@@ -117,8 +117,5 @@ while True:
 		# For the insert into db
 		if (progress >= 1000 and progress <= 1500):
 			updateDB()
-		played = datetime.fromtimestamp(progress/1000).strftime("%M:%S")	
-		total = datetime.fromtimestamp(songDuration/1000).strftime("%M:%S")	
-		print(songName, " - [", played, "/", total, "]", end="\r")	
 
 	time.sleep(0.4)

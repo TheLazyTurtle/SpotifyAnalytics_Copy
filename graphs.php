@@ -41,7 +41,7 @@ function topArtists() {
 	global $topArtists;
 
 	$connection = getConnection();
-	$query = "SELECT count(p.songID) AS times, a.name AS artistName FROM played p INNER JOIN artistfromsong afs ON p.songID = afs.songID RIGHT JOIN artist a ON afs.artistID = a.artistID GROUP BY artistName ORDER BY times DESC LIMIT 10";
+	$query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN artistfromsong afs ON p.songID = afs.songID RIGHT JOIN artist a ON afs.artistID = a.artistID GROUP BY a.artistID ORDER BY times DESC LIMIT 10";
 
 	$res = mysqli_query($connection, $query);
 	$topArtists = array();
@@ -137,7 +137,6 @@ var topArtists = new CanvasJS.Chart("topArtists", {
 
 
 }
-
 
 </script>
 </body>
