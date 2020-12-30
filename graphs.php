@@ -5,7 +5,7 @@ function allSongs() {
 	global $dataPoints;
 	// TODO: Make a slider to adjust time
 	// Returns all the names from all the songs i have ever listened to and how many times i have listened to it.
-	$query =  "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID GROUP BY s.songID ORDER BY times DESC, name ASC";
+	$query =  "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID GROUP BY s.songID ORDER BY name ASC";
 	$connection = getConnection();
 
 	$res = mysqli_query($connection, $query);
