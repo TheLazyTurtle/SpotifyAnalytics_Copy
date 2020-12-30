@@ -6,8 +6,8 @@ from datetime import datetime, timedelta
 
 db = mysql.connector.connect(
 	host="localhost",
-	user="root",
-	password="",
+	user="remote",
+	password="***REMOVED***",
 	database="spotify"
 )
 

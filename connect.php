@@ -2,8 +2,8 @@
 
 function getConnection() {
 	$host = "localhost";
-	$username = "root";
-	$pass = "";
+	$username = "remote";
+	$pass = "***REMOVED***";
 	$db = "spotify";	
 
 	try {
