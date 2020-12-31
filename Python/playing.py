@@ -2,7 +2,7 @@ import spotipy
 import spotipy.util as util
 import mysql.connector
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 
 db = mysql.connector.connect(
 	host="localhost",
@@ -18,20 +18,8 @@ clientSec = "***REMOVED***"
 # The scopes defines how much you are allowed
 scope = "user-read-currently-playing"
 
-# TODO: Figure out why the username
+# This is used to see which cache it has to load?? Make this array to use for multiple users??
 username = "1182819693"
-
-def alreadySend():
-	cursor = db.cursor()
-	# TODO: Remove the order by and limit if I ever feel like improving this
-	cursor.execute("SELECT * FROM played ORDER BY ID DESC LIMIT 1")
-	res = cursor.fetchall()
-
-	# TODO: Find a way to see if we had the same insert 1 or 2 seconds ago. If that is the case than DON'T insert
-	if res[0][2] + timedelta(1) >= datetime.now():
-		print("We were to fast")
-		return True
-	return False
 
 def updateDB():
 	global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg
@@ -48,7 +36,6 @@ def updateDB():
 		artistFromSongVal = (songID, artistID[x])
 		cursor.execute(artistFromSongSQL, artistFromSongVal)
 
-	# alreadySend()
 	# Add song to db
 	songSQL = "INSERT IGNORE INTO song (songID, name, length, url, img) VALUES (%s, %s, %s, %s, %s)"
 	songVal = (songID, songName, songDuration, songUrl, songImg)
