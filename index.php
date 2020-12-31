@@ -1,11 +1,11 @@
 <?php
-require "connect.php";
+require "header.php";
 
 function allSongs() {
-	global $dataPoints;
+	global $dataPoints, $spID;
 	// TODO: Make a slider to adjust time
 	// Returns all the names from all the songs i have ever listened to and how many times i have listened to it.
-	$query =  "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID GROUP BY s.songID ORDER BY name ASC";
+	$query =  "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' GROUP BY s.songID ORDER BY name ASC";
 	$connection = getConnection();
 
 	$res = mysqli_query($connection, $query);
@@ -21,10 +21,10 @@ function allSongs() {
 }
 
 function topSongs() {
-	global $topSongs;
+	global $topSongs, $spID;
 
 	$connection = getConnection();
-	$query = "SELECT count(p.songID) as times, s.name as songName FROM played p INNER JOIN song s ON p.songID = s.songID GROUP BY songName ORDER BY times DESC LIMIT 10";
+	$query = "SELECT count(p.songID) as times, s.name as songName FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' GROUP BY songName ORDER BY times DESC LIMIT 10";
 
 	$res = mysqli_query($connection, $query);
 	$topSongs = array();
@@ -38,10 +38,10 @@ function topSongs() {
 }
 
 function topArtists() {
-	global $topArtists;
+	global $topArtists, $spID;
 
 	$connection = getConnection();
-	$query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN artistfromsong afs ON p.songID = afs.songID RIGHT JOIN artist a ON afs.artistID = a.artistID GROUP BY a.artistID ORDER BY times DESC LIMIT 10";
+	$query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN artistfromsong afs ON p.songID = afs.songID RIGHT JOIN artist a ON afs.artistID = a.artistID WHERE playedBy = '$spID' GROUP BY a.artistID ORDER BY times DESC LIMIT 10";
 
 	$res = mysqli_query($connection, $query);
 	$topArtists = array();
@@ -53,10 +53,14 @@ function topArtists() {
 	mysqli_free_result($res);
 	mysqli_close($connection);
 }
-
-allSongs();
-topSongs();
-topArtists();
+if (isset($_SESSION["loggedIn"])) {
+	$spID = $_SESSION["spID"];
+	allSongs();
+	topSongs();
+	topArtists();
+} else {
+	header("Location: login.php");
+}
 ?>
 
 <html>
