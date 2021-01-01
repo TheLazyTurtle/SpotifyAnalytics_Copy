@@ -4,8 +4,10 @@ import mysql.connector
 from time import sleep
 from datetime import datetime
 import threading
+import sys
 
 threads = []
+running = True
 
 db = mysql.connector.connect(
 	host="localhost",
@@ -23,106 +25,168 @@ scope = "user-read-currently-playing"
 
 # This will get all the users and will use the user ID's to load in the cache so it has you auth code. 
 def getAllUsers():
-	global username
+	global username, running
 
-	cursor = db.cursor()
-	getUserQuery = "SELECT userID FROM users"
-	cursor.execute(getUserQuery)
-	return cursor.fetchall()
+	try:
+		cursor = db.cursor()
+		getUserQuery = "SELECT userID FROM users"
+		cursor.execute(getUserQuery)
+		return cursor.fetchall()
+	except Exception as e:
+		print("Couldn't get user | ", e)
+		running = False
 
 def updateDB(username):
-	global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg
+	global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg, running
 	curTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	cursor = db.cursor()
 
-	# Inserts the artist info
 	for x in range(len(artistID)):
-		artistSQL = "INSERT IGNORE INTO artist (artistID, name, url) VALUES (%s, %s, %s)"	
-		artistVal = (artistID[x], artistName[x], artistUrl[x]) 
-		cursor.execute(artistSQL, artistVal)
+		try:
+			# Inserts the artist info
+			artistSQL = "INSERT IGNORE INTO artist (artistID, name, url) VALUES (%s, %s, %s)"	
+			artistVal = (artistID[x], artistName[x], artistUrl[x]) 
+			cursor.execute(artistSQL, artistVal)
+		except Exception as e:
+			running = False
+			print("Couldn't insert new artist into db | ", e)
+		
+		try:
+			# Links artists to a song
+			artistFromSongSQL = "INSERT IGNORE INTO artistfromsong (songID, artistID) VALUES (%s, %s)"
+			artistFromSongVal = (songID, artistID[x])
+			cursor.execute(artistFromSongSQL, artistFromSongVal)
+		except Exception as e:
+			running = False
+			print("Couldn't link artist to song | ", e)				
+	
+	try:
+		# Inserts song to database
+		songSQL = "INSERT IGNORE INTO song (songID, name, length, url, img) VALUES (%s, %s, %s, %s, %s)"
+		songVal = (songID, songName, songDuration, songUrl, songImg)
+		cursor.execute(songSQL, songVal)
+	except Exception as e:
+		running = False
+		print("Couldn't add song to db | ", e)
 
-		artistFromSongSQL = "INSERT IGNORE INTO artistfromsong (songID, artistID) VALUES (%s, %s)"
-		artistFromSongVal = (songID, artistID[x])
-		cursor.execute(artistFromSongSQL, artistFromSongVal)
+	try:
+		# Add song to played
+		playedSQL = "INSERT IGNORE INTO played (songID, playedBy, datePlayed) VALUE (%s, %s, %s)"
+		playedVal = (songID, username, curTime)
+		cursor.execute(playedSQL, playedVal)
+	except Exception as e:
+		running = False
+		print("Couldn't ass song to played | ", e)
 
-	# Add song to db
-	songSQL = "INSERT IGNORE INTO song (songID, name, length, url, img) VALUES (%s, %s, %s, %s, %s)"
-	songVal = (songID, songName, songDuration, songUrl, songImg)
-	cursor.execute(songSQL, songVal)
-
-	# Add song to played
-	playedSQL = "INSERT IGNORE INTO played (songID, playedBy, datePlayed) VALUE (%s, %s, %s)"
-	playedVal = (songID, username, curTime)
-	cursor.execute(playedSQL, playedVal)
-
-	# Commits the data to the db. Without this it won't update the db
-	db.commit()
-	cursor.close()
-	print("COMMITTED", songName, username)
+	try:
+		# Commits the data to the db. Without this it won't update the db
+		db.commit()
+		cursor.close()
+		print("COMMITTED", songName, username)
+	except Exception as e:
+		running = False
+		print("Failed to commit | ", e)
 
 def auth(username):
-	# Gets a token for spotify and should keep it updated
-	token = util.prompt_for_user_token(username, scope, client_id=clientID, client_secret=clientSec, redirect_uri="http://localhost/Spotify/callback.php")
-	return spotipy.Spotify(auth=token)	
+	global running
 
-def getResults(sp):	
-	# Retruns all the data about the current playing song
-	return sp.currently_playing(market=None)
+	try:	
+		# Gets a token for spotify and should keep it updated
+		token = util.prompt_for_user_token(username, scope, client_id=clientID, client_secret=clientSec, redirect_uri="http://localhost/Spotify/callback.php")
+		return spotipy.Spotify(auth=token)	
+	except Exception as e:
+		running = False
+		print("Couldn't get/refresh token | ", e)
+
+def getResults(sp):
+	global running
+
+	try:	
+		# Retruns all the data about the current playing song
+		return sp.currently_playing(market=None)
+	except Exception as e:
+		running = False
+		print("Couldn't return result | ", e)
 
 # Fix weird bug where a second param is needed for the thread to not crash.
 def getData(username, userID):
+	global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg, running
 	
 	while True:	
-		global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg
 		results = getResults(auth(username))	
 
-		if results:
-			# Control info
-			progress = results["progress_ms"]
-			playing = results["is_playing"]
+		try:
+			if results:
+				# Control info
+				progress = results["progress_ms"]
+				playing = results["is_playing"]
 
-			try:
-				# Song info
-				songID = results["item"]["id"]
-				songUrl = results["item"]["external_urls"]["spotify"]
-				songName = results["item"]["name"]
-				songImg = results["item"]["album"]["images"][0]["url"]
-				songDuration = results["item"]["duration_ms"]
+				try:
+					# Song info
+					songID = results["item"]["id"]
+					songUrl = results["item"]["external_urls"]["spotify"]
+					songName = results["item"]["name"]
+					songImg = results["item"]["album"]["images"][0]["url"]
+					songDuration = results["item"]["duration_ms"]
 
-				# Artist info
-				artistID = []
-				artistUrl = []
-				artistName = []
+					# Artist info
+					artistID = []
+					artistUrl = []
+					artistName = []
 
-				# Get all the artists and put their info in the arrays
-				for artistInfo in results["item"]["artists"]:
-					artistID.append(artistInfo["id"])
-					artistUrl.append(artistInfo["external_urls"]["spotify"])
-					artistName.append(artistInfo["name"])
+					# Get all the artists and put their info in the arrays
+					for artistInfo in results["item"]["artists"]:
+						artistID.append(artistInfo["id"])
+						artistUrl.append(artistInfo["external_urls"]["spotify"])
+						artistName.append(artistInfo["name"])
+
+				# This is for custom songs that don't have all the info needed 
+				# Its a bit cringe because songID and artistID become the name of the song or artist. Doesn't really matter but it doesn't look great.
+				# Maybe throw on encryption so it looks less obvious	
+				except KeyError:
+					# Song info
+					songUrl = " "
+					songName = results["item"]["name"]
+					songID = songName
+					songImg = " "
+					songDuration = results["item"]["duration_ms"]
+					
+					# Artist info
+					artistID = []
+					artistUrl = []
+					artistName = []
+
+					# Get all the artists and put their info in the arrays
+					for artistInfo in results["item"]["artists"]:
+						artistUrl.append(" ")
+						artistName.append(artistInfo["name"])
+						artistID.append(artistInfo["name"])
 			
-			except KeyError:
-				# Song info
-				songUrl = " "
-				songName = results["item"]["name"]
-				songID = songName
-				songImg = " "
-				songDuration = results["item"]["duration_ms"]
-				
-				# Artist info
-				artistID = []
-				artistUrl = []
-				artistName = []
+				# This is for if i want to print the times of how for a person is in listening to the song. Their might be a problem where it is gonna crash or glitch when multiple users will use it.  
+				curTime = datetime.fromtimestamp(progress/1000).strftime('%M:%S')
+				totalTime = datetime.fromtimestamp(songDuration / 1000).strftime('%M:%S')
+				print(songName, "[", curTime, "/", totalTime , "]" , end="\r")
+			
+				# For the insert into db
+				if (progress >= 15000 and progress <= 15500 and playing):
+					updateDB(username)
 
-				# Get all the artists and put their info in the arrays
-				for artistInfo in results["item"]["artists"]:
-					artistUrl.append(" ")
-					artistName.append(artistInfo["name"])
-					artistID.append(artistInfo["name"])
-		
-			# For the insert into db
-			if (progress >= 15000 and progress <= 15500 and playing):
-				updateDB(username)
-		sleep(0.4)
+			# If there is an error kill the thread
+			if not running:
+				threading.Thread.join()
+				print("Stopping thread-", username)
+
+			# This is a really cringe way to check and exit for keyboard interrupts
+			try:			
+				sleep(0.4)
+			except KeyboardInterrupt:
+				for thread in threading.Thread:
+					thread.join()
+					sys.exit()
+
+		except Exception as e:
+			running = False
+			print("Runtime error | ", e)
 
 for x in getAllUsers():
 	t = threading.Thread(target=getData, args=(x[0], x[0]))
