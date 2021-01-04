@@ -24,8 +24,6 @@ clientSec = "***REMOVED***"
 scope = "user-read-currently-playing"
 
 # This will get all the users and will use the user ID's to load in the cache so it has you auth code.
-
-
 def getAllUsers():
     global username, running
 
@@ -96,8 +94,8 @@ def auth(username):
 
     try:
         # Gets a token for spotify and should keep it updated
-        token = util.prompt_for_user_token(
-            username, scope, client_id=clientID, client_secret=clientSec, redirect_uri="http://localhost/Spotify/callback.php")
+        token = util.prompt_for_user_token(username, scope, client_id=clientID, client_secret=clientSec, redirect_uri="http://localhost/Spotify/callback.php")
+        print("Got a new token for user:", username)
         return spotipy.Spotify(auth=token)
     except Exception as e:
         running = False
@@ -114,14 +112,12 @@ def getResults(sp):
         running = False
         print("Couldn't return result | ", e)
 
-# Fix weird bug where a second param is needed for the thread to not crash.
-
-
+#TODO: Fix weird bug where a second param is needed for the thread to not crash.
 def getData(username, userID):
-	global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg, running
+	global artistID, artistName, artistUrl, songID, songName, songDuration, songUrl, songImg, running, token
 
 	while True:
-		results = getResults(auth(username))
+		results = getResults(token)
 
 		try:
 			if results:
@@ -169,12 +165,9 @@ def getData(username, userID):
 						artistUrl.append(" ")
 						artistName.append(artistInfo["name"])
 						artistID.append(artistInfo["name"])
-
-                # prints the time of how far a person is in listening to the song. Their might be a problem where it is gonna crash/glitch when multiple users will use it.
-				curTime = datetime.fromtimestamp(progress/1000).strftime('%M:%S')
-				totalTime = datetime.fromtimestamp(songDuration / 1000).strftime('%M:%S')
-				print(username, "is playing: ", songName, " by ", artistName[0], "[", curTime, "/", totalTime, "]", end="\r")
-
+				except:
+					token = auth(username)
+					
                 # For the insert into db
 				if (progress >= 15000 and progress <= 15500 and playing):
 					updateDB(username)
@@ -193,13 +186,12 @@ def getData(username, userID):
 					sys.exit()
 
 		# Shows when a person is playing podcast find a way to fix the printing message
-		# Maybe make a msg str which changes based on the type of content and then gets printed in the end 
-		# It shows a message but it is combined with the old print so if the old print is too long then it won't show properly so gotta find a way to clear the console once a while
 		except:
-			print(username, "is playing a podcast", end="\r")
+			print(username, "is playing a podcast")
 			sleep(2)
 
 for x in getAllUsers():
+	token = auth(x[0])
 	t = threading.Thread(target=getData, args=(x[0], x[0]))
 	threads.append(t)
 	t.start()
