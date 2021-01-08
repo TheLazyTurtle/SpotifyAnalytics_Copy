@@ -1,0 +1,155 @@
+Array
+(
+    [timestamp] => 1608552930588
+    [context] => Array
+        (
+            [external_urls] => Array
+                (
+                    [spotify] => https://open.spotify.com/playlist/6MLRgVGjktRChM6IBc6bHJ
+                )
+
+            [href] => https://api.spotify.com/v1/playlists/6MLRgVGjktRChM6IBc6bHJ
+            [type] => playlist
+            [uri] => spotify:playlist:6MLRgVGjktRChM6IBc6bHJ
+        )
+
+    [progress_ms] => 2434
+    [item] => Array
+        (
+            [album] => Array
+                (
+                    [album_type] => single
+                    [artists] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [external_urls] => Array
+                                        (
+                                            [spotify] => https://open.spotify.com/artist/4D75GcNG95ebPtNvoNVXhz
+                                        )
+
+                                    [href] => https://api.spotify.com/v1/artists/4D75GcNG95ebPtNvoNVXhz
+                                    [id] => 4D75GcNG95ebPtNvoNVXhz
+                                    [name] => Afrojack
+                                    [type] => artist
+                                    [uri] => spotify:artist:4D75GcNG95ebPtNvoNVXhz
+                                )
+
+                        )
+
+                    [available_markets] => Array
+                        (
+                        )
+
+                    [external_urls] => Array
+                        (
+                            [spotify] => https://open.spotify.com/album/3CXprnYNotvIL5cAfwSgLc
+                        )
+
+                    [href] => https://api.spotify.com/v1/albums/3CXprnYNotvIL5cAfwSgLc
+                    [id] => 3CXprnYNotvIL5cAfwSgLc
+                    [images] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [height] => 640
+                                    [url] => https://i.scdn.co/image/ab67616d0000b273ff815071cd63fe7b7cb23548
+                                    [width] => 640
+                                )
+
+                            [1] => Array
+                                (
+                                    [height] => 300
+                                    [url] => https://i.scdn.co/image/ab67616d00001e02ff815071cd63fe7b7cb23548
+                                    [width] => 300
+                                )
+
+                            [2] => Array
+                                (
+                                    [height] => 64
+                                    [url] => https://i.scdn.co/image/ab67616d00004851ff815071cd63fe7b7cb23548
+                                    [width] => 64
+                                )
+
+                        )
+
+                    [name] => Ten Feet Tall
+                    [release_date] => 2014-01-01
+                    [release_date_precision] => day
+                    [total_tracks] => 1
+                    [type] => album
+                    [uri] => spotify:album:3CXprnYNotvIL5cAfwSgLc
+                )
+
+            [artists] => Array
+                (
+                    [0] => Array
+                        (
+                            [external_urls] => Array
+                                (
+                                    [spotify] => https://open.spotify.com/artist/4D75GcNG95ebPtNvoNVXhz
+                                )
+
+                            [href] => https://api.spotify.com/v1/artists/4D75GcNG95ebPtNvoNVXhz
+                            [id] => 4D75GcNG95ebPtNvoNVXhz
+                            [name] => Afrojack
+                            [type] => artist
+                            [uri] => spotify:artist:4D75GcNG95ebPtNvoNVXhz
+                        )
+
+                    [1] => Array
+                        (
+                            [external_urls] => Array
+                                (
+                                    [spotify] => https://open.spotify.com/artist/7r2uG6BlFXKcwmh9ItqlII
+                                )
+
+                            [href] => https://api.spotify.com/v1/artists/7r2uG6BlFXKcwmh9ItqlII
+                            [id] => 7r2uG6BlFXKcwmh9ItqlII
+                            [name] => Wrabel
+                            [type] => artist
+                            [uri] => spotify:artist:7r2uG6BlFXKcwmh9ItqlII
+                        )
+
+                )
+
+            [available_markets] => Array
+                (
+                )
+
+            [disc_number] => 1
+            [duration_ms] => 233353
+            [explicit] => 
+            [external_ids] => Array
+                (
+                    [isrc] => CYA221400001
+                )
+
+            [external_urls] => Array
+                (
+                    [spotify] => https://open.spotify.com/track/64eMQ7f31JSd8b9H6HUvvN
+                )
+
+            [href] => https://api.spotify.com/v1/tracks/64eMQ7f31JSd8b9H6HUvvN
+            [id] => 64eMQ7f31JSd8b9H6HUvvN
+            [is_local] => 
+            [name] => Ten Feet Tall
+            [poeularity] => 0
+            [preview_url] => 
+            [track_number] => 1
+            [type] => track
+            [uri] => spotify:track:64eMQ7f31JSd8b9H6HUvvN
+        )
+
+    [currently_playing_type] => track
+    [actions] => Array
+        (
+            [disallows] => Array
+                (
+                    [pausing] => 1
+                )
+
+        )
+
+    [is_playing] => 
+)
