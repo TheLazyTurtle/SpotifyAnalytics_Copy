@@ -9,10 +9,7 @@ $session = new SpotifyWebAPI\Session(
 
 $options = [
     'scope' => [
-        'playlist-read-private',
-        'user-read-private',
-        'user-read-currently-playing',
-        'user-read-playback-state'
+        'user-read-recently-played'
     ],
 ];
 

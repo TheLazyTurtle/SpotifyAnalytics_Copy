@@ -1,5 +1,5 @@
 {
-    "require": {
-        "jwilsson/spotify-web-api-php": "^4.1"
-    }
+	"require": {
+		"jwilsson/spotify-web-api-php": "4.1"
+	}
 }
