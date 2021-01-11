@@ -108,7 +108,8 @@ def getUsers():
         cursor.execute(getUsersQuery)
 
         func.printMsg("Got all the users", "green")
-        # Cant close the connection because than I lose the output
+
+        # Could close the connection if I make cursor.fetchall a var and return that
 
         return cursor.fetchall()
 
