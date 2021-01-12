@@ -6,16 +6,16 @@ import functions as func
 
 # Insert a artist into the database if it doesn't exist yet
 # Takes a artist ID, artist name, link to artist account, and person who listened to it
-def insertArtist(artistID, name, link, addedBy):
+def insertArtist(artistID, name, url, addedBy):
     try:
         cursor = creds.db.cursor()
         InsertArtist = """
         INSERT IGNORE INTO artist 
-        (artistID, name, link, addedBy) 
+        (artistID, name, url, addedBy) 
         VALUES (%s, %s, %s, %s)
         """
 
-        data = (artistID, name, link, addedBy)
+        data = (artistID, name, url, addedBy)
         cursor.execute(InsertArtist, data)
 
         creds.db.commit()
@@ -31,16 +31,16 @@ def insertArtist(artistID, name, link, addedBy):
 
 # Insert a song into the database if it doesn't exist yet
 # Takes a song ID, song name, link to song, who added it, the song cover, and the song duration
-def insertSong(songID, name, link, addedBy, img, duration):
+def insertSong(songID, name, url, addedBy, img, length):
     try:
         cursor = creds.db.cursor()
         InsertSong = """
         INSERT IGNORE INTO song 
-        (songId, name, link, addedBy, img, duration) 
+        (songID, name, url, addedBy, img, length) 
         VALUES (%s, %s, %s, %s, %s, %s)
         """
 
-        data = (songID, name, link, addedBy, img, duration)
+        data = (songID, name, url, addedBy, img, length)
         cursor.execute(InsertSong, data)
 
         creds.db.commit()
@@ -54,16 +54,16 @@ def insertSong(songID, name, link, addedBy, img, duration):
         func.printMsg("Failed to insert song:", "red", e, "red")
 
 
-def insertAsPlayed(songID, playedBy, playedAt, songName):
+def insertAsPlayed(songID, playedBy, datePlayed, songName):
     try:
         cursor = creds.db.cursor()
 
         insertAsPlayed = """
         INSERT IGNORE INTO played 
-        (songID, playedBy, playedAt) 
+        (songID, playedBy, datePlayed) 
         VALUES (%s, %s, %s)
         """
-        data = (songID, playedBy, playedAt)
+        data = (songID, playedBy, datePlayed)
         cursor.execute(insertAsPlayed, data)
 
         creds.db.commit()
