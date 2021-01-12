@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 $session = new SpotifyWebAPI\Session(
     '***REMOVED***',
     '***REMOVED***',
-    'http://localhost/Spotify/callback.php'
+    'http://192.168.2.7/Spotify/callback.php'
 );
 
 $options = [
