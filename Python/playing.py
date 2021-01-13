@@ -1,14 +1,16 @@
-import spotipy
-import spotipy.util as util
+import threading
 import time
 from datetime import datetime
+
+import spotipy
+import spotipy.util as util
 
 import creds
 import functions as func
 import queries as q
 
 
-def auth(username):
+def getAuthToken(username):
     try:
         # If there is a cache file than run the auth process. Else make a file
         if func.checkCachefile(username):
@@ -22,10 +24,11 @@ def auth(username):
             return spotipy.Spotify(auth=token)
         else:
             if func.editCachefile(func.makeCachefile(username)):
-                auth(username)
+                getAuthToken(username)
     except Exception as e:
         func.printMsg("Couldn't get/refresh access token for user:", "red",
                       username, "white", e, "red")
+        return False
 
 
 def getResult(sp):
@@ -79,15 +82,21 @@ def getdata(result, username):
         func.printMsg("Failed by getting song data for user:", "red", username,
                       "white", e, "red")
 
-
-while True:
-    for username in q.getUsers():
-        # Gets the authorization for the user 
-        token = auth(username[0])
+def authAndFetch(username):
+    # Gets the authorization for the user
+        token = getAuthToken(username)
 
         # If the user is authorized get the results
         if token:
-            getdata(getResult(token), username[0])
+            getdata(getResult(token), username)
+
+threads = list()
+while True:
+    for username in q.getUsers():
+        x = threading.Thread(target=authAndFetch, args=(username))
+        threads.append(x)
+        x.start()
+
 
     # 300 secs = 5 minutes
     time.sleep(300)

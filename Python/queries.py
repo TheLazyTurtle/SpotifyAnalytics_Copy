@@ -107,6 +107,7 @@ def getUsers():
         getUsersQuery = "SELECT spotifyID FROM users"
         cursor.execute(getUsersQuery)
 
+        # Maybe return how many users it returned
         func.printMsg("Got all the users", "green")
 
         # Could close the connection if I make cursor.fetchall a var and return that
