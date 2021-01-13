@@ -1,6 +1,7 @@
 import spotipy
 import spotipy.util as util
 import time
+import threading
 from datetime import datetime
 
 import creds
@@ -87,7 +88,7 @@ while True:
 
         # If the user is authorized get the results
         if token:
-            getdata(getResult(auth(username[0])), username[0])
+            getdata(getResult(token), username[0])
 
     # 300 secs = 5 minutes
     time.sleep(300)

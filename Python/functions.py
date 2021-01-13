@@ -31,11 +31,23 @@ def makeCachefile(username):
         destfile = curPath + "/.cache-" + username
         copy(tempfile, destfile)
         printMsg("Made cache file for", "green", username, "white")
+        # checkUserAuthToken(username)
         return (destfile, username)
     except Exception as e:
         printMsg("Couldn't make cache file for", "red", username, "white", e,
                  "red")
 
+def checkUserAuthToken(username):
+    try:
+        cursor = creds.db.cursor()
+
+        checkUserAuthToken = "SELECT spotifyAuth FROM users where spotifyID = %s"
+        data = (username, )
+        cursor.execute(checkUserAuthToken, data)
+        result = cursor.fetchone()
+        print(result)
+    except Exception as e:
+        printMsg("failed...", "red", e, "red")
 
 # Gets the tokens from the database
 def getUserInfo(username):
@@ -47,7 +59,7 @@ def getUserInfo(username):
         cursor.execute(getUserInfo, data)
         printMsg("Getting auth tokens from database for", "yellow", username,
                  "white")
-        return cursor.fetchall()
+        return cursor.fetchone()
     except Exception as e:
         printMsg("Failed to get auth tokens from database for user", "red",
                  username, "white", e, "red")
