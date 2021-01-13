@@ -1,7 +1,6 @@
 import spotipy
 import spotipy.util as util
 import time
-import threading
 from datetime import datetime
 
 import creds
