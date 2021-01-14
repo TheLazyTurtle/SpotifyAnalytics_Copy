@@ -21,16 +21,33 @@ function login($name, $pass) {
 
 	$query = mysqli_query($connection, "SELECT * FROM users WHERE name = '$name' AND pass = '$pass'");
 	$res = mysqli_fetch_assoc($query);
+	mysqli_close($connection);
+	
 	if (mysqli_num_rows($query) == 1) {
-		$_SESSION["spID"] = $res["userID"];
-		$_SESSION["loggedIn"] = True;
+		$_SESSION["spID"] = $res["spotifyID"];
+		if (userHasAuthtoken($res["spotifyID"])) {
+			$_SESSION["loggedIn"] = True;
+			header("Location: ./index.php");
+		} else {
+			header("Location: ../browser/auth.php");
+		}
 	} else {
-		echo "Er is iets mis gegaan probeer het opnieuw";
+		$error = "Er is iets mis gegaan probeer het opnieuw";
 	}
 }
 
-if (isset($_SESSION["loggedIn"])) {
-	header("Location: index.php");
+function userHasAuthToken($spID) {
+	$connection = getConnection();
+	$query = mysqli_query($connection, "SELECT * FROM users WHERE spotifyID = '$spID'");
+
+	$res = mysqli_fetch_assoc($query);
+	mysqli_close($connection);
+
+	if (empty($res["spotifyAuth"]) || empty($res["spotifyRefresh"]) || empty($res["spotifyExpire"])){
+		return False; 
+	} else {
+		return True;
+	}
 }
 
 ?>

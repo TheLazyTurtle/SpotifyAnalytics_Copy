@@ -54,8 +54,8 @@ function topArtists() {
 	mysqli_close($connection);
 }
 if (isset($_SESSION["loggedIn"])) {
-//	$spID = $_SESSION["spID"];
-	$spID = "11182819693";
+	$spID = $_SESSION["spID"];
+
 	allSongs();
 	topSongs();
 	topArtists();

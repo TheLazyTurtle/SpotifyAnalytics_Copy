@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require "vendor/autoload.php";
@@ -12,17 +11,13 @@ $session = new SpotifyWebAPI\Session(
 $accessToken = $_SESSION["aToken"];
 $refreshToken = $_SESSION["rToken"];
 $expirationTime = $_SESSION["xTime"]; 
+$spID = $_SESSION["spID"];
 $code = $_SESSION["URL"]; 
 
-print($accessToken);
-print("<br>");
-print($refreshToken);
-print("<br>");
-print($expirationTime);
-print("<br>");
-print("URL ". $code );
+$connection = getConnection();
 
-mysqli_query(getConnection(), "UPDATE users SET spotifyAuth = '$accessToken' WHERE spotifyID = 11182819693");
+mysqli_query($connection, "UPDATE users SET spotifyAuth = '$accessToken', spotifyRefresh = '$refreshToken', spotifyExpire = '$expirationTime' WHERE spotifyID = '$spID'");
+mysqli_close($connection);
 
 if ($accessToken){
 	$session->setAccessToken($accessToken);
@@ -32,11 +27,11 @@ if ($accessToken){
 }
 
 $options = [
-	'auto_refresh' => true,
 ];
 
 $api = new SpotifyWebAPI\SpotifyWebAPI($options, $session);
 
 $api->setAccessToken($accessToken);
+header("Location: ../main/index.php");
 
 ?>
