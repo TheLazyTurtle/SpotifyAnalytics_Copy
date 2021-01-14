@@ -3,6 +3,8 @@
 - current_user_top_artist()
 - devices()
 
+IF IT FAILS TO GET TOKENS THAN DON'T MAKE A FILE
+
 #TODO
 - Make it that you can control the date of the graphs
 - Make a graph like all songs ever played but than for artists to see how many times you have played an artist
