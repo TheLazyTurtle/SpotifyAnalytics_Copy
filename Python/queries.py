@@ -1,5 +1,3 @@
-from termcolor import colored
-
 import creds
 import functions as func
 
@@ -104,7 +102,7 @@ def linkSongToArtist(songID, artistID, songName, artistName):
 def getUsers():
     try:
         cursor = creds.db.cursor()
-        getUsersQuery = "SELECT spotifyID FROM users"
+        getUsersQuery = "SELECT spotifyID FROM users where active = 1"
         cursor.execute(getUsersQuery)
 
         # Maybe return how many users it returned

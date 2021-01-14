@@ -1,4 +1,3 @@
-import threading
 import time
 from datetime import datetime
 
@@ -90,13 +89,10 @@ def authAndFetch(username):
         if token:
             getdata(getResult(token), username)
 
-threads = list()
 while True:
     for username in q.getUsers():
-        x = threading.Thread(target=authAndFetch, args=(username))
-        threads.append(x)
-        x.start()
-
+        authAndFetch(username[0])
 
     # 300 secs = 5 minutes
-    time.sleep(300)
+    # time.sleep(300)
+    time.sleep(3)
