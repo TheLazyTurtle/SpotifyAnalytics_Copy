@@ -87,7 +87,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		text: "To all songs ever played"
 	},
 	axisY:{
-		includeZero: true
+		includeZero: true,
+		scaleBreaks: {
+			autoCalculate: true
+		},
 	},
 	data: [{
 		type: "column", //change type to bar, line, area, pie, etc
@@ -107,7 +110,11 @@ var topSongs = new CanvasJS.Chart("topSongs", {
 		text: "Top 10 songs"
 	},
 	axisY:{
-		includeZero: true
+		includeZero: true,
+		scaleBreaks: {
+			autoCalculate: true
+		},
+
 	},
 	data: [{
 		type: "column",
@@ -127,7 +134,11 @@ var topArtists = new CanvasJS.Chart("topArtists", {
 		text: "Top 10 artists"
 	},
 	axisY:{
-		includeZero: true
+		includeZero: true,
+		scaleBreaks: {
+			autoCalculate: true
+		},
+
 	},
 	data: [{
 		type: "column",
