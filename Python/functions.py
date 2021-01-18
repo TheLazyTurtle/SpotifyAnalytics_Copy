@@ -72,7 +72,7 @@ def getUserInfo(username):
                  "white")
 
         result = cursor.fetchone()
-        creds.db.free_result()
+        # creds.db.free_result()
         cursor.close()
 
         return result
