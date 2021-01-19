@@ -1,0 +1,56 @@
+body {
+    background-color: #32373A;
+}
+
+/*Header*/
+.header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+
+    overflow: hidden;
+    padding-top: 10px;
+    background-color: #32373A;
+
+    width: 100%;
+    height: 30px;
+
+    padding-bottom: 5px;
+
+    border-bottom: 2px solid white;
+}
+
+/* buttons */
+.btn {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    margin-left: 20px;
+    margin-right: 20px;
+
+    background-color: #0095F6;
+    text-decoration: none;
+    color: white;
+
+    border-radius: 3px;
+}
+
+.btn-left {
+    float: left;
+}
+
+.btn-right {
+    float: right;
+
+}
+
+/*graph body*/
+.test {
+    margin-top: 60px;
+}
+
+.container {
+    margin-top: 65px;
+}

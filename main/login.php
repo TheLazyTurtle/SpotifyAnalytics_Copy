@@ -52,18 +52,18 @@ function userHasAuthToken($spID) {
 
 ?>
 
-<html>
-
-<form action="#" method="POST">
-	<label>Naam</label>
-	<input type="text" name="name">
-	<br>
-	<label>Wachtwoord</label>
-	<input type="password" name="pass">
-	<br>
-	<input type="submit" name="submit" value="Login">
-	<br>
-</form>
+<div class="container">
+    <form action="#" method="POST">
+	    <label>Naam</label>
+	    <input type="text" name="name">
+	    <br>
+	    <label>Wachtwoord</label>
+	    <input type="password" name="pass">
+	    <br>
+	    <input type="submit" name="submit" value="Login">
+	    <br>
+    </form>
+</div>
 
 <h4><?php if (isset($error)) {echo $error;}?> </h4>
 

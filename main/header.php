@@ -5,8 +5,28 @@ session_start();
 ?>
 
 <html>
+<head>
 
-<a href="login.php">Inloggen</a>
-<a href="logout.php">Uitloggen</a>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
 
-</html>
+
+<div class="header-container">
+    <div class="header">
+
+<?php 
+if (isset($_SESSION["loggedIn"])) {
+
+    if ($_SESSION["loggedIn"]) {
+	echo '<a class="btn btn-right" href="logout.php">Uitloggen</a>';
+    } else {
+	echo '<a class="btn btn-left" href="login.php">Inloggen</a>';
+    }
+}
+
+?>
+    </div>
+</div>
+
+<body>
