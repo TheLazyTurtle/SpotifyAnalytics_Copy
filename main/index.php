@@ -53,12 +53,41 @@ function topArtists() {
 	mysqli_free_result($res);
 	mysqli_close($connection);
 }
+
+function playedPerDay($songName) {
+    global $playedPerDay, $spID;
+
+    $connection = getConnection();
+    $query = "SELECT count(*) AS times, p.datePlayed AS date, s.name FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' AND s.name = '$songName' GROUP BY DAY(date), p.songID;";
+
+    $res = mysqli_query($connection, $query);
+    $playedPerDay = array();
+
+    while ($row = mysqli_fetch_assoc($res)) {
+	// Some facked up code to convert the time to unix
+	$date = date($row["date"]);
+	$date = str_replace(" ", "-", $date);
+	$date = str_replace(":", "-", $date);
+	$date = explode("-", $date);
+	$date = mktime($date[5], $date[4], $date[3], $date[1], $date[2], $date[0]);
+	print($date);
+	print("<br>");
+
+	$data = ["x"=>$date, "y"=>$row["times"]];
+	array_push($playedPerDay, $data);
+    }
+    mysqli_free_result($res);
+    mysqli_close($connection);
+
+}
+
 if (isset($_SESSION["loggedIn"])) {
 	$spID = $_SESSION["spID"];
 
 	allSongs();
 	topSongs();
 	topArtists();
+	playedPerDay("Slow Down");
 } else {
 	header("Location: login.php");
 }

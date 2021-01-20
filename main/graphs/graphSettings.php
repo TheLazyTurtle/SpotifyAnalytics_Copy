@@ -1,7 +1,10 @@
+<!-- the html elements to show the graphs -->
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <div id ="topSongs" style="height: 370px; width: 100%;"></div>
 <div id ="topArtists" style="height: 370px; width: 100%;"></div>
+<div id="playedPerDay" style="height: 370px; width: 100%;"></div>
 
+<!-- All the js scripts to fill the right tables -->
 <script>
 // Shows all songs ever played
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -71,4 +74,30 @@ var topArtists = new CanvasJS.Chart("topArtists", {
     }]
 });
 topArtists.render();
+
+// This is the played per day graphs
+var playedPerDay = new CanvasJS.Chart("playedPerDay", {
+    animationEnabled: true,
+    theme: "dark2",
+    title: {
+	text: "Played per day",
+    },
+    asixX: {
+	title: "Time",
+    }, 
+    axisY: {
+	title: "Times",
+	includeZero: true,
+    },
+    data: [{
+	type: "line",
+	name: "Played Per Day",
+	connectNullData: true,
+	xValueType: "dateTime",
+	xValueFormatString: "DD MM YYYY",
+	dataPoints: <?php echo json_encode($playedPerDay, JSON_NUMERIC_CHECK); ?>
+    }]
+});
+playedPerDay.render();
+
 </script>

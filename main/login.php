@@ -54,14 +54,14 @@ function userHasAuthToken($spID) {
 
 <div class="container">
     <form action="#" method="POST">
-	    <label>Naam</label>
-	    <input type="text" name="name">
-	    <br>
-	    <label>Wachtwoord</label>
-	    <input type="password" name="pass">
-	    <br>
-	    <input type="submit" name="submit" value="Login">
-	    <br>
+	<label>Naam</label>
+	<input type="text" name="name">
+	<br>
+	<label>Wachtwoord</label>
+	<input type="password" name="pass">
+	<br>
+	<input class="btn" type="submit" name="submit" value="Login">
+	<br>
     </form>
 </div>
 
