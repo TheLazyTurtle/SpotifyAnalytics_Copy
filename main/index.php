@@ -1,77 +1,6 @@
 <?php
 require "header.php";
-
-function allSongs() {
-	global $dataPoints, $spID;
-	// TODO: Make a slider to adjust time
-	// Returns all the names from all the songs i have ever listened to and how many times i have listened to it.
-	$query =  "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY s.songID ORDER BY name ASC";
-	$connection = getConnection();
-
-	$res = mysqli_query($connection, $query);
-	$dataPoints = array();
-
-	// Turns all the songs into data points
-	while ($row = mysqli_fetch_assoc($res)) {
-		$data = ["label"=>$row["name"], "y"=>$row["times"]];	
-		array_push($dataPoints, $data);	
-	}
-	mysqli_free_result($res);
-	mysqli_close($connection);
-}
-
-function topSongs() {
-	global $topSongs, $spID;
-
-	$connection = getConnection();
-	$query = "SELECT count(p.songID) as times, s.name as songName FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY songName ORDER BY times DESC LIMIT 10";
-
-	$res = mysqli_query($connection, $query);
-	$topSongs = array();
-
-	while ($row = mysqli_fetch_assoc($res)) {
-		$data = ["label"=>$row["songName"], "y"=>$row["times"]];	
-		array_push($topSongs, $data);
-	}
-	mysqli_free_result($res);
-	mysqli_close($connection);
-}
-
-function topArtists() {
-	global $topArtists, $spID;
-
-	$connection = getConnection();
-	$query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN SongFromArtist sfa ON p.songID = sfa.songID RIGHT JOIN artist a ON sfa.artistID = a.artistID WHERE p.playedBy = '$spID' GROUP BY a.artistID ORDER BY times DESC LIMIT 10";
-
-	$res = mysqli_query($connection, $query);
-	$topArtists = array();
-
-	while ($row = mysqli_fetch_assoc($res)) {
-		$data = ["label"=>$row["artistName"], "y"=>$row["times"]];
-		array_push($topArtists, $data);
-	}
-	mysqli_free_result($res);
-	mysqli_close($connection);
-}
-
-function playedPerDay($songName) {
-    global $playedPerDay, $spID;
-
-    $connection = getConnection();
-    $query = "SELECT count(*) AS times, unix_timestamp(p.datePlayed)*1000 AS date, s.name FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' AND s.name = '$songName' GROUP BY DAY(p.datePlayed), p.songID ORDER BY date DESC";
-
-    $res = mysqli_query($connection, $query);
-    $playedPerDay = array();
-
-    while ($row = mysqli_fetch_assoc($res)) {
-
-	$data = ["x"=>$row["date"], "y"=>$row["times"]];
-	array_push($playedPerDay, $data);
-    }
-    mysqli_free_result($res);
-    mysqli_close($connection);
-
-}
+require "dataFunctions.php";
 
 if (isset($_SESSION["loggedIn"])) {
 	$spID = $_SESSION["spID"];
@@ -84,7 +13,6 @@ if (isset($_SESSION["loggedIn"])) {
 	header("Location: login.php");
 }
 ?>
-
 
 <div class="test">
     <?php
