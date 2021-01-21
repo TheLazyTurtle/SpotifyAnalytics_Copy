@@ -58,22 +58,14 @@ function playedPerDay($songName) {
     global $playedPerDay, $spID;
 
     $connection = getConnection();
-    $query = "SELECT count(*) AS times, p.datePlayed AS date, s.name FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' AND s.name = '$songName' GROUP BY DAY(date), p.songID;";
+    $query = "SELECT count(*) AS times, unix_timestamp(p.datePlayed)*1000 AS date, s.name FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' AND s.name = '$songName' GROUP BY DAY(p.datePlayed), p.songID ORDER BY date DESC";
 
     $res = mysqli_query($connection, $query);
     $playedPerDay = array();
 
     while ($row = mysqli_fetch_assoc($res)) {
-	// Some facked up code to convert the time to unix
-	$date = date($row["date"]);
-	$date = str_replace(" ", "-", $date);
-	$date = str_replace(":", "-", $date);
-	$date = explode("-", $date);
-	$date = mktime($date[5], $date[4], $date[3], $date[1], $date[2], $date[0]);
-	print($date);
-	print("<br>");
 
-	$data = ["x"=>$date, "y"=>$row["times"]];
+	$data = ["x"=>$row["date"], "y"=>$row["times"]];
 	array_push($playedPerDay, $data);
     }
     mysqli_free_result($res);

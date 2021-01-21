@@ -94,7 +94,7 @@ var playedPerDay = new CanvasJS.Chart("playedPerDay", {
 	name: "Played Per Day",
 	connectNullData: true,
 	xValueType: "dateTime",
-	xValueFormatString: "DD MM YYYY",
+	xValueFormatString: "MM DD YYYY",
 	dataPoints: <?php echo json_encode($playedPerDay, JSON_NUMERIC_CHECK); ?>
     }]
 });

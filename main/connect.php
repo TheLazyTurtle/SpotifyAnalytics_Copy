@@ -1,7 +1,7 @@
 <?php
 
 function getConnection() {
-	$host = "localhost";
+	$host = "192.168.2.7";
 	$username = "remote";
 	$pass = "***REMOVED***";
 	$db = "spotify";	
