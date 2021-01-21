@@ -2,6 +2,11 @@ body {
     background-color: #32373A;
 }
 
+.graphs {
+    height: 370px;
+    width: 100%;
+}
+
 /*Header*/
 .header-container {
     position: fixed;

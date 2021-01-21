@@ -1,9 +1,3 @@
-<!-- the html elements to show the graphs -->
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<div id ="topSongs" style="height: 370px; width: 100%;"></div>
-<div id ="topArtists" style="height: 370px; width: 100%;"></div>
-<div id="playedPerDay" style="height: 370px; width: 100%;"></div>
-
 <!-- All the js scripts to fill the right tables -->
 <script>
 // Shows all songs ever played

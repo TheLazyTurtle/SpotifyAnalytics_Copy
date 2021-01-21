@@ -2,9 +2,10 @@
 // This gets all the songs played. 
 // TODO: Add filter for artist, date, min played
 function allSongs() {
-    global $dataPoints, $spID;
+    global $dataPoints, $spID, $minPlayed;
+    print($minPlayed);
 
-    $query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY s.songID ORDER BY name ASC";
+    $query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY s.songID HAVING times > '$minPlayed' ORDER BY name ASC";
     $connection = getConnection();
 
     $res = mysqli_query($connection, $query);
@@ -25,7 +26,7 @@ function topSongs() {
     global $topSongs, $spID;
 
     $connection = getConnection();
-    $query = "SELECT count(p.songID) as times, s.name as songName FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY songName ORDER BY times DESC LIMIT 10";
+    $query = "SELECT count(p.songID) AS times, s.name AS songName FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY songName ORDER BY times DESC LIMIT 10";
 
     $res = mysqli_query($connection, $query);
     $topSongs = array();
@@ -40,18 +41,18 @@ function topSongs() {
 
 // Gets the top 10 artist
 // TODO: Add filter to define top how many, date
-function topArtist() {
-    global $topArtist, $spID;
+function topArtists() {
+    global $topArtists, $spID;
 
     $connection = getConnection();
-    $query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN SongFromArtist sfa ON p.songID = sfa.songID RIGHT JOIN artist a ON sfa.artistID = a.artistID WHERE p.playedBy = '$spID' GROUPY BY a.artistID ORDER BY times DESC LIMIT 10";
+    $query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN SongFromArtist sfa ON p.songID = sfa.songID RIGHT JOIN artist a ON sfa.artistID = a.artistID WHERE p.playedBy = '$spID' GROUP BY a.artistID ORDER BY times DESC LIMIT 10";
 
     $res = mysqli_query($connection, $query);
-    $topArtist = array();
+    $topArtists = array();
 
     while ($row = mysqli_fetch_assoc($res)){
 	$data = ["label"=>$row["artistName"], "y"=>$row["times"]];
-	array_push($topArtist, $data);
+	array_push($topArtists, $data);
     }
     mysqli_free_result($res);
     mysqli_close($connection);
