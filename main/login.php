@@ -14,6 +14,17 @@ if (isset($_POST["submit"])) {
 	}
 }
 
+function getUserID($spID) {
+    $connection = getConnection();
+    $sql = "SELECT userID FROM users WHERE spID = '$spID'";
+    $query = mysqli_query($connection, $query);
+    $res = mysqli_fetch_assoc($res);
+
+    mysqli_free_result($res);
+    mysqli_close($connection);
+    return $res;
+}
+
 function login($name, $pass) {
 	$connection = getConnection();
 
@@ -27,6 +38,7 @@ function login($name, $pass) {
 		$_SESSION["spID"] = $res["spotifyID"];
 		if (userHasAuthtoken($res["spotifyID"])) {
 			$_SESSION["loggedIn"] = True;
+			$_SESSION["userID"] = getUserID($_SESSION["spID"]);
 			header("Location: ./index.php");
 		} else {
 			header("Location: ../browser/auth.php");
