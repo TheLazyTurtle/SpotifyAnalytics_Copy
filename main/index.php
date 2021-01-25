@@ -3,29 +3,12 @@ require "header.php";
 require "dataFunctions.php";
 require "userSettings.php";
 
-$settings = [
-    "minPlayedAllSongs", 
-];
-
 if (isset($_SESSION["loggedIn"])) {
     $spID = $_SESSION["spID"];
     $userID = $_SESSION["userID"];
-    print($userID. "user");
 
-    $savedSettings = savedSettings($userID, $settings);
-    print_r($savedSettings);
-
-    if (isset($_GET["submitAllSongs"])) {
-	$minPlayedAllSongs = isset($_GET["minPlayedAllSongs"]) ? $_GET["minPlayedAllSongs"] : 0;
-
-	if (checkSettingExists($userID, "minPlayedAllSongs")) {
-	    print("HEYHO");
-	    updateSetting($userID, "minPlayedAllSongs", $minPlayedAllSongs);
-	} else {
-	    print("LOLZ");
-	    makeSetting($userID, "minPlayedAllSongs", $minPlayedAllSongs);
-	}
-    }
+    // Load the settings
+    require "settings.php";
 
     allSongs();
     topSongs();
@@ -42,8 +25,9 @@ if (isset($_SESSION["loggedIn"])) {
 <div class="test">
 
     <form action="#" method="GET">
-    <input type="number" name="minPlayedAllSongs" placeholder="Minimaal afgespeeld" value="<?php echo $minPlayed ?>">
-	<input type="submit" name="submitAllSongs" value="submit">
+    <input type="number" name="minPlayedAllSongs" placeholder="Minimaal afgespeeld" value="<?php echo $minPlayedAllSongs ?>">
+    <input type="number" name="maxPlayedAllSongs" placeholder="Maximaal afgespeeld" value="<?php echo $maxPlayedAllSongs ?>">
+	<input type="submit" name="submitAllSongs" value="update">
     </form>
 
     <div id="chartContainer" class="graphs"></div>

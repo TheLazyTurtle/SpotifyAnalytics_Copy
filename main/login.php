@@ -16,13 +16,13 @@ if (isset($_POST["submit"])) {
 
 function getUserID($spID) {
     $connection = getConnection();
-    $sql = "SELECT userID FROM users WHERE spID = '$spID'";
-    $query = mysqli_query($connection, $query);
-    $res = mysqli_fetch_assoc($res);
+    $sql = "SELECT userID FROM users WHERE spotifyID = '$spID'";
+    $query = mysqli_query($connection, $sql);
+    $res = mysqli_fetch_assoc($query);
 
-    mysqli_free_result($res);
+    mysqli_free_result($query);
     mysqli_close($connection);
-    return $res;
+    return $res["userID"];
 }
 
 function login($name, $pass) {

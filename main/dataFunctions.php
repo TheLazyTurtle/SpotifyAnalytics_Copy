@@ -2,10 +2,9 @@
 // This gets all the songs played. 
 // TODO: Add filter for artist, date, min played
 function allSongs() {
-    global $dataPoints, $spID, $minPlayed;
-    print($minPlayed);
+    global $dataPoints, $spID, $minPlayedAllSongs, $maxPlayedAllSongs;
 
-    $query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY s.songID HAVING times > '$minPlayed' ORDER BY name ASC";
+    $query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.playedBy = '$spID' GROUP BY s.songID HAVING times > '$minPlayedAllSongs' AND times < '$maxPlayedAllSongs' ORDER BY name ASC";
     $connection = getConnection();
 
     $res = mysqli_query($connection, $query);
