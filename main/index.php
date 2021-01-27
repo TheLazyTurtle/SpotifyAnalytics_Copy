@@ -33,6 +33,12 @@ if (isset($_SESSION["loggedIn"])) {
     <div id="chartContainer" class="graphs"></div>
     <div id="topSongs" class="graphs"></div>
     <div id="topArtists" class="graphs"></div>
+
+<form action="#" method="GET">
+<input type="text" name="playedPerDaySong" placeholder="Nummer naam" value="<?php echo $playedPerDaySong; ?>">
+<input type="submit" name="submitPlayedPerDay" value="update">
+
+</form>
     <div id="playedPerDay" class="graphs"></div>
 
 <div>

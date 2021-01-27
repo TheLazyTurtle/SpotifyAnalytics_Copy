@@ -3,11 +3,13 @@
 $settings = [
     "minPlayedAllSongs",
     "maxPlayedAllSongs",
+    "playedPerDaySong",
 ];
 
-// This will get the setting for min and max played for the graphs all songs ever played
+// Gets all the saved settings
 $savedSettings = savedSettings($userID, $settings);
-print_r($savedSettings);
+
+// This will get the setting for min and max played for the graphs all songs ever played
 $minPlayedAllSongs = isset($savedSettings["minPlayedAllSongs"]["value"]) ? $savedSettings["minPlayedAllSongs"]["value"] : 0;
 $maxPlayedAllSongs = isset($savedSettings["maxPlayedAllSongs"]["value"]) ? $savedSettings["maxPlayedAllSongs"]["value"] : 99999;
 
@@ -28,4 +30,16 @@ if (isset($_GET["submitAllSongs"])) {
     }
 }
 
+//=============================================================================
+$playedPerDaySong = isset($savedSettings["playedPerDaySong"]["value"]) ? $savedSettings["playedPerDaySong"]["value"] : "%";
+
+if (isset($_GET["submitPlayedPerDay"])) {
+    $playedPerDaySong = isset($_GET["playedPerDaySong"]) ? $_GET["playedPerDaySong"] : "%";
+
+    if (checkSettingExists($userID, "playedPerDaySong")) {
+	updateSetting($userID, "playedPerDaySong", $playedPerDaySong);
+    } else {
+	makeSetting($userID, "playedPerDaySong", $minPlayedAllSongs);
+    }
+}
 ?>
