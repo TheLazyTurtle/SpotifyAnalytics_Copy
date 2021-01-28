@@ -35,7 +35,6 @@ function updateSetting($userID, $type, $value) {
 function makeSetting($userID, $type, $value) {
     $connection = getConnection();
     $query = "INSERT INTO user_settings (userID, type, value) VALUES ('$userID', '$type', '$value')";
-    print($userID. " ". $type." ". $value);
     mysqli_query($connection, $query);
     mysqli_close($connection);
 }
@@ -46,7 +45,6 @@ function savedSettings($userID, $settings) {
     foreach ($settings as $setting) {
 	if (checkSettingExists($userID, $setting)) {
 	    $savedSettings[$setting] = getSettings($userID, $setting);
-	    //array_push($savedSettings, getSettings($userID, $setting));
 	}
     }
     return $savedSettings;

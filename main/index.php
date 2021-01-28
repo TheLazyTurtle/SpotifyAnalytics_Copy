@@ -2,6 +2,7 @@
 require "header.php";
 require "dataFunctions.php";
 require "userSettings.php";
+require "settingForms.php";
 
 if (isset($_SESSION["loggedIn"])) {
     $spID = $_SESSION["spID"];
@@ -13,7 +14,7 @@ if (isset($_SESSION["loggedIn"])) {
     allSongs();
     topSongs();
     topArtists();
-    playedPerDay("Slow Down");
+    playedPerDay();
 
 } else {
     header("Location: login.php");
@@ -23,16 +24,15 @@ if (isset($_SESSION["loggedIn"])) {
 ?>
 
 <div class="test">
-
-    <form action="#" method="GET">
-    <input type="number" name="minPlayedAllSongs" placeholder="Minimaal afgespeeld" value="<?php echo $minPlayedAllSongs ?>">
-    <input type="number" name="maxPlayedAllSongs" placeholder="Maximaal afgespeeld" value="<?php echo $maxPlayedAllSongs ?>">
-	<input type="submit" name="submitAllSongs" value="update">
-    </form>
-
+    <?php allSongsForm($minPlayedAllSongs, $maxPlayedAllSongs, $minDatePlayedAllSongs, $maxDatePlayedAllSongs, $artistPlayedAllSongs); ?>
     <div id="chartContainer" class="graphs"></div>
+
+    <?php topSongsForm($artistTopSongs, $minDateTopSongs, $maxDateTopSongs); ?>
     <div id="topSongs" class="graphs"></div>
+
     <div id="topArtists" class="graphs"></div>
+
+    <?php playedPerDayForm($playedPerDaySong); ?>
     <div id="playedPerDay" class="graphs"></div>
 
 <div>
