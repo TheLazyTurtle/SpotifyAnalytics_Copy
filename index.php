@@ -10,11 +10,12 @@ if (isset($_SESSION["loggedIn"])) {
 
     // Load the settings
     require "./assets/settings/settings.php";
+    require "./assets/graphs/graphConfig.php";
 
-    allSongs();
-    topSongs();
-    topArtists();
-    playedPerDay();
+    allSongs($minPlayedAllSongs, $maxPlayedAllSongs, $minDatePlayedAllSongs, $maxDatePlayedAllSongs, $artistPlayedAllSongs);
+    topSongs($artistTopSongs, $minDateTopSongs, $maxDateTopSongs, $amountTopSongs);
+    topArtists($amountTopArtist, $minDateTopArtist, $maxDateTopArtist);
+    playedPerDay($playedPerDaySong, $minDatePlayedPerDay, $maxDatePlayedPerDay);
 
 } else {
     header("Location: ./login.php");

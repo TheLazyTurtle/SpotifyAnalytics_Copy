@@ -11,7 +11,16 @@ function inputForm($type, $inputName, $placeholder, $value) {
 	$value = "";
     }
 
-    echo "<input type='$type' name='$inputName' placeholder='$placeholder' value='$value'>";
+    if ($type == "text") {
+	// If the field type is text than give it a autocomplete feature
+	echo "<div class='$inputName'>";
+	echo "<input type='$type' name='$inputName' placeholder='$placeholder' value='$value' autocomplete='off'>";
+	echo "<div class='result'></div>";
+	echo "</div>";
+    } else {
+	echo "<input type='$type' name='$inputName' placeholder='$placeholder' value='$value' autocomplete='off'>";
+    }
+
 }
 
 function submitForm($buttonName) {
@@ -22,54 +31,5 @@ function endForm() {
     echo '</form>';
 }
 
-// The settings form for all songs ever played
-function allSongsForm($minPlayedAllSongs, $maxPlayedAllSongs, $minDatePlayedAllSongs, $maxDatePlayedAllSongs, $artistPlayedAllSongs) {
-    startForm();
-
-    inputForm("number", "minPlayedAllSongs", "Minimaal afgespeeld", $minPlayedAllSongs);
-    inputForm("number", "maxPlayedAllSongs", "Maximaal afgespeeld", $maxPlayedAllSongs);
-    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artistPlayedAllSongs);
-    inputForm("date", "minDatePlayedAllSongs", "Vanaf datum", $minDatePlayedAllSongs);
-    inputForm("date", "maxDatePlayedAllSongs", "Tot datum", $maxDatePlayedAllSongs);
-    submitForm("submitAllSongs");
-
-    endForm();
-}
-
-function topSongsForm($artistTopSongs, $minDateTopSongs, $maxDateTopSongs, $amountTopSongs) {
-    startForm();
-
-    inputForm("text", "artistTopSongs", "artiest naam", $artistTopSongs);
-    inputForm("number", "amountTopSongs", "Top hoeveel", $amountTopSongs);
-    inputForm("date", "minDateTopSongs", "Vanaf datum", $minDateTopSongs);
-    inputForm("date", "maxDateTopSongs", "Tot datum", $maxDateTopSongs);
-    submitForm("submitTopSongs");
-
-    endForm();
-
-}
-
-function topArtistForm($amountTopArtist, $minDateTopArtist, $maxDateTopArtist) {
-    startForm();
-
-    inputForm("number", "amountTopArtist", "Top hoeveel", $amountTopArtist);
-    inputForm("date", "minDateTopArtist", "Vanaf datum", $minDateTopArtist);
-    inputForm("date", "maxDateTopArtist", "Tot datum", $maxDateTopArtist);
-    submitForm("submitTopArtist");
-
-    endForm();
-}
-
-// The settings form of played per day
-function playedPerDayForm($playedPerDaySong, $minDatePlayedPerDay, $maxDatePlayedPerDay) {
-    startForm();
-
-    inputForm("text", "playedPerDaySong", "Nummer naam", $playedPerDaySong);
-    inputForm("date", "minDatePlayedPerDay", "Vanaf datum", $minDatePlayedPerDay);
-    inputForm("date", "maxDatePlayedPerDay", "Tot datum", $maxDatePlayedPerDay);
-    submitForm("submitPlayedPerDay");
-
-    endForm();
-}
 ?>
 
