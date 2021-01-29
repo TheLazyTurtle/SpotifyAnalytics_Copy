@@ -28,18 +28,19 @@ function allSongsForm($minPlayedAllSongs, $maxPlayedAllSongs, $minDatePlayedAllS
 
     inputForm("number", "minPlayedAllSongs", "Minimaal afgespeeld", $minPlayedAllSongs);
     inputForm("number", "maxPlayedAllSongs", "Maximaal afgespeeld", $maxPlayedAllSongs);
+    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artistPlayedAllSongs);
     inputForm("date", "minDatePlayedAllSongs", "Vanaf datum", $minDatePlayedAllSongs);
     inputForm("date", "maxDatePlayedAllSongs", "Tot datum", $maxDatePlayedAllSongs);
-    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artistPlayedAllSongs);
     submitForm("submitAllSongs");
 
     endForm();
 }
 
-function topSongsForm($artistTopSongs, $minDateTopSongs, $maxDateTopSongs) {
+function topSongsForm($artistTopSongs, $minDateTopSongs, $maxDateTopSongs, $amountTopSongs) {
     startForm();
 
     inputForm("text", "artistTopSongs", "artiest naam", $artistTopSongs);
+    inputForm("number", "amountTopSongs", "Top hoeveel", $amountTopSongs);
     inputForm("date", "minDateTopSongs", "Vanaf datum", $minDateTopSongs);
     inputForm("date", "maxDateTopSongs", "Tot datum", $maxDateTopSongs);
     submitForm("submitTopSongs");
@@ -48,11 +49,24 @@ function topSongsForm($artistTopSongs, $minDateTopSongs, $maxDateTopSongs) {
 
 }
 
+function topArtistForm($amountTopArtist, $minDateTopArtist, $maxDateTopArtist) {
+    startForm();
+
+    inputForm("number", "amountTopArtist", "Top hoeveel", $amountTopArtist);
+    inputForm("date", "minDateTopArtist", "Vanaf datum", $minDateTopArtist);
+    inputForm("date", "maxDateTopArtist", "Tot datum", $maxDateTopArtist);
+    submitForm("submitTopArtist");
+
+    endForm();
+}
+
 // The settings form of played per day
-function playedPerDayForm($playedPerDaySong) {
+function playedPerDayForm($playedPerDaySong, $minDatePlayedPerDay, $maxDatePlayedPerDay) {
     startForm();
 
     inputForm("text", "playedPerDaySong", "Nummer naam", $playedPerDaySong);
+    inputForm("date", "minDatePlayedPerDay", "Vanaf datum", $minDatePlayedPerDay);
+    inputForm("date", "maxDatePlayedPerDay", "Tot datum", $maxDatePlayedPerDay);
     submitForm("submitPlayedPerDay");
 
     endForm();

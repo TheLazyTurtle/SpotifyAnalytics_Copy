@@ -6,7 +6,7 @@ function allSongs() {
 
     //$query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID INNER JOIN SongFromArtist sfa ON sfa.songID = p.songID RIGHT JOIN artist a ON sfa.artistID = a.artistID WHERE p.playedBy = '$spID' AND datePlayed > date('$minDatePlayedAllSongs') AND datePlayed < date('$maxDatePlayedAllSongs') AND a.name LIKE '$artistPlayedAllSongs' GROUP BY s.songID HAVING times > '$minPlayedAllSongs' AND times < '$maxPlayedAllSongs' ORDER BY name ASC";
 
-    $query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.songID IN (SELECT songID FROM song WHERE songID IN (SELECT songID FROM SongFromArtist WHERE artistID IN (SELECT artistID FROM artist WHERE name LIKE '%$artistPlayedAllSongs%'))) AND playedBy LIKE '$spID' AND datePlayed BETWEEN DATE('$minDatePlayedAllSongs') AND DATE('$maxDatePlayedAllSongs') GROUP BY s.songID HAVING times > '$minPlayedAllSongs' AND times < '$maxPlayedAllSongs' ORDER BY name ASC";
+    $query = "SELECT s.name AS name, count(p.songID) AS times FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.songID IN (SELECT songID FROM song WHERE songID IN (SELECT songID FROM SongFromArtist WHERE artistID IN (SELECT artistID FROM artist WHERE name LIKE '%$artistPlayedAllSongs%'))) AND playedBy LIKE '$spID' AND datePlayed BETWEEN DATE('$minDatePlayedAllSongs') AND DATE('$maxDatePlayedAllSongs') GROUP BY s.songID HAVING times BETWEEN '$minPlayedAllSongs' AND '$maxPlayedAllSongs' ORDER BY name ASC";
 
     // Before time 0.021 Sec
     // After time
@@ -27,10 +27,10 @@ function allSongs() {
 // Gets the top 10 songs
 // TODO: Add filter to define top how many, date
 function topSongs() {
-    global $topSongs, $spID, $artistTopSongs, $minDateTopSongs, $maxDateTopSongs;
+    global $topSongs, $spID, $artistTopSongs, $minDateTopSongs, $maxDateTopSongs, $amountTopSongs;
 
     $connection = getConnection();
-    $query = "SELECT count(p.songID) AS times, s.name AS songName FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.songID IN (SELECT songID FROM song WHERE songID IN (SELECT songID FROM SongFromArtist WHERE artistID IN (SELECT artistID FROM artist WHERE name LIKE '%$artistTopSongs%'))) AND datePlayed BETWEEN DATE('$minDateTopSongs') AND DATE('$maxDateTopSongs') AND p.playedBy = '$spID' GROUP BY songName ORDER BY times DESC LIMIT 10";
+    $query = "SELECT count(p.songID) AS times, s.name AS songName FROM played p INNER JOIN song s ON p.songID = s.songID WHERE p.songID IN (SELECT songID FROM song WHERE songID IN (SELECT songID FROM SongFromArtist WHERE artistID IN (SELECT artistID FROM artist WHERE name LIKE '%$artistTopSongs%'))) AND datePlayed BETWEEN DATE('$minDateTopSongs') AND DATE('$maxDateTopSongs') AND p.playedBy = '$spID' GROUP BY songName ORDER BY times DESC LIMIT $amountTopSongs";
     // Before time 0.021 Sec
     // After time
 
@@ -49,10 +49,10 @@ function topSongs() {
 // TODO: Add filter to define top how many, date
 // This query takes 8!!!!! seconds to load. This will only get worse!! fix this. Maybe with index
 function topArtists() {
-    global $topArtists, $spID;
+    global $topArtists, $spID, $amountTopArtist, $minDateTopArtist, $maxDateTopArtist;
 
     $connection = getConnection();
-    $query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN SongFromArtist sfa ON p.songID = sfa.songID RIGHT JOIN artist a ON sfa.artistID = a.artistID WHERE p.playedBy = '$spID' GROUP BY a.artistID ORDER BY times DESC LIMIT 10";
+    $query = "SELECT count(p.songID) AS times, a.name AS artistName, a.artistID FROM played p INNER JOIN SongFromArtist sfa ON p.songID = sfa.songID RIGHT JOIN artist a ON sfa.artistID = a.artistID WHERE p.playedBy = '$spID' AND p.datePlayed BETWEEN DATE('$minDateTopArtist') AND DATE('$maxDateTopArtist') GROUP BY a.artistID ORDER BY times DESC LIMIT $amountTopArtist";
 
     // Before time 8.228 Sec
     // After time
@@ -72,10 +72,10 @@ function topArtists() {
 // TODO: Make filter for songName, date
 //   ... Add function for multiple songs to compare??
 function playedPerDay() {
-    global $playedPerDay, $spID, $playedPerDaySong;
+    global $playedPerDay, $spID, $playedPerDaySong, $minDatePlayedPerDay, $maxDatePlayedPerDay;
 
     $connection = getConnection();
-    $query = "SELECT count(*) AS times, unix_timestamp(p.datePlayed) * 1000 AS date, s.name FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' AND s.name LIKE '$playedPerDaySong' GROUP BY DAY(p.datePlayed), p.songID ORDER BY date DESC";
+    $query = "SELECT count(*) AS times, unix_timestamp(p.datePlayed) * 1000 AS date, s.name FROM played p INNER JOIN song s ON p.songID = s.songID WHERE playedBy = '$spID' AND s.name LIKE '$playedPerDaySong' AND p.datePlayed BETWEEN '$minDatePlayedPerDay' AND '$maxDatePlayedPerDay' GROUP BY DAY(p.datePlayed), p.songID ORDER BY date DESC";
     // Before time
     // After time
 
