@@ -11,16 +11,10 @@ function inputForm($type, $inputName, $placeholder, $value) {
 	$value = "";
     }
 
-    if ($type == "text") {
-	// If the field type is text than give it a autocomplete feature
-	echo "<div class='$inputName'>";
-	echo "<input type='$type' name='$inputName' placeholder='$placeholder' value='$value' autocomplete='off'>";
-	echo "<div class='result'></div>";
-	echo "</div>";
-    } else {
-	echo "<input type='$type' name='$inputName' placeholder='$placeholder' value='$value' autocomplete='off'>";
-    }
-
+    echo "<div class='$inputName'>";
+    echo "<input type='$type' name='$inputName' placeholder='$placeholder' value='$value' autocomplete='off'>";
+    echo "<div class='result'></div>";
+    echo "</div>";
 }
 
 function submitForm($buttonName) {

@@ -54,4 +54,12 @@ CREATE TABLE users (
     spotifyExpire int(255) NULL,
     active tinyint(1) NULL DEFAULT 1,
     primary key (userID);
-)
+);
+
+CREATE TABLE searchRanking (
+    userID int(11) NOT NULL,
+    ID varchar(255) NOT NULL,
+    type varchar(255) NOT NULL,
+    searchDate timestamp NOT NULL DEFAULT current_timestamp(),
+    primary key (userID, searchDate)
+);
