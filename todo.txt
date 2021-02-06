@@ -1,0 +1,25 @@
+# scopes that might be fun to implement
+- current_user_top_tracks()
+- current_user_top_artist()
+- devices()
+
+IF IT FAILS TO GET TOKENS THAN DON'T MAKE A FILE
+
+#TODO
+- Make it that you can control the date of the graphs
+- Make a graph like all songs ever played but than for artists to see how many times you have played an artist
+- Make a graph that shows goes from the first time you played to song to the day you select and than shows how often you listened to it every day/week/month
+- Maybe make it so you can add multiple songs and give different lines so you can compare multiple songs
+- Make a page with all songs i've played with link to the song on spotify, a 30 sec preview, all the artists that are in the song plus a link to their account and the song img
+- Do the check for listening after like 10 seconds because then you can skip a song without it registering as played
+- Make a readout for how many unique songs i have ever listened to
+- Make a readout for how many unique songs i have listened to this day/week/month 
+- Make a graph for how many songs i have listened in a day/week/month
+
+#FOR THE VERY FAR FUTURE	
+- Might be fun to see if I can also do something for podcasts
+- Make it automatically make a queue based on the last X amount songs you played
+- Show songs that you don't really like anymore
+- Do this based on skips
+- Add songs to all time best playlist
+- Remove songs from all time best playlist
