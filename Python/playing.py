@@ -33,7 +33,7 @@ def getAuthToken(username):
 def getResult(sp):
     try:
         # I have chosen 4 because if a song is just a bit longer than 1 minute it might otherwise be skipped so now it will (hopefully) get all songs
-        if sp.current_user_recently_played(limit=4):
+        if sp.current_user_recently_played(limit=25):
             func.printMsg("Got last 4 songs for:", "green", username[0],
                           "white")
             return sp.current_user_recently_played(limit=4)
@@ -53,6 +53,8 @@ def getdata(result, username):
             # Get played at
             # keep in mind that played_at is end time
             playedAt = song["played_at"]
+            playedAt = playedAt.replace("T", " ")
+            playedAt = playedAt.replace("Z", "")
 
             # Get song info
             songID = song["track"]["id"]
@@ -95,4 +97,4 @@ while True:
 
     # 300 secs = 5 minutes
     # time.sleep(300)
-    time.sleep(3)
+    time.sleep(300)
