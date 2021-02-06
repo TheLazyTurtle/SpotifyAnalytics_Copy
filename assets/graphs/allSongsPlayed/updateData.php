@@ -1,15 +1,18 @@
 <?php
+session_start();
+
 require "settings.php";
 require "../../settings/settingFunctions.php";
 require "../../connect.php";
 
 function updateData() {
+    $spID = $_SESSION["spID"];
+    $userID = $_SESSION["userID"];
+
     $settings = allSongsSettings($userID);
     $counter = 0;
 
     $artist = isset($_GET["artist"]) ? $_GET["artist"] : $settings["artist"];
-    $spID = "111%";
-    $userID = 1;
 
     // set minPlayed
     if (isset($_GET["minPlayed"])) {

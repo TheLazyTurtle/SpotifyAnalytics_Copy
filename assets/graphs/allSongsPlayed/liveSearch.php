@@ -21,7 +21,6 @@ $(document).ready(function() {
 	    dataType: "json",
 	    success: function(data) {
 		updateGraph(data);
-		console.log(data);
 	    }
 	})
     });
