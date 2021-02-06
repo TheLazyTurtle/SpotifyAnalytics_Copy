@@ -12,8 +12,6 @@ function updateData() {
     $settings = allSongsSettings($userID);
     $counter = 0;
 
-    $artist = isset($_GET["artist"]) ? $_GET["artist"] : $settings["artist"];
-
     // set minPlayed
     if (isset($_GET["minPlayed"])) {
 	$minPlayed = $_GET["minPlayed"];

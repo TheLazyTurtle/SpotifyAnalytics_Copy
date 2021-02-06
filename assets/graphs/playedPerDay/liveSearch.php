@@ -1,12 +1,12 @@
 <script>
 $(document).ready(function() {
     //This will auto complete the artist name
-    $('.artistPlayedPerDay input[type="text"]').on("keyup input", function () {
+    $('.songPlayedPerDay input[type="text"]').on("keyup input", function () {
 	// Get input on value change
-	var inputArtist = $(this).val();
+	var inputSong = $(this).val();
 	var resultDropdown = $(this).siblings(".result");
-	if (inputArtist.length) {
-	    $.get("./assets/graphs/playedPerDay/liveSearchFetchName.php", {term: inputArtist}).done(function(data) {
+	if (inputSong.length) {
+	    $.get("./assets/graphs/playedPerDay/liveSearchFetchName.php", {term: inputSong}).done(function(data) {
 		//display the returned data
 		resultDropdown.html(data);
 	    });
@@ -14,10 +14,15 @@ $(document).ready(function() {
 	    resultDropdown.empty();
 	}
 
+	$(document).on("click", ".result p", function() {
+	    $(this).parents(".songPlayedPerDay").find("input[type='text']").val($(this).text());
+	    $(".result").empty();
+	})
+
 	// Some magic stuff to automatically update the graph
 	$.ajax({
 	    type: "GET",
-	    url: './assets/graphs/playedPerDay/updateData.php?artist='+inputArtist,
+	    url: './assets/graphs/playedPerDay/updateData.php?song='+inputSong,
 	    dataType: "json",
 	    success: function(data) {
 		updateGraph(data);
@@ -28,12 +33,9 @@ $(document).ready(function() {
 })
 
 function updateGraph(data) {
-    chart.options.data[0].dataPoints = [];
+    playedPerDay.options.data[0].dataPoints = [];
+    playedPerDay.options.data[0].dataPoints = data;
 
-    for (var i = 0; i <= data.length; i++) {
-	chart.options.data[0].dataPoints.push(data[i]);
-    }
-
-    chart.render();
+    playedPerDay.render();
 }
 </script>

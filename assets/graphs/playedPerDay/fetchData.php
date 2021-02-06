@@ -1,13 +1,13 @@
 <?php
-
-function fetchData($settings) {
-    global $spID, $playedPerDay;
+function fetchData($spID, $settings) {
+    global $playedPerDay;
 
     $song = $settings["song"];
     $minDate = $settings["minDate"];
     $maxDate = $settings["maxDate"];
 
     $connection = getConnection();
+
     $query = 
 	"SELECT count(*) AS times, unix_timestamp(p.datePlayed) * 1000 AS date, s.name 
 	FROM played p 

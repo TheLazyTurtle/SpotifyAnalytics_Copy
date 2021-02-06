@@ -5,11 +5,6 @@ if (isset($_SESSION["loggedIn"])) {
     $spID = $_SESSION["spID"];
     $userID = $_SESSION["userID"];
 
-    // Load the settings
-    //topSongs($artistTopSongs, $minDateTopSongs, $maxDateTopSongs, $amountTopSongs);
-    //topArtists($amountTopArtist, $minDateTopArtist, $maxDateTopArtist);
-    //playedPerDay($playedPerDaySong, $minDatePlayedPerDay, $maxDatePlayedPerDay);
-
 } else {
     // If the user is not logged in than send them to the login page
     header("Location: ./login.php");
@@ -20,8 +15,8 @@ if (isset($_SESSION["loggedIn"])) {
 <div class="test">
 <script>
 $(document).ready(function() {
-    $("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
-    //$("#playedPerDayJ").load("./assets/graphs/playedPerDay/playedPerDay.php");
+    //$("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
+    $("#playedPerDayJ").load("./assets/graphs/playedPerDay/playedPerDay.php");
 })
 
 </script>
