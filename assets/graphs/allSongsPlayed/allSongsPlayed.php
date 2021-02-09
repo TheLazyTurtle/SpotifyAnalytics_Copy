@@ -38,6 +38,8 @@ function allSongsForm($settings) {
 }
 
 require "graph.php";
-require "liveSearch.php";
+
 ?>
+
+<script src="./assets/graphs/allSongsPlayed/liveSearch.js"></script>
 

@@ -6,7 +6,6 @@ require "settings.php";
 require "../../connect.php";
 require "../../settings/formBuilder.php";
 require "../../settings/settingFunctions.php";
-//require "../../header.php";
 
 $spID = $_SESSION["spID"];
 $userID = $_SESSION["userID"];
@@ -34,6 +33,8 @@ function playedPerDayForm($settings) {
 }
 
 require "graph.php";
-require "liveSearch.php";
+
 ?>
+
+<script src="assets/graphs/playedPerDay/liveSearch.js"></script>
 

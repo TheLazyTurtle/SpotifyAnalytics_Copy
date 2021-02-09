@@ -1,4 +1,3 @@
-<script>
 $(document).ready(function() {
     // This will auto compelete the artist name
     $('.artistPlayedAllSongs input[type="text"]').on("keyup input", function() {
@@ -29,6 +28,15 @@ $(document).ready(function() {
     $(document).on("click", ".artistPlayedAllSongsResult p", function() {
 	$(this).parents(".artistPlayedAllSongs").find("input[type='text']").val($(this).text());	
 	$(".artistPlayedAllSongsResult").empty();
+	//Some magic stuff to automatically update the graph 
+	$.ajax({
+	    type: "GET",
+	    url: 'http://localhost/assets/graphs/allSongsPlayed/updateData.php?artist='+$(this).text(),
+	    dataType: "json",
+	    success: function(data) {
+		updateGraphASP(data);
+	    }
+	})
     })
 
     // This will auto change min played 
@@ -106,4 +114,4 @@ function updateGraphASP(data) {
 
     chart.render();
 }
-</script>
+

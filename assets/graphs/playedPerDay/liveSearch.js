@@ -1,4 +1,3 @@
-<script>
 $(document).ready(function() {
     //This will auto complete the artist name
     $('.songPlayedPerDay input[type="text"]').on("keyup input", function () {
@@ -17,7 +16,6 @@ $(document).ready(function() {
 	$(document).on("click", ".songPlayedPerDayResult p", function() {
 	    $(this).parents(".songPlayedPerDay").find("input[type='text']").val($(this).text());
 	    $(".songPlayedPerDayResult").empty();
-	    console.log($(this).text());
 	    // Some magic stuff to automatically update the graph
 	    $.ajax({
 		type: "GET",
@@ -37,4 +35,4 @@ function updateGraphPPD(data) {
 
     playedPerDay.render();
 }
-</script>
+
