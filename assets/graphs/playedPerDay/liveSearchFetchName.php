@@ -9,7 +9,7 @@ if (isset($_REQUEST["term"])) {
     $spID = $_SESSION["spID"];
     $term = $_REQUEST["term"];
 
-    $sql = "SELECT * FROM song WHERE name LIKE '%$term%' AND addedBy LIKE '$spID' ORDER BY name ASC LIMIT 10";
+    $sql = "SELECT * FROM song WHERE name LIKE '%$term%' AND addedBy = '$spID' ORDER BY name ASC LIMIT 10";
     $result = mysqli_query($connection, $sql);
 
     if (mysqli_num_rows($result) > 0) {

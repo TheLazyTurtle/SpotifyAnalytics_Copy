@@ -4,9 +4,9 @@ $(document).ready(function() {
     $('.artistPlayedAllSongs input[type="text"]').on("keyup input", function() {
 	// Get input value on change
 	var inputArtist = $(this).val();
-	var resultDropdown = $(this).siblings(".result");
+	var resultDropdown = $(this).siblings(".artistPlayedAllSongsResult");
 	if (inputArtist.length) {
-	    $.get("./assets/graphs/allSongsPlayed/liveSearchFetchName.php", {term: inputArtist}).done(function(data){
+	    $.get("http://localhost/assets/graphs/allSongsPlayed/liveSearchFetchName.php", {term: inputArtist}).done(function(data){
 		// Display the returned data
 		resultDropdown.html(data);
 	    });
@@ -17,18 +17,18 @@ $(document).ready(function() {
 	//Some magic stuff to automatically update the graph 
 	$.ajax({
 	    type: "GET",
-	    url: './assets/graphs/allSongsPlayed/updateData.php?artist='+inputArtist,
+	    url: 'http://localhost/assets/graphs/allSongsPlayed/updateData.php?artist='+inputArtist,
 	    dataType: "json",
 	    success: function(data) {
-		updateGraph(data);
+		updateGraphASP(data);
 	    }
 	})
     });
 
     // Set search input value on click of result item
-    $(document).on("click", ".result p", function() {
+    $(document).on("click", ".artistPlayedAllSongsResult p", function() {
 	$(this).parents(".artistPlayedAllSongs").find("input[type='text']").val($(this).text());	
-	$(".result").empty();
+	$(".artistPlayedAllSongsResult").empty();
     })
 
     // This will auto change min played 
@@ -39,10 +39,10 @@ $(document).ready(function() {
 	//Some magic stuff to automatically update the graph 
 	$.ajax({
 	    type: "GET",
-	    url: './assets/graphs/allSongsPlayed/updateData.php?minPlayed='+inputMinPlayed,
+	    url: 'http://localhost/assets/graphs/allSongsPlayed/updateData.php?minPlayed='+inputMinPlayed,
 	    dataType: "json",
 	    success: function(data) {
-		updateGraph(data);
+		updateGraphASP(data);
 	    }
 	})
     });
@@ -55,10 +55,10 @@ $(document).ready(function() {
 	//Some magic stuff to automatically update the graph 
 	$.ajax({
 	    type: "GET",
-	    url: './assets/graphs/allSongsPlayed/updateData.php?maxPlayed='+inputMaxPlayed,
+	    url: 'http://localhost/assets/graphs/allSongsPlayed/updateData.php?maxPlayed='+inputMaxPlayed,
 	    dataType: "json",
 	    success: function(data) {
-		updateGraph(data);
+		updateGraphASP(data);
 	    }
 	})
     });
@@ -71,10 +71,10 @@ $(document).ready(function() {
 	//Some magic stuff to automatically update the graph 
 	$.ajax({
 	    type: "GET",
-	    url: './assets/graphs/allSongsPlayed/updateData.php?minDate='+inputMinDate,
+	    url: 'http://localhost/assets/graphs/allSongsPlayed/updateData.php?minDate='+inputMinDate,
 	    dataType: "json",
 	    success: function(data) {
-		updateGraph(data);
+		updateGraphASP(data);
 	    }
 	})
     });
@@ -87,17 +87,17 @@ $(document).ready(function() {
 	//Some magic stuff to automatically update the graph 
 	$.ajax({
 	    type: "GET",
-	    url: './assets/graphs/allSongsPlayed/updateData.php?maxDate='+inputMaxDate,
+	    url: 'http://localhost/assets/graphs/allSongsPlayed/updateData.php?maxDate='+inputMaxDate,
 	    dataType: "json",
 	    success: function(data) {
-		updateGraph(data);
+		updateGraphASP(data);
 	    }
 	})
     });
 
 })
 
-function updateGraph(data) {
+function updateGraphASP(data) {
     chart.options.data[0].dataPoints = [];
 
     for (var i = 0; i <= data.length-1; i++) {

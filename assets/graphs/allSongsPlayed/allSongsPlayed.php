@@ -27,7 +27,7 @@ function allSongsForm($settings) {
 
     startForm();
 
-    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artist);
+    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artist, True);
     inputForm("number", "minPlayedAllSongs", "Minimaal afgespeeld", $minPlayed);
     inputForm("number", "maxPlayedAllSongs", "Minimaal afgespeeld", $maxPlayed);
     inputForm("date", "minDatePlayedAllSongs", "Vanaf datum", $minDate);

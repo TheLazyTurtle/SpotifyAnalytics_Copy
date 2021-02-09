@@ -15,7 +15,7 @@ if (isset($_SESSION["loggedIn"])) {
 <div class="test">
 <script>
 $(document).ready(function() {
-    //$("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
+    $("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
     $("#playedPerDayJ").load("./assets/graphs/playedPerDay/playedPerDay.php");
 })
 

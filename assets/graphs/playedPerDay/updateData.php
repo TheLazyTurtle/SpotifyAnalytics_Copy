@@ -45,7 +45,7 @@ function updateData() {
 	FROM played p 
 	INNER JOIN song s ON p.songID = s.songID 
 	WHERE playedBy = '$spID' 
-	AND s.name LIKE '%$song%' AND p.datePlayed BETWEEN '$minDate' 
+	AND s.name = '$song' AND p.datePlayed BETWEEN '$minDate' 
 	AND '$maxDate' 
 	GROUP BY Day(p.datePlayed), p.songID 
 	ORDER BY date DESC";

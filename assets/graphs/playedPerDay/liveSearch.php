@@ -4,9 +4,9 @@ $(document).ready(function() {
     $('.songPlayedPerDay input[type="text"]').on("keyup input", function () {
 	// Get input on value change
 	var inputSong = $(this).val();
-	var resultDropdown = $(this).siblings(".result");
+	var resultDropdown = $(this).siblings(".songPlayedPerDayResult");
 	if (inputSong.length) {
-	    $.get("./assets/graphs/playedPerDay/liveSearchFetchName.php", {term: inputSong}).done(function(data) {
+	    $.get("http://localhost/assets/graphs/playedPerDay/liveSearchFetchName.php", {term: inputSong}).done(function(data) {
 		//display the returned data
 		resultDropdown.html(data);
 	    });
@@ -14,25 +14,24 @@ $(document).ready(function() {
 	    resultDropdown.empty();
 	}
 
-	$(document).on("click", ".result p", function() {
+	$(document).on("click", ".songPlayedPerDayResult p", function() {
 	    $(this).parents(".songPlayedPerDay").find("input[type='text']").val($(this).text());
-	    $(".result").empty();
-	})
-
-	// Some magic stuff to automatically update the graph
-	$.ajax({
-	    type: "GET",
-	    url: './assets/graphs/playedPerDay/updateData.php?song='+inputSong,
-	    dataType: "json",
-	    success: function(data) {
-		updateGraph(data);
-	    }
-	})
+	    $(".songPlayedPerDayResult").empty();
+	    console.log($(this).text());
+	    // Some magic stuff to automatically update the graph
+	    $.ajax({
+		type: "GET",
+		url: 'http://localhost/assets/graphs/playedPerDay/updateData.php?song='+$(this).text(),
+		dataType: "json",
+		success: function(data) {
+		    updateGraphPPD(data);
+		}
+	    })
+	})	
     });
-
 })
 
-function updateGraph(data) {
+function updateGraphPPD(data) {
     playedPerDay.options.data[0].dataPoints = [];
     playedPerDay.options.data[0].dataPoints = data;
 

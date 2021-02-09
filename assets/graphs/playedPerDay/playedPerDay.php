@@ -6,6 +6,7 @@ require "settings.php";
 require "../../connect.php";
 require "../../settings/formBuilder.php";
 require "../../settings/settingFunctions.php";
+//require "../../header.php";
 
 $spID = $_SESSION["spID"];
 $userID = $_SESSION["userID"];
@@ -24,7 +25,7 @@ function playedPerDayForm($settings) {
 
     startForm();
 
-    inputForm("text", "songPlayedPerDay", "Nummer naam", $song);
+    inputForm("text", "songPlayedPerDay", "Nummer naam", $song, True);
     inputForm("date", "minDatePlayedPerDay", "Vanaf datum", $minDate);
     inputForm("date", "maxDatePlayedPerDay", "Tot datum", $maxDate);
     submitForm("submitPlayedPerDay");
