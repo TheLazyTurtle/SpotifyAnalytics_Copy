@@ -16,6 +16,7 @@ if (isset($_SESSION["loggedIn"])) {
 <script>
 $(document).ready(function() {
     $("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
+    $("#topSongsJ").load("./assets/graphs/topSongs/topSongs.php");
     $("#topArtistsJ").load("./assets/graphs/topArtist/topArtist.php");
     $("#playedPerDayJ").load("./assets/graphs/playedPerDay/playedPerDay.php");
 })
@@ -23,6 +24,7 @@ $(document).ready(function() {
 </script>
 
 <div id="allSongsPlayedJ"></div>
+<div id="topSongsJ"></div>
 <div id="topArtistsJ"></div>
 <div id="playedPerDayJ"></div>
 

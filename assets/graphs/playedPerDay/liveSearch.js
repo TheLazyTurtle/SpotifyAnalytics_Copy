@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var inputSong = $(this).val();
 	var resultDropdown = $(this).siblings(".songPlayedPerDayResult");
 	if (inputSong.length) {
-	    $.get("http://localhost/assets/graphs/playedPerDay/liveSearchFetchName.php", {term: inputSong}).done(function(data) {
+	    $.get("./assets/graphs/playedPerDay/liveSearchFetchName.php", {term: inputSong}).done(function(data) {
 		//display the returned data
 		resultDropdown.html(data);
 	    });
@@ -19,7 +19,7 @@ $(document).ready(function() {
 	    // Some magic stuff to automatically update the graph
 	    $.ajax({
 		type: "GET",
-		url: 'http://localhost/assets/graphs/playedPerDay/updateData.php?song='+$(this).text(),
+		url: './assets/graphs/playedPerDay/updateData.php?song='+$(this).text(),
 		dataType: "json",
 		success: function(data) {
 		    updateGraphPPD(data);
@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: "http://localhost/assets/graphs/playedPerDay/updateData.php?minDate="+inputMinDate,
+	    url: "./assets/graphs/playedPerDay/updateData.php?minDate="+inputMinDate,
 	    dataType: "json",
 	    success: function(data) {
 		updateGraphPPD(data);
@@ -50,7 +50,7 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: "http://localhost/assets/graphs/playedPerDay/updateData.php?maxDate="+inputMaxDate,
+	    url: "./assets/graphs/playedPerDay/updateData.php?maxDate="+inputMaxDate,
 	    dataType: "json",
 	    success: function(data) {
 		updateGraphPPD(data);

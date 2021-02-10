@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: 'http://localhost/assets/graphs/topArtist/updateData.php?amount='+inputAmount,
+	    url: './assets/graphs/topArtist/updateData.php?amount='+inputAmount,
 	    dataType: "json",
 	    success: function(data) {
 		updateGraphTA(data);
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: 'http://localhost/assets/graphs/topArtist/updateData.php?minDate='+inputMinDate,
+	    url: './assets/graphs/topArtist/updateData.php?minDate='+inputMinDate,
 	    dataType: "json",
 	    success: function(data) {
 		updateGraphTA(data);
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: 'http://localhost/assets/graphs/topArtist/updateData.php?maxDate='+inputMaxDate,
+	    url: './assets/graphs/topArtist/updateData.php?maxDate='+inputMaxDate,
 	    dataType: "json",
 	    success: function(data) {
 		updateGraphTA(data);
