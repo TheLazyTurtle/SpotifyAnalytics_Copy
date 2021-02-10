@@ -1,4 +1,3 @@
-
 <script>
 var chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,

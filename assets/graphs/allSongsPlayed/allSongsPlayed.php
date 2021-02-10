@@ -27,17 +27,18 @@ function allSongsForm($settings) {
 
     startForm();
 
-    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artist);
+    inputForm("text", "artistPlayedAllSongs", "Artiest naam", $artist, True);
     inputForm("number", "minPlayedAllSongs", "Minimaal afgespeeld", $minPlayed);
     inputForm("number", "maxPlayedAllSongs", "Minimaal afgespeeld", $maxPlayed);
     inputForm("date", "minDatePlayedAllSongs", "Vanaf datum", $minDate);
     inputForm("date", "maxDatePlayedAllSongs", "Tot datum", $maxDate);
-    submitForm("submitAllSongs");
 
     endForm(); 
 }
 
 require "graph.php";
-require "liveSearch.php";
+
 ?>
+
+<script src="./assets/graphs/allSongsPlayed/liveSearch.js"></script>
 

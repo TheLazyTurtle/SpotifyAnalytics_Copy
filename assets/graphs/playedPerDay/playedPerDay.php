@@ -1,14 +1,21 @@
 <?php
+session_start();
+
 require "fetchData.php";
 require "settings.php";
-require "./assets/settings/settingFunctions.php";
+require "../../connect.php";
+require "../../settings/formBuilder.php";
+require "../../settings/settingFunctions.php";
 
-playedPerDayForm(playedPerDaySettings(1));
+$spID = $_SESSION["spID"];
+$userID = $_SESSION["userID"];
+
+playedPerDayForm(playedPerDaySettings($userID));
 
 echo "<div id='playedPerDay' class='graphs'></div>";
-fetchData(playedPerDaySettings(1));
+fetchData($spID, playedPerDaySettings($userID));
 
-allSongSettings(1);
+playedPerDaySettings($userID);
 
 function playedPerDayForm($settings) {
     $song = $settings["song"];
@@ -17,7 +24,7 @@ function playedPerDayForm($settings) {
 
     startForm();
 
-    inputForm("text", "songPlayedPerDay", "Nummer naam", $song);
+    inputForm("text", "songPlayedPerDay", "Nummer naam", $song, True);
     inputForm("date", "minDatePlayedPerDay", "Vanaf datum", $minDate);
     inputForm("date", "maxDatePlayedPerDay", "Tot datum", $maxDate);
 
@@ -25,6 +32,8 @@ function playedPerDayForm($settings) {
 }
 
 require "graph.php";
-require "liveSearch.php";
+
 ?>
+
+<script src="assets/graphs/playedPerDay/liveSearch.js"></script>
 

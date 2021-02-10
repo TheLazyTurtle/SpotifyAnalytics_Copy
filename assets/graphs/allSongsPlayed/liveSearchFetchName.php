@@ -7,7 +7,6 @@ $connection = getConnection();
 
 if(isset($_REQUEST["term"])) {
     $spID = $_SESSION["spID"];
-    //$spID = "111%";
     $term = $_REQUEST["term"];
 
     $sql = "SELECT * FROM artist WHERE name LIKE '%$term%' AND addedBy LIKE '$spID' ORDER BY name ASC LIMIT 10";

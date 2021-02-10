@@ -1,15 +1,43 @@
 <?php
-require "../../connect.php";
-require "settings.php";
+session_start();
 
-function updateDataPPD() {
-    $settings = playedPerDaySettings(1);
-    $counter = 0;
+require "settings.php";
+require "../../settings/settingFunctions.php";
+require "../../connect.php";
+
+function updateData() {
+    $spID = $_SESSION["spID"];
+    $userID = $_SESSION["userID"];
+
+    $settings = playedPerDaySettings($userID);
 
     $song = isset($_GET["song"]) ? $_GET["song"] : $settings["song"];
-    $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $setting["minDate"];
-    $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $setting["maxDate"];
-    $spID = "111%";
+    $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $settings["minDate"];
+    $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $settings["maxDate"];
+
+    // Set song
+    if (isset($_GET["song"])) {
+	$song = $_GET["song"];
+	makeUpdateSetting("playedPerDaySong", $song, $userID);
+    } else {
+	$song = $settings["song"];
+    }
+
+    // Set min date 
+    if (isset($_GET["minDate"])) {
+	$minDate = $_GET["minDate"];
+	makeUpdateSetting("minDatePlayedPerDay", $minDate, $userID);
+    } else {
+	$minDate = $settings["minDate"];
+    }
+
+    // Set max date 
+    if (isset($_GET["maxDate"])) {
+	$maxDate = $_GET["maxDate"];
+	makeUpdateSetting("maxDatePlayedPerDay", $maxDate, $userID);
+    } else {
+	$maxDate = $settings["maxDate"];
+    }
 
     $connection = getConnection();
     $query = 
@@ -17,8 +45,8 @@ function updateDataPPD() {
 	FROM played p 
 	INNER JOIN song s ON p.songID = s.songID 
 	WHERE playedBy = '$spID' 
-	AND s.name LIKE '$playedPerDaySong' AND p.datePlayed BETWEEN '$minDatePlayedPerDay' 
-	AND '$maxDatePlayedPerDay' 
+	AND s.name = '$song' AND p.datePlayed BETWEEN '$minDate' 
+	AND '$maxDate' 
 	GROUP BY Day(p.datePlayed), p.songID 
 	ORDER BY date DESC";
 
@@ -26,9 +54,8 @@ function updateDataPPD() {
     $updatedPlayedPerDay = array();
 
     while ($row = mysqli_fetch_assoc($res)) {
-	$data = ["x"=>$row["date"], "y"=>$row["times"], "x"=>$counter];
+	$data = ["x"=>$row["date"], "y"=>$row["times"]];
 	array_push($updatedPlayedPerDay, $data);
-	$counter += 1;
     }
     mysqli_free_result($res);
     mysqli_close($connection);
@@ -38,4 +65,5 @@ function updateDataPPD() {
 }
 
 print_r(updateData());
+
 ?>
