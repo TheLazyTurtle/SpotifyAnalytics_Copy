@@ -22,10 +22,6 @@ function inputForm($type, $inputName, $placeholder, $value, $result = False) {
     echo "</div>";
 }
 
-function submitForm($buttonName) {
-    echo "<input type='submit' name='$buttonName' value='update'>";
-}
-
 function endForm() {
     echo '</form>';
 }

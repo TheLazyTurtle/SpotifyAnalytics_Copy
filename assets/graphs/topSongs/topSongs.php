@@ -30,7 +30,6 @@ function topSongsForm($settings) {
     inputForm("number", "amountTopSongs", "Top hoeveel", $amount);
     inputForm("date", "minDateTopSongs", "Vanaf datum", $minDate);
     inputForm("date", "maxDateTopSongs", "Vanaf datum", $maxDate);
-    submitForm("submitTopSongs");
 
     endForm();
 }

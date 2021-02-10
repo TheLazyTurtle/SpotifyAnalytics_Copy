@@ -27,7 +27,6 @@ function playedPerDayForm($settings) {
     inputForm("text", "songPlayedPerDay", "Nummer naam", $song, True);
     inputForm("date", "minDatePlayedPerDay", "Vanaf datum", $minDate);
     inputForm("date", "maxDatePlayedPerDay", "Tot datum", $maxDate);
-    submitForm("submitPlayedPerDay");
 
     endForm();
 }

@@ -28,7 +28,6 @@ function topArtistForm($settings) {
     inputForm("number", "amountTopArtist", "Top hoeveel", $amount);
     inputForm("date", "minDateTopArtist", "Vanaf datum", $minDate);
     inputForm("date", "maxDateTopArtist", "Vanaf datum", $maxDate);
-    submitForm("submitTopArtist");
 
     endForm(); 
 }

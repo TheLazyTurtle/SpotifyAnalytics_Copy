@@ -32,7 +32,6 @@ function allSongsForm($settings) {
     inputForm("number", "maxPlayedAllSongs", "Minimaal afgespeeld", $maxPlayed);
     inputForm("date", "minDatePlayedAllSongs", "Vanaf datum", $minDate);
     inputForm("date", "maxDatePlayedAllSongs", "Tot datum", $maxDate);
-    submitForm("submitAllSongs");
 
     endForm(); 
 }
