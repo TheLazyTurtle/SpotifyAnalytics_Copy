@@ -1,0 +1,10 @@
+# scopes that might be fun to implement
+- current_user_top_tracks()
+- current_user_top_artist()
+- devices()
+
+#TODO
+- Maybe make it so you can add multiple songs and give different lines so you can compare multiple songs
+- Make a page with all songs i've played with link to the song on spotify, a 30 sec preview, all the artists that are in the song plus a link to their account and the song img
+- Make a readout for how many unique songs i have ever listened to
+- Make a readout for how many unique songs i have listened to this day/week/month 

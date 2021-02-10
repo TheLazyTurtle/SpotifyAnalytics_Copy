@@ -1,4 +1,32 @@
 <?php
+// Defines all the settings
+$minDefaultDate = "2020-01-01";
+$maxDefaultDate = "2099-12-31";
+
+function globalSettings() {
+    $settings = [
+	"minPlayedAllSongs",
+	"maxPlayedAllSongs",
+	"minDatePlayedAllSongs",
+	"maxDatePlayedAllSongs",
+
+	"artistPlayedAllSongs",
+	"artistTopSongs",
+	"minDateTopSongs",
+	"maxDateTopSongs",
+	"amountTopSongs",
+
+	"amountTopArtist",
+	"minDateTopArtist",
+	"maxDateTopArtist",
+
+	"playedPerDaySong",
+	"minDatePlayedPerDay",
+	"maxDatePlayedPerDay",
+    ];
+
+    return $settings;
+}
 
 function getSettings($userID, $type) {
     $connection = getConnection();
@@ -48,5 +76,14 @@ function savedSettings($userID, $settings) {
 	}
     }
     return $savedSettings;
+}
+
+function makeUpdateSetting($settingName, $settingValue, $userID) {
+
+    if (checkSettingExists($userID, $settingName)) {
+	updateSetting($userID, $settingName, $settingValue);
+    } else {
+	makeSetting($userID, $settingName, $settingValue);
+    }
 }
 ?>
