@@ -22,13 +22,6 @@ $(document).ready(function() {
 
 </script>
 
-
-    <?php //topSongsForm($artistTopSongs, $minDateTopSongs, $maxDateTopSongs, $amountTopSongs); ?>
-    <!--<div id="topSongs" class="graphs"></div>-->
-
-    <?php //topArtistForm($amountTopArtist, $minDateTopArtist, $maxDateTopArtist); ?>
-<!--    <div id="topArtists" class="graphs"></div>-->
-
 <div id="allSongsPlayedJ"></div>
 <div id="topArtistsJ"></div>
 <div id="playedPerDayJ"></div>

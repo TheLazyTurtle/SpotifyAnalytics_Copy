@@ -27,6 +27,36 @@ $(document).ready(function() {
 	    })
 	})	
     });
+
+    // This will update graph based on input
+    $('.minDatePlayedPerDay input[type="date"]').on("keyup input", function() {
+	// Get input value on change
+	var inputMinDate = $(this).val();
+
+	$.ajax({
+	    type: "GET",
+	    url: "http://localhost/assets/graphs/playedPerDay/updateData.php?minDate="+inputMinDate,
+	    dataType: "json",
+	    success: function(data) {
+		updateGraphPPD(data);
+	    }
+	})
+    });
+
+    // This will update graph based on input
+    $('.maxDatePlayedPerDay input[type="date"]').on("keyup input", function() {
+	// Get input value on change
+	var inputMaxDate = $(this).val();
+
+	$.ajax({
+	    type: "GET",
+	    url: "http://localhost/assets/graphs/playedPerDay/updateData.php?maxDate="+inputMaxDate,
+	    dataType: "json",
+	    success: function(data) {
+		updateGraphPPD(data);
+	    }
+	})
+    });
 })
 
 function updateGraphPPD(data) {
