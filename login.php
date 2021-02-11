@@ -1,5 +1,5 @@
 <?php
-require "header.php";
+require "./assets/header.php";
 
 $error;
 
@@ -12,6 +12,17 @@ if (isset($_POST["submit"])) {
 	} else {
 		login($name, $pass);
 	}
+}
+
+function getUserID($spID) {
+    $connection = getConnection();
+    $sql = "SELECT userID FROM users WHERE spotifyID = '$spID'";
+    $query = mysqli_query($connection, $sql);
+    $res = mysqli_fetch_assoc($query);
+
+    mysqli_free_result($query);
+    mysqli_close($connection);
+    return $res["userID"];
 }
 
 function login($name, $pass) {
@@ -27,6 +38,7 @@ function login($name, $pass) {
 		$_SESSION["spID"] = $res["spotifyID"];
 		if (userHasAuthtoken($res["spotifyID"])) {
 			$_SESSION["loggedIn"] = True;
+			$_SESSION["userID"] = getUserID($_SESSION["spID"]);
 			header("Location: ./index.php");
 		} else {
 			header("Location: ../browser/auth.php");
@@ -52,18 +64,18 @@ function userHasAuthToken($spID) {
 
 ?>
 
-<html>
-
-<form action="#" method="POST">
+<div class="container">
+    <form action="#" method="POST">
 	<label>Naam</label>
 	<input type="text" name="name">
 	<br>
 	<label>Wachtwoord</label>
 	<input type="password" name="pass">
 	<br>
-	<input type="submit" name="submit" value="Login">
+	<input class="btn" type="submit" name="submit" value="Login">
 	<br>
-</form>
+    </form>
+</div>
 
 <h4><?php if (isset($error)) {echo $error;}?> </h4>
 
