@@ -12,16 +12,6 @@ $(document).ready(function() {
 	} else {
 	    resultDropdown.empty();
 	}
-
-	//Some magic stuff to automatically update the graph 
-	$.ajax({
-	    type: "GET",
-	    url: './assets/graphs/allSongsPlayed/updateData.php?artist='+inputArtist,
-	    dataType: "json",
-	    success: function(data) {
-		updateGraphASP(data);
-	    }
-	})
     });
 
     // Set search input value on click of result item
@@ -102,7 +92,6 @@ $(document).ready(function() {
 	    }
 	})
     });
-
 })
 
 function updateGraphASP(data) {
@@ -112,6 +101,6 @@ function updateGraphASP(data) {
 	chart.options.data[0].dataPoints.push(data[i]);
     }
 
-    chart.render();
+    chart.render();	
 }
 
