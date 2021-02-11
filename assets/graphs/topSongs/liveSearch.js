@@ -4,7 +4,7 @@ $(document).ready(function() {
 	// Get input value on change
 	var inputArtist = $(this).val();
 	var resultDropdown = $(this).siblings(".artistTopSongsResult");
-	console.log(inputArtist);
+
 	if (inputArtist.length) {
 	    $.get("./assets/graphs/topSongs/liveSearchFetchName.php", {term: inputArtist}).done(function(data) {
 		// Display the returned data
@@ -13,16 +13,6 @@ $(document).ready(function() {
 	} else {
 	    resultDropdown.empty();
 	}
-
-	//Some magic stuff to automatically update the graph
-	$.ajax({
-	    type: "GET",
-	    url: './assets/graphs/topSongs/updateData.php?artist='+inputArtist,
-	    dataType: "json",
-	    success: function(data) {
-		updateGraphTS(data);
-	    }
-	})
     });
 
     // If clicked set value
@@ -60,7 +50,6 @@ $(document).ready(function() {
     $('.minDateTopSongs input[type="date"]').on("keyup input", function() {
 	var inputMinDate = $(this).val();
 
-	console.log(inputMinDate);
 	$.ajax({
 	    type: "GET",
 	    url: './assets/graphs/topSongs/updateData.php?minDate='+inputMinDate,
@@ -87,11 +76,12 @@ $(document).ready(function() {
 })
 
 function updateGraphTS(data) {
-    topSongs.options.data[0].dataPoints = [];
+	topSongs.options.data[0].dataPoints = [];
 
-    for (var i = 0; i <= data.length-1; i++) {
-	topSongs.options.data[0].dataPoints.push(data[i]);
-    }
+	for (var i = 0; i <= data.length-1; i++) {
+	    topSongs.options.data[0].dataPoints.push(data[i]);
+	}
 
-    topSongs.render();
+	topSongs.render();
+
 }

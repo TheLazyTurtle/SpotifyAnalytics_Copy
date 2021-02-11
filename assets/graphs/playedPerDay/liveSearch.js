@@ -60,9 +60,11 @@ $(document).ready(function() {
 })
 
 function updateGraphPPD(data) {
+    setTimeout(function() {
     playedPerDay.options.data[0].dataPoints = [];
     playedPerDay.options.data[0].dataPoints = data;
 
     playedPerDay.render();
+    }, 2000);
 }
 

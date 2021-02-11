@@ -1,6 +1,6 @@
 <script>
 var topSongs = new CanvasJS.Chart("topSongs", {
-    animationEnabled: true,
+    animationEnabled: false,
     theme: "dark2",
     title: {
 	text: "Top 10 songs"

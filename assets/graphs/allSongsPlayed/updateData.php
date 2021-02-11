@@ -71,7 +71,7 @@ function updateData() {
 	    WHERE artistID IN (
 		SELECT artistID FROM artist
 		WHERE name LIKE '%$artist%'))
-	AND playedBy LIKE '$spID' AND datePlayed BETWEEN DATE('$minDate') AND DATE('$maxDate')
+	AND playedBy = '$spID' AND datePlayed BETWEEN DATE('$minDate') AND DATE('$maxDate')
 	GROUP BY s.songID HAVING times BETWEEN '$minPlayed' AND '$maxPlayed'
 	ORDER BY name ASC";
 

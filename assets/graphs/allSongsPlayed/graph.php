@@ -1,6 +1,6 @@
 <script>
 var chart = new CanvasJS.Chart("chartContainer", {
-    animationEnabled: true,
+    animationEnabled: false,
     theme: "dark2",
     title: {
 	text: "All songs ever played",

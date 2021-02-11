@@ -1,7 +1,7 @@
 <script>
 // This is the played per day graphs
 var playedPerDay = new CanvasJS.Chart("playedPerDay", {
-    animationEnabled: true,
+    animationEnabled: false,
     theme: "dark2",
     title: {
 	text: "Played per day",
