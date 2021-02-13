@@ -19,7 +19,7 @@ function fetchData($spID, $settings) {
 	WHERE a.name LIKE '$artist'
 	AND a.addedBy = '$spID' AND p.playedBy = '$spID'
 	AND datePlayed BETWEEN '$minDate' AND '$maxDate'
-	GROUP BY s.name, a.artistID
+	GROUP BY s.songID, a.artistID
 	ORDER BY times DESC
 	LIMIT $amount";
 
