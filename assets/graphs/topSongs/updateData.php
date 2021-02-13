@@ -45,16 +45,18 @@ function updateData() {
     }
 
     $connection = getconnection();
-    $query = 
-	"SELECT count(p.songID) AS times, s.name AS songName 
-	FROM played p INNER JOIN song s ON p.songID = s.songID 
-	WHERE p.songID IN (
-	    SELECT songID FROM song WHERE songID IN (
-		SELECT songID FROM SongFromArtist WHERE artistID IN (
-		    SELECT artistID FROM artist WHERE name LIKE '%$artist%'))) 
-	AND datePlayed BETWEEN DATE('$minDate') AND DATE('$maxDate') 
-	AND playedBy = '$spID' 
-	GROUP BY songName ORDER BY times DESC LIMIT $amount";
+    $query = "
+	SELECT distinct s.name as songName, count(p.songID) as times
+	FROM played p
+	INNER JOIN song s ON s.songID = p.songID
+	INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
+	RIGHT JOIN artist a on sfa.artistID = a.artistID
+	WHERE a.name LIKE '$artist'
+	AND a.addedBy = '$spID' AND p.playedBy = '$spID'
+	AND datePlayed BETWEEN '$minDate' AND '$maxDate'
+	GROUP BY s.name, a.artistID
+	ORDER BY times DESC
+	LIMIT $amount";
     
     $res = mysqli_query($connection, $query);
     $updatedTopSongs = array();

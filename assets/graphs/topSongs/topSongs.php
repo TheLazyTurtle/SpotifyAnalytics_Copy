@@ -35,9 +35,6 @@ function topSongsForm($settings) {
 }
 
 require "graph.php";
-
-
-
 ?>
 
 <script src="./assets/graphs/topSongs/liveSearch.js"></script>

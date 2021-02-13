@@ -11,7 +11,6 @@ if (isset($_SESSION["loggedIn"])) {
 }
 
 ?>
-
 <div class="test">
 <script>
 $(document).ready(function() {

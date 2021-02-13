@@ -41,12 +41,12 @@ function updateData() {
 
     $connection = getConnection();
     $query = 
-	"SELECT count(*) AS times, unix_timestamp(p.datePlayed) * 1000 AS date, s.name 
+	"SELECT count(*) AS times, unix_timestamp(p.datePlayed) * 1000 AS date
 	FROM played p 
 	INNER JOIN song s ON p.songID = s.songID 
 	WHERE playedBy = '$spID' 
-	AND s.name = '$song' AND p.datePlayed BETWEEN '$minDate' 
-	AND '$maxDate' 
+	AND s.name = '$song' 
+	AND p.datePlayed BETWEEN '$minDate' AND '$maxDate' 
 	GROUP BY Day(p.datePlayed), p.songID 
 	ORDER BY date DESC";
 
