@@ -10,7 +10,15 @@ $(document).ready(function() {
 		resultDropdown.html(data);
 	    });
 	} else {
-
+	    //Some magic stuff to automatically update the graph 
+	    $.ajax({
+		type: "GET",
+		url: './assets/graphs/allSongsPlayed/updateData.php?artist=%',
+		dataType: "json",
+		success: function(data) {
+		    updateGraphASP(data);
+		}
+	    })
 	    resultDropdown.empty();
 	}
     });
