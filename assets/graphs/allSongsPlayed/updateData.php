@@ -63,17 +63,17 @@ function updateData() {
 
     $connection = getConnection();
     $query = "
-	SELECT s.name AS name, count(p.songID) AS times
-	FROM played p
-	INNER JOIN song s ON p.songID = s.songID
-	WHERE s.songID IN (
-	    SELECT songID FROM SongFromArtist
-	    WHERE artistID IN (
-		SELECT artistID FROM artist
-		WHERE name LIKE '%$artist%'))
-	AND playedBy = '$spID' AND datePlayed BETWEEN DATE('$minDate') AND DATE('$maxDate')
-	GROUP BY s.songID HAVING times BETWEEN '$minPlayed' AND '$maxPlayed'
-	ORDER BY name ASC";
+	SELECT distinct s.name as name, count(p.songID) as times 
+	FROM played p 
+	INNER JOIN song s ON s.songID = p.songID 
+	INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID 
+	RIGHT JOIN artist a ON a.artistID = sfa.artistID 
+	WHERE a.name LIKE '%$artist%' 
+	AND a.addedBy = '$spID' AND playedBy = '$spID' 
+	AND datePlayed BETWEEN '$minDate' AND '$maxDate'
+	GROUP BY s.name, a.artistID 
+	HAVING times between '$minPlayed' AND '$maxPlayed'
+	ORDER BY name";
 
     $res = mysqli_query($connection, $query);
     $updatedDataPoints = array();

@@ -38,11 +38,12 @@ function updateData() {
 
     $connection = getConnection();
     $query = 
-	"SELECT count(p.songID) AS times, a.name AS artistName, a.artistID 
+	"SELECT count(p.songID) AS times, a.name AS artistName
 	FROM played p 
-	INNER JOIN SongFromArtist sfa ON p.songID = sfa.songID 
-	RIGHT JOIN artist a On sfa.artistID = a.artistID 
-	WHERE p.playedBy = '$spID' 
+	INNER JOIN song s ON p.songID = s.songID
+	INNER JOIN SongFromArtist sfa ON sfa.songID = s.songID
+	RIGHT JOIN artist a ON sfa.artistID = a.artistID 
+	WHERE p.playedBy = '$spID' AND a.addedBy = '$spID'
 	AND p.datePlayed BETWEEN DATE('$minDate') AND DATE('$maxDate') 
 	GROUP BY a.artistID 
 	ORDER BY times DESC 

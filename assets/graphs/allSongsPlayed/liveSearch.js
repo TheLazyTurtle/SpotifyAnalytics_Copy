@@ -10,6 +10,7 @@ $(document).ready(function() {
 		resultDropdown.html(data);
 	    });
 	} else {
+
 	    resultDropdown.empty();
 	}
     });
