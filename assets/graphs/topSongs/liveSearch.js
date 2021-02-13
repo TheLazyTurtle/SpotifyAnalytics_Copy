@@ -12,6 +12,14 @@ $(document).ready(function() {
 	    });
 	} else {
 	    resultDropdown.empty();
+	    $.ajax({
+		type: "GET",
+		url: './assets/graphs/topSongs/updateData.php?artist=%',
+		dataType: "json",
+		success: function(data) {
+		    updateGraphTS(data);
+		}
+	    })
 	}
     });
 
