@@ -15,7 +15,7 @@ function fetchData($spID, $settings) {
 	WHERE playedBy = '$spID' 
 	AND s.name LIKE '$song' 
 	AND p.datePlayed BETWEEN '$minDate' AND '$maxDate' 
-	GROUP BY Day(p.datePlayed), p.songID 
+	GROUP BY DAY(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed), p.songID 
 	ORDER BY date DESC"; 
 
     $res = mysqli_query($connection, $query);
