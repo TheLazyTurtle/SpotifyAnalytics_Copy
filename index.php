@@ -10,8 +10,12 @@ if (isset($_SESSION["loggedIn"])) {
     header("Location: ./login.php");
 }
 
+
 ?>
+
 <div class="test">
+<?php require "./assets/info_slider/slider.php"; ?>
+
 <script>
 $(document).ready(function() {
     $("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");

@@ -8,7 +8,8 @@ clientSec = "***REMOVED***"
 scope = "user-read-recently-played"
 
 db = mysql.connector.connect(
-    host="localhost",
+    # host="localhost",
+    host = "192.168.2.7",
     user="remote",
     password="***REMOVED***",
     database="spotify",
