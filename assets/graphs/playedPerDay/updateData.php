@@ -44,7 +44,7 @@ function updateData() {
 	"SELECT count(*) AS times, unix_timestamp(p.datePlayed) * 1000 AS date
 	FROM played p 
 	INNER JOIN song s ON p.songID = s.songID 
-	WHERE playedBy = '$spID' 
+	WHERE playedBy = '$spID' AND s.addedBy = '$spID'
 	AND s.name = '$song' 
 	AND p.datePlayed BETWEEN '$minDate' AND '$maxDate' 
 	GROUP BY DAY(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed), p.songID 

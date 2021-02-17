@@ -13,7 +13,7 @@ function fetchData($spID, $settings) {
 	INNER JOIN song s ON p.songID = s.songID
 	INNER JOIN SongFromArtist sfa ON sfa.songID = s.songID
 	RIGHT JOIN artist a ON sfa.artistID = a.artistID 
-	WHERE p.playedBy = '$spID' AND a.addedBy = '$spID'
+	WHERE p.playedBy = '$spID' AND a.addedBy = '$spID' AND s.addedBy = '$spID'
 	AND p.datePlayed BETWEEN DATE('$minDate') AND DATE('$maxDate') 
 	GROUP BY a.artistID 
 	ORDER BY times DESC 

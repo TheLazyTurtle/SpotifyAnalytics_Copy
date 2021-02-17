@@ -69,7 +69,7 @@ function updateData() {
 	INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID 
 	RIGHT JOIN artist a ON a.artistID = sfa.artistID 
 	WHERE a.name LIKE '%$artist%' 
-	AND a.addedBy = '$spID' AND playedBy = '$spID' 
+	AND a.addedBy = '$spID' AND p.playedBy = '$spID' AND s.addedBy = '$spID'
 	AND datePlayed BETWEEN '$minDate' AND '$maxDate'
 	GROUP BY s.name, a.artistID 
 	HAVING times between '$minPlayed' AND '$maxPlayed'
