@@ -24,8 +24,12 @@ function getSongImg($song) {
     $query = "SELECT img FROM song WHERE name LIKE '%$song%'";
     $res = mysqli_query($connection, $query);
 
-    $img = mysqli_fetch_row($res);
-    return "<img class='gallery-img' src='".$img[0]. "'>";
+    try {
+	$img = mysqli_fetch_row($res);
+	return "<img class='gallery-img' src='".$img[0]. "'>";
+    } catch (Exception $e) {
+	return '<img src="http://fakeimg.pl/300/?text=song">';
+    }
 }
 
 function getArtistImg($artist) {
@@ -34,8 +38,12 @@ function getArtistImg($artist) {
     $query = "SELECT img FROM artist WHERE name LIKE '%$artist%'";
     $res = mysqli_query($connection, $query);
 
-    $img = mysqli_fetch_row($res);
-    return "<img class='gallery-img' src='". $img[0]. "'>";
+    try {
+	$img = mysqli_fetch_row($res);
+	return "<img class='gallery-img' src='". $img[0]. "'>";
+    } catch(Exception $e) {
+	return '<img src="http://fakeimg.pl/300/?text=artist">';
+    }
 }
 
 function amountSongs($date) {
