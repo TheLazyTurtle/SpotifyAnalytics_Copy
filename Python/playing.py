@@ -61,8 +61,12 @@ def getdata(result, username, token):
             songName = song["track"]["name"]
             songImg = song["track"]["album"]["images"][0]["url"]
             songDuration = song["track"]["duration_ms"]
-            songPreview = song["track"]["preview_url"]
-
+            
+            try:
+                songPreview = song["track"]["preview_url"]
+            except Exception as e:
+                pass
+            
             q.insertSong(songID, songName, songUrl, username, songImg,
                          songDuration, songPreview)
             q.insertAsPlayed(songID, username, playedAt, songName)
