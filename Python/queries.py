@@ -4,16 +4,16 @@ import functions as func
 
 # Insert a artist into the database if it doesn't exist yet
 # Takes a artist ID, artist name, link to artist account, and person who listened to it
-def insertArtist(artistID, name, url, addedBy):
+def insertArtist(artistID, name, url, addedBy, img):
     try:
         cursor = creds.db.cursor()
         InsertArtist = """
         INSERT IGNORE INTO artist 
-        (artistID, name, url, addedBy) 
-        VALUES (%s, %s, %s, %s)
+        (artistID, name, url, addedBy, img) 
+        VALUES (%s, %s, %s, %s, %s)
         """
 
-        data = (artistID, name, url, addedBy)
+        data = (artistID, name, url, addedBy, img)
         cursor.execute(InsertArtist, data)
 
         creds.db.commit()
@@ -25,7 +25,6 @@ def insertArtist(artistID, name, url, addedBy):
     except Exception as e:
         func.printMsg("Failed to insert artist:", "red", name, "white", e,
                       "red")
-
 
 # Insert a song into the database if it doesn't exist yet
 # Takes a song ID, song name, link to song, who added it, the song cover, and the song duration
