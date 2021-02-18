@@ -62,9 +62,10 @@ def getdata(result, username, token):
             songName = song["track"]["name"]
             songImg = song["track"]["album"]["images"][0]["url"]
             songDuration = song["track"]["duration_ms"]
+            songPreview = song["track"]["preview_url"]
 
             q.insertSong(songID, songName, songUrl, username, songImg,
-                         songDuration)
+                         songDuration, songPreview)
             q.insertAsPlayed(songID, username, playedAt, songName)
 
             # Get artists

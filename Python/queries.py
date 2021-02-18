@@ -28,16 +28,16 @@ def insertArtist(artistID, name, url, addedBy, img):
 
 # Insert a song into the database if it doesn't exist yet
 # Takes a song ID, song name, link to song, who added it, the song cover, and the song duration
-def insertSong(songID, name, url, addedBy, img, length):
+def insertSong(songID, name, url, addedBy, img, length, preview):
     try:
         cursor = creds.db.cursor()
         InsertSong = """
         INSERT IGNORE INTO song 
-        (songID, name, url, addedBy, img, length) 
-        VALUES (%s, %s, %s, %s, %s, %s)
+        (songID, name, url, addedBy, img, length, preview) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
 
-        data = (songID, name, url, addedBy, img, length)
+        data = (songID, name, url, addedBy, img, length, preview)
         cursor.execute(InsertSong, data)
 
         creds.db.commit()
