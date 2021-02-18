@@ -46,7 +46,7 @@ def getResult(sp):
                       "white", e, "red")
 
 
-def getdata(result, username):
+def getdata(result, username, token):
     try:
         for song in result["items"]:
 
@@ -62,9 +62,10 @@ def getdata(result, username):
             songName = song["track"]["name"]
             songImg = song["track"]["album"]["images"][0]["url"]
             songDuration = song["track"]["duration_ms"]
+            songPreview = song["track"]["preview_url"]
 
             q.insertSong(songID, songName, songUrl, username, songImg,
-                         songDuration)
+                         songDuration, songPreview)
             q.insertAsPlayed(songID, username, playedAt, songName)
 
             # Get artists
@@ -72,13 +73,15 @@ def getdata(result, username):
                 artistID = artist["id"]
                 artistName = artist["name"]
                 artistUrl = artist["external_urls"]["spotify"]
+                artistImg = func.getArtistImg(token, artistName)
 
-                q.insertArtist(artistID, artistName, artistUrl, username)
+                q.insertArtist(artistID, artistName, artistUrl, username, artistImg)
                 q.linkSongToArtist(songID, artistID, songName, artistName)
 
         # Show the time of last update so you can calculate how long it will take for the next update to come
         print("Last updated at:", datetime.now().strftime("%H:%M:%S"))
         print("----------------")
+
     except Exception as e:
         func.printMsg("Failed by getting song data for user:", "red", username,
                       "white", e, "red")
@@ -89,12 +92,11 @@ def authAndFetch(username):
 
         # If the user is authorized get the results
         if token:
-            getdata(getResult(token), username)
+            getdata(getResult(token), username, token)
 
 while True:
     for username in q.getUsers():
         authAndFetch(username[0])
 
     # 300 secs = 5 minutes
-    # time.sleep(300)
     time.sleep(300)

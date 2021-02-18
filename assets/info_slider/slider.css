@@ -5,12 +5,12 @@
 
 .floatOver {
     position: absolute;
-    transform: translateY(500%) translateX(10%);
+    transform: translateY(500%);
 }
 
 .gallery-item-selected .floatOver {
     position: absolute;
-    transform: translateY(1000%) translateX(10%);
+    transform: translateY(1000%);
 }
 
 .gallery {

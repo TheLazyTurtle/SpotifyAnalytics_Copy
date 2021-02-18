@@ -5,6 +5,15 @@ from termcolor import colored
 
 import creds
 
+def getArtistImg(token, name):
+    results = token.search(q="artist: " + name, type="artist")
+    item = results["artists"]["items"]
+
+    try:
+        artist = item[0]
+        return artist["images"][0]["url"]
+    except Exception:
+        pass
 
 # Custom print statement for colored print messages
 def printMsg(msg1, color1, msg2="", color2="white", msg3="", color3="white"):
