@@ -36,7 +36,7 @@ def getResult(sp):
         if sp.current_user_recently_played(limit=25):
             func.printMsg("Got last 4 songs for:", "green", username[0],
                           "white")
-            return sp.current_user_recently_played(limit=4)
+            return sp.current_user_recently_played(limit=25)
     except AttributeError as ae:
         if ae == "current_user_recently_played":
             getResult(sp)
