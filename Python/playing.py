@@ -32,11 +32,10 @@ def getAuthToken(username):
 
 def getResult(sp):
     try:
-        # I have chosen 4 because if a song is just a bit longer than 1 minute it might otherwise be skipped so now it will (hopefully) get all songs
-        if sp.current_user_recently_played(limit=25):
+        if sp.current_user_recently_played(limit=func.getFetchAmount(username[0])):
             func.printMsg("Got last 4 songs for:", "green", username[0],
                           "white")
-            return sp.current_user_recently_played(limit=25)
+            return sp.current_user_recently_played(limit=func.getFetchAmount(username[0]))
     except AttributeError as ae:
         if ae == "current_user_recently_played":
             getResult(sp)
@@ -75,7 +74,8 @@ def getdata(result, username, token):
                 artistUrl = artist["external_urls"]["spotify"]
                 artistImg = func.getArtistImg(token, artistName)
 
-                q.insertArtist(artistID, artistName, artistUrl, username, artistImg)
+                q.insertArtist(artistID, artistName, artistUrl, username,
+                               artistImg)
                 q.linkSongToArtist(songID, artistID, songName, artistName)
 
         # Show the time of last update so you can calculate how long it will take for the next update to come
@@ -86,13 +86,15 @@ def getdata(result, username, token):
         func.printMsg("Failed by getting song data for user:", "red", username,
                       "white", e, "red")
 
+
 def authAndFetch(username):
     # Gets the authorization for the user
-        token = getAuthToken(username)
+    token = getAuthToken(username)
 
-        # If the user is authorized get the results
-        if token:
-            getdata(getResult(token), username, token)
+    # If the user is authorized get the results
+    if token:
+        getdata(getResult(token), username, token)
+
 
 while True:
     for username in q.getUsers():
