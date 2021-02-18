@@ -14,7 +14,7 @@ if (isset($_SESSION["loggedIn"])) {
 ?>
 
 <div class="test">
-<?php require "./assets/info_slider/slider.php"; ?>
+<?php //require "./assets/info_slider/slider.php"; ?>
 
 <script>
 $(document).ready(function() {
