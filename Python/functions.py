@@ -5,6 +5,15 @@ from termcolor import colored
 
 import creds
 
+def getFetchAmount(username):
+    cursor = creds.db.cursor()
+    query = "SELECT fetchAmount FROM users WHERE spotifyID = %s"
+    data = (username, )
+    cursor.execute(query, data)
+
+    res = cursor.fetchall()
+    return res[0][0]
+
 def getArtistImg(token, name):
     results = token.search(q="artist: " + name, type="artist")
     item = results["artists"]["items"]
