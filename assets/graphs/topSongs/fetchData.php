@@ -16,14 +16,18 @@ function fetchData($spID, $settings) {
 	INNER JOIN song s ON s.songID = p.songID
 	INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
 	RIGHT JOIN artist a on sfa.artistID = a.artistID
-	WHERE a.name LIKE '$artist'
-	AND a.addedBy = '$spID' AND p.playedBy = '$spID' AND s.addedBy = '$spID'
-	AND datePlayed BETWEEN '$minDate' AND '$maxDate'
+	WHERE a.name LIKE ? 
+	AND a.addedBy = ? AND p.playedBy = ? AND s.addedBy = ? 
+	AND datePlayed BETWEEN ? AND ? 
 	GROUP BY s.songID, a.artistID
 	ORDER BY times DESC
-	LIMIT $amount";
+	LIMIT ?";
+    
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ssssssi", $artist, $spID, $spID, $spID, $minDate, $maxDate, $amount);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    $res = mysqli_query($connection, $query);
     $topSongs = array();
 
     while ($row = mysqli_fetch_assoc($res)) {
@@ -32,6 +36,7 @@ function fetchData($spID, $settings) {
     }
     mysqli_free_result($res);
     mysqli_close($connection);
+    mysqli_stmt_close($stmt);
 
 }
 

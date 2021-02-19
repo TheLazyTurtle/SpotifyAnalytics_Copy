@@ -19,13 +19,23 @@ $week = strtotime("previous monday");
 $week = strftime("%Y-%m-%d", $week);
 
 function getSongImg($song) {
-    global $connection;
+    $connection = getConnection();
 
-    $query = "SELECT img FROM song WHERE name LIKE '%$song%'";
-    $res = mysqli_query($connection, $query);
+    $query = "SELECT img FROM song WHERE name LIKE ?";
+
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "s", $song);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
 
     try {
 	$img = mysqli_fetch_row($res);
+
+	mysqli_close($connection);
+	mysqli_free_result($res);
+	mysqli_stmt_close($stmt);
+
 	return "<img class='gallery-img' src='".$img[0]. "'>";
     } catch (Exception $e) {
 	return '<img src="http://fakeimg.pl/300/?text=song">';
@@ -33,13 +43,22 @@ function getSongImg($song) {
 }
 
 function getArtistImg($artist) {
-    global $connection;
+    $connection = getConnection();
 
-    $query = "SELECT img FROM artist WHERE name LIKE '%$artist%'";
-    $res = mysqli_query($connection, $query);
+    $query = "SELECT img FROM artist WHERE name LIKE ?";
+
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "s", $artist);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
     try {
 	$img = mysqli_fetch_row($res);
+
+	mysqli_close($connection);
+	mysqli_free_result($res);
+	mysqli_stmt_close($stmt);
+
 	return "<img class='gallery-img' src='". $img[0]. "'>";
     } catch(Exception $e) {
 	return '<img src="http://fakeimg.pl/300/?text=artist">';
@@ -47,91 +66,136 @@ function getArtistImg($artist) {
 }
 
 function amountSongs($date) {
-    global $connection, $spID;
+    global $spID;
+    $connection = getConnection();
 
-    $querySongsToday = "
+    $query = "
     SELECT count(p.songID), AS times FROM played p 
     INNER JOIN song s ON p.songID = s.songID
-    WHERE p.playedBy = '$spID' AND s.addedBy = '$spID'
-    AND p.datePlayed >= '$date'
+    WHERE p.playedBy = ? AND s.addedBy = ? 
+    AND p.datePlayed >= ?
     ";
 
-    $resSongsToday = mysqli_query($connection, $querySongsToday);
-    $rowSongsToday = mysqli_fetch_array($resSongsToday, MYSQLI_ASSOC);
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "sss", $spID, $spID, $date);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    print("songs played: " . $rowSongsToday["times"]);
+    $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+    print("songs played: " . $row["times"]);
+
+    mysqli_close($connection);
+    mysqli_free_result($res);
+    mysqli_stmt_close($stmt);
 }
 
 function timeListend($date) {
-    global $connection, $spID;
+    global $spID;
+    $connection = getConnection();
 
-    $queryTotalTimeSongsToday = "
+    $query = "
     SELECT SUM(s.length) AS totalTime FROM played p
     INNER JOIN song s ON p.songID = s.songID
-    WHERE p.playedBy = '$spID' AND s.addedBy = '$spID'
-    AND p.datePlayed >= '$date';
+    WHERE p.playedBy = ? AND s.addedBy = ? 
+    AND p.datePlayed >= ?;
     ";
 
-    $resTotalTimeSongsToday = mysqli_query($connection, $queryTotalTimeSongsToday);
-    $rowTotalTimeSongsToday = mysqli_fetch_array($resTotalTimeSongsToday, MYSQLI_ASSOC);
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "sss", $spID, $spID, $date);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    $time = gmdate("H:i:s", ($rowTotalTimeSongsToday["totalTime"]/1000));
+    $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+    $time = gmdate("H:i:s", ($row["totalTime"]/1000));
     print("time played: " . $time);
+
+    mysqli_close($connection);
+    mysqli_free_result($res);
+    mysqli_stmt_close($stmt);
 }
 
 function topSong($date) {
-    global $connection, $spID;
+    global $spID;
+    $connection = getConnection();
 
     $query = "
     SELECT s.name, count(p.songID) AS times FROM played p 
     INNER JOIN song s on p.songID = s.songID
-    WHERE p.playedBy = '$spID' AND s.addedBy = '$spID'
-    AND p.datePlayed >= '$date'
+    WHERE p.playedBy = ? AND s.addedBy = ? 
+    AND p.datePlayed >= ? 
     GROUP BY p.songID
     ORDER BY times DESC
     LIMIT 1;
     ";
 
-    $res = mysqli_query($connection, $query);
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "sss", $spID, $spID, $date);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
     $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+    mysqli_free_result($res);
 
     return $row;
 }
 
 function topArtist($date) {
-    global $connection, $spID;
+    global $spID;
+    $connection = getConnection();
     
     $query = "
     SELECT a.name AS name, count(a.name) AS times FROM played p
     INNER JOIN song s ON p.songID = s.songID
     INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
     RIGHT JOIN artist a ON sfa.artistID = a.artistID
-    WHERE p.playedBy = '$spID' AND a.addedBy = '$spID' AND s.addedBy = '$spID'
-    AND p.datePlayed >= '$date'
+    WHERE p.playedBy = ? AND a.addedBy = ? AND s.addedBy = ? 
+    AND p.datePlayed >= ? 
     GROUP BY a.name
     ORDER BY times DESC
     LIMIT 1;
     ";
 
-    $res = mysqli_query($connection, $query);
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ssss", $spID, $spID, $spID, $date);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
     $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+    mysqli_close($connection);
+    mysqli_free_result($res);
+    mysqli_stmt_close($stmt);
 
     return $row;
 }
 
 function amountNewSongs($date) {
-    global $connection, $spID;
+    global $spID;
+    $connection = getConnection();
 
-    $queryNewSongsToday = "
+    $query = "
     SELECT count(*) AS new FROM song
     WHERE addedBy = '$spID'
     AND dateAdded >= '$date'
     ";
 
-    $resNewSongsToday = mysqli_query($connection, $queryNewSongsToday);
-    $rowNewSongsToday = mysqli_fetch_array($resNewSongsToday, MYSQLI_ASSOC);
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $spID, $date);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    print("New songs: " . $rowNewSongsToday["new"]);
+    $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+    print("New songs: " . $row["new"]);
+
+    mysqli_close($connection);
+    mysqli_free_result($res);
+    mysqli_stmt_close($stmt);
 }
 ?>
 

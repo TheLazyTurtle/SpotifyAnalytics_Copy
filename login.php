@@ -16,50 +16,69 @@ if (isset($_POST["submit"])) {
 
 function getUserID($spID) {
     $connection = getConnection();
-    $sql = "SELECT userID FROM users WHERE spotifyID = '$spID'";
-    $query = mysqli_query($connection, $sql);
-    $res = mysqli_fetch_assoc($query);
+    $sql = "SELECT userID FROM users WHERE spotifyID = ?";
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $spID);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-    mysqli_free_result($query);
+    $row = mysqli_fetch_assoc($res);
+
+    mysqli_free_result($res);
     mysqli_close($connection);
-    return $res["userID"];
+    mysqli_stmt_close($stmt);
+    return $row["userID"];
 }
 
 function login($name, $pass) {
-	$connection = getConnection();
+    $connection = getConnection();
 
-	$pass = md5($pass);
+    $pass = md5($pass);
 
-	$query = mysqli_query($connection, "SELECT * FROM users WHERE name = '$name' AND pass = '$pass'");
-	$res = mysqli_fetch_assoc($query);
-	mysqli_close($connection);
-	
-	if (mysqli_num_rows($query) == 1) {
-		$_SESSION["spID"] = $res["spotifyID"];
-		if (userHasAuthtoken($res["spotifyID"])) {
-			$_SESSION["loggedIn"] = True;
-			$_SESSION["userID"] = getUserID($_SESSION["spID"]);
-			header("Location: ./index.php");
-		} else {
-			header("Location: ../browser/auth.php");
-		}
+    $query = "SELECT * FROM users WHERE name = ? AND pass = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $name, $pass);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
+    $row = mysqli_fetch_assoc($res);
+    
+    if (mysqli_num_rows($res) == 1) {
+	$_SESSION["spID"] = $row["spotifyID"];
+	if (userHasAuthtoken($row["spotifyID"])) {
+	    $_SESSION["loggedIn"] = True;
+	    $_SESSION["userID"] = getUserID($_SESSION["spID"]);
+	    header("Location: ./index.php");
 	} else {
-		$error = "Er is iets mis gegaan probeer het opnieuw";
+	    header("Location: ../browser/auth.php");
 	}
+    } else {
+	$error = "Er is iets mis gegaan probeer het opnieuw";
+    }
+    mysqli_close($connection);
+    mysqli_free_result($res);
+    mysqli_stmt_close($stmt);
 }
 
 function userHasAuthToken($spID) {
-	$connection = getConnection();
-	$query = mysqli_query($connection, "SELECT * FROM users WHERE spotifyID = '$spID'");
+    $connection = getConnection();
+    $query = "SELECT * FROM users WHERE spotifyID = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "s", $spID);
+    $res = mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
 
-	$res = mysqli_fetch_assoc($query);
-	mysqli_close($connection);
+    $row = mysqli_fetch_assoc($res);
+    mysqli_close($connection);
+    mysqli_stmt_close($stmt);
 
-	if (empty($res["spotifyAuth"]) || empty($res["spotifyRefresh"]) || empty($res["spotifyExpire"])){
-		return False; 
-	} else {
-		return True;
-	}
+    if (empty($row["spotifyAuth"]) || empty($row["spotifyRefresh"]) || empty($row["spotifyExpire"])){
+	mysqli_free_result($res);
+	return False; 
+    } else {
+	mysqli_free_result($res);
+	return True;
+    }
 }
 
 ?>
