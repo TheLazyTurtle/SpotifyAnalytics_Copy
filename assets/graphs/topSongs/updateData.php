@@ -16,8 +16,10 @@ function updateData() {
     if (isset($_GET["artist"])) {
 	$artist = $_GET["artist"];
 	makeUpdateSetting("artistTopSongs", $artist, $userID);
+	$artist = "%" . $artist . "%";
     } else {
 	$artist = $settings["artist"];
+	$artist = "%" . $artist . "%";
     }
 
     // set amount
@@ -51,7 +53,7 @@ function updateData() {
 	INNER JOIN song s ON s.songID = p.songID
 	INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
 	RIGHT JOIN artist a on sfa.artistID = a.artistID
-	WHERE a.name LIKE ? 
+	WHERE a.name LIKE ?
 	AND a.addedBy = ? AND p.playedBy = ? AND s.addedBy = ? 
 	AND datePlayed BETWEEN ? AND ? 
 	GROUP BY s.songID, a.artistID
@@ -59,7 +61,7 @@ function updateData() {
 	LIMIT ?";
 
     $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, "ssssssi", $artist, $spID, $spID, $spID, $minDate, $maxDate, $amoutn);
+    mysqli_stmt_bind_param($stmt, "ssssssi", $artist, $spID, $spID, $spID, $minDate, $maxDate, $amount);
     $res = mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
     
