@@ -12,7 +12,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 10;
 
     overflow: hidden;
     padding-top: 10px;
@@ -60,3 +60,10 @@ body {
 .container {
     margin-top: 65px;
 }
+
+/* Jquery div thing*/
+#funInfoSliderJ {
+    margin-top: -5%;
+}
+
+

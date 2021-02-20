@@ -8,8 +8,12 @@ session_start();
 <head>
 
 <link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="./assets/info_slider/slider.css">
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="./assets/loader.js"></script>
+
 </head>
 
 

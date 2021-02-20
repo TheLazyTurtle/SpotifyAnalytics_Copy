@@ -9,33 +9,15 @@ if (isset($_SESSION["loggedIn"])) {
     // If the user is not logged in than send them to the login page
     header("Location: ./login.php");
 }
-
-
 ?>
 
 <div class="test">
-<?php //require "./assets/info_slider/slider.php"; ?>
-
-<script>
-$(document).ready(function() {
-    $("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
-    $("#topSongsJ").load("./assets/graphs/topSongs/topSongs.php");
-    $("#topArtistsJ").load("./assets/graphs/topArtist/topArtist.php");
-    $("#playedPerDayJ").load("./assets/graphs/playedPerDay/playedPerDay.php");
-})
-
-</script>
-
-<div id="allSongsPlayedJ"></div>
-<div id="topSongsJ"></div>
-<div id="topArtistsJ"></div>
-<div id="playedPerDayJ"></div>
-
-<div>
-
-<?php 
-    //require "./assets/settings/graphSettings.php";
-?>
+    <div id="funInfoSliderJ"></div>
+    <div id="allSongsPlayedJ"></div>
+    <div id="topSongsJ"></div>
+    <div id="topArtistsJ"></div>
+    <div id="playedPerDayJ"></div>
+</div>
 
 </body>
 <html>
