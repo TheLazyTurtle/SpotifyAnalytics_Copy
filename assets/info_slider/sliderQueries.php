@@ -46,52 +46,6 @@ function formatSeconds($ms) {
     return str_pad($hours, 2, '0', STR_PAD_LEFT) . gmdate(':i:s', $sec);
 }
 
-// This will get the image, from the database, from the song you pass in
-function getSongImg($song) {
-    $connection = getConnection();
-
-    $query = "SELECT img FROM song WHERE songID = ? ORDER BY dateAdded DESC";
-
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, "s", $song);
-    $res = mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-
-    $img = mysqli_fetch_row($res);
-    mysqli_close($connection);
-    mysqli_free_result($res);
-    mysqli_stmt_close($stmt);
-
-    if (!empty($img[0])) {
-	return $img[0];
-    } else {
-	return "http://fakeimg.pl/300/?text=no new song";
-    }
-}
-
-// This will get the imgage, from the database, from the artist you pass in 
-function getArtistImg($artist) {
-    $connection = getConnection();
-
-    $query = "SELECT img FROM artist WHERE artistID = ? ORDER BY dateAdded DESC";
-
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, "s", $artist);
-    $res = mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-
-    $img = mysqli_fetch_row($res);
-    mysqli_close($connection);
-    mysqli_free_result($res);
-    mysqli_stmt_close($stmt);
-
-    if (!empty($img[0])) {
-	return $img[0];
-    } else {
-	return "http://fakeimg.pl/300/?text=artist";
-    }
-}
-
 // This will get the amount of song you played in the timeframe you pass in
 function amountSongs($date) {
     global $spID;
@@ -169,6 +123,12 @@ function topSong($date) {
 
     $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
+    if (empty($row)) {
+	$row["img"] = "http://fakeimg.pl/300/?text=no song";
+	$row["name"] = " ";
+	$row["times"] = " ";
+    }
+
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
     mysqli_free_result($res);
@@ -199,6 +159,12 @@ function topArtist($date) {
     $res = mysqli_stmt_get_result($stmt);
 
     $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+    if (empty($row["img"])) {
+	$row["img"] = "http://fakeimg.pl/300/?text=no artist";
+	$row["name"] = " ";
+	$row["times"] = " ";
+    }
 
     mysqli_close($connection);
     mysqli_free_result($res);

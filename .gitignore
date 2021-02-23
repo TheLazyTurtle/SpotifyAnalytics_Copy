@@ -8,3 +8,5 @@ todo.txt
 Python/.nvimlog
 .nvimlog
 Python/__pycache__
+Python/V1/__pycache__
+Python/V2/__pycache__
