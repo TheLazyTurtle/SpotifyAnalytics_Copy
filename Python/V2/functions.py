@@ -30,7 +30,7 @@ def getArtistImg(token, name):
         artist = item[0]
         return artist["images"][0]["url"]
     except Exception as e:
-        pringMsg("Couldn't get image for artist", "yellow", name, "white", e,
+        printMsg("Couldn't get image for artist", "yellow", name, "white", e,
                  "red")
 
 
