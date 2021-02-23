@@ -2,6 +2,7 @@ from termcolor import colored
 from datetime import datetime
 
 import creds
+import Inserter
 
 
 def getFetchAmount(username):
@@ -22,16 +23,19 @@ def getFetchAmount(username):
                  "white", e, "red")
 
 
-def getArtistImg(token, name):
-    results = token.search(q="artist: " + name, type="artist")
-    item = results["artists"]["items"]
+def getArtistImg(token, name, artistID, spID):
+    inserter = Inserter.InsertData(spID)
+
+    if not inserter.artistExists(artistID):
+        results = token.search(q="artist: " + name, type="artist")
+        item = results["artists"]["items"]
 
     try:
         artist = item[0]
         return artist["images"][0]["url"]
     except Exception as e:
-        printMsg("Couldn't get image for artist", "yellow", name, "white", e,
-                 "red")
+        return "http://www.techspot.com/images2/downloads/topdownload/2016/12/spotify-icon-18.png"
+        printMsg("Couldn't get image for artist", "yellow", name, "white", "gave artist default img", "yellow")
 
 
 # Custom print statement for colored print messages
