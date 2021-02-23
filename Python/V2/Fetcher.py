@@ -88,7 +88,7 @@ class Fetcher:
                     artistName = artist["name"]
                     artistURL = artist["external_urls"]["spotify"]
                     # If the artist does not yet exists than make the extra call on the api for the artist img
-                    if not inserter.artistExists(artistName):
+                    if not self.inserter.artistExists(artistName):
                         artistImg = func.getArtistImg(self.token, artistName)
 
                     self.inserter.insertArtist(artistID, artistName, artistURL,
