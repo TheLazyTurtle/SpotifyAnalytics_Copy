@@ -11,8 +11,8 @@ class InsertData:
             connection = creds.connection()
             cursor = connection.cursor()
 
-            artistExists = "SELECT count(artistID) FROM artist WHERE artistID = %s"
-            data = (artistID, )
+            artistExists = "SELECT count(artistID) FROM artist WHERE artistID = %s AND addedBy = %s"
+            data = (artistID, self.spID)
 
             cursor.execute(artistExists, data)
             rowCount = cursor.fetchone()[0]
@@ -31,8 +31,8 @@ class InsertData:
             connection = creds.connection()
             cursor = connection.cursor()
 
-            songExists = "SELECT count(songID) FROM song WHERE songID = %s"
-            data = (songID, )
+            songExists = "SELECT count(songID) FROM song WHERE songID = %s AND addedBy = %s"
+            data = (songID, self.spID)
 
             cursor.execute(songExists, data)
             rowCount = cursor.fetchone()[0]
@@ -51,8 +51,8 @@ class InsertData:
             connection = creds.connection()
             cursor = connection.cursor()
 
-            markedPlayed = "SELECT count(songID) FROM played WHERE songID = %s AND datePlayed = %s"
-            data = (songID, datePlayed)
+            markedPlayed = "SELECT count(songID) FROM played WHERE songID = %s AND datePlayed = %s AND playedBy = %s"
+            data = (songID, datePlayed, self.spID)
 
             cursor.execute(markedPlayed, data)
             rowCount = cursor.fetchone()[0]
@@ -73,8 +73,8 @@ class InsertData:
             connection = creds.connection()
             cursor = connection.cursor()
 
-            linked = "SELECT count(songID) FROM SongFromArtist WHERE songID = %s AND artistID = %s"
-            data = (songID, artistID)
+            linked = "SELECT count(songID) FROM SongFromArtist WHERE songID = %s AND artistID = %s AND addedBy = %s"
+            data = (songID, artistID, self.spID)
 
             cursor.execute(linked, data)
             rowCount = cursor.fetchone()[0]
@@ -164,8 +164,8 @@ class InsertData:
                 connection = creds.connection()
                 cursor = connection.cursor()
 
-                linkSongToArtist = "INSERT IGNORE INTO SongFromArtist (songID, artistID) VALUES (%s, %s)"
-                data = (songID, artistID)
+                linkSongToArtist = "INSERT IGNORE INTO SongFromArtist (songID, artistID, addedBy) VALUES (%s, %s, %s)"
+                data = (songID, artistID, self.spID)
 
                 cursor.execute(linkSongToArtist, data)
                 connection.commit()
