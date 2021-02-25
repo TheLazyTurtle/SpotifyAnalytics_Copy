@@ -35,6 +35,7 @@ if (isset($_GET["remove"])) {
     $values = explode(" ", $value);
     $songID = $values[0];
     $artistID = $values[1];
+    print($value);
 
     $query = "
     UPDATE SongFromArtist 
@@ -43,7 +44,7 @@ if (isset($_GET["remove"])) {
     AND artistID = ? AND addedBy = ?";
 
     $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, "sss", $songID, $artistID, $spIDj);
+    mysqli_stmt_bind_param($stmt, "sss", $songID, $artistID, $spID);
     mysqli_stmt_execute($stmt);
     
     mysqli_stmt_close($stmt);

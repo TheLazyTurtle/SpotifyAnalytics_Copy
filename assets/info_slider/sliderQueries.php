@@ -146,16 +146,16 @@ function topArtist($date) {
     INNER JOIN song s ON p.songID = s.songID
     INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
     RIGHT JOIN artist a ON sfa.artistID = a.artistID
-    WHERE p.playedBy = ? AND a.addedBy = ? AND s.addedBy = ? 
+    WHERE p.playedBy = ? AND a.addedBy = ? AND s.addedBy = ? AND sfa.addedBy = ?
     AND sfa.primaryArtist = 1
     AND p.datePlayed >= ? 
-    GROUP BY a.name
+    GROUP BY a.artistID
     ORDER BY times DESC
     LIMIT 1;
     ";
 
     $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, "ssss", $spID, $spID, $spID, $date);
+    mysqli_stmt_bind_param($stmt, "sssss", $spID, $spID, $spID, $spID, $date);
     $res = mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
 

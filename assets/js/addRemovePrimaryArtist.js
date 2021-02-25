@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: "./primarySwitcher.php?add=" + value,
+	    url: "/assets/primary_artist/primarySwitcher.php?add=" + value,
 	    dataType: "text",
 	    success: function(data) {
 		$(".primary-check-" + value).attr("src", "https://openclipart.org/image/2400px/svg_to_png/202732/checkmark.png");
@@ -19,9 +19,10 @@ $(document).ready(function() {
 
 	$.ajax({
 	    type: "GET",
-	    url: "./primarySwitcher.php?remove=" + value,
+	    url: "/assets/primary_artist/primarySwitcher.php?remove=" + value,
 	    dataType: "text",
 	    success: function(data) {
+		console.log(data);
 		$(".primary-check-" + value).attr("src", "http://www.pngall.com/wp-content/uploads/2016/04/Red-Cross-Mark-PNG.png");
 	    }
 	})

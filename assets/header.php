@@ -25,7 +25,7 @@ session_start();
 if (isset($_SESSION["loggedIn"])) {
 
     if ($_SESSION["loggedIn"]) {
-	echo '<a class="btn btn-right" href="./logout.php">Uitloggen</a>';
+	echo '<a class="btn btn-right" href="/logout.php">Uitloggen</a>';
 
 	if ($_SERVER["REQUEST_URI"] != "/assets/primary_artist/selector.php") {
 	    echo '<a class="btn btn-left" href="/index.php">Home</a>';
@@ -36,7 +36,7 @@ if (isset($_SESSION["loggedIn"])) {
 	}
 
     } else {
-	echo '<a class="btn btn-left" href="./login.php">Inloggen</a>';
+	echo '<a class="btn btn-left" href="/login.php">Inloggen</a>';
     }
 }
 
