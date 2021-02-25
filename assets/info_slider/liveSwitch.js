@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('#day').click(function() {
 	$.ajax({
 	    type: "GET",
-	    url: "./assets/info_slider/sliderQueries.php?date=day",
+	    url: "/assets/info_slider/sliderQueries.php?date=day",
 	    dataType: "JSON",
 	    success: function(data) {
 		setData(data);
@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('#week').click(function() {
 	$.ajax({
 	    type: "GET",
-	    url: "./assets/info_slider/sliderQueries.php?date=week",
+	    url: "/assets/info_slider/sliderQueries.php?date=week",
 	    dataType: "JSON",
 	    success: function(data) {
 		setData(data);
@@ -25,7 +25,7 @@ $(document).ready(function() {
     $('#month').click(function() {
 	$.ajax({
 	    type: "GET",
-	    url: "./assets/info_slider/sliderQueries.php?date=month",
+	    url: "/assets/info_slider/sliderQueries.php?date=month",
 	    dataType: "JSON",
 	    success: function(data) {
 		setData(data);
@@ -36,7 +36,7 @@ $(document).ready(function() {
     $('#year').click(function() {
 	$.ajax({
 	    type: "GET",
-	    url: "./assets/info_slider/sliderQueries.php?date=year",
+	    url: "/assets/info_slider/sliderQueries.php?date=year",
 	    dataType: "JSON",
 	    success: function(data) {
 		setData(data);
@@ -47,7 +47,7 @@ $(document).ready(function() {
     $('#allTime').click(function() {
 	$.ajax({
 	    type: "GET",
-	    url: "./assets/info_slider/sliderQueries.php?date=allTime",
+	    url: "/assets/info_slider/sliderQueries.php?date=allTime",
 	    dataType: "JSON",
 	    success: function(data) {
 		setData(data);

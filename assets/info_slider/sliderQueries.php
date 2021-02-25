@@ -147,6 +147,7 @@ function topArtist($date) {
     INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
     RIGHT JOIN artist a ON sfa.artistID = a.artistID
     WHERE p.playedBy = ? AND a.addedBy = ? AND s.addedBy = ? 
+    AND sfa.primaryArtist = 1
     AND p.datePlayed >= ? 
     GROUP BY a.name
     ORDER BY times DESC

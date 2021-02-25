@@ -6,7 +6,9 @@ CREATE INDEX index_artist ON artist (artistID, name);
 CREATE TABLE SongFromArtist (
     songID varchar(255) NOT NULL,
     artistID varchar(255) NOT NULL,
-    primary key(songID, artistID)
+    addedBy varchar(255) NOT NULL,    
+    primaryArtist tinyint(1) NOT NULL DEFAULT 0,
+    primary key(songID, artistID, addedBy)
 );
 
 CREATE TABLE artist (
@@ -14,8 +16,9 @@ CREATE TABLE artist (
     name varchar(255) NOT NULL,
     url varchar(255) NOT NULL,
     dateAdded timestamp NOT NULL DEFAULT current_timestamp(),
-    addedBy varchar(255) NULL,
-    primary key (artistID)
+    addedBy varchar(255) NOT NULL,
+    img varchar(255) NULL,
+    primary key (artistID, addedBy)
 );
 
 CREATE TABLE played (
@@ -32,8 +35,9 @@ CREATE TABLE song (
     url varchar(255) NOT NULL,
     img varchar(255) NOT NULL,
     dateAdded timestamp NOT NULL DEFAULT current_timestamp(),
-    addedBy varchar(11) NULL,
-    primary key (songID)
+    addedBy varchar(255) NOT NULL,
+    preview varchar(255) NULL,
+    primary key (songID, addedBy)
 );
 
 CREATE TABLE user_settings (
@@ -53,13 +57,11 @@ CREATE TABLE users (
     spotifyRefresh varchar(255) NULL,
     spotifyExpire int(255) NULL,
     active tinyint(1) NULL DEFAULT 1,
-    primary key (userID);
+    primary key (userID)
 );
 
-CREATE TABLE searchRanking (
-    userID int(11) NOT NULL,
-    ID varchar(255) NOT NULL,
-    type varchar(255) NOT NULL,
-    searchDate timestamp NOT NULL DEFAULT current_timestamp(),
-    primary key (userID, searchDate)
+CREATE TABLE autoArtist (
+    addedBy varchar(255) NOT NULL,
+    artistID varchar(255) NOT NULL,
+    primary key (addedBy, artistID)
 );

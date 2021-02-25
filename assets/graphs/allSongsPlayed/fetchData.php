@@ -16,14 +16,15 @@ function fetchData($spID, $settings) {
 	INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID 
 	RIGHT JOIN artist a ON a.artistID = sfa.artistID 
 	WHERE a.name LIKE ?
-	AND a.addedBy = ? AND p.playedBy = ? AND s.addedBy = ?
+	AND a.addedBy = ? AND p.playedBy = ? AND s.addedBy = ? AND sfa.addedBy = ?
+	AND sfa.primaryArtist = 1
 	AND datePlayed BETWEEN ? AND ?
 	GROUP BY s.name, a.artistID 
 	HAVING times between ? AND ?
 	ORDER BY name";
 
     $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, 'ssssssii', $artist, $spID, $spID, $spID, $minDate, $maxDate, $minPlayed, $maxPlayed);
+    mysqli_stmt_bind_param($stmt, 'sssssssii', $artist, $spID, $spID, $spID, $spID, $minDate, $maxDate, $minPlayed, $maxPlayed);
     $res = mysqli_stmt_execute($stmt);
     $res = mysqli_stmt_get_result($stmt);
 

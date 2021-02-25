@@ -158,14 +158,14 @@ class InsertData:
                           (songName + " - " + self.spID), "white", e, "red")
 
     # links artists to songs
-    def linkSongToArtist(self, songID, artistID, songName, artistName):
+    def linkSongToArtist(self, songID, artistID, songName, artistName, primaryArtist = 0):
         try:
             if not self.linkedSFA(songID, artistID):
                 connection = creds.connection()
                 cursor = connection.cursor()
 
-                linkSongToArtist = "INSERT IGNORE INTO SongFromArtist (songID, artistID, addedBy) VALUES (%s, %s, %s)"
-                data = (songID, artistID, self.spID)
+                linkSongToArtist = "INSERT IGNORE INTO SongFromArtist (songID, artistID, addedBy, primaryArtist) VALUES (%s, %s, %s, %s)"
+                data = (songID, artistID, self.spID, primaryArtist)
 
                 cursor.execute(linkSongToArtist, data)
                 connection.commit()

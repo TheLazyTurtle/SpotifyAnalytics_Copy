@@ -1,15 +1,16 @@
 $(document).ready(function() {
     $("#funInfoSliderJ").load("./assets/info_slider/slider.php");
     // Initial load of the slider
-    $.ajax({
-	type: "GET",
-	url: "./assets/info_slider/sliderQueries.php?date=day",
-	dataType: "JSON",
-	success: function(data) {
-	    setData(data);
-	}
-    });
-
+    if ($("#funInfoSliderJ").length) {
+	$.ajax({
+	    type: "GET",
+	    url: "/assets/info_slider/sliderQueries.php?date=day",
+	    dataType: "JSON",
+	    success: function(data) {
+		setData(data);
+	    }
+	});
+    }
 
     $("#allSongsPlayedJ").load("./assets/graphs/allSongsPlayed/allSongsPlayed.php");
     $("#topSongsJ").load("./assets/graphs/topSongs/topSongs.php");

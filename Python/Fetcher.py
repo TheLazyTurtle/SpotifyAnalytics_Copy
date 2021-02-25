@@ -1,11 +1,12 @@
-import spotipy
-import spotipy.util as util
 import time
 
-import Inserter
+import spotipy
+import spotipy.util as util
+
 import Caching
-import functions as func
 import creds
+import functions as func
+import Inserter
 
 
 class Fetcher:
@@ -53,9 +54,29 @@ class Fetcher:
             func.printMsg("Failed to get results for user:", "red", self.spID,
                           "white", e, "red")
 
+    def autoArtist(self, artistID):
+        try:
+            connection = creds.connection()
+            cursor = connection.cursor()
+
+            autoArtist = "SELECT count(*) FROM autoArtist WHERE addedBy = %s AND artistID = %s"
+            data = (self.spID, artistID)
+
+            cursor.execute(autoArtist, data)
+            rowCount = cursor.fetchone()[0]
+
+            if rowCount > 0:
+                return True
+            else:
+                return False
+        except Exception as e:
+            func.printMsg("Failed to get autoArtist from db", "red",
+                          (artistID + " - " + self.spID), "white", e, "red")
+
     def parseData(self):
         try:
             for song in self.getResult()["items"]:
+                artists = 1
                 # Get the time the song was played at
                 playedAt = song["played_at"]
                 playedAt = playedAt.replace("T", " ")
@@ -93,8 +114,15 @@ class Fetcher:
 
                     self.inserter.insertArtist(artistID, artistName, artistURL,
                                                self.spID, artistImg)
-                    self.inserter.linkSongToArtist(songID, artistID, songName,
-                                                   artistName)
+
+                    if artists == 1 or self.autoArtist(artistID):
+                        self.inserter.linkSongToArtist(songID, artistID,
+                                                       songName, artistName, 1)
+                    else:
+                        self.inserter.linkSongToArtist(songID, artistID,
+                                                       songName, artistName)
+
+                    artists += 1
 
         except Exception as e:
             func.printMsg("Failed to get song data for user:", "red",
