@@ -20,14 +20,16 @@ function addToken($userID, $token, $validTo) {
 
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="nl">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-
+<title>Spotify Analitics</title>
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="/assets/info_slider/slider.css">
 
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js" rel="noopener"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="noopener"></script>
 <script src="/assets/js/loader.js"></script>
 <!-- <script src="./assets/js/primaryArtistSwitch.js"></script> -->
 
