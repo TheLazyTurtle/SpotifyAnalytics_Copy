@@ -20,8 +20,9 @@ if (isset($_COOKIE["userID"]) && isset($_COOKIE["token"])) {
 	    if (date("Y-m-d") < $row[1]) {
 		$_SESSION["loggedIn"] = True;
 		$_SESSION["userID"] = $_COOKIE["userID"];
+		$_SESSION["spID"] = getSpID($_SESSION["userID"]);
 
-		if ($_SESSION["loggedIn"] == True) {
+		if ($_SESSION["loggedIn"]) {
 		    header("Location: /index.php");
 		}
 	    }
@@ -53,6 +54,25 @@ if (isset($_POST["submit"])) {
 	login($name, $pass, $token, $validTo);
     }
 }
+
+function getSpID($userID) {
+    $connection = getConnection();
+    $query = "SELECT spotifyID FROM users where userID = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "s", $userID);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+
+    $row = mysqli_fetch_assoc($res);
+
+    mysqli_close($connection);
+    mysqli_stmt_close($connection);
+    mysqli_free_result($res);
+
+    return $row["spotifyID"];
+
+}
+
 
 function getUserID($spID) {
     $connection = getConnection();
