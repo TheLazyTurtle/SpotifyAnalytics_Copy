@@ -2,6 +2,22 @@
 require "connect.php";
 session_start();
 
+// Add the token and userID to the database and set the cookies
+function addToken($userID, $token, $validTo) {
+    $connection = getConnection();
+    $query = "INSERT INTO loginToken (userID, token, validTo) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "sss", $userID, $token, $validTo);
+    mysqli_stmt_execute($stmt);
+
+    // Set the tokens
+    setcookie("userID", $userID, time() + (86400 * 30), "/");
+    setcookie("token", $token, time() + (86400 * 30), "/");
+
+    mysqli_close($connection);
+    mysqli_stmt_close($stmt);
+}
+
 ?>
 
 <html>

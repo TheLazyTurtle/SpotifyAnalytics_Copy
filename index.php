@@ -9,6 +9,7 @@ if (isset($_SESSION["loggedIn"])) {
     // If the user is not logged in than send them to the login page
     header("Location: ./login.php");
 }
+
 ?>
 
 <div class="test">

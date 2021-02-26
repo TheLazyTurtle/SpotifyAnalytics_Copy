@@ -65,3 +65,10 @@ CREATE TABLE autoArtist (
     artistID varchar(255) NOT NULL,
     primary key (addedBy, artistID)
 );
+
+CREATE TABLE loginToken (
+    userID int(11) NOT NULL,
+    token varchar(255) NOT NULL,
+    validTo varchar(255) NOT NULL,
+    primary ey (userID, token)
+);

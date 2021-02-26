@@ -1,17 +1,57 @@
 <?php
 require "./assets/header.php";
 
+// checks if the cookies are set and it than logs you in if that is the case
+if (isset($_COOKIE["userID"]) && isset($_COOKIE["token"])) {
+    if (!empty($_COOKIE["userID"]) && !empty($_COOKIE["token"])) {	
+
+	$connection = getConnection();
+	$userID = $_COOKIE["userID"];
+	$token = $_COOKIE["token"];
+
+	$query = "SELECT count(*), validTo FROM loginToken WHERE userID = ? AND token = ? GROUP BY userID";
+	$stmt = mysqli_prepare($connection, $query);
+	mysqli_stmt_bind_param($stmt, "ss", $userID, $token);
+	$res = mysqli_stmt_execute($stmt);
+	$res = mysqli_stmt_get_result($stmt);
+
+	$row = mysqli_fetch_row($res);
+	if ($row[0] == 1) {
+	    if (date("Y-m-d") < $row[1]) {
+		$_SESSION["loggedIn"] = True;
+		$_SESSION["userID"] = $_COOKIE["userID"];
+
+		if ($_SESSION["loggedIn"] == True) {
+		    header("Location: /index.php");
+		}
+	    }
+	} else {
+	    header("Location: /login.php");
+	}
+    }
+}
+
 $error;
 
 if (isset($_POST["submit"])) {
-	$name = $_POST["name"];
-	$pass = $_POST["pass"];
+    $name = $_POST["name"];
+    $pass = $_POST["pass"];
 
-	if (empty($name) || empty($pass)) {
-		$error = "Niet alle velden zijn ingevuld";
-	} else {
-		login($name, $pass);
-	}
+    if (isset($_POST["checkbox"])) {
+	$checkbox = $_POST["checkbox"];
+
+	// Generates a random token and how long it is valid for
+	$token = openssl_random_pseudo_bytes(16);
+	$token = bin2hex($token);
+	$validTo = strtotime("next month");
+	$validTo = date("Y-m-d", $validTo); 
+    }	
+
+    if (empty($name) || empty($pass)) {
+	$error = "Niet alle velden zijn ingevuld";
+    } else {
+	login($name, $pass, $token, $validTo);
+    }
 }
 
 function getUserID($spID) {
@@ -30,7 +70,7 @@ function getUserID($spID) {
     return $row["userID"];
 }
 
-function login($name, $pass) {
+function login($name, $pass, $token, $validTo) {
     $connection = getConnection();
 
     $pass = md5($pass);
@@ -48,6 +88,8 @@ function login($name, $pass) {
 	if (userHasAuthtoken($row["spotifyID"])) {
 	    $_SESSION["loggedIn"] = True;
 	    $_SESSION["userID"] = getUserID($_SESSION["spID"]);
+
+	    addToken($_SESSION["userID"], $token, $validTo);
 	    header("Location: ./index.php");
 	} else {
 	    header("Location: ../browser/auth.php");
@@ -90,6 +132,9 @@ function userHasAuthToken($spID) {
 	<br>
 	<label>Wachtwoord</label>
 	<input type="password" name="pass">
+	<br>
+	<label>Ingeloged blijven?</label>
+	<input type="checkbox" name="checkbox">
 	<br>
 	<input class="btn" type="submit" name="submit" value="Login">
 	<br>
