@@ -7,8 +7,16 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
 // Files needed to connect to db and get the user object
-include_once 'config/database.php';
-include_once 'objects/user.php';
+require '../config/database.php';
+require '../objects/user.php';
+
+// Genereate json web token (jwt)
+require '../config/core.php';
+require '../libs/php-jwt/src/BeforeValidException.php';
+require '../libs/php-jwt/src/ExpiredException.php';
+require '../libs/php-jwt/src/SignatureInvalidException.php';
+require '../libs/php-jwt/src/JWT.php';
+use \Firebase\JWT\JWT;
 
 // Get db connection
 $database = new Database();
@@ -21,14 +29,6 @@ $data = json_decode(file_get_contents("php://input"));
 
 $user->email = $data->email;
 $email_exists = $user->emailExists();
-
-// Genereate json web token (jwt)
-include_once 'config/core.php';
-include_once 'libs/php-jwt/src/BeforeValidException.php';
-include_once 'libs/php-jwt/src/ExpiredException.php';
-include_once 'libs/php-jwt/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt/src/JWT.php';
-use \Firebase\JWT\JWT;
 
 // Check if email exists and if password is correct
 if ($email_exists && password_verify($data->password, $user->password)) {

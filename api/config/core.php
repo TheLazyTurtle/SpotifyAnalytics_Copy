@@ -9,6 +9,6 @@ date_default_timezone_set("Europe/Amsterdam");
 // This key must be secret??
 $key = "superFancyKey";
 $issued_at = time();
-$expiration_time = $issued_at + (60*60); // valid for one hour
+$expiration_time = $issued_at + (24*60*60*1000); // valid for one hour
 $issuer = "http://localhost/";
 ?>
