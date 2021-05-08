@@ -1,6 +1,6 @@
 <html lang="en">
+    <!--Try and put all these things in an header file (prob wiht jquery)-->
     <head>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -16,59 +16,52 @@
 	<div id="content"></div>
 
 
+    <!--This should all be placed in an seperate js file-->
     <script>
 	$(document).ready(function() {
-	    // Make the form
+	    // Loading the form in this way is very important because otherwise it will just lose all the data on submit and it wont work
 	    var html = `
-		<div class="login-container">
-		    <div class="login-box">
-			<h2>Login</h2>
-			<form method="POST" id="login_form">
-			    <input type="email" name="email" placeholder="Username" class="form-field login-form"><br>
-			    <input type="password" name="password" placeholder="Password" class="form-field login-form"><br>
-			    <button type="submit" class="btn login-btn">Login</button>
-			</form>
-			<p>Don't have an account? Make one <a class="register-link" href="/register.html">here</a></p>
+		    <div class="register-container">
+			<div class="register-box">
+			    <h2>Register</h2>
+			    <form method="POST" id="register_form">
+				<input type="text" name="firstname" placeholder="Firstname" class="form-field register-form"><br>
+				<input type="text" name="lastname" placeholder="Lastname" class="form-field register-form"><br>
+				<input type="email" name="email" placeholder="Email" class="form-field register-form"><br>
+				<input type="password" name="password" placeholder="Password" class="form-field register-form"><br>
+				<button type="submit" class="btn register-btn">Register</button>
+			    </form>
+			    <p>Already have an account? Log in <a class="login-link" href="/login.php">here</a></p>
+			</div>
 		    </div>
-		</div>
 	    `;
 
-	    // Load the form
-	    $("#content").html(html);
+	    // Actually display the form
+	    $('#content').html(html);
 
-	    // Process the input data
-	    $(document).on('submit', "#login_form", function() {
+	    // Trigger when Register form is submitted
+	    $(document).on('submit', "#register_form", function(){
 		// Get form data
-		var login_form = $(this);
-		var login_data = JSON.stringify(login_form.serializeObject());
+		var sign_up_form = $(this);
+		var form_data = JSON.stringify(sign_up_form.serializeObject());
 
-		// submit data to api
+		// Submit form data to api
 		$.ajax({
-		    url: "api/login.php",
-		    type: "post",
+		    url: "api/create_user.php",
+		    type: "POST",
 		    contentType: "application/json",
-		    data: login_data,
+		    data: form_data,
 		    success: function(result) {
-			// Store jwt to cookie
-			setCookie("jwt", result.jwt, 1);
-
-			// Go to home page
-			window.location.href= "index.html";
+			// TODO: Do something successful
+			window.location.href="login.php";
 		    },
 		    error: function(xhr, resp, text) {
-			// TODO: Do something to disapoint the user
+			// TODO: Disapoint the user
+			window.location.href="index.html";
 		    }
 		});
 		return false;
 	    });
-
-	    // Sets the cookie
-	    function setCookie(cname, cvalue, exdays) {
-		var d = new Date();
-		d.setTime(d.getTime() + (exdays*24*60*60*1000));
-		var expires = "expires="+ d.toUTCString();
-		document.cookie = cname + "=" + cvalue +";" + expires + "; path=/";
-	    }
 
 	    // Cleans the data up
 	    $.fn.serializeObject = function(){
@@ -88,6 +81,7 @@
 		return o;
 	    };
 	});
+
     </script>
     </body>
 </html>
