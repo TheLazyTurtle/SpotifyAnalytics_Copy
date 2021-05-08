@@ -1,0 +1,64 @@
+/*general*/
+body {
+    background-color: #32373A;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+    color: #0095F6;
+}
+
+.graph {
+    height: 370px;
+    width: 100%;
+}
+
+.btn {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    margin-top: 10px;
+
+    background-color: #0095F6;
+    text-decoration: none;
+
+    border: 1px;
+    border-radius: 5px;
+}
+
+.form-field {
+    border: 1px solid gray;
+    margin-bottom: 5px;
+    padding: 5px;
+    background: #eaeaea;
+}
+
+/*login stuff*/
+.login-container, .register-container {
+    margin: auto;
+    background-color: white;
+    width: 20%;
+    padding: 10px;
+    border: 1px;
+    border-radius: 8px;
+}
+
+.login-form, .register-form{
+    width: 50%;
+}
+
+.login-box, .register-box {
+    text-align: center;
+}
+
+.login-btn, .register-btn {
+    width: 50%;
+}
+
+/*Index stuff*/
+.container {
+    width: 100%;
+}
+
