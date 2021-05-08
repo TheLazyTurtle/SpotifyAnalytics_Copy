@@ -16,6 +16,31 @@ class Song {
 
     public function __construct($db) {
 	$this->conn = $db;
+	$this->checkCoockie();
+    }
+
+    function checkCoockie() {
+	$jwtCookie = isset($_COOKIE["jwt"]) ? $_COOKIE["jwt"] : null;
+
+	if ($jwtCookie == null) {
+	    die();
+	}
+
+	$data = array("jwt" => $jwtCookie);
+
+	$options = array (
+	    'http' => array (
+		'header' => 'Content-type: application/json',
+		'method' => 'POST',
+		'content' => http_build_query($data)
+	    )
+	);
+	$context = stream_context_create($options);
+	$result = file_get_contents("../../api/validate_token.php", false, $context);
+
+	if ($result === false) {
+	    die();
+	}
     }
 
     // Get all songs from the db

@@ -12,45 +12,4 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </head>
 
-<script>
-$(document).ready(function() {
-    var jwt = getCookie('jwt');
-    $.ajax({
-    url: "api/validate_token.php",
-	type: "post",
-	contentType: "application/json",
-	data: JSON.stringify({jwt:jwt}),
-	success: function(result) {
-	    if (!document.URL.includes("index.php")) {
-		window.location.href = "index.php";
-	    }
-	},
-	error: function(result) {
-	    if (!document.URL.includes("login.php")) {
-		window.location.href = "login.php";
-	    }
-	}
-
-    });
-
-    // get or read cookie
-    function getCookie(cname){
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var ca = decodedCookie.split(';');
-	for(var i = 0; i < ca.length; i++) {
-	    var c = ca[i];
-	    while (c.charAt(0) == ' '){
-		c = c.substring(1);
-	    }
-     
-	    if (c.indexOf(name) == 0) {
-		console.log(c.substring(name.length, c.length));
-		return c.substring(name.length, c.length);
-	    }
-	}
-	return "";
-    }
-});
-
-</script>
+<script src="/js/check_jwt.js"></script>
