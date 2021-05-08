@@ -70,5 +70,12 @@ CREATE TABLE loginToken (
     userID int(11) NOT NULL,
     token varchar(255) NOT NULL,
     validTo varchar(255) NOT NULL,
-    primary ey (userID, token)
+    primary key (userID, token)
+);
+
+CREATE TABLE apiTokens (
+    userID int(11) NOT NULL,
+    token varchar(255) NOT NULL,
+    validTo varchar(255) NOT NULL,
+    primary Key (userID, token)
 );
