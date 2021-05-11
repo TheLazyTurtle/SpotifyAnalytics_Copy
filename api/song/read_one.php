@@ -20,7 +20,7 @@ $song->id = isset($_GET['songID']) ? $_GET["songID"] : die();
 // fetch that one song
 $song->readOne();
 
-// Found data??
+// Found data
 if ($song->name != null) {
     $songArr = array(
 	"songID" => $song->id,

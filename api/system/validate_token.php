@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Require headers
 header("Access-Control-Allow-Origin: http://localhost/");
 header("Content-Type: application/json; charset=UTF-8");
@@ -32,6 +33,8 @@ if ($jwt) {
 	    "message" => "access granted",
 	    "data" => $decoded->data
 	));
+	$_SESSION["userID"] = $decoded->data->id;
+
     } catch (Exception $e) {
 	// Set http response to denied
 	http_response_code(401);

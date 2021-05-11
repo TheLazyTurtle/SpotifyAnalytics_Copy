@@ -28,6 +28,14 @@ a {
     border-radius: 5px;
 }
 
+.btn:hover {
+    background-color: #ffffff;
+}
+
+.btn:active {
+    transform: scale(0.9);
+}
+
 .form-field {
     border: 1px solid gray;
     margin-bottom: 5px;

@@ -37,7 +37,8 @@ if ($email_exists && password_verify($data->password, $user->password)) {
 	"exp" => $expiration_time,
 	"iss" => $issuer,
 	"data" => array (
-	    "id" => $user->firstname,
+	    "id" => $user->id,
+	    "firstname" => $user->firstname,
 	    "lastname" => $user->lastname,
 	    "email" => $user->email,
 	)

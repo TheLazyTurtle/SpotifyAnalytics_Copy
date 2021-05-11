@@ -6,19 +6,16 @@ header("Access-Control-Allow_Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Get db connection
-include_once '../config/database.php';
+// Get db connection and get song object
+require '../config/database.php';
+require '../objects/songs.php';
 
-// make song object
-include_once '../objects/songs.php';
-
+// Make db connection and make new song object
 $database = new Database();
 $db = $database->getConnection();
-
 $song = new Song($db);
 
 // Get posted data
-// No clue what this does (yet)
 $data = json_decode(file_get_contents("php://input"));
 
 // Check if data is not empty

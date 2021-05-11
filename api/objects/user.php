@@ -1,4 +1,6 @@
 <?php
+require "../config/check_cookie.php";
+
 class User {
     // Database connection
     private $conn;
@@ -12,6 +14,7 @@ class User {
 
     public function __construct($db) {
 	$this->conn = $db;
+	//checkCookie();
     }
 
     function create() {
@@ -113,12 +116,8 @@ class User {
 
 	    return true;
 	}
-
 	return false;
     } 
-
-    // CONTINUE ON STEP 6.5
-    // https://codeofaninja.com/2018/09/rest-api-authentication-example-php-jwt-tutorial.html
 }
 
 ?>

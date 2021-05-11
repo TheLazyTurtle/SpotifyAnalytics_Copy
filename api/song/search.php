@@ -4,23 +4,22 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object
-include_once '../config/database.php';
-include_once '../objects/songs.php';
+require '../config/database.php';
+require '../objects/songs.php';
 
-//  Make db
+//  Make db connection and new song object
 $database = new Database();
 $db = $database->getConnection();
-
-// make object
 $song = new Song($db);
 
 // Get the keyword
 $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
 
-// Get the products
+// Get the songs 
 $stmt = $song->search($keyword);
 $num = $stmt->rowCount();
 
+// If there are results
 if ($num > 0)  {
     $songsArr = array();
     $songsArr["records"] = array();

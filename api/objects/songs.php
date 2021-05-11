@@ -1,4 +1,6 @@
 <?php
+require '../config/check_cookie.php';
+
 class Song {
     // Db connection and table
     private $conn;
@@ -16,40 +18,12 @@ class Song {
 
     public function __construct($db) {
 	$this->conn = $db;
-	$this->checkCoockie();
-    }
-
-    // This checks if the jwt cookie is set and is valid. 
-    // If its not set or not valid than kill the connection and don't show the data.
-    // This is done to prevent api requests from people who aren't autenticated 
-    // to get the data they asked for.
-    function checkCoockie() {
-	$jwtCookie = isset($_COOKIE["jwt"]) ? $_COOKIE["jwt"] : null;
-
-	if ($jwtCookie == null) {
-		die();
-	}
-
-	$data = array("jwt" => $jwtCookie);
-
-	$options = array(
-		'http' => array(
-			'header' => 'Content-type: application/json',
-			'method' => 'POST',
-			'content' => http_build_query($data)
-		)
-	);
-	$context = stream_context_create($options);
-	$result = file_get_contents("../../api/system/validate_token.php", false, $context);
-
-	if ($result === false) {
-		die();
-	}
+	checkCookie();
     }
 
     // Get all songs from the db
     function read() {
-	$query = "SELECT songID as id, name, img, dateAdded, addedBy FROM " . $this->tableName . " LIMIT 10";
+	$query = "SELECT songID as id, name, img, dateAdded, addedBy FROM song LIMIT 10";
 	$stmt = $this->conn->prepare($query);
 	$stmt->execute();
 	return $stmt;
@@ -91,7 +65,7 @@ class Song {
 	    dateAdded = :dateAdded,
 	    addedBy = :addedBy, 
 	    preview = :preview";
-	$stmt = $this->con->prepare($query);
+	$stmt = $this->conn->prepare($query);
 
 	// Clean data from specialchars
 	$this->id = htmlspecialchars(strip_tags($this->id));
@@ -104,7 +78,7 @@ class Song {
 	$this->preview = htmlspecialchars(strip_tags($this->preview));
 
 	if ($stmt->execute()) {
-		return true;
+	    return true;
 	}
 	return false;
     }

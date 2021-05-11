@@ -1,6 +1,7 @@
 <?php
 require 'header.php';
 ?>
+
     <body>
 	<div id="content"></div>
 

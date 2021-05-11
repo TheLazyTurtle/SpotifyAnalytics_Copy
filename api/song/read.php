@@ -1,17 +1,15 @@
 <?php
 // Required headers
-header("Acess-control-Allow_Origin: *");
+header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
-include_once '../config/database.php';
-include_once '../objects/songs.php';
+require '../config/database.php';
+require '../objects/songs.php';
 
-// Make db and product objects
+// Make db and song objects
 $database = new Database();
 $db = $database->getConnection();
-
-// Initialize object
 $song = new Song($db);
 
 // query songs
