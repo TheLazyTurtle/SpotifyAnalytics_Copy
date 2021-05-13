@@ -16,14 +16,15 @@ var userID = '<%= Session["userID"] %>'
 
 // TODO: Find a way to get the correct api call and the correct data it needs
 // Get the data to make the graph
-function getGraphData(containerID, title, titleX, titleY, xValueType) {
-    var filterSettings = {
-        minPlayed: 20,
-        maxPlayed: 9999,
-        minDate: "2020-01-01",
-        maxDate: "2099-01-01",
-    }
-
+function getGraphData(
+    containerID,
+    title,
+    titleX,
+    titleY,
+    xValueType,
+    api,
+    filterSettings
+) {
     var graphData = {
         containerID: containerID,
         title: title,
@@ -31,10 +32,11 @@ function getGraphData(containerID, title, titleX, titleY, xValueType) {
         titleY: titleY,
         xValueType: xValueType,
         indexLabelFontColor: "#5a6767",
+        api: api,
     }
 
     $.ajax({
-        url: "/api/graph/allSongsPlayed.php",
+        url: api,
         type: "post",
         //contentType: "application/json",
         data: filterSettings,
@@ -84,7 +86,7 @@ function makeNewGraph(data, graphData) {
         ],
     })
     graphs[graphData.title].render()
-    getButtonPressed(graphData.containerID)
+    getButtonPressed(graphData.containerID, graphData.api)
 }
 
 // Make the array of buttons that are used to select the timeframe
@@ -105,17 +107,17 @@ function buttonArray(mainDiv, containerID) {
 }
 
 // Check if the timeframe buttons are pressed
-function getButtonPressed(containerID) {
+function getButtonPressed(containerID, api) {
     for (var i = 0; i < timeframes.length; i++) {
         $("#" + containerID + "-" + timeframes[i]).click(function () {
             var timeframe = $(this).val()
-            updateData(timeframe)
+            updateData(containerID, timeframe, api)
         })
     }
 }
 
 // Update the data of the graph based on the timeframe change
-function updateData(timeframe) {
+function updateData(containerID, timeframe, api) {
     // TODO: Make maxPlayed be the max amount of played and convert that to the next round number so 00 => 100 and 1387 => 1400 || 1500
     time = convertTime(timeframe)
 
@@ -127,19 +129,19 @@ function updateData(timeframe) {
     }
 
     $.ajax({
-        url: "/api/graph/allSongsPlayed.php",
+        url: api,
         type: "POST",
         //contentType: "application/json",
         data: data,
         success: function (result) {
-            graphs["test"].options.data[0].dataPoints = []
+            graphs[containerID].options.data[0].dataPoints = []
 
             for (var i = 0; i < result["records"].length; i++) {
-                graphs["test"].options.data[0].dataPoints.push(
+                graphs[containerID].options.data[0].dataPoints.push(
                     result["records"][i]
                 )
             }
-            graphs["test"].render()
+            graphs[containerID].render()
         },
         error: function (result) {
             console.error(result)
@@ -147,83 +149,29 @@ function updateData(timeframe) {
     })
 }
 
-// Converts the timeframe button values to actual dates
-function convertTime(timeframe) {
-    var minDate = "2020-01-01"
-    var maxDate = "2099-01-01"
-
-    if (timeframe == "yesterday") {
-        minDate = formatDate(-1, 0)
-        maxDate = formatDate(0, 0)
-    } else if (timeframe == "today") {
-        minDate = formatDate(0, 0)
-        maxDate = formatDate(0, 0, false)
-    } else if (timeframe == "week") {
-        minDate = lastSunday()
-        maxDate = formatDate(0, 0, false)
-    } else if (timeframe == "month") {
-        minDate = startMonth()
-        maxDate = formatDate(0, 0, false)
-    } else if (timeframe == "year") {
-        minDate = startYear()
-        maxDate = formatDate(0, 0, false)
-    } else if (timeframe == "allTime") {
-        minDate = "2020-01-01"
-        maxDate = formatDate(0, 0, false)
-    }
-
-    return { minDate: minDate, maxDate: maxDate }
+var filterSettings = {
+    minPlayed: 20,
+    maxPlayed: 9999,
+    minDate: "2020-01-01",
+    maxDate: "2099-01-01",
 }
 
-// Formats the days to a format SQL can use
-function formatDate(
-    plusDay = 0,
-    plusMonth = 0,
-    startOfDay = true,
-    date = new Date()
-) {
-    var d = new Date(date),
-        month = "" + (d.getMonth() + Number(plusMonth) + plusMonth + 1),
-        day = "" + (d.getDate() + Number(plusDay)),
-        year = d.getFullYear(),
-        hour = 23
+getGraphData(
+    "test",
+    "test",
+    "",
+    "",
+    "string",
+    "/api/graph/allSongsPlayed.php",
+    filterSettings
+)
 
-    if (month.length < 2) {
-        month = "0" + month
-    }
-    if (day.length < 2) {
-        day = "0" + day
-    }
-    if (startOfDay) {
-        hour = 00
-    }
-
-    time = [year, month, day].join("-")
-    time += " " + hour
-    return time
-}
-
-// Get the previouse sunday
-function lastSunday(startOfDay = true) {
-    d = new Date()
-    var day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6 : 0)
-    return formatDate(0, 0, startOfDay, new Date(d.setDate(diff)))
-}
-
-// Get the start of the month date
-function startMonth(startOfDay = true) {
-    d = new Date()
-    var month = d.getMonth(),
-        diff = d.getMonth() - month + (month == 0 ? -12 : 1)
-    return formatDate(0, 0, startOfDay, new Date(d.setDate(diff)))
-}
-
-// Get the start of the year date
-function startYear(startOfDay = true) {
-    d = new Date()
-    year = d.getFullYear() + "-01-01"
-    return formatDate(0, 0, startOfDay, new Date(year))
-}
-
-getGraphData("test", "test", "", "", "string")
+getGraphData(
+    "test2",
+    "test2",
+    "",
+    "",
+    "string",
+    "/api/graph/allSongsPlayed.php",
+    filterSettings
+)

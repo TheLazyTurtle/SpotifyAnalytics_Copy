@@ -9,6 +9,10 @@ a {
     color: #0095F6;
 }
 
+.main {
+    margin-bottom: 400px;
+}
+
 .graph {
     height: 370px;
     width: 100%;
