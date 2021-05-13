@@ -14,7 +14,6 @@ var timeframes = [
 // Get the userID form the session
 var userID = '<%= Session["userID"] %>'
 
-// TODO: Find a way to get the correct api call and the correct data it needs
 // Get the data to make the graph
 function getGraphData(
     containerID,
@@ -23,7 +22,8 @@ function getGraphData(
     titleY,
     xValueType,
     api,
-    filterSettings
+    filterSettings,
+    inputFields
 ) {
     var graphData = {
         containerID: containerID,
@@ -33,12 +33,20 @@ function getGraphData(
         xValueType: xValueType,
         indexLabelFontColor: "#5a6767",
         api: api,
+        filterSettings,
     }
 
+    // If we make the graph with input fields than make the amount of input fields we have defined here with the names given in the object of input fields
+    if (inputFields) {
+        for (var i = 0; i < inputFields.length; i++) {
+            makeInputFields(graphData, inputFields, i)
+        }
+    }
+
+    // Make the api request to get the data to fill the graph
     $.ajax({
         url: api,
         type: "post",
-        //contentType: "application/json",
         data: filterSettings,
         success: function (result) {
             makeNewGraph(result["records"], graphData)
@@ -86,53 +94,27 @@ function makeNewGraph(data, graphData) {
         ],
     })
     graphs[graphData.title].render()
-    getButtonPressed(graphData.containerID, graphData.api)
-}
-
-// Make the array of buttons that are used to select the timeframe
-function buttonArray(mainDiv, containerID) {
-    var id = containerID + "-array"
-    $(mainDiv).append("<div class='button-array' id=" + id + "></div>")
-
-    for (var i = 0; i < timeframes.length; i++) {
-        var button = document.createElement("button")
-        button.className = containerID + "-button btn"
-        button.value = timeframes[i][0]
-        button.id = containerID + "-" + timeframes[i][0]
-        button.innerHTML = timeframes[i][1]
-
-        var appendID = "#" + id
-        $(appendID).append(button)
-    }
-}
-
-// Check if the timeframe buttons are pressed
-function getButtonPressed(containerID, api) {
-    for (var i = 0; i < timeframes.length; i++) {
-        $("#" + containerID + "-" + timeframes[i]).click(function () {
-            var timeframe = $(this).val()
-            updateData(containerID, timeframe, api)
-        })
-    }
+    readInputFields(
+        graphData.containerID,
+        graphData.filterSettings,
+        graphData.api
+    )
+    getButtonPressed(
+        graphData.containerID,
+        graphData.filterSettings,
+        graphData.api
+    )
 }
 
 // Update the data of the graph based on the timeframe change
-function updateData(containerID, timeframe, api) {
+function updateData(containerID, filterSettings, api) {
     // TODO: Make maxPlayed be the max amount of played and convert that to the next round number so 00 => 100 and 1387 => 1400 || 1500
-    time = convertTime(timeframe)
-
-    var data = {
-        minPlayed: "1",
-        maxPlayed: "9999",
-        minDate: time.minDate,
-        maxDate: time.maxDate,
-    }
 
     $.ajax({
         url: api,
         type: "POST",
         //contentType: "application/json",
-        data: data,
+        data: filterSettings,
         success: function (result) {
             graphs[containerID].options.data[0].dataPoints = []
 
@@ -149,6 +131,7 @@ function updateData(containerID, timeframe, api) {
     })
 }
 
+// TODO: Make different fileterSettings based on the graph
 var filterSettings = {
     minPlayed: 20,
     maxPlayed: 9999,
@@ -156,6 +139,19 @@ var filterSettings = {
     maxDate: "2099-01-01",
 }
 
+var inputFields = []
+inputFields[0] = {
+    name: "minPlayed",
+    placeholder: "Minimaal afgespeeld",
+    type: "number",
+}
+inputFields[1] = {
+    name: "maxPlayed",
+    placeholder: "Maximaal afgespeeld",
+    type: "number",
+}
+
+// TODO: Might have to make it that it will make its own div for everyting instead of makeing a div in index.php and than passing the name in here
 getGraphData(
     "test",
     "test",
@@ -163,7 +159,8 @@ getGraphData(
     "",
     "string",
     "/api/graph/allSongsPlayed.php",
-    filterSettings
+    filterSettings,
+    inputFields
 )
 
 getGraphData(

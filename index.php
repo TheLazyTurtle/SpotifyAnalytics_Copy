@@ -11,6 +11,7 @@ require 'header.php';
 	</div>
     </div>
 </body>
+<script src="js/inputTypes.js"></script>
 <script src="js/dateProcessing.js"></script>
 <script src="js/Graph.js"></script>
 </html>
