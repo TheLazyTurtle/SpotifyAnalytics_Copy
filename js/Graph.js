@@ -52,7 +52,7 @@ function getGraphData(
             makeNewGraph(result["records"], graphData)
         },
         error: function (result) {
-            console.error(result)
+            setError(graphData.containerID)
         },
     })
 }
@@ -94,41 +94,42 @@ function makeNewGraph(data, graphData) {
         ],
     })
     graphs[graphData.title].render()
-    readInputFields(
-        graphData.containerID,
-        graphData.filterSettings,
-        graphData.api
-    )
-    getButtonPressed(
-        graphData.containerID,
-        graphData.filterSettings,
-        graphData.api
-    )
+    readInputFields(graphData)
+    getButtonPressed(graphData)
 }
 
 // Update the data of the graph based on the timeframe change
-function updateData(containerID, filterSettings, api) {
+function updateData(graphData) {
     // TODO: Make maxPlayed be the max amount of played and convert that to the next round number so 00 => 100 and 1387 => 1400 || 1500
 
     $.ajax({
-        url: api,
+        url: graphData.api,
         type: "POST",
         //contentType: "application/json",
-        data: filterSettings,
+        data: graphData.filterSettings,
         success: function (result) {
-            graphs[containerID].options.data[0].dataPoints = []
+            console.log(graphs[graphData.containerID])
+            graphs[graphData.containerID].options.data[0].dataPoints = []
 
             for (var i = 0; i < result["records"].length; i++) {
-                graphs[containerID].options.data[0].dataPoints.push(
+                graphs[graphData.containerID].options.data[0].dataPoints.push(
                     result["records"][i]
                 )
             }
-            graphs[containerID].render()
+            graphs[graphData.containerID].options.title.text = graphData.title
+            graphs[graphData.containerID].render()
         },
         error: function (result) {
-            console.error(result)
+            setError(graphData.containerID)
         },
     })
+}
+
+// Empty the graph and change the title to show an error for when it can't find results
+function setError(containerID) {
+    graphs[containerID].options.data[0].dataPoints = []
+    graphs[containerID].options.title.text = "No data found"
+    graphs[containerID].render()
 }
 
 // TODO: Make different fileterSettings based on the graph

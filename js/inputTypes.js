@@ -16,21 +16,21 @@ function buttonArray(mainDiv, containerID) {
 }
 
 // Check if the timeframe buttons are pressed
-function getButtonPressed(containerID, inputFields, api) {
+function getButtonPressed(graphData) {
     for (var i = 0; i < timeframes.length; i++) {
-        $("#" + containerID + "-" + timeframes[i]).click(function () {
+        $("#" + graphData.containerID + "-" + timeframes[i]).click(function () {
             var timeframe = $(this).val()
             var updatedTime = convertTime(timeframe)
 
             if (
-                inputFields["minDate"] != null &&
-                inputFields["maxDate"] != null
+                graphData.filterSettings["minDate"] != null &&
+                graphData.filterSettings["maxDate"] != null
             ) {
-                inputFields["minDate"] = updatedTime.minDate
-                inputFields["maxDate"] = updatedTime.maxDate
+                graphData.filterSettings["minDate"] = updatedTime.minDate
+                graphData.filterSettings["maxDate"] = updatedTime.maxDate
             }
 
-            updateData(containerID, inputFields, api)
+            updateData(graphData)
         })
     }
 }
@@ -62,8 +62,8 @@ function makeInputFields(graphData, inputFieldData, index) {
 }
 
 // TODO: Refactor this because it is a mess
-function readInputFields(containerID, filterSettings, api) {
-    var inputFieldArrayDiv = "#" + containerID + "-input-array"
+function readInputFields(graphData) {
+    var inputFieldArrayDiv = "#" + graphData.containerID + "-input-array"
     var inputFields = $(inputFieldArrayDiv).children()
 
     if (inputFields.length > 0) {
@@ -72,20 +72,20 @@ function readInputFields(containerID, filterSettings, api) {
                 var id = "#" + inputFields[i].id
                 var filterSettingName = inputFields[i].id
                 filterSettingName = filterSettingName.replace(
-                    containerID + "-",
+                    graphData.containerID + "-",
                     ""
                 )
 
                 // Check if value exists and than update that value
                 if (
-                    filterSettings[filterSettingName] != null &&
+                    graphData.filterSettings[filterSettingName] != null &&
                     $(id).val() != ""
                 ) {
-                    filterSettings[filterSettingName] = $(id).val()
+                    graphData.filterSettings[filterSettingName] = $(id).val()
                 }
 
                 // Actually update the graph
-                updateData(containerID, filterSettings, api)
+                updateData(graphData)
             }
         })
     }
