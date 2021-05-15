@@ -1,3 +1,12 @@
+var timeframes = [
+    // id && value / display name
+    ["yesterday", "Yesterday"],
+    ["today", "Today"],
+    ["week", "This week"],
+    ["month", "This month"],
+    ["year", "This year"],
+    ["allTime", "All time"],
+]
 // Make the array of buttons that are used to select the timeframe
 function buttonArray(mainDiv, containerID) {
     var id = containerID + "-array"
@@ -37,7 +46,7 @@ function getButtonPressed(graphData) {
 
 // This will make the input fields like min played and maxplayed or names,
 // these will be maded based on the amount of given inputFields in the makeGraph function
-function makeInputFields(graphData, inputFieldData, index) {
+function makeInputFields(graphData, index) {
     var mainDiv = "#" + graphData.containerID + "-main"
     var id = graphData.containerID + "-input-array"
     var appendID = "#" + id
@@ -50,41 +59,47 @@ function makeInputFields(graphData, inputFieldData, index) {
 
     var inputField = document.createElement("input")
     inputField.className = graphData.containerID + "-input inputField"
-    inputField.type = inputFieldData[index].type
-    inputField.placeholder = inputFieldData[index].placeholder
-    inputField.id = graphData.containerID + "-" + inputFieldData[index].name
+    inputField.type = graphData.inputFields[index].type
+    inputField.placeholder = graphData.inputFields[index].placeholder
+    inputField.id =
+        graphData.containerID + "-" + graphData.inputFields[index].name
 
-    if (inputFieldData[index].type == "number") {
+    if (graphData.inputFields[index].type == "number") {
         inputField.min = 0
     }
 
     $(appendID).append(inputField)
 }
 
-// TODO: Refactor this because it is a mess
+// This runs when a input field is updated
 function readInputFields(graphData) {
     var inputFieldArrayDiv = "#" + graphData.containerID + "-input-array"
     var inputFields = $(inputFieldArrayDiv).children()
 
+    // If the inputFields array has input fields
     if (inputFields.length > 0) {
-        $(inputFields).on("change", function () {
+        // Check if the fields have changed
+        $(inputFields).on("keyup", function () {
+            // If there was change go through all the inputfields
             for (var i = 0; i < inputFields.length; i++) {
-                var id = "#" + inputFields[i].id
-                var filterSettingName = inputFields[i].id
-                filterSettingName = filterSettingName.replace(
+                var settingName = inputFields[i].id
+                var inputFieldId = "#" + settingName
+
+                // Remove the graph identifier from the id so that you are left
+                // with the name of the filter setting you want to change
+                settingName = settingName.replace(
                     graphData.containerID + "-",
                     ""
                 )
 
                 // Check if value exists and than update that value
-                if (
-                    graphData.filterSettings[filterSettingName] != null &&
-                    $(id).val() != ""
-                ) {
-                    graphData.filterSettings[filterSettingName] = $(id).val()
+                var value = $(inputFieldId).val()
+                if (value != "") {
+                    // Sets the data so it will be processed when updating the grap
+                    graphData.filterSettings[settingName] = value
                 }
 
-                // Actually update the graph
+                // Update the graph
                 updateData(graphData)
             }
         })
