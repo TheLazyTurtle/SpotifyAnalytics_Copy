@@ -75,3 +75,20 @@ a {
     width: 100%;
 }
 
+/*Some autocomplete stuff*/
+.ui-autocomplete {
+    background: #4a4a4a;
+    border-radius: 0px;
+    list-style-type: none;
+    width: 145px;
+}
+
+.ui-menu-item a{
+    background:red !important;
+    height:10px;
+    font-size:8px;
+}
+
+.ui-menu-item-wrapper {
+    margin-left: -35px;
+}

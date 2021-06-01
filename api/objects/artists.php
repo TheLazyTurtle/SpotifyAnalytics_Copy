@@ -88,5 +88,99 @@ class Artist {
 	$stmt->execute();
 	return $stmt;
     }
+
+    // This wil search all artist from a user
+    function serachForuser($userID, $keyword, $limit) {
+	$query = "SELECT artistID as id, name, url, img, dateAdded, addedBy 
+	    FROM artist 
+	    WHERE addedBy LIKE ? 
+	    AND name LIKE ? 
+	    LIMIT ?";
+
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$keyword = htmlspecialchars(strip_tags($keyword));
+	$userID = htmlspecialchars(strip_tags($userID));
+	$userID = "%$userID%";
+	$keyword = "%$keyword%";
+
+	// Bind params
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $keyword);
+	$stmt->bindParam(3, $limit, PDO::PARAM_INT);
+
+	$stmt->execute();
+	return $stmt;
+    }
+
+    // Gets the top artist of a user
+    function topArtist($userID, $minDate, $maxDate, $amount) {
+	$query = "SELECT count(p.songID) AS y, a.name AS label
+	    FROM played p
+	    INNER JOIN song s ON p.songID = s.songID
+	    INNER JOIN SongFromArtist sfa ON sfa.songID = s.songID
+	    RIGHT JOIN artist a ON sfa.artistID = a.artistID
+	    WHERE p.playedBy LIKE ? AND a.addedBy LIKE ? AND s.addedBy LIKE ? AND sfa.addedBy LIKE ?
+	    AND p.datePlayed BETWEEN ? AND ?
+	    GROUP BY a.artistID
+	    ORDER BY y DESC
+	    LIMIT ?";
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$userID = htmlspecialchars(strip_tags($userID));
+	$minDate = htmlspecialchars(strip_tags($minDate));
+	$maxDate = htmlspecialchars(strip_tags($maxDate));
+	$amount = htmlspecialchars(strip_tags($amount));
+
+	$userID = "%$userID%";
+
+	// Bind params
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $userID);
+	$stmt->bindParam(3, $userID);
+	$stmt->bindParam(4, $userID);
+	$stmt->bindParam(5, $minDate);
+	$stmt->bindParam(6, $maxDate);
+	$stmt->bindParam(7, $amount, PDO::PARAM_INT);
+
+	$stmt->execute();
+	return $stmt;
+    }
+
+    // Gets the top artist of a user for search result
+    function topArtistSearch($userID, $keyword, $amount) {
+	$query = "SELECT a.name AS name
+	    FROM played p
+	    INNER JOIN song s ON p.songID = s.songID
+	    INNER JOIN SongFromArtist sfa ON sfa.songID = s.songID
+	    RIGHT JOIN artist a ON sfa.artistID = a.artistID
+	    WHERE p.playedBy LIKE ? AND a.addedBy LIKE ? AND s.addedBy LIKE ? AND sfa.addedBy LIKE ?
+	    AND a.name LIKE ?
+	    GROUP BY a.artistID
+	    ORDER BY count(p.songID) DESC
+	    LIMIT ?";
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$userID = htmlspecialchars(strip_tags($userID));
+	$keyword = htmlspecialchars(strip_tags($keyword));
+	$amount = htmlspecialchars(strip_tags($amount));
+
+	$userID = "%$userID%";
+	$keyword = "%$keyword%";
+
+	// Bind params
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $userID);
+	$stmt->bindParam(3, $userID);
+	$stmt->bindParam(4, $userID);
+	$stmt->bindParam(5, $keyword);
+	$stmt->bindParam(6, $amount, PDO::PARAM_INT);
+
+	$stmt->execute();
+	return $stmt;
+    }
 }
 ?>

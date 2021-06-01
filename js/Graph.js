@@ -39,7 +39,6 @@ function getGraphData(
             makeNewGraph(result["records"], graphData)
         },
         error: function (result) {
-            console.error("Error:" + result)
             setError(graphData.containerID)
         },
     })
@@ -115,7 +114,6 @@ function updateData(graphData) {
 
 // Empty the graph and change the title to show an error for when it can't find results
 function setError(containerID) {
-    console.log(containerID)
     graphs[containerID].options.data[0].dataPoints = []
     graphs[containerID].options.title.text = "No data found"
     graphs[containerID].render()

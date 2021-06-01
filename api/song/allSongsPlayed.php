@@ -7,13 +7,13 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
 require "../config/database.php";
-require "../objects/graphs.php";
+require "../objects/songs.php";
 require "../config/core.php";
 
 // Make db and graphs object
 $database = new Database();
 $db = $database->getConnection();
-$graph = new Graph($db);
+$graph = new Song($db);
 
 // Get posted data 
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();

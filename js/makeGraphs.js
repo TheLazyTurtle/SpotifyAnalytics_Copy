@@ -81,7 +81,7 @@ getGraphData(
     "",
     "",
     "string",
-    "/api/graph/allSongsPlayed.php",
+    "/api/song/allSongsPlayed.php",
     filterSettings["asp"],
     inputFields["asp"]
 )
@@ -93,7 +93,7 @@ getGraphData(
     "",
     "",
     "string",
-    "/api/graph/topSongs.php",
+    "/api/song/topSongs.php",
     filterSettings["ts"],
     inputFields["ts"]
 )
@@ -105,7 +105,7 @@ getGraphData(
     "",
     "",
     "string",
-    "/api/graph/topArtist.php",
+    "/api/artist/topArtist.php",
     filterSettings["ta"],
     inputFields["ta"]
 )
@@ -117,7 +117,7 @@ getGraphData(
     "",
     "",
     "dateTime",
-    "/api/graph/playedPerDay.php",
+    "/api/song/playedPerDay.php",
     filterSettings["ppd"],
     inputFields["ppd"],
     "line"

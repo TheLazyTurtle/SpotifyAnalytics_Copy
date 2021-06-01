@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Require headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -7,20 +8,22 @@ header("Content-Type: application/json; charset=UTF-8");
 require '../config/database.php';
 require '../objects/songs.php';
 
-//  Make db connection and new song object
+// Make db connection and new song object
 $database = new Database();
 $db = $database->getConnection();
 $song = new Song($db);
 
 // Get the keyword
+$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
 $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+$limit = isset($_GET["limit"]) ? $_GET["limit"] : 10;
 
-// Get the songs 
-$stmt = $song->search($keyword);
+// Get the songs
+$stmt = $song->searchForUser($userID, $keyword, $limit);
 $num = $stmt->rowCount();
 
-// If there are results
-if ($num > 0)  {
+// If result
+if ($num > 0) {
     $songsArr = array();
     $songsArr["records"] = array();
 
@@ -35,17 +38,16 @@ if ($num > 0)  {
 	    "img" => $img,
 	    "dateAdded" => $dateAdded,
 	    "addedBy" => $addedBy,
-	    "preview" => $preview,
+	    "preview" => $preview
 	);
 	array_push($songsArr["records"], $songItem);
     }
-
-    // Set response code to ok
+    // Set response to ok
     http_response_code(200);
 
     echo json_encode($songsArr);
 } else {
-    // Set response code to bad request 
+    // Set response to bad request
     http_response_code(400);
 
     echo json_encode(array("message" => "No songs found"));

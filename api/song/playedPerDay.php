@@ -7,23 +7,22 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
 require "../config/database.php";
-require "../objects/graphs.php";
+require "../objects/songs.php";
 require "../config/core.php";
-
 
 // Make db and graphs object
 $database = new Database();
 $db = $database->getConnection();
-$graph = new Graph($db);
+$graph = new Song($db);
 
 // Get posted data
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$song = isset($_POST["song"]) ? $_POST["song"] : "";
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
 $maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
-$amount = isset($_POST["amount"]) ? $_POST["amount"] : 10;
 
 // Query the results
-$stmt = $graph->topArtist($userID, $minDate, $maxDate, $amount);
+$stmt = $graph->playedPerDay($userID, $song, $minDate, $maxDate);
 $num = $stmt->rowCount();
 
 // If results
@@ -35,11 +34,12 @@ if ($num > 0) {
 	extract($row);
 
 	$resultItem = array(
-	    "label" => $label,
+	    "x" => (int)$x,
 	    "y" => (int)$y,
 	);
 	array_push($resultsArr["records"], $resultItem);
     }
+
     // Set response to ok
     http_response_code(200);
 
@@ -48,6 +48,6 @@ if ($num > 0) {
     // Set response to bad request
     http_response_code(400);
 
-    echo json_encode(array("message" => "No results found"));
+    json_encode(array("message" => "No results found"));
 }
 ?>
