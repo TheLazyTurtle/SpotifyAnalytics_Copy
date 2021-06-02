@@ -195,6 +195,39 @@ class Song {
 	return $stmt;
     }
 
+    function topSongSearch($userID, $keyword, $amount) {
+	$query = "SELECT DISTINCT s.name AS name 
+	    FROM played p 
+	    INNER JOIN song s ON s.songID = p.songID
+	    INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
+	    RIGHT JOIN artist a ON sfa.artistID = a.artistID
+	    WHERE s.name LIKE ?
+	    AND a.addedBy LIKE ? AND p.playedBy LIKE ? AND s.addedBy LIKE ? AND sfa.addedBy LIKE ?
+	    GROUP BY s.name, a.artistID
+	    ORDER BY count(p.songID) DESC
+	    LIMIT ?";
+	$stmt = $this->conn->prepare($query);
+
+	// Clean the input
+	$userID = htmlspecialchars(strip_tags($userID));
+	$amount = htmlspecialchars(strip_tags($amount));
+
+	$userID = "%$userID%";
+	$keyword = "%$keyword%";
+
+	// Bind params
+	$stmt->bindParam(1, $keyword);
+	$stmt->bindParam(2, $userID);
+	$stmt->bindParam(3, $userID);
+	$stmt->bindParam(4, $userID);
+	$stmt->bindParam(5, $userID);
+	$stmt->bindParam(6, $amount, PDO::PARAM_INT);
+
+	$stmt->execute();
+	return $stmt;
+
+    }
+
     // Gets the played per day graph
     function playedPerDay($userID, $song, $minDate, $maxDate) {
 	// TODO: Intergrate a timewindows feature where if the selected timeframe is day or yesterday (and mabye week)

@@ -4,10 +4,15 @@ function convertTime(timeframe) {
     var maxDate = "2099-01-01"
 
     if (timeframe == "yesterday") {
-        minDate = formatDate(-1, 0)
-        maxDate = formatDate(0, 0)
+        minDate = formatDate(
+            0,
+            0,
+            true,
+            new Date().setDate(new Date().getDate() - 1)
+        )
+        maxDate = formatDate()
     } else if (timeframe == "today") {
-        minDate = formatDate(0, 0)
+        minDate = formatDate()
         maxDate = formatDate(0, 0, false)
     } else if (timeframe == "week") {
         minDate = lastSunday()

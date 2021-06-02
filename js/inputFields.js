@@ -1,126 +1,125 @@
-var artistTags = []
-var songTags = []
-getTags("/api/artist/topArtist.php", artistTags)
-
-// Get the tags for searching
-function getTags(api, tagType) {
-    $.ajax({
-        url: api,
-        type: "GET",
-        data: { amount: 200 },
-        success: function (results) {
-            loadTags(tagType, results)
-        },
-    })
-}
-
-function loadTags(tagType, tags) {
-    // This will load artists and songs so they can be used as tags
-    if (tagType.length == 0) {
-        tagType = tags
-    }
-}
-
 // This will make the input fields like min played and maxplayed or names,
 // these will be maded based on the amount of given inputFields in the makeGraph function
 function makeInputFields(graphData, index) {
-    var mainDiv = "#" + graphData.containerID + "-main"
-    var id = graphData.containerID + "-input-array"
+    var containerID = graphData.containerID
+
+    var mainDiv = "#" + containerID + "-main"
+    var id = containerID + "-input-array"
     var appendID = "#" + id
 
-    // If the div does not yet exist than make the div else ignore this because the div already
-    // exists and you can just append to the existing one
-    if ($(appendID).length == 0) {
-        $(mainDiv).append("<div class='input-array' id=" + id + "></div>")
-    }
+    // This will make in div to put all the input fields in
+    makeInputFieldArray(appendID, mainDiv, id)
 
     var inputField = document.createElement("input")
-    inputField.className = graphData.containerID + "-input inputField"
+    inputField.className = containerID + "-input inputField"
     inputField.type = graphData.inputFields[index].type
     inputField.placeholder = graphData.inputFields[index].placeholder
-    inputField.id =
-        graphData.containerID + "-" + graphData.inputFields[index].name
+    inputField.id = containerID + "-" + graphData.inputFields[index].name
 
+    // If the field should be a number set the min value to 0
     if (graphData.inputFields[index].type == "number") {
         inputField.min = 0
     }
 
+    // Add the input field to input field array
     $(appendID).append(inputField)
 }
 
 // This runs when a input field is updated
+// TODO: It would make life so much easier if this could just get passed an index. Would just love it to make this a class...
 function readInputFields(graphData) {
-    var inputFieldArrayDiv = "#" + graphData.containerID + "-input-array"
+    var containerID = graphData.containerID
+    var inputFieldArrayDiv = "#" + containerID + "-input-array"
     var inputFields = $(inputFieldArrayDiv).children()
+    var amountOfFields = Object.keys(graphData.inputFields).length
 
-    // If the inputFields array has input fields
-    if (inputFields.length > 0) {
-        // Check if the fields have changed
-        $(inputFields).on("input", function () {
-            // If there was change go through all the inputfields
-            for (var i = 0; i < inputFields.length; i++) {
-                var settingName = inputFields[i].id
-                var inputFieldId = "#" + settingName
+    // Check if the fields have changed
+    //$(inputFields).on("input", function () {
+    // If there was change go through all the inputfields
+    for (var i = 0; i < amountOfFields; i++) {
+        $(inputFields[i]).on("input", function () {
+            var settingName = $(this)[0].attributes[3].value
+            var inputFieldId = "#" + settingName
 
-                // Remove the graph identifier from the id so that you are left
-                // with the name of the filter setting you want to change
-                settingName = settingName.replace(
-                    graphData.containerID + "-",
-                    ""
-                )
+            // Remove the graph identifier from the id so that you are left
+            // with the name of the filter setting you want to change
+            settingName = settingName.replace(containerID + "-", "")
+            var api = chooseApi(settingName)
 
-                // Check if value exists and than update that value
-                var value = $(inputFieldId).val()
-                var dropDown = $(this).siblings(".played_Per_Day_results")
-
-                autoComplete(graphData)
+            if (api !== "no API") {
+                autoComplete(graphData, inputFieldId, api)
+            } else {
+                graphData.filterSettings[settingName] = $(this).val()
+                updateData(graphData)
             }
         })
     }
+    //})
 }
 
-function autoComplete(graphData) {
+// TODO: If a result contains a special character it wont get the data when updating the grap because they are not escaped out
+function autoComplete(graphData, inputFieldId, api) {
     $(function () {
         // This makes gives the autocomplete the filterable settings with the tags given above
-        $("#top_Songs-artist").autocomplete({
+        $(inputFieldId).autocomplete({
             source: function (request, response) {
                 $.ajax({
                     type: "GET",
-                    url: "/api/artist/topArtistSearch.php",
+                    url: api,
                     data: { keyword: request.term, amount: 10 },
                     success: function (data) {
                         response(data)
+                        console.table(request.term)
                     },
                 })
             },
 
+            // Updates the graph when a result is clicked
             select: function (event) {
-                // TODO: make graph update
-                var id = event.target.attributes[3].nodeValue
-                id = cleanID(id)
                 var input = $(this).val()
-                graphData.filterSettings[id] = input
-                updateData(graphData)
+                updateGraph(event, graphData, input)
+            },
+
+            // This should reset the graph when the input is empty
+            change: function (event) {
+                if ($(this).val().length <= 0) {
+                    updateGraph(event, graphData, "%")
+                }
             },
         })
     })
 }
 
-function cleanID(rawID) {
-    return rawID.replace("top_Songs-", "")
+// Updates the graph based on the given data from the autocomplete
+function updateGraph(event, graphData, input) {
+    var id = event.target.attributes[3].nodeValue
+    id = cleanFilterSettingID(id, graphData.containerID)
+
+    graphData.filterSettings[id] = input
+    console.log(graphData)
+    updateData(graphData)
 }
 
-// If a dropdown item has been clicked update the graph based on those values
-function getResultClicked(graphData, settingName) {
-    $(document).on("click", ".top_Songs_results p", function () {
-        // TODO: The problem is that its using the wrong settingName
-        $(this)
-            .parents(".top_Songs-artist")
-            .find("input[type='text']")
-            .val($(this).text())
-        $(graphData.containerID + "_results").empty()
+// This will remove the prefix of the given id so that it can update the correct filter setting
+function cleanFilterSettingID(rawID, containerID) {
+    return rawID.replace(containerID + "-", "")
+}
 
-        graphData.filterSettings[settingName] = $(this).text()
-        updateData(graphData)
-    })
+// If the div does not yet exist than make the div else ignore this because the div already
+// exists and you can just append to the existing one
+function makeInputFieldArray(appendID, mainDiv, id) {
+    if ($(appendID).length == 0) {
+        $(mainDiv).append("<div class='input-array' id=" + id + "></div>")
+    }
+}
+
+// This will based on the settingName choose what api to return
+function chooseApi(settingName) {
+    if (settingName == "song") {
+        return "/api/song/topSongsSearch.php"
+    } else if (settingName == "artist") {
+        return "/api/artist/topArtistSearch.php"
+    } else {
+        return "no API"
+    }
 }

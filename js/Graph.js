@@ -33,12 +33,12 @@ function getGraphData(
     // Make the api request to get the data to fill the graph
     $.ajax({
         url: graphData.api,
-        type: "post",
+        type: "POST",
         data: filterSettings,
         success: function (result) {
             makeNewGraph(result["records"], graphData)
         },
-        error: function (result) {
+        error: function () {
             setError(graphData.containerID)
         },
     })
@@ -92,8 +92,7 @@ function updateData(graphData) {
 
     $.ajax({
         url: graphData.api,
-        type: "POST",
-        //contentType: "application/json",
+        type: "GET",
         data: graphData.filterSettings,
         success: function (result) {
             graphs[graphData.containerID].options.data[0].dataPoints = []
@@ -106,7 +105,7 @@ function updateData(graphData) {
             graphs[graphData.containerID].options.title.text = graphData.title
             graphs[graphData.containerID].render()
         },
-        error: function (result) {
+        error: function () {
             setError(graphData.containerID)
         },
     })

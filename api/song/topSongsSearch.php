@@ -10,37 +10,30 @@ require "../config/database.php";
 require "../objects/songs.php";
 require "../config/core.php";
 
-// Make db and graphs object
+// Make database and song object
 $database = new Database();
 $db = $database->getConnection();
-$graph = new Song($db);
+$song = new Song($db);
 
 // Get posted data
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
-$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
-$artist = isset($_GET["artist"]) ? $_GET["artist"] : "%";
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "%";
 $amount = isset($_GET["amount"]) ? $_GET["amount"] : 10;
 
 // Query the results
-$stmt = $graph->topSongs($userID, $artist, $minDate, $maxDate, $amount);
+$stmt = $song->topSongSearch($userID, $keyword, $amount);
 $num = $stmt->rowCount();
 
 // If results
 if ($num > 0) {
     $resultsArr = array();
-    $resultsArr["records"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	extract($row);
-
-	$resultItem = array(
-	    "label" => $label,
-	    "y" => (int)$y,
-	);
-	array_push($resultsArr["records"], $resultItem);
+	array_push($resultsArr, $name);
     }
-    // Set response to ok
+
+    // set response to ok
     http_response_code(200);
 
     echo json_encode($resultsArr);

@@ -33,11 +33,13 @@ filterSettings["ppd"] = {
 var inputFields = []
 inputFields["asp"] = {
     0: {
+        index: 0,
         name: "minPlayed",
         placeholder: "Minimaal afgespeeld",
         type: "number",
     },
     1: {
+        index: 1,
         name: "maxPlayed",
         placeholder: "Maximaal afgespeeld",
         type: "number",
@@ -46,11 +48,13 @@ inputFields["asp"] = {
 
 inputFields["ts"] = {
     0: {
+        index: 0,
         name: "artist",
         placeholder: "Artiest",
         type: "text",
     },
     1: {
+        index: 1,
         name: "amount",
         placeholder: "Top Hoeveel",
         type: "number",
@@ -59,6 +63,7 @@ inputFields["ts"] = {
 
 inputFields["ta"] = {
     0: {
+        index: 0,
         name: "amount",
         placeholder: "Top hoeveel",
         type: "number",
@@ -67,6 +72,7 @@ inputFields["ta"] = {
 
 inputFields["ppd"] = {
     0: {
+        index: 0,
         name: "song",
         placeholder: "Nummer naam",
         type: "text",
@@ -120,5 +126,5 @@ getGraphData(
     "/api/song/playedPerDay.php",
     filterSettings["ppd"],
     inputFields["ppd"],
-    "line"
+    "spline"
 )
