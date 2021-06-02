@@ -17,10 +17,9 @@ $graph = new Song($db);
 
 // Get posted data 
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$minPlayed = isset($_GET["minPlayed"]) ? $_GET["minPlayed"] : $minPlayed_def;
-$maxPlayed = isset($_GET["maxPlayed"]) ? $_GET["maxPlayed"] : $maxPlayed_def;
-//$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
-$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : 100;
+$minPlayed = isset($_GET["minPlayed"]) && !empty($_GET["minPlayed"]) ? $_GET["minPlayed"] : $minPlayed_def;
+$maxPlayed = isset($_GET["maxPlayed"]) && !empty($_GET["maxPlayed"]) ? $_GET["maxPlayed"] : $maxPlayed_def;
+$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 
 // Query results

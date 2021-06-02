@@ -17,9 +17,9 @@ $graph = new Song($db);
 
 // Get posted data
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$song = isset($_POST["song"]) ? $_POST["song"] : "";
-$minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
-$maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
+$song = isset($_GET["song"]) && !empty($_GET["song"])? $_GET["song"] : "%";
+$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
+$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 
 // Query the results
 $stmt = $graph->playedPerDay($userID, $song, $minDate, $maxDate);

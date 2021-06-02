@@ -69,7 +69,6 @@ function autoComplete(graphData, inputFieldId, api) {
                     data: { keyword: request.term, amount: 10 },
                     success: function (data) {
                         response(data)
-                        console.table(request.term)
                     },
                 })
             },
@@ -96,7 +95,6 @@ function updateGraph(event, graphData, input) {
     id = cleanFilterSettingID(id, graphData.containerID)
 
     graphData.filterSettings[id] = input
-    console.log(graphData)
     updateData(graphData)
 }
 

@@ -19,8 +19,8 @@ $graph = new Song($db);
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
-$artist = isset($_GET["artist"]) ? $_GET["artist"] : "%";
-$amount = isset($_GET["amount"]) ? $_GET["amount"] : 10;
+$artist = isset($_GET["artist"]) && !empty($_GET["artist"]) ? $_GET["artist"] : "%";
+$amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
 
 // Query the results
 $stmt = $graph->topSongs($userID, $artist, $minDate, $maxDate, $amount);
