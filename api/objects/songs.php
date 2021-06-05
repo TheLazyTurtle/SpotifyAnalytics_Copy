@@ -261,4 +261,83 @@ class Song {
 	$stmt->execute();
 	return $stmt;
     }
+
+    // Gets the amount of songs you have listend to in the time frame specified
+    function amountOfSongs($userID, $minDate, $maxDate) {
+	$query = "SELECT count(p.songID) AS times 
+	    FROM played p 
+	    INNER JOIN song s ON p.songID = s.songID 
+	    WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? 
+	    AND p.datePlayed BETWEEN ? AND ?";
+
+	$stmt = $this->conn->prepare($query);
+	
+	// Clean input
+	$userID = htmlspecialchars(strip_tags($userID));
+	$minDate = htmlspecialchars(strip_tags($minDate));
+	$maxDate = htmlspecialchars(strip_tags($maxDate));
+
+	$userID = "%$userID%";
+
+	// Bind params
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $userID);
+	$stmt->bindParam(3, $minDate);
+	$stmt->bindParam(4, $maxDate);
+
+	$stmt->execute();
+	return $stmt;
+    }
+
+    // Gets the time you have listend to music in the given time frame
+    // Might have to move it to another place but not sure where
+    function timeListend($userID, $minDate, $maxDate) {
+	$query = "SELECT SUM(s.length) AS totalTime 
+	    FROM played p
+	    INNER JOIN song s ON p.songID = s.songID
+	    WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? 
+	    AND p.datePlayed BETWEEN ? AND ?";
+
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$userID = htmlspecialchars(strip_tags($userID));
+	$minDate = htmlspecialchars(strip_tags($minDate));
+	$maxDate = htmlspecialchars(strip_tags($maxDate));
+
+	$userID = "%$userID%";
+
+	// Bind params
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $userID);
+	$stmt->bindParam(3, $minDate);
+	$stmt->bindParam(4, $maxDate);
+
+	$stmt->execute();
+	return $stmt;
+    }
+
+    // Get the new songs for the given timeframe
+    function newSongs($userID, $minDate, $maxDate) {
+	$query = "SELECT count(*) AS new, img FROM song
+	    WHERE addedBy LIKE ?
+	    AND dateAdded BETWEEN ? AND ?";
+	
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$userID = htmlspecialchars(strip_tags($userID));
+	$minDate = htmlspecialchars(strip_tags($minDate));
+	$maxDate = htmlspecialchars(strip_tags($maxDate));
+
+	$userID = "%$userID%";
+
+	// Bind param
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $minDate);
+	$stmt->bindParam(3, $maxDate);
+
+	$stmt->execute();
+	return $stmt;
+    }
 }

@@ -6,6 +6,7 @@ session_start();
 <html lang="en">
     <head>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/css/slider.css">
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<title>Spotify analytics</title>

@@ -4,6 +4,7 @@ require 'header.php';
 ?>
 
 <body>
+    <?php require 'slider.php' ?>
     <div class="container">
 	<div id="all_Songs_Played-main" class="main">
 	    <div class="all_Songs_played_results"></div>

@@ -19,11 +19,9 @@ $song = new Song($db);
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
-$artist = isset($_GET["artist"]) && !empty($_GET["artist"]) ? $_GET["artist"] : "%";
-$amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
 
 // Query the results
-$stmt = $song->topSongs($userID, $artist, $minDate, $maxDate, $amount);
+$stmt = $song->timeListend($userID, $minDate, $maxDate);
 $num = $stmt->rowCount();
 
 // If results
@@ -35,11 +33,12 @@ if ($num > 0) {
 	extract($row);
 
 	$resultItem = array(
-	    "label" => $label,
-	    "y" => (int)$y,
+	    "totalTime" => $totalTime,
+	    "img" => "https://i.pinimg.com/736x/f9/4c/95/f94c9574933ce9404f323fb58f5e7f5c.jpg"
 	);
 	array_push($resultsArr["records"], $resultItem);
     }
+
     // Set response to ok
     http_response_code(200);
 
