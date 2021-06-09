@@ -1,10 +1,10 @@
 <?php
 require '../config/check_cookie.php';
+require_once '/var/www/html/vendor/autoload.php';
 
 class Song {
     // Db connection and table
     private $conn;
-    private $tableName = "song";
 
     // Object properties
     public $id;
@@ -23,32 +23,27 @@ class Song {
 
     // Get all songs from the db
     function read() {
-	$query = "SELECT songID as id, name, img, dateAdded, addedBy FROM song LIMIT 10";
-	$stmt = $this->conn->prepare($query);
-	$stmt->execute();
-	return $stmt;
+	$collection = $this->conn->song;
+	$cursor = $collection->find();
+
+	return $cursor;
     }
 
     // This will only read one song from the database based on the id given
-    //TODO: Might have to throw in a userID or filter it that it will not check userID
     function readOne() {
-	$query = "SELECT songID as id, name, img, length, url, dateAdded, addedBy, preview FROM " . $this->tableName . " WHERE songID = ? OR name = ? LIMIT 0,1";
+	$collection = $this->conn->song;
+	$query = ['songID' => $this->id];
 
-	$stmt = $this->conn->prepare($query);
-	$stmt->bindParam(1, $this->id);
-	$stmt->bindParam(2, $this->name);
-	$stmt->execute();
+	$cursor = $collection->find($query);
 
-	$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-	$this->id = $row["id"];
-	$this->name = $row["name"];
-	$this->length = $row["length"];
-	$this->url = $row["url"];
-	$this->img = $row["img"];
-	$this->dateAdded = $row["dateAdded"];
-	$this->addedBy = $row["addedBy"];
-	$this->preview = $row["preview"];
+	foreach ($cursor as $row) {
+	    $this->id = $row["songID"];
+	    $this->name = $row["name"];
+	    $this->length = $row["length"];
+	    $this->url = $row["url"];
+	    $this->img = $row["img"];
+	    $this->preview = $row["preview"];
+	}
     }
 
     // Add a song to the db
@@ -83,56 +78,64 @@ class Song {
 	return false;
     }
 
+    // This will search for a song by keyword
+    // If there is no keyword it returns an empty array to prevent loading all songs
     function search($keywords) {
-	$query = "SELECT s.songID as id, s.name, s.length, s.url, s.img, s.dateAdded, s.addedBy, s.preview FROM " . $this->tableName . " s INNER JOIN SongFromArtist sfa on s.songID = sfa.songID RIGHT JOIN artist a ON a.artistID = sfa.artistID WHERE s.name like ? OR a.name like ?";
-
-	$stmt = $this->conn->prepare($query);
+	$collection = $this->conn->song;
 
 	// Clean the keywords
 	$keywords = htmlspecialchars(strip_tags($keywords));
-	$keywords = "%{$keywords}%";
 
-	// Bind the keywords to the query
-	$stmt->bindParam(1, $keywords);
-	$stmt->bindParam(2, $keywords);
+	if (strlen($keywords) > 0) {
+	    $query = ["name" => new \MongoDB\BSON\Regex($keywords, 'i')];
+	    $cursor = $collection->find($query);
+	    return $cursor;
+	}
 
-	$stmt->execute();
-	return $stmt;
+	return array();
+    }
+
+    // This will return the songID from the song by searching by name and a artist name
+    function searchByArtist($userID, $song, $artist) {
+	$collection = $this->conn->song;
+
+	// Clean input
+	$song = htmlspecialchars(strip_tags($song));
+	$artist = htmlspecialchars(strip_tags($artist));
+
+	$query = [
+	    'name' => $song,
+	    'addedBy' => $userID,
+	    'artists' => ['$elemMatch' => ['name' => $artist]]
+	];
+
+	$cursor = $collection->find($query);
+	return $cursor;
     }
 
     // This will search all songs from a user
     function searchForUser($userID, $keyword, $limit) {
-	$query = "SELECT songID as id, name, length, url, img, dateAdded, addedBy, preview
-	    FROM song WHERE addedBy LIKE ? AND name LIKE ? LIMIT ?";
+	$collection = $this->conn->song;
 
-	$stmt = $this->conn->prepare($query);
-	    
-	// Clean keywords
+	// Clean input
 	$userID = htmlspecialchars(strip_tags($userID));
 	$keyword = htmlspecialchars(strip_tags($keyword));
 
-	$userID = "%$userID%";
-	$keyword = "%$keyword%";
+	if (strlen($keyword) > 0) {
+	    $query = [
+		"name" => new \MongoDB\BSON\Regex($keyword, 'i'),
+		"addedBy" => $userID,
+	    ];
+	    $cursor = $collection->find($query)->limit($limit);
+	    return $cursor;
+	}
 
-	// Bind params
-	$stmt->bindParam(1, $userID);
-	$stmt->bindParam(2, $keyword);
-	$stmt->bindParam(3, $limit, PDO::PARAM_INT);
-
-	$stmt->execute();
-	return $stmt;
+	return array();
     }
 
     // This will get all songs played by a user
     function allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate) {
-	$query = "SELECT s.name AS label, count(p.songID) as y 
-	    FROM played p 
-	    INNER JOIN song s ON p.songID = s.songID 
-	    WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? AND p.datePlayed >= ? AND p.datePlayed <= ? 
-	    GROUP BY s.name 
-	    HAVING y BETWEEN ? AND ? 
-	    ORDER BY name";
-	$stmt = $this->conn->prepare($query);
+	$collection = $this->conn->played;
 
 	// Clean the input
 	$userID = htmlspecialchars(strip_tags($userID));
@@ -140,35 +143,35 @@ class Song {
 	$maxPlayed = htmlspecialchars(strip_tags($maxPlayed));
 	$minDate = htmlspecialchars(strip_tags($minDate));
 	$maxDate = htmlspecialchars(strip_tags($maxDate));
+	$minDate = new MongoDB\BSON\UTCDateTime(strtotime($minDate) * 1000);
+	$maxDate = new MongoDB\BSON\UTCDateTime(strtotime($maxDate) * 1000);
 
-	$userID = "%$userID%";
+	$query = [
+	    ['$match' => ['playedBy' => $userID]],
+	    ['$group' => [
+		'_id' => '$songID', 
+		'count' => ['$sum' => 1], 
+		'name' => ['$first' => '$name'],
+		'date' => ['$first' => '$datePlayed']
+	    ]],
+	    ['$match' => [
+		'count' => ['$gte' => (int)$minPlayed, '$lte' => (int)$maxPlayed],
+		'date' => [
+		    '$gte' => $minDate,
+		    '$lte' => $maxDate
+		]
+	    ]],
+	    ['$sort' => ['name' => 1]]
+	];
 
-	// Bind params
-	$stmt->bindParam(1, $userID);
-	$stmt->bindParam(2, $userID);
-	$stmt->bindParam(3, $minDate);
-	$stmt->bindParam(4, $maxDate);
-	$stmt->bindParam(5, $minPlayed);
-	$stmt->bindParam(6, $maxPlayed);
+	$cursor = $collection->aggregate($query);
 
-	$stmt->execute();
-	return $stmt;
+	return $cursor;
     }
 
     // This will get the top songs of a user
     function topSongs($userID, $artist, $minDate, $maxDate, $amount) {
-	$query = "SELECT DISTINCT s.name as label, count(p.songID) as y 
-	    FROM played p 
-	    INNER JOIN song s ON s.songID = p.songID
-	    INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
-	    RIGHT JOIN artist a ON sfa.artistID = a.artistID
-	    WHERE a.name LIKE ?
-	    AND a.addedBy LIKE ? AND p.playedBy LIKE ? AND s.addedBy LIKE ? AND sfa.addedBy LIKE ?
-	    AND datePlayed BETWEEN ? AND ?
-	    GROUP BY s.name, a.artistID
-	    ORDER BY y DESC
-	    LIMIT ?";
-	$stmt = $this->conn->prepare($query);
+	$collection = $this->conn->played;
 
 	// Clean the input
 	$userID = htmlspecialchars(strip_tags($userID));
@@ -176,90 +179,100 @@ class Song {
 	$maxDate = htmlspecialchars(strip_tags($maxDate));
 	$artist = htmlspecialchars(strip_tags($artist));
 	$amount = htmlspecialchars(strip_tags($amount));
+	$minDate = new MongoDB\BSON\UTCDateTime(strtotime($minDate) * 1000);
+	$maxDate = new MongoDB\BSON\UTCDateTime(strtotime($maxDate) * 1000);
 
-	$userID = "%$userID%";
-	$artist = "%$artist%";
+	$query = [
+	    ['$match' => ['playedBy' => $userID]],
+	    ['$group' => [
+		"_id" => '$songID',
+		'count' => ['$sum' => 1],
+		'date' => ['$first' => '$datePlayed'],
+		'artist' => ['$last' => '$artists'],
+		'name' => ['$first' => '$name']
+		]],
+		['$match' => [
+		    'artist' => new \MongoDB\BSON\Regex($artist, 'i'),
+		    'date' => [
+			'$gte' => $minDate,
+			'$lte' => $maxDate
+		    ]
+		]],
+	    ['$sort' => ['count' => -1]],
+	    ['$limit' => (int)$amount]
+	];
 
-	// Bind params
-	$stmt->bindParam(1, $artist);
-	$stmt->bindParam(2, $userID);
-	$stmt->bindParam(3, $userID);
-	$stmt->bindParam(4, $userID);
-	$stmt->bindParam(5, $userID);
-	$stmt->bindParam(6, $minDate);
-	$stmt->bindParam(7, $maxDate);
-	// Force an int because otherwise mysql will panic becuase you can't limit with an string
-	$stmt->bindParam(8, $amount, PDO::PARAM_INT);
+	$cursor = $collection->aggregate($query);
 
-	$stmt->execute();
-	return $stmt;
+	return $cursor;
     }
 
     function topSongSearch($userID, $keyword, $amount) {
-	$query = "SELECT DISTINCT s.name AS name 
-	    FROM played p 
-	    INNER JOIN song s ON s.songID = p.songID
-	    INNER JOIN SongFromArtist sfa ON s.songID = sfa.songID
-	    RIGHT JOIN artist a ON sfa.artistID = a.artistID
-	    WHERE s.name LIKE ?
-	    AND a.addedBy LIKE ? AND p.playedBy LIKE ? AND s.addedBy LIKE ? AND sfa.addedBy LIKE ?
-	    GROUP BY s.name, a.artistID
-	    ORDER BY count(p.songID) DESC
-	    LIMIT ?";
-	$stmt = $this->conn->prepare($query);
+	$collection = $this->conn->played;
 
 	// Clean the input
 	$userID = htmlspecialchars(strip_tags($userID));
 	$amount = htmlspecialchars(strip_tags($amount));
 
-	$userID = "%$userID%";
-	$keyword = "%$keyword%";
+	$query = [
+	    ['$match' => ['playedBy' => $userID]],
+	    ['$group' => [
+		"_id" => '$songID',
+		'count' => ['$sum' => 1],
+		'name' => ['$first' => '$name'],
+		'artist' => ['$first' => ['$first' => '$artists']]
+		]],
+		['$match' => [
+		    'name' => new \MongoDB\BSON\Regex($keyword, 'i'),
+		]],
+	    ['$sort' => ['count' => -1]],
+	    ['$limit' => (int)$amount]
+	];
 
-	// Bind params
-	$stmt->bindParam(1, $keyword);
-	$stmt->bindParam(2, $userID);
-	$stmt->bindParam(3, $userID);
-	$stmt->bindParam(4, $userID);
-	$stmt->bindParam(5, $userID);
-	$stmt->bindParam(6, $amount, PDO::PARAM_INT);
+	$cursor = $collection->aggregate($query);
 
-	$stmt->execute();
-	return $stmt;
-
+	return $cursor;
     }
 
     // Gets the played per day graph
     function playedPerDay($userID, $song, $minDate, $maxDate) {
 	// TODO: Intergrate a timewindows feature where if the selected timeframe is day or yesterday (and mabye week)
 	// also group by hour so you don't just have a dot but can see the difference between hours of the day
-	$query = "SELECT count(p.songID) AS y, unix_timestamp(p.datePlayed) * 1000 AS x 
-	    FROM played p
-	    INNER JOIN song s ON p.songID = s.songID
-	    WHERE playedBy LIKE ? AND s.addedBy LIKE ?
-	    AND s.name LIKE ?
-	    AND p.datePlayed BETWEEN ? AND ?
-	    GROUP BY DAY(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed)
-	    ORDER BY x DESC";
-	$stmt = $this->conn->prepare($query);
+	$collection = $this->conn->played;
 
 	// Clean input
 	$userID = htmlspecialchars(strip_tags($userID));
 	$song = htmlspecialchars(strip_tags($song));
 	$minDate = htmlspecialchars(strip_tags($minDate));
 	$maxDate = htmlspecialchars(strip_tags($maxDate));
+	$minDate = new MongoDB\BSON\UTCDateTime(strtotime($minDate) * 1000);
+	$maxDate = new MongoDB\BSON\UTCDateTime(strtotime($maxDate) * 1000);
 
-	$userID = "%$userID%";
-	$song = "%$song%";
+	$query = [
+	    ['$match'=>
+		['songID' => new \MongoDB\BSON\Regex($song, 'i')]
+	    ],
+	    ['$group' =>[
+		'_id' => [
+		    'month' => ['$month' => '$datePlayed'],
+		    'day' => ['$dayOfMonth' => '$datePlayed'],
+		    'year' => ['$year' => '$datePlayed']
+		],
+		'count' => ['$sum' => 1],
+		'date' => ['$first' => '$datePlayed'],
+		'name' => ['$first' => '$name']
+	    ]],
+	    ['$match' => [
+		'date' => [
+		    '$gte' => $minDate,
+		    '$lte' => $maxDate
+		]
+	    ]],
+	    ['$sort' => ['date' => -1]]
+	];
 
-	// Bind params
-	$stmt->bindParam(1, $userID);
-	$stmt->bindParam(2, $userID);
-	$stmt->bindParam(3, $song);
-	$stmt->bindParam(4, $minDate);
-	$stmt->bindParam(5, $maxDate);
-
-	$stmt->execute();
-	return $stmt;
+	$cursor = $collection->aggregate($query);
+	return $cursor;
     }
 
     // Gets the amount of songs you have listend to in the time frame specified

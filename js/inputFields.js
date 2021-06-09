@@ -68,7 +68,17 @@ function autoComplete(graphData, inputFieldId, api) {
                     url: api,
                     data: { keyword: request.term, amount: 10 },
                     success: function (data) {
-                        response(data)
+                        // If its a song do difficult route because we have to worry about IDs and not names
+                        // because songs are more likely to have the same name
+                        if (graphData.filterSettings.hasOwnProperty("song")) {
+                            response(
+                                data.map(function (item) {
+                                    return item["name"] + " - " + item["artist"]
+                                })
+                            )
+                        } else {
+                            response(data)
+                        }
                     },
                 })
             },
@@ -76,13 +86,20 @@ function autoComplete(graphData, inputFieldId, api) {
             // Updates the graph when a result is clicked
             select: function (event) {
                 var input = $(this).val()
-                updateGraph(event, graphData, input)
+
+                // If its a song do difficult route because we have to worry about IDs and not names
+                // because songs are more likely to have the same name
+                if (graphData.filterSettings.hasOwnProperty("song")) {
+                    getSongID(event, graphData, input)
+                } else {
+                    updateGraph(event, graphData, input)
+                }
             },
 
             // This should reset the graph when the input is empty
             change: function (event) {
                 if ($(this).val().length <= 0) {
-                    updateGraph(event, graphData, "%")
+                    updateGraph(event, graphData, "")
                 }
             },
         })
@@ -96,6 +113,19 @@ function updateGraph(event, graphData, input) {
 
     graphData.filterSettings[id] = input
     updateData(graphData)
+}
+
+function getSongID(event, graphData, input) {
+    var data = input.split(" - ")
+
+    $.ajax({
+        type: "GET",
+        url: "/api/song/searchByArtist.php",
+        data: { song: data[0], artist: data[1] },
+        success: function (data) {
+            updateGraph(event, graphData, data[0])
+        },
+    })
 }
 
 // This will remove the prefix of the given id so that it can update the correct filter setting

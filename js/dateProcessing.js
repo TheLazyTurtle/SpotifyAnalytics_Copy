@@ -42,7 +42,7 @@ function formatDate(
         month = "" + (d.getMonth() + Number(plusMonth) + plusMonth + 1),
         day = "" + (d.getDate() + Number(plusDay)),
         year = d.getFullYear(),
-        hour = 23
+        hour = "T" + 23
 
     if (month.length < 2) {
         month = "0" + month
@@ -51,7 +51,7 @@ function formatDate(
         day = "0" + day
     }
     if (startOfDay) {
-        hour = 00
+        hour = "T" + 00
     }
 
     time = [year, month, day].join("-")

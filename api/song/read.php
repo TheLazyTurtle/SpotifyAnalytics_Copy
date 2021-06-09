@@ -4,41 +4,40 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
-require '../config/database.php';
+require '../config/mongo.php';
 require '../objects/songs.php';
+require_once '/var/www/html/vendor/autoload.php';
 
 // Make db and song objects
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 $song = new Song($db);
 
+// Make results array
+$songArr = array();
+$songArr["records"] = array();
+
 // query songs
 $stmt = $song->read();
-$num = $stmt->rowCount();
 
-// Check if there are more than 0 results found
-if ($num > 0) {
-    $songArr = array();
-    $songArr["records"] = array();
+foreach($stmt as $row) {
+    $songItem = array (
+	"id" => $row["songID"],
+	"name" => $row["name"],
+	"img" => $row["img"], 
+	"dateAdded" => $row["dateAdded"]->toDateTime()->format("Y-m-d H:i:s"),
+	"addedBy" => $row["addedBy"]
+    );
+    array_push($songArr["records"], $songItem);
+}
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
-
-	$songItem = array (
-	    "id" => $id,
-	    "name" => $name,
-	    "img" => $img,
-	    "dateAdded" => $dateAdded,
-	    "addedBy" => $addedBy
-	);
-
-	array_push($songArr["records"], $songItem);
-    }
-    // set ok response code
+// If there are results
+if (count($songArr["records"]) > 0) {
+    // Set response to ok
     http_response_code(200);
 
-    // Sohw the songs in json format
     echo json_encode($songArr);
+
 } else {
     // set not found response code
     http_response_code(404);

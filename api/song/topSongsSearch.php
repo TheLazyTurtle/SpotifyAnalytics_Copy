@@ -6,33 +6,37 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
-require "../config/database.php";
+require "../config/mongo.php";
 require "../objects/songs.php";
 require "../config/core.php";
 
 // Make database and song object
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 $song = new Song($db);
 
+// Make results array
+$resultsArr = array();
+
 // Get posted data
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "%";
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
 $amount = isset($_GET["amount"]) ? $_GET["amount"] : 10;
 
 // Query the results
 $stmt = $song->topSongSearch($userID, $keyword, $amount);
-$num = $stmt->rowCount();
+
+foreach ($stmt as $row) {
+    $resultsItem = array(
+	"name" => $row["name"],
+	"artist" => $row["artist"],
+	"songID" => $row["_id"]
+    );
+    array_push($resultsArr, $resultsItem);
+}
 
 // If results
-if ($num > 0) {
-    $resultsArr = array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
-	array_push($resultsArr, $name);
-    }
-
+if (count($resultsArr) > 0) {
     // set response to ok
     http_response_code(200);
 
