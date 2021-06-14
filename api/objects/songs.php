@@ -277,80 +277,97 @@ class Song {
 
     // Gets the amount of songs you have listend to in the time frame specified
     function amountOfSongs($userID, $minDate, $maxDate) {
-	$query = "SELECT count(p.songID) AS times 
-	    FROM played p 
-	    INNER JOIN song s ON p.songID = s.songID 
-	    WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? 
-	    AND p.datePlayed BETWEEN ? AND ?";
+	//$query = "SELECT count(p.songID) AS times 
+	    //FROM played p 
+	    //INNER JOIN song s ON p.songID = s.songID 
+	    //WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? 
+	    //AND p.datePlayed BETWEEN ? AND ?";
+	$collection = $this->conn->played;	
 
-	$stmt = $this->conn->prepare($query);
-	
 	// Clean input
 	$userID = htmlspecialchars(strip_tags($userID));
 	$minDate = htmlspecialchars(strip_tags($minDate));
 	$maxDate = htmlspecialchars(strip_tags($maxDate));
+	$minDate = new MongoDB\BSON\UTCDateTime(strtotime($minDate) * 1000);
+	$maxDate = new MongoDB\BSON\UTCDateTime(strtotime($maxDate) * 1000);
 
-	$userID = "%$userID%";
+	$query = [
+	    ['$match' => [
+		'datePlayed' => [
+		    '$gte' => $minDate, 
+		    '$lte' => $maxDate
+		]
+	    ]],
+	    ['$group'=> [
+		'_id' => 'datePlayed',
+		'times' => ['$sum' => 1]
+	    ]]
+	];
 
-	// Bind params
-	$stmt->bindParam(1, $userID);
-	$stmt->bindParam(2, $userID);
-	$stmt->bindParam(3, $minDate);
-	$stmt->bindParam(4, $maxDate);
-
-	$stmt->execute();
-	return $stmt;
+	$cursor = $collection->aggregate($query);
+	return $cursor;
     }
 
     // Gets the time you have listend to music in the given time frame
     // Might have to move it to another place but not sure where
     function timeListend($userID, $minDate, $maxDate) {
-	$query = "SELECT SUM(s.length) AS totalTime 
-	    FROM played p
-	    INNER JOIN song s ON p.songID = s.songID
-	    WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? 
-	    AND p.datePlayed BETWEEN ? AND ?";
-
-	$stmt = $this->conn->prepare($query);
+	$collection = $this->conn->played;
 
 	// Clean input
 	$userID = htmlspecialchars(strip_tags($userID));
 	$minDate = htmlspecialchars(strip_tags($minDate));
 	$maxDate = htmlspecialchars(strip_tags($maxDate));
+	$minDate = new MongoDB\BSON\UTCDateTime(strtotime($minDate) * 1000);
+	$maxDate = new MongoDB\BSON\UTCDateTime(strtotime($maxDate) * 1000);
 
-	$userID = "%$userID%";
+	$query = [
+	    ['$match' => [
+		'playedBy' => $userID,
+		'datePlayed' => [
+		    '$gte' => $minDate,
+		    '$lte' => $maxDate
+		]
+	    ]],
+	    ['$group' => [
+		'_id' => "time Played",
+		'time' => ['$sum' => '$length'],
+	    ]],
+	];
 
-	// Bind params
-	$stmt->bindParam(1, $userID);
-	$stmt->bindParam(2, $userID);
-	$stmt->bindParam(3, $minDate);
-	$stmt->bindParam(4, $maxDate);
-
-	$stmt->execute();
-	return $stmt;
+	$cursor = $collection->aggregate($query);
+	return $cursor;
     }
 
     // Get the new songs for the given timeframe
     function newSongs($userID, $minDate, $maxDate) {
-	$query = "SELECT count(*) AS new, img FROM song
-	    WHERE addedBy LIKE ?
-	    AND dateAdded BETWEEN ? AND ?";
-	
-	$stmt = $this->conn->prepare($query);
+	//$query = "SELECT count(*) AS new, img FROM song
+	    //WHERE addedBy LIKE ?
+	    //AND dateAdded BETWEEN ? AND ?";
+	$collection = $this->conn->song;
 
 	// Clean input
 	$userID = htmlspecialchars(strip_tags($userID));
 	$minDate = htmlspecialchars(strip_tags($minDate));
 	$maxDate = htmlspecialchars(strip_tags($maxDate));
+	$minDate = new MongoDB\BSON\UTCDateTime(strtotime($minDate) * 1000);
+	$maxDate = new MongoDB\BSON\UTCDateTime(strtotime($maxDate) * 1000);
 
-	$userID = "%$userID%";
+	$query = [
+	    ['$match' => [
+		'addedBy' => $userID,
+		'dateAdded' => [
+		    '$gte' => $minDate,
+		    '$lte' => $maxDate
+		]
+	    ]],
+	    ['$group' => [
+		'_id' => 'new songs',
+		'items' => ['$sum' => 1],
+		'img' => ['$first' => '$img']
+	    ]]
+	];
 
-	// Bind param
-	$stmt->bindParam(1, $userID);
-	$stmt->bindParam(2, $minDate);
-	$stmt->bindParam(3, $maxDate);
-
-	$stmt->execute();
-	return $stmt;
+	$cursor = $collection->aggregate($query);
+	return $cursor;
     }
 }
