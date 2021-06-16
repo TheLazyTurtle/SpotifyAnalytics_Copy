@@ -18,7 +18,7 @@ class User {
     }
 
     function create() {
-	$query = "INSERT INTO temp_user SET firstname = :firstname, lastname = :lastname, email = :email, password = :password";
+	$query = "INSERT INTO user SET firstname = :firstname, lastname = :lastname, email = :email, password = :password";
 
 	$stmt = $this->conn->prepare($query);
 
@@ -91,7 +91,7 @@ class User {
 
     // Check if the email exists in the db
     function emailExists () {
-	$query = "SELECT id, firstname, lastname, password FROM temp_user WHERE email = ? LIMIT 0,1";
+	$query = "SELECT * FROM user WHERE email = ? LIMIT 0,1";
 
 	$stmt = $this->conn->prepare($query);
 
@@ -109,7 +109,7 @@ class User {
 	    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 	    // Asign values to object
-	    $this->id = $row["id"];
+	    $this->id = $row["userID"];
 	    $this->firstname = $row["firstname"];
 	    $this->lastname = $row["lastname"];
 	    $this->password = $row["password"];

@@ -29,13 +29,13 @@ require 'header.php';
 	    $(document).on('submit', "#login_form", function() {
 		// Get form data
 		var login_form = $(this);
-		var login_data = JSON.stringify(login_form.serializeObject());
+		var login_data = login_form.serializeObject();
 
 		// submit data to api
+		console.log(login_form.serializeObject())
 		$.ajax({
 		    url: "api/system/login.php",
-		    type: "post",
-		    contentType: "application/json",
+		    type: "POST",
 		    data: login_data,
 		    success: function(result) {
 			// Store jwt to cookie

@@ -25,13 +25,11 @@ $db = $database->getConnection();
 // Make user object
 $user = new User($db);
 
-$data = json_decode(file_get_contents("php://input"));
-
-$user->email = $data->email;
+$user->email = $_POST["email"];
 $email_exists = $user->emailExists();
 
 // Check if email exists and if password is correct
-if ($email_exists && password_verify($data->password, $user->password)) {
+if ($email_exists && password_verify($_POST["password"], $user->password)) {
     $token = array (
 	"iat" => $issued_at,
 	"exp" => $expiration_time,
