@@ -118,6 +118,52 @@ class User {
 	}
 	return false;
     } 
+
+    // Get all user filterSettings
+    function readFilterSettings($userID) {
+	$query = "SELECT * FROM filterSetting WHERE userID = ?";
+	$stmt = $this->conn->prepare($query);
+	$stmt->bindParam(1, $userID);
+	$stmt->execute;
+	return $stmt;
+    }
+
+    // Get one user filterSetting
+    function readOneFilterSetting($userID, $name, $graphID) {
+	$query = "SELECT * FROM filterSetting WHERE userID = ? AND name = ? OR graphID = ?";
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$name = htmlspecialchars(strip_tags($name));
+
+	// Bind values
+	$stmt->bindParam(1, $userID);
+	$stmt->bindParam(2, $name);
+	$stmt->bindParam(3, $graphID);
+	$stmt->execute();
+	return $stmt;
+    }
+
+    // Update filterSetting
+    function updateFilterSetting($userID, $settingName, $value, $graphID) {
+	$query = "UPDATE filterSetting SET value = ? WHERE name = ? AND graphID = ? AND userID = ?";
+	$stmt = $this->conn->prepare($query);
+
+	// Clean input
+	$settingName = htmlspecialchars(strip_tags($settingName));
+	$value = htmlspecialchars(strip_tags($value));
+	$graphID = htmlspecialchars(strip_tags($graphID));
+
+	// Bind values
+	$stmt->bindParam(1, $value);
+	$stmt->bindParam(2, $settingName);
+	$stmt->bindParam(3, $graphID);
+	$stmt->bindParam(4, $userID);
+
+	$stmt->execute();
+	return $stmt;
+    }
+
 }
 
 ?>

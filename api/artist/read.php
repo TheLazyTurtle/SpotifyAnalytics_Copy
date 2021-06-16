@@ -7,7 +7,7 @@ header("Content-Type: application/json; charset=UTF-8");
 require "../config/database.php";
 require "../objects/artists.php";
 
-// Make db and song object
+// Make db and artist object
 $database = new Database();
 $db = $database->getConnection();
 $artist = new Artist($db);
@@ -42,7 +42,7 @@ if ($num > 0) {
     echo json_encode($artistArr);
 } else {
     // Not found
-    http_response_code(404);
+    http_response_code(400);
 
     echo json_encode(array("message" => "No artists found"));
 }

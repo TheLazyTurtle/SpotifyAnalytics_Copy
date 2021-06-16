@@ -277,11 +277,6 @@ class Song {
 
     // Gets the amount of songs you have listend to in the time frame specified
     function amountOfSongs($userID, $minDate, $maxDate) {
-	//$query = "SELECT count(p.songID) AS times 
-	    //FROM played p 
-	    //INNER JOIN song s ON p.songID = s.songID 
-	    //WHERE p.playedBy LIKE ? AND s.addedBy LIKE ? 
-	    //AND p.datePlayed BETWEEN ? AND ?";
 	$collection = $this->conn->played;	
 
 	// Clean input

@@ -1,8 +1,10 @@
 <?php
 class Database {
     // DB creds
-    private $host = "192.168.2.7";
-    private $db_name = "spotify";
+    //private $host = "192.168.2.7";
+    private $host = "localhost";
+    //private $db_name = "spotify";
+    private $db_name = "spotifyDev";
     private $username = "remote";
     private $password = "***REMOVED***";
     public $conn;

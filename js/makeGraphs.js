@@ -4,127 +4,116 @@ var userID = '<%= Session["userID"] %>'
 // This will contain all the graphs
 var graphs = []
 
-// This contains the filter settings for all the graphs
-var filterSettings = []
-filterSettings["asp"] = {
-    minPlayed: 20,
-    maxPlayed: 9999,
-    minDate: "2020-01-01",
-    maxDate: "2099-01-01",
-}
-filterSettings["ts"] = {
-    artist: "",
-    amount: 10,
-    minDate: "2020-01-01",
-    maxDate: "2099-01-01",
-}
-filterSettings["ta"] = {
-    amount: 10,
-    minDate: "2020-01-01",
-    maxDate: "2099-01-01",
-}
-filterSettings["ppd"] = {
-    song: "",
-    minDate: "2020-01-01",
-    maxDate: "2099-01-01",
-}
+// This will get all the graphs from the database
+function getGraphs() {
+    $.ajax({
+        url: "/api/graph/read.php",
+        type: "GET",
+        success: function (result) {
+            for (var i = 0; i <= result["records"].length; i++) {
+                var res = result["records"][i]
+                var containerID = res["containerID"]
+                var title = res["title"]
+                var titleX = res["titleX"]
+                var titleY = res["titleY"]
+                var xValueType = res["xValueType"]
+                var api = res["api"]
+                var type = res["type"]
+                var graphID = res["id"]
 
-// This will contain all the info for input fields if a graph has input fields
-var inputFields = []
-inputFields["asp"] = {
-    0: {
-        index: 0,
-        name: "minPlayed",
-        placeholder: "Minimaal afgespeeld",
-        type: "number",
-    },
-    1: {
-        index: 1,
-        name: "maxPlayed",
-        placeholder: "Maximaal afgespeeld",
-        type: "number",
-    },
+                getFilterSettings(
+                    containerID,
+                    title,
+                    titleX,
+                    titleY,
+                    xValueType,
+                    api,
+                    type,
+                    graphID
+                )
+            }
+        },
+    })
 }
 
-inputFields["ts"] = {
-    0: {
-        index: 0,
-        name: "artist",
-        placeholder: "Artiest",
-        type: "text",
-    },
-    1: {
-        index: 1,
-        name: "amount",
-        placeholder: "Top Hoeveel",
-        type: "number",
-    },
+// This will get all the settings from the user for the graph thats passed in
+function getFilterSettings(
+    containerID,
+    title,
+    titleX,
+    titleY,
+    xValueType,
+    api,
+    type,
+    graphID
+) {
+    $.ajax({
+        url: "/api/user/readOneFilterSetting.php",
+        type: "GET",
+        data: { graphID: graphID },
+        success: function (results) {
+            var filterSettings = {}
+
+            for (var i = 0; i < results["records"].length; i++) {
+                var res = results["records"][i]
+                filterSettings[res["name"]] = res["value"]
+            }
+
+            getInputFields(
+                containerID,
+                title,
+                titleX,
+                titleY,
+                xValueType,
+                api,
+                filterSettings,
+                type,
+                graphID
+            )
+        },
+    })
 }
 
-inputFields["ta"] = {
-    0: {
-        index: 0,
-        name: "amount",
-        placeholder: "Top hoeveel",
-        type: "number",
-    },
+// This will get the input fields that are part of the graph
+function getInputFields(
+    containerID,
+    title,
+    titleX,
+    titleY,
+    xValueType,
+    api,
+    filterSettings,
+    type,
+    graphID
+) {
+    $.ajax({
+        url: "/api/graph/readInputfield.php",
+        data: { graphID: graphID },
+        success: function (results) {
+            var inputFields = {}
+
+            for (var i = 0; i < results["records"].length; i++) {
+                res = results["records"][i]
+                inputFields[i] = {}
+                inputFields[i]["index"] = i
+                inputFields[i]["name"] = res["name"]
+                inputFields[i]["value"] = res["value"]
+                inputFields[i]["type"] = res["type"]
+            }
+
+            getGraphData(
+                containerID,
+                title,
+                titleX,
+                titleY,
+                xValueType,
+                api,
+                filterSettings,
+                getInputFields,
+                type
+            )
+        },
+    })
 }
 
-inputFields["ppd"] = {
-    0: {
-        index: 0,
-        name: "song",
-        placeholder: "Nummer naam",
-        type: "text",
-    },
-}
-
-// TODO: Might have to make it that it will make its own div for everyting instead of makeing a div in index.php and than passing the name in here
-// This graph is all songs played
-getGraphData(
-    "all_Songs_Played",
-    "All Songs Played",
-    "",
-    "",
-    "string",
-    "/api/song/allSongsPlayed.php",
-    filterSettings["asp"],
-    inputFields["asp"]
-)
-
-// This is top 10 songs
-getGraphData(
-    "top_Songs",
-    "Top Songs",
-    "",
-    "",
-    "string",
-    "/api/song/topSongs.php",
-    filterSettings["ts"],
-    inputFields["ts"]
-)
-
-// This is top 10 artist
-getGraphData(
-    "top_Artist",
-    "Top Artist",
-    "",
-    "",
-    "string",
-    "/api/artist/topArtist.php",
-    filterSettings["ta"],
-    inputFields["ta"]
-)
-
-// This is top 10 artist
-getGraphData(
-    "played_Per_Day",
-    "Player Per Day",
-    "",
-    "",
-    "dateTime",
-    "/api/song/playedPerDay.php",
-    filterSettings["ppd"],
-    inputFields["ppd"],
-    "spline"
-)
+getGraphs()
