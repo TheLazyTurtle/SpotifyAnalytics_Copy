@@ -6,15 +6,18 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
-require "../config/database.php";
+require "../config/mongo.php";
 require "../objects/artists.php";
 require "../config/core.php";
 
-
 // Make db and artists object
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 $artist = new Artist($db);
+
+// Result array
+$resultsArr = array();
+$resultsArr["records"] = array();
 
 // Get posted data
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
@@ -24,22 +27,18 @@ $amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 
 
 // Query the results
 $stmt = $artist->topArtist($userID, $minDate, $maxDate, $amount);
-$num = $stmt->rowCount();
+
+foreach ($stmt as $row) {
+
+    $resultItem = array(
+	"label" => $row["_id"],
+	"y" => (int)$row["count"],
+    );
+    array_push($resultsArr["records"], $resultItem);
+}
 
 // If results
-if ($num > 0) {
-    $resultsArr = array();
-    $resultsArr["records"] = array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
-
-	$resultItem = array(
-	    "label" => $label,
-	    "y" => (int)$y,
-	);
-	array_push($resultsArr["records"], $resultItem);
-    }
+if (count($resultsArr["records"]) > 0) {
     // Set response to ok
     http_response_code(200);
 

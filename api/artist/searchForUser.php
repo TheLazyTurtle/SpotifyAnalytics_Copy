@@ -5,13 +5,17 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object
-require '../config/database.php';
+require '../config/mongo.php';
 require '../objects/artists.php';
 
 // Make db connecton and new artist object
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 $artist = new Artist($db);
+
+// Result array
+$artistArr = array();
+$artistArr["records"] = array();
 
 // Get the keywords
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
@@ -20,23 +24,19 @@ $limit = isset($_GET["limit"]) ? $_GET["limit"] : 10;
 
 // Get the artist
 $stmt = $artist->serachForuser($userID, $keyword, $limit);
-$num = $stmt->rowCount();
+
+foreach ($stmt as $row) {
+
+    $artistItem = array(
+	"artistID" => $row["artistID"],
+	"name" => $row["name"],
+    );
+
+    array_push($artistArr["records"], $artistItem);
+}
 
 // If result
-if ($num > 0) {
-    $artistArr = array();
-    $artistArr["records"] = array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
-
-	$artistItem = array(
-	    "artistID" => $id,
-	    "name" => $name,
-	);
-
-	array_push($artistArr["records"], $artistItem);
-    }
+if (count($artistArr["records"]) > 0) {
     // Set response to ok
     http_response_code(200);
 

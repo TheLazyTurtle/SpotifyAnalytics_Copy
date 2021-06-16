@@ -6,11 +6,11 @@ header("Acces-Control-Allow_credentials: true");
 header("Content-Type: application/json");
 
 // Include objects
-include_once '../config/database.php';
+include_once '../config/mongo.php';
 include_once '../objects/artists.php';
 
 // Make db connection
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 
 // Make new artist object

@@ -335,9 +335,6 @@ class Song {
 
     // Get the new songs for the given timeframe
     function newSongs($userID, $minDate, $maxDate) {
-	//$query = "SELECT count(*) AS new, img FROM song
-	    //WHERE addedBy LIKE ?
-	    //AND dateAdded BETWEEN ? AND ?";
 	$collection = $this->conn->song;
 
 	// Clean input

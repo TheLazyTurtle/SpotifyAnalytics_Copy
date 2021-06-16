@@ -4,38 +4,37 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
-require "../config/database.php";
+require "../config/mongo.php";
 require "../objects/artists.php";
 
 // Make db and artist object
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 $artist = new Artist($db);
 
+// Result arrays
+$artistArr = array();
+$artistArr["records"] = array();
+
 // Query artist
 $stmt = $artist->read();
-$num = $stmt->rowCount();
+
+foreach ($stmt as $row) {
+
+    $artistItem = array(
+	"id" => $row["artistID"],
+	"name" => $row["name"],
+	"url" => $row["url"],
+	"dateAdded" => $row["dateAdded"],
+	"addedBy" => $row["addedBy"],
+	"img" =>$row["img"] 
+    );
+
+    array_push($artistArr["records"], $artistItem);
+}
 
 // If there are results
-if ($num > 0) {
-    $artistArr = array();
-    $artistArr["records"] = array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
-
-	$artistItem = array(
-	    "id" => $id,
-	    "name" => $name,
-	    "url" => $url,
-	    "dateAdded" => $dateAdded,
-	    "addedBy" => $addedBy,
-	    "img" => $img
-	);
-
-	array_push($artistArr["records"], $artistItem);
-    }
-
+if (count($artistArr["records"]) > 0) {
     // Set ok
     http_response_code(200);
 

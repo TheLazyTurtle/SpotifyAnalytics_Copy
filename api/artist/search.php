@@ -4,39 +4,38 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object
-include_once '../config/database.php';
+include_once '../config/mongo.php';
 include_once '../objects/artists.php';
 
 // Make db and artist object
-$database = new Database();
+$database = new Mongo();
 $db = $database->getConnection();
 $artist = new Artist($db);
+
+// Result arrays
+$artistArr = array();
+$artistArr["records"] = array();
 
 // Get the keywords
 $keywords = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
 
 // Get the artist
 $stmt = $artist->search($keywords);
-$num = $stmt->rowCount();
+
+foreach ($stmt as $row) {
+    $artistItem = array (
+	"artistID" => $row["artistID"],
+	"name" => $row["name"],
+	"url" => $row["url"],
+	"dateAdded" => $row["dateAdded"],
+	"addedBy" => $row["addedBy"],
+	"img" => $row["img"],
+    );
+    array_push($artistArr["records"], $artistItem);
+}
 
 // If there are results
-if ($num > 0) {
-    $artistArr = array();
-    $artistArr["records"] = array();
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
-
-	$artistItem = array (
-	    "artistID" => $id,
-	    "name" => $name,
-	    "url" => $url,
-	    "dateAdded" => $dateAdded,
-	    "addedBy" => $addedBy,
-	    "img" => $img,
-	);
-	array_push($artistArr["records"], $artistItem);
-    }
+if (count($artistArr["records"]) > 0) {
     // Set ok response
     http_response_code(200);
 
