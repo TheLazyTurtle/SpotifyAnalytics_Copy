@@ -4,6 +4,8 @@ var userID = '<%= Session["userID"] %>'
 // This will contain all the graphs
 var graphs = []
 
+// TODO: Refactor these things so that there is not a huge list of params passed
+// ... in but just an object
 // This will get all the graphs from the database
 function getGraphs() {
     $.ajax({
@@ -97,7 +99,7 @@ function getInputFields(
                 inputFields[i] = {}
                 inputFields[i]["index"] = i
                 inputFields[i]["name"] = res["name"]
-                inputFields[i]["value"] = res["value"]
+                inputFields[i]["placeholder"] = res["value"]
                 inputFields[i]["type"] = res["type"]
             }
 
@@ -109,7 +111,7 @@ function getInputFields(
                 xValueType,
                 api,
                 filterSettings,
-                getInputFields,
+                inputFields,
                 type
             )
         },
