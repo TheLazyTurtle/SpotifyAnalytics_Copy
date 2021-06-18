@@ -26,7 +26,6 @@ function makeInputFields(graphData, index) {
 }
 
 // This runs when a input field is updated
-// TODO: It would make life so much easier if this could just get passed an index. Would just love it to make this a class...
 function readInputFields(graphData) {
     var containerID = graphData.containerID
     var inputFieldArrayDiv = "#" + containerID + "-input-array"
@@ -84,15 +83,15 @@ function autoComplete(graphData, inputFieldId, api) {
             },
 
             // Updates the graph when a result is clicked
-            select: function (event) {
-                var input = $(this).val()
+            select: function (element, event) {
+                var input = event.item.value
 
                 // If its a song do difficult route because we have to worry about IDs and not names
                 // because songs are more likely to have the same name
                 if (graphData.filterSettings.hasOwnProperty("song")) {
-                    getSongID(event, graphData, input)
+                    getSongID(element, graphData, input)
                 } else {
-                    updateGraph(event, graphData, input)
+                    updateGraph(element, graphData, input)
                 }
             },
 

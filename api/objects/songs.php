@@ -1,6 +1,6 @@
 <?php
 require '../config/check_cookie.php';
-require_once '/var/www/html/vendor/autoload.php';
+//require_once '/var/www/html/vendor/autoload.php';
 
 class Song {
     // Db connection and table

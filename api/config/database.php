@@ -2,11 +2,13 @@
 class Database {
     // DB creds
     //private $host = "192.168.2.7";
-    private $host = "localhost";
     //private $db_name = "spotify";
+    //private $username = "remote";
+    //private $password = "***REMOVED***";
+    private $host = "localhost";
     private $db_name = "spotifyDev";
-    private $username = "remote";
-    private $password = "***REMOVED***";
+    private $username = "root";
+    private $password = "";
     public $conn;
 
     // Make db connection

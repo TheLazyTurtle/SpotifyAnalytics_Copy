@@ -11,6 +11,7 @@ require_once '/var/www/html/vendor/autoload.php';
 // Make db and song objects
 $database = new Mongo();
 $db = $database->getConnection();
+echo "test";
 $song = new Song($db);
 
 // Make results array
