@@ -6,18 +6,14 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
-require "../config/mongo.php";
-require "../objects/songs.php";
+require "../config/database.php";
+require "../objects/played.php";
 require "../config/core.php";
 
 // Make db and graphs object
-$database = new Mongo();
+$database = new Database();
 $db = $database->getConnection();
-$graph = new Song($db);
-
-// Make result array
-$resultsArr = array();
-$resultsArr["records"] = array();
+$graph = new Played($db);
 
 // Get posted data 
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
@@ -28,25 +24,30 @@ $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 
 // Query results
 $stmt = $graph->allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate);
-
-foreach ($stmt as $row) {
-    $resultItem = array(
-	"label" => $row["name"],
-	"y" => $row["count"],
-    );
-    array_push($resultsArr["records"], $resultItem);
-}
+$num = $stmt->rowCount();
 
 // If results
-if (count($resultsArr["records"]) > 0) {
-    // set response to ok
-    http_response_code(200);
+if ($num > 0) {
+	// Make result array
+	$resultsArr = array();
+	$resultsArr["records"] = array();
 
-    echo json_encode($resultsArr);
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		extract($row);
+		$resultItem = array(
+			"label" => $name,
+			"y" => (int)$times,
+		);
+		array_push($resultsArr["records"], $resultItem);
+	}
+
+	// set response to ok
+	http_response_code(200);
+
+	echo json_encode($resultsArr);
 } else {
-    // Set response to bad request 
-    http_response_code(400);
+	// Set response to bad request 
+	http_response_code(400);
 
-    echo json_encode(array("message" => "No results found"));
+	echo json_encode(array("message" => "No results found"));
 }
-?>

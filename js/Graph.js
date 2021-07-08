@@ -1,5 +1,6 @@
 // Get the data to make the graph
 function getGraphData(
+    graphID,
     containerID,
     title,
     titleX,
@@ -11,6 +12,7 @@ function getGraphData(
     type = "column"
 ) {
     var graphData = {
+        graphID: graphID,
         containerID: containerID,
         title: title,
         titleX: titleX,
@@ -30,18 +32,42 @@ function getGraphData(
         }
     }
 
-    // Make the api request to get the data to fill the graph
-    $.ajax({
-        url: graphData.api,
-        type: "POST",
-        data: filterSettings,
-        success: function (result) {
-            makeNewGraph(result["records"], graphData)
-        },
-        error: function () {
-            setError(graphData.containerID)
-        },
-    })
+    // If the filter setting has a song in it convert the song and artist name to a songID to show the correct data
+    if (filterSettings.hasOwnProperty("song") && filterSettings.song != "") {
+        data = filterSettings.song.split(" - ")
+        $.ajax({
+            url: "/api/song/searchByArtist.php",
+            data: { song: data[0], artist: data[1] },
+            success: function (result) {
+                filterSettings.song = result[0]
+
+                $.ajax({
+                    url: graphData.api,
+                    type: "GET",
+                    data: filterSettings,
+                    success: function (result) {
+                        makeNewGraph(result["records"], graphData)
+                    },
+                    error: function () {
+                        setError(graphData.containerID)
+                    },
+                })
+            },
+        })
+    } else {
+        // Else just show the data
+        $.ajax({
+            url: graphData.api,
+            type: "GET",
+            data: filterSettings,
+            success: function (result) {
+                makeNewGraph(result["records"], graphData)
+            },
+            error: function () {
+                setError(graphData.containerID)
+            },
+        })
+    }
 }
 
 // Make the graph based on the data fetched in getGraphData

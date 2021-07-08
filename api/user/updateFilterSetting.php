@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Required headers
 header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -14,9 +15,9 @@ $user = new User($db);
 
 // Get input
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$settingname = isset($_GET["settingname"]) && !empty($_GET["settingname"]) ? $_GET["settingname"] : die();
-$value = isset($_GET["value"]) && !empty($_GET["value"]) ? $_GET["value"] : die();
-$graphID = isset($_GET["graphID"]) && !empty($_GET["graphID"]) ? $_GET["graphID"] : die();
+$settingname = isset($_GET["settingname"]) && !empty($_GET["settingname"]) ? $_GET["settingname"] : "";
+$value = isset($_GET["value"]) && !empty($_GET["value"]) ? $_GET["value"] : "";
+$graphID = isset($_GET["graphID"]) && !empty($_GET["graphID"]) ? $_GET["graphID"] : "";
 
 if ($user->updateFilterSetting($userID, $settingname, $value, $graphID)) {
     // Set response to ok

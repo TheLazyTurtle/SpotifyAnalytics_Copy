@@ -12,6 +12,7 @@ To fix this do the following steps:
 * Go to your host in the browser and make an account.
 * When you login it will ask you to login with spotify. 
 When you allowed the program to read your spotify recently played the python script will start collecting your latest songs and displaying them on the web page
+* Go to the api/config directory and make a copy of the example files and fill in the correct info in the file mongo.php, database.php and config.php
 
 # Info
 * The api key is valid for a day (it doesn't yet get refreshed after expiration)

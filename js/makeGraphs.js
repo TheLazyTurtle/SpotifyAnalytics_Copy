@@ -58,6 +58,7 @@ function getFilterSettings(
 
             for (var i = 0; i < results["records"].length; i++) {
                 var res = results["records"][i]
+
                 filterSettings[res["name"]] = res["value"]
             }
 
@@ -101,9 +102,11 @@ function getInputFields(
                 inputFields[i]["name"] = res["name"]
                 inputFields[i]["placeholder"] = res["value"]
                 inputFields[i]["type"] = res["type"]
+                inputFields[i]["value"] = filterSettings[res["name"]]
             }
 
             getGraphData(
+                graphID,
                 containerID,
                 title,
                 titleX,

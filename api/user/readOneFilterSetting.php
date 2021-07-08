@@ -25,30 +25,28 @@ $num = $stmt->rowCount();
 
 // If results
 if ($num > 0) {
-    $filterSettingsArr = array();
-    $filterSettingsArr["records"] = array();
+	$filterSettingsArr = array();
+	$filterSettingsArr["records"] = array();
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		extract($row);
 
-	$filterSetting = array(
-	    "graphID" => $graphID,
-	    "userID" => $userID,
-	    "name" => $name,
-	    "value" => $value
-	);
-	array_push($filterSettingsArr["records"], $filterSetting);
-    }
+		$filterSetting = array(
+			"graphID" => $graphID,
+			"userID" => $userID,
+			"name" => $name,
+			"value" => $value
+		);
+		array_push($filterSettingsArr["records"], $filterSetting);
+	}
 
-    // Set response to ok
-    http_response_code(200);
+	// Set response to ok
+	http_response_code(200);
 
-    echo json_encode($filterSettingsArr);
-
+	echo json_encode($filterSettingsArr);
 } else {
-    // Set response to bad request
-    http_response_code(400);
+	// Set response to bad request
+	http_response_code(400);
 
-    echo json_encode(array("message" => "No results found"));
+	echo json_encode(array("message" => "No results found"));
 }
-?>

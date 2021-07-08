@@ -42,7 +42,7 @@ function formatDate(
         month = "" + (d.getMonth() + Number(plusMonth) + plusMonth + 1),
         day = "" + (d.getDate() + Number(plusDay)),
         year = d.getFullYear(),
-        hour = "T" + 23
+        hour = "23:00:00"
 
     if (month.length < 2) {
         month = "0" + month
@@ -51,7 +51,7 @@ function formatDate(
         day = "0" + day
     }
     if (startOfDay) {
-        hour = "T" + 00
+        hour = "00:00:00"
     }
 
     time = [year, month, day].join("-")
@@ -80,4 +80,24 @@ function startYear(startOfDay = true) {
     d = new Date()
     year = d.getFullYear() + "-01-01"
     return formatDate(0, 0, startOfDay, new Date(year))
+}
+
+function msToTime(s) {
+    s = parseInt(s)
+
+    var ms = s % 1000
+    s = (s - ms) / 1000
+    var secs = s % 60
+    s = (s - secs) / 60
+    var mins = s % 60
+    var hrs = (s - mins) / 60
+
+    if (mins <= 9) {
+        mins = "0" + mins
+    }
+    if (secs <= 9) {
+        secs = "0" + secs
+    }
+
+    return hrs + ":" + mins + ":" + secs
 }

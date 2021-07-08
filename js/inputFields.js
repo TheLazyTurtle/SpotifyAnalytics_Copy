@@ -6,15 +6,22 @@ function makeInputFields(graphData, index) {
     var mainDiv = "#" + containerID + "-main"
     var id = containerID + "-input-array"
     var appendID = "#" + id
+    var inputFields = graphData.inputFields
 
     // This will make in div to put all the input fields in
     makeInputFieldArray(appendID, mainDiv, id)
 
     var inputField = document.createElement("input")
     inputField.className = containerID + "-input inputField"
-    inputField.type = graphData.inputFields[index].type
-    inputField.placeholder = graphData.inputFields[index].placeholder
-    inputField.id = containerID + "-" + graphData.inputFields[index].name
+    inputField.type = inputFields[index].type
+    inputField.placeholder = inputFields[index].placeholder
+    inputField.id = containerID + "-" + inputFields[index].name
+
+    if (inputFields[index] == null) {
+        inputField.value = graphData.filterSettings[inputFields[index].name]
+    } else {
+        inputField.value = inputFields[index].value
+    }
 
     // If the field should be a number set the min value to 0
     if (graphData.inputFields[index].type == "number") {
@@ -33,7 +40,6 @@ function readInputFields(graphData) {
     var amountOfFields = Object.keys(graphData.inputFields).length
 
     // Check if the fields have changed
-    //$(inputFields).on("input", function () {
     // If there was change go through all the inputfields
     for (var i = 0; i < amountOfFields; i++) {
         $(inputFields[i]).on("input", function () {
@@ -48,83 +54,14 @@ function readInputFields(graphData) {
             if (api !== "no API") {
                 autoComplete(graphData, inputFieldId, api)
             } else {
-                graphData.filterSettings[settingName] = $(this).val()
+                var value = $(this).val()
+                graphData.filterSettings[settingName] = value
                 updateData(graphData)
+
+                updateFilterSetting(graphData.graphID, settingName, value)
             }
         })
     }
-    //})
-}
-
-// TODO: If a result contains a special character it wont get the data when updating the grap because they are not escaped out
-function autoComplete(graphData, inputFieldId, api) {
-    $(function () {
-        // This makes gives the autocomplete the filterable settings with the tags given above
-        $(inputFieldId).autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    type: "GET",
-                    url: api,
-                    data: { keyword: request.term, amount: 10 },
-                    success: function (data) {
-                        // If its a song do difficult route because we have to worry about IDs and not names
-                        // because songs are more likely to have the same name
-                        if (graphData.filterSettings.hasOwnProperty("song")) {
-                            response(
-                                data.map(function (item) {
-                                    return item["name"] + " - " + item["artist"]
-                                })
-                            )
-                        } else {
-                            response(data)
-                        }
-                    },
-                })
-            },
-
-            // Updates the graph when a result is clicked
-            select: function (element, event) {
-                var input = event.item.value
-
-                // If its a song do difficult route because we have to worry about IDs and not names
-                // because songs are more likely to have the same name
-                if (graphData.filterSettings.hasOwnProperty("song")) {
-                    getSongID(element, graphData, input)
-                } else {
-                    updateGraph(element, graphData, input)
-                }
-            },
-
-            // This should reset the graph when the input is empty
-            change: function (event) {
-                if ($(this).val().length <= 0) {
-                    updateGraph(event, graphData, "")
-                }
-            },
-        })
-    })
-}
-
-// Updates the graph based on the given data from the autocomplete
-function updateGraph(event, graphData, input) {
-    var id = event.target.attributes[3].nodeValue
-    id = cleanFilterSettingID(id, graphData.containerID)
-
-    graphData.filterSettings[id] = input
-    updateData(graphData)
-}
-
-function getSongID(event, graphData, input) {
-    var data = input.split(" - ")
-
-    $.ajax({
-        type: "GET",
-        url: "/api/song/searchByArtist.php",
-        data: { song: data[0], artist: data[1] },
-        success: function (data) {
-            updateGraph(event, graphData, data[0])
-        },
-    })
 }
 
 // This will remove the prefix of the given id so that it can update the correct filter setting
@@ -143,7 +80,7 @@ function makeInputFieldArray(appendID, mainDiv, id) {
 // This will based on the settingName choose what api to return
 function chooseApi(settingName) {
     if (settingName == "song") {
-        return "/api/song/topSongsSearch.php"
+        return "/api/played/topSongsSearch.php"
     } else if (settingName == "artist") {
         return "/api/artist/topArtistSearch.php"
     } else {

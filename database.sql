@@ -1,23 +1,24 @@
 -- Use stuff
 CREATE TABLE IF NOT EXISTS user (
-    userID INT NOT NULL AUTO_INCREMENT,
+    userID VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL,
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    password VARCHAR(45) NOT NULL,
+    password VARCHAR(80) NOT NULL,
     isAdmin TINYINT NOT NULL DEFAULT 0,
     createdAt DATETIME NOT NULL DEFAULT current_timestamp(),
     modified TIMESTAMP NULL DEFAULT current_timestamp(),
     active TINYINT NOT NULL DEFAULT 1,
+	fetchAmount TINYINT NULL,
     PRIMARY KEY (userID)
 );
 
 CREATE TABLE IF NOT EXISTS spotifyData(
-    userID INT NOT NULL,
+    userID varchar(45) NOT NULL,
     authToken VARCHAR(255) NOT NULL,
-    refreshToken VARCHAR(255),
-    ExpireDate INT NULL,
+    refreshToken VARCHAR(255) NOT NULL,
+    ExpireDate INT NULL NOT NULL,
     PRIMARY KEY (userID)
 );
 
@@ -30,12 +31,13 @@ CREATE TABLE IF NOT EXISTS graph (
     titleX VARCHAR(45) NOT NULL,
     titleY VARCHAR(45) NOT NULL,
     type VARCHAR(45) NOT NULL,
+	containerID varchar(45) NOT NULL,
     PRIMARY KEY (graphID)
 );
 
 CREATE TABLE IF NOT EXISTS filterSetting (
     graphID INT NOT NULL,
-    userID INT NOT NULL,
+    userID VARCHAR(25) NOT NULL,
     name VARCHAR(45) NOT NULL,
     value VARCHAR(45) NOT NULL,
     PRIMARY KEY (graphID, name, userID)
@@ -46,5 +48,38 @@ CREATE TABLE IF NOT EXISTS inputfield (
     inputFieldID INT NOT NULL,
     name VARCHAR(45) NOT NULL,
     value VARCHAR(45) NOT NULL,
+	type VARCHAR(20) NOT NULL,
     PRIMARY KEY (graphID, inputFieldID, name)
+);
+
+CREATE TABLE IF NOT EXISTS artist (
+	artistID varchar(23) NOT NULL,
+	name varchar(45) NOT NULL,
+	url varchar(255) NOT NULL,
+	img varchar(255) NULL,
+	primary key(artistID)
+);
+
+CREATE TABLE IF NOT EXISTS artist_has_song (
+	songID varchar(23) NOT NULL,
+	artistID varchar(23) NOT NULL,
+	primary key(songID, artistID)
+);
+
+CREATE TABLE IF NOT EXISTS played (
+	songID varchar(23) NOT NULL,
+	datePlayed varchar(19) NOT NULL,
+	playedBy varchar(45) NOT NULL,
+	songName varchar(255) NOT NULL,
+	primary key(songId, datePlayed, playedBy)
+);
+
+CREATE TABLE IF NOT EXISTS song (
+	songID varchar(23) NOT NULL,
+	name varchar(255) NOT NULL,
+	length int NOT NULL,
+	url varchar(255) NOT NULL,
+	img varchar(255) NOT NULL,
+	preview varchar(255) NULL,
+	primary key(songID)
 );

@@ -81,10 +81,12 @@ class Carousel {
         })
 
         !!galleryControlsContainer.childNodes[0]
-            ? (galleryControlsContainer.childNodes[0].innerHTML = this.carouselControls[0])
+            ? (galleryControlsContainer.childNodes[0].innerHTML =
+                  this.carouselControls[0])
             : null
         !!galleryControlsContainer.childNodes[1]
-            ? (galleryControlsContainer.childNodes[1].innerHTML = this.carouselControls[1])
+            ? (galleryControlsContainer.childNodes[1].innerHTML =
+                  this.carouselControls[1])
             : null
     }
 
@@ -98,9 +100,8 @@ class Carousel {
                 const selectedItem = document.querySelectorAll(
                     ".gallery-item-selected"
                 )
-                const leftSelectedItem = document.querySelectorAll(
-                    ".gallery-item-left"
-                )
+                const leftSelectedItem =
+                    document.querySelectorAll(".gallery-item-left")
                 const rightSelectedItem = document.querySelectorAll(
                     ".gallery-item-right"
                 )

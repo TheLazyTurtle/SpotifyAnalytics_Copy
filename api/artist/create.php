@@ -16,36 +16,31 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get posted data
-$data= json_decode(file_get_contents("php://input"));
+$data = $_GET;
 
 // Check if data is not empty
 if (
-    !empty($data->artistID) && 
-    !empty($data->name) && 
-    !empty($data->url) && 
-    !empty($data->dateAdded) && 
-    !empty($data->addedBy) && 
-    !empty($data->img)
+	!empty($data["artistID"]) &&
+	!empty($data["name"]) &&
+	!empty($data["url"]) &&
+	!empty($data["img"])
 ) {
-    $artist->id = $data->artistID;
-    $artist->name = $data->name;
-    $artist->url = $data->url;
-    $artist->dateAdded = $data->dateAdded;
-    $artist->addedBy = $data->addedBy;
-    $artist->img = $data->img;
+	$artist->id = $data["artistID"];
+	$artist->name = $data["name"];
+	$artist->url = $data["url"];
+	$artist->img = $data["img"];
 
-    if ($artist->create()) {
-	http_response_code(201);
+	if ($artist->create()) {
+		http_response_code(201);
 
-	echo json_encode(array("message" => "artist added"));
-    } else {
-	echo json_encode(array("message" => "unable to add artist"));
-    }
+		echo json_encode(array("message" => "artist added"));
+	} else {
+		http_response_code(503);
+		echo json_encode(array("message" => "unable to add artist"));
+	}
 } else {
-    // bad request
-    http_response_code(401);
+	// bad request
+	http_response_code(401);
 
-    echo json_encode(array("message" => "Data incomplete"));
+	echo json_encode(array("message" => "Data incomplete"));
 }
-?>
-

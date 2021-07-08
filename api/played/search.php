@@ -9,7 +9,7 @@ header("Content-Type: application/json; charset=UTF-8");
 // Include db and object
 require '../config/core.php';
 require '../config/database.php';
-require '../objects/songs.php';
+require '../objects/played.php';
 
 // Make db connection and new played object
 $database = new Database();
@@ -50,4 +50,3 @@ if ($num > 0) {
     
     echo json_encode(array("message" => "No data found"));
 }
-?>

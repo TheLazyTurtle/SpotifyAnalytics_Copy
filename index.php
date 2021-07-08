@@ -4,8 +4,10 @@ require 'header.php';
 ?>
 
 <body>
-    <?php //require 'slider.php' ?>
     <div class="container">
+	<div id="funInfoSliderJ">
+	    <?php require 'slider.php' ?>
+	</div>
 	<div id="all_Songs_Played-main" class="main">
 	</div>
 
@@ -20,6 +22,7 @@ require 'header.php';
     </div>
 </body>
 
+<script src="js/autocomplete.js"></script>
 <script src="js/inputFields.js"></script>
 <script src="js/buttons.js"></script>
 <script src="js/dateProcessing.js"></script>
