@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $song = new Song($db);
 
 // Get posted data
-$data = $_GET;
+$data = $_POST;
 
 // Check for empty data
 if (

@@ -9,10 +9,10 @@ from time import sleep
 # This will get all the users
 # If the user is not in the active array than add them and make a new thread for them
 def getUsers():
-    r = req.get("http://localhost/api/user/getAllUsers.php")
-    jsonObject = json.loads(r.text)
-
     try:
+        r = req.get("http://localhost/api/user/getAllUsers.php")
+        jsonObject = json.loads(r.text)
+
         for usr in jsonObject["records"]:
             if usr["userID"] not in users:
                 addUser(usr)
@@ -37,4 +37,4 @@ users = []
 # This will get all users every hour
 while True:
     getUsers()
-    sleep(60)
+    sleep(3600)

@@ -17,7 +17,7 @@ $db = $database->getConnection();
 $played = new Played($db);
 
 // Get posted data
-$data = $_GET;
+$data = $_POST;
 
 // Check if data is not empty
 if (

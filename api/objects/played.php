@@ -18,6 +18,19 @@ class Played
 		//checkCookie();
 	}
 
+	function readOne($songID)
+	{
+		$query = "SELECT * FROM played WHERE songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$songID = htmlspecialchars(strip_tags($songID));
+
+		$stmt->bindParam(1, $songID);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
 	// This will mark a song as played
 	function create()
 	{

@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get posted data
-$data = $_GET;
+$data = $_POST;
 
 // Check if data is not empty
 if (
@@ -40,7 +40,7 @@ if (
 	}
 } else {
 	// bad request
-	http_response_code(401);
+	http_response_code(400);
 
 	echo json_encode(array("message" => "Data incomplete"));
 }

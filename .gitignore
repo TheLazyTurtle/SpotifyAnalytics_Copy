@@ -4,8 +4,7 @@
 data.json
 todo.md
 .nvimlog
-.nvimlog
-__pycache__
+backOffice/src/__pycache__/
 example.html
 vendor/
 /api/config/core.php

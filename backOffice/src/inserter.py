@@ -20,7 +20,7 @@ class Inserter():
                 "preview": song["preview"]
             }
 
-            r = req.get(self.url + "song/create.php", params=values)
+            r = req.post(self.url + "song/create.php", data=values)
             httpResponse = r.status_code
 
             if httpResponse == 201:
@@ -42,7 +42,7 @@ class Inserter():
                     "img": artist["img"]
                 }
 
-                r = req.get(self.url + "artist/create.php", params=values)
+                r = req.post(self.url + "artist/create.php", data=values)
                 httpResponse = r.status_code
 
                 if httpResponse == 201:
@@ -50,7 +50,6 @@ class Inserter():
                 elif httpResponse == 503:
                     pass
                 else:
-                    print(artist)
                     printc("Failed to add artist:", "red",
                            artist["name"], "white", httpResponse)
 
@@ -63,7 +62,7 @@ class Inserter():
                 "songName": song["name"]
             }
 
-            r = req.get(self.url + '/played/create.php', params=values)
+            r = req.post(self.url + '/played/create.php', data=values)
             httpResponse = r.status_code
 
             if httpResponse == 201:
@@ -83,8 +82,8 @@ class Inserter():
                     "artistID": artist["artistID"]
                 }
 
-                r = req.get(self.url + "song/linkArtistToSong.php",
-                            params=values)
+                r = req.post(self.url + "song/linkArtistToSong.php",
+                             data=values)
                 httpResponse = r.status_code
 
                 if httpResponse == 201:
