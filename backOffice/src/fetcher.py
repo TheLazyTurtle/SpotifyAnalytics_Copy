@@ -138,7 +138,7 @@ class Fetcher():
         return object
 
     def artistHasImg(self, artistID):
-        r = req.get("http://localhost/api/artist/getImage.php",
+        r = req.get(creds.apiUrl + "artist/getImage.php",
                     params={"artistID": artistID})
         httpResponse = r.status_code
 

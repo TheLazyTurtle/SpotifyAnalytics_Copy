@@ -4,13 +4,14 @@ import json
 import user
 from printer import printc
 from time import sleep
+from creds import apiUrl
 
 
 # This will get all the users
 # If the user is not in the active array than add them and make a new thread for them
 def getUsers():
     try:
-        r = req.get("http://localhost/api/user/getAllUsers.php")
+        r = req.get(apiUrl + "user/getAllUsers.php")
         jsonObject = json.loads(r.text)
 
         for usr in jsonObject["records"]:

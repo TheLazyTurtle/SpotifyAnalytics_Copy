@@ -7,6 +7,8 @@ clientSec = "***REMOVED***"
 # The scope defines how much you are allowed to do
 scope = "user-read-recently-played"
 
+apiUrl = "https://spa.jcg-ict.nl/api/"
+
 
 def connection():
     db = mysql.connector.connect(

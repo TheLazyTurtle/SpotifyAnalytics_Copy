@@ -2,6 +2,7 @@ import os
 import requests
 import json
 from shutil import copy
+from creds import apiUrl
 
 
 class Caching():
@@ -37,7 +38,7 @@ class Caching():
     def getAuthTokens(self):
         try:
             r = requests.get(
-                "http://localhost/api/user/getAuthTokens.php", params={"userID": self.userID})
+                apiUrl + "user/getAuthTokens.php", params={"userID": self.userID})
             result = json.loads(r.text)
 
             return result["records"][0]

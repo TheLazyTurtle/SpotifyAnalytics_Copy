@@ -2,6 +2,7 @@ import threading
 import fetcher
 import inserter
 from time import sleep
+from creds import apiUrl
 
 
 class User():
@@ -12,7 +13,7 @@ class User():
     # TODO: Add error handling and printing
     def fetch(self):
         self.fetcher = fetcher.Fetcher(self.userID)
-        self.inserter = inserter.Inserter(self.userID, "http://localhost/api/")
+        self.inserter = inserter.Inserter(self.userID, apiUrl)
 
         while True:
             # This returns the songs objects and insert them into the db
