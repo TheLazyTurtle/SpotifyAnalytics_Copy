@@ -4,7 +4,7 @@ $(document).ready(function () {
     // Validates the jwt token
     $.ajax({
         url: "api/system/validate_token.php",
-        type: "post",
+        type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ jwt: jwt }),
         success: function (result) {

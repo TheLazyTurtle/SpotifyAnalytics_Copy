@@ -19,8 +19,8 @@ $songsArr["records"] = array();
 
 // Get the keyword
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-$limit = isset($_GET["limit"]) ? $_GET["limit"] : 10;
+$keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "";
+$limit = isset($_POST["limit"]) ? $_POST["limit"] : 10;
 
 // Get the songs
 $stmt = $song->searchForUser($userID, $keyword, $limit);
@@ -50,4 +50,3 @@ if (count($songsArr["records"]) > 0) {
 
     echo json_encode(array("message" => "No songs found"));
 }
-?>

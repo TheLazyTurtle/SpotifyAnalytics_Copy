@@ -10,7 +10,7 @@ var graphs = []
 function getGraphs() {
     $.ajax({
         url: "/api/graph/read.php",
-        type: "GET",
+        type: "POST",
         success: function (result) {
             for (var i = 0; i <= result["records"].length; i++) {
                 var res = result["records"][i]
@@ -51,7 +51,7 @@ function getFilterSettings(
 ) {
     $.ajax({
         url: "/api/user/readOneFilterSetting.php",
-        type: "GET",
+        type: "POST",
         data: { graphID: graphID },
         success: function (results) {
             var filterSettings = {}

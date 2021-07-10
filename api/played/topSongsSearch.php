@@ -17,8 +17,8 @@ $song = new Played($db);
 
 // Get posted data
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-$amount = isset($_GET["amount"]) ? $_GET["amount"] : 10;
+$keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "";
+$amount = isset($_POST["amount"]) ? $_POST["amount"] : 10;
 
 // Query the results
 $stmt = $song->topSongSearch($userID, $keyword, $amount);

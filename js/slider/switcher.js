@@ -91,7 +91,7 @@ function fetchSliderData(dates, sliderInfo, timeFrame, type) {
     var maxDate = dates.maxDate
 
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: api,
         data: { minDate: minDate, maxDate: maxDate, amount: 1 },
         success: function (data) {

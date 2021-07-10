@@ -13,7 +13,7 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get input
-$artistID = isset($_GET["artistID"]) ? $_GET["artistID"] : "";
+$artistID = isset($_POST["artistID"]) ? $_POST["artistID"] : "";
 
 // Query the results
 $stmt = $artist->getImage($artistID);

@@ -43,7 +43,7 @@ function getGraphData(
 
                 $.ajax({
                     url: graphData.api,
-                    type: "GET",
+                    type: "POST",
                     data: filterSettings,
                     success: function (result) {
                         makeNewGraph(result["records"], graphData)
@@ -58,7 +58,7 @@ function getGraphData(
         // Else just show the data
         $.ajax({
             url: graphData.api,
-            type: "GET",
+            type: "POST",
             data: filterSettings,
             success: function (result) {
                 makeNewGraph(result["records"], graphData)
@@ -118,7 +118,7 @@ function updateData(graphData) {
 
     $.ajax({
         url: graphData.api,
-        type: "GET",
+        type: "POST",
         data: graphData.filterSettings,
         success: function (result) {
             graphs[graphData.containerID].options.data[0].dataPoints = []

@@ -17,10 +17,10 @@ $graph = new Played($db);
 
 // Get posted data 
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$minPlayed = isset($_GET["minPlayed"]) && !empty($_GET["minPlayed"]) ? $_GET["minPlayed"] : $minPlayed_def;
-$maxPlayed = isset($_GET["maxPlayed"]) && !empty($_GET["maxPlayed"]) ? $_GET["maxPlayed"] : $maxPlayed_def;
-$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
-$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
+$minPlayed = isset($_POST["minPlayed"]) && !empty($_POST["minPlayed"]) ? $_POST["minPlayed"] : $minPlayed_def;
+$maxPlayed = isset($_POST["maxPlayed"]) && !empty($_POST["maxPlayed"]) ? $_POST["maxPlayed"] : $maxPlayed_def;
+$minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
+$maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
 
 // Query results
 $stmt = $graph->allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate);

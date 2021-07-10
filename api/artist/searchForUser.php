@@ -15,8 +15,8 @@ $artist = new Artist($db);
 
 // Get the keywords
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-$limit = isset($_GET["limit"]) ? $_GET["limit"] : 10;
+$keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "";
+$limit = isset($_POST["limit"]) ? $_POST["limit"] : 10;
 
 // Get the artist
 $stmt = $artist->serachForuser($userID, $keyword, $limit);

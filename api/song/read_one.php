@@ -15,7 +15,7 @@ $db = $database->getConnection();
 
 // Make new song object and get the song based on the songID
 $song = new Song($db);
-$song->id = isset($_GET['songID']) ? $_GET["songID"] : die();
+$song->id = isset($_POST['songID']) ? $_POST["songID"] : die();
 
 // fetch that one song
 $song->readOne();

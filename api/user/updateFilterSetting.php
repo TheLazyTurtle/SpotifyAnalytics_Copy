@@ -15,9 +15,9 @@ $user = new User($db);
 
 // Get input
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$settingname = isset($_GET["settingname"]) && !empty($_GET["settingname"]) ? $_GET["settingname"] : "";
-$value = isset($_GET["value"]) && !empty($_GET["value"]) ? $_GET["value"] : "";
-$graphID = isset($_GET["graphID"]) && !empty($_GET["graphID"]) ? $_GET["graphID"] : "";
+$settingname = isset($_POST["settingname"]) && !empty($_POST["settingname"]) ? $_POST["settingname"] : "";
+$value = isset($_POST["value"]) && !empty($_POST["value"]) ? $_POST["value"] : "";
+$graphID = isset($_POST["graphID"]) && !empty($_POST["graphID"]) ? $_POST["graphID"] : "";
 
 if ($user->updateFilterSetting($userID, $settingname, $value, $graphID)) {
     // Set response to ok
@@ -30,4 +30,3 @@ if ($user->updateFilterSetting($userID, $settingname, $value, $graphID)) {
 
     echo json_encode(array("message" => "Unable to update filterSetting"));
 }
-?>

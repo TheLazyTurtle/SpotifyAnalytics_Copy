@@ -15,7 +15,7 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get input
-$userID = isset($_GET["userID"]) && !empty($_GET["userID"]) ? $_GET["userID"] : die();
+$userID = isset($_POST["userID"]) && !empty($_POST["userID"]) ? $_POST["userID"] : die();
 
 // Query the auth tokens
 $stmt = $user->getAuthTokens($userID);

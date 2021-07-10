@@ -16,8 +16,8 @@ $user = new User($db);
 
 // Get input
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$name = isset($_GET["name"]) ? $_GET["name"] : "";
-$graphID = isset($_GET["graphID"]) ? $_GET["graphID"] : "";
+$name = isset($_POST["name"]) ? $_POST["name"] : "";
+$graphID = isset($_POST["graphID"]) ? $_POST["graphID"] : "";
 
 // Query the filterSettings
 $stmt = $user->readOneFilterSetting($userID, $name, $graphID);

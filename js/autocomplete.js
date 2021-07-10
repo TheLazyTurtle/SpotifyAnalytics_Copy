@@ -5,7 +5,7 @@ function autoComplete(graphData, inputFieldId, api) {
         $(inputFieldId).autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: api,
                     data: { keyword: request.term, amount: 10 },
                     success: function (data) {
@@ -57,7 +57,7 @@ function updateGraph(element, graphData, input) {
         } else {
             var data = input.split(" - ")
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "/api/song/searchByArtist.php",
                 data: { song: data[0], artist: data[1] },
                 success: function (data) {
@@ -76,7 +76,7 @@ function updateGraph(element, graphData, input) {
 // This will update the setting in the database when input changes
 function updateFilterSetting(graphID, settingName, value) {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "/api/user/updateFilterSetting.php",
         data: { graphID: graphID, settingname: settingName, value: value },
     })

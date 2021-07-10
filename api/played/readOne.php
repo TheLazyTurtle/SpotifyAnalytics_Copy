@@ -9,10 +9,12 @@ header("Content-Type: application/json");
 include_once '../config/database.php';
 include_once '../objects/played.php';
 
+// Make database and played object
 $database = new Database();
 $db = $database->getConnection();
 $played = new Played($db);
 
+// Fetch input data
 $songID = isset($_GET["songID"]) && !empty($_GET["songID"]) ? $_GET["songID"] : die();
 
 $stmt = $played->readOne($songID);

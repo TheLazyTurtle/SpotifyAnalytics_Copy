@@ -13,7 +13,7 @@ $db = $database->getConnection();
 $song = new Song($db);
 
 // Get input
-$songID = isset($_GET["songID"]) ? $_GET["songID"] : "";
+$songID = isset($_POST["songID"]) ? $_POST["songID"] : "";
 
 // Query the songs
 $stmt = $song->getImage($songID);

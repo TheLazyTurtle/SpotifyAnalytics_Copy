@@ -17,8 +17,8 @@ $db = $database->getConnection();
 $played = new Played($db);
 
 // Get keywords
-$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate;
-$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate;
+$minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate;
+$maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate;
 
 // Get the data
 $stmt = $played->search($minDate, $maxDate, $userID);
@@ -26,27 +26,27 @@ $num = $stmt->rowCount();
 
 // If results
 if ($num > 0) {
-    $playedArr = array();
-    $playedArr["records"] = array();
+	$playedArr = array();
+	$playedArr["records"] = array();
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+		extract($row);
 
-	$playedItem = array(
-	    "songID" => $songID,
-	    "datePlayed" => $datePlayed,
-	    "playedBy" => $playedBy 
-	);
-	array_push($playedArr["records"], $playedItem);
-    }
+		$playedItem = array(
+			"songID" => $songID,
+			"datePlayed" => $datePlayed,
+			"playedBy" => $playedBy
+		);
+		array_push($playedArr["records"], $playedItem);
+	}
 
-    // Set response to ok
-    http_response_code(200);
+	// Set response to ok
+	http_response_code(200);
 
-    echo json_encode($playedArr);
+	echo json_encode($playedArr);
 } else {
-    // Set response to not found
-    http_response_code(404);
-    
-    echo json_encode(array("message" => "No data found"));
+	// Set response to not found
+	http_response_code(404);
+
+	echo json_encode(array("message" => "No data found"));
 }
