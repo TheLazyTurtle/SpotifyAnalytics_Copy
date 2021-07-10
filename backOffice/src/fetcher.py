@@ -32,12 +32,12 @@ class Fetcher():
             return False
 
     # Get the songs
-    def getResult(self):
+    def getResult(self, amount):
         try:
             self.token = self.getToken()
             if self.token:
                 # TODO: Implement GH issue #45
-                result = self.token.current_user_recently_played(limit=5)
+                result = self.token.current_user_recently_played(limit=amount)
             else:
                 self.cacher.makeFile()
                 printc("Failed to get results for user:",
@@ -87,6 +87,7 @@ class Fetcher():
             print(e)
             return False
 
+    # Get the song info from the song object provided by spotify
     def extractSong(self, song):
         # Get the time the song was played at
         playedAt = song["played_at"]
@@ -116,6 +117,7 @@ class Fetcher():
             'playedAt': playedAt
         }
 
+    # Get the artists from the song object provided by spotify
     def extractArtist(self, artist):
         artistID = artist["id"]
         name = artist["name"]
@@ -137,6 +139,8 @@ class Fetcher():
 
         return object
 
+    # Checks if the artists already has an image. If the artist already have an image than don't add the artist because we already have it in the database
+    # TODO: If the artist exists but doesn't yet have an image than try to update the img
     def artistHasImg(self, artistID):
         r = req.get(creds.apiUrl + "artist/getImage.php",
                     params={"artistID": artistID})
@@ -147,6 +151,7 @@ class Fetcher():
         else:
             return False
 
+    # This will get the image for an artist. If it can't find and image return a default image
     def getArtistImg(self, name):
         result = self.token.search(q="artist: " + name, type="artist")
         item = result["artists"]["items"]
@@ -157,5 +162,5 @@ class Fetcher():
         except Exception as e:
             return "http://www.techspot.com/images2/downloads/topdownload/2016/12/spotify-icon-18.png"
 
-    def run(self):
-        return self.createSongObject(self.getResult())
+    def run(self, amount):
+        return self.createSongObject(self.getResult(amount))

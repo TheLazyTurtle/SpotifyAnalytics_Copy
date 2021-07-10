@@ -7,7 +7,7 @@ clientSec = "***REMOVED***"
 # The scope defines how much you are allowed to do
 scope = "user-read-recently-played"
 
-apiUrl = "http://localhost/api/"
+apiUrl = "localhost/api"
 
 
 def connection():

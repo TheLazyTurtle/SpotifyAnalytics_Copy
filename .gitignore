@@ -4,11 +4,12 @@
 data.json
 todo.md
 .nvimlog
-backOffice/src/__pycache__/
+__pycache__/
 example.html
 vendor/
 /api/config/core.php
 /api/config/database.php
+/backOffice/src/creds.py
 .vim
 creds.py
 __tests__

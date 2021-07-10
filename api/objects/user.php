@@ -195,4 +195,24 @@ class User
 		$stmt->execute();
 		return $stmt;
 	}
+
+	function getActiveHours($userID)
+	{
+		$query = "SELECT 
+			(COUNT(*) / (SELECT COUNT(*) FROM played WHERE playedBy LIKE ?) * 100) AS percent, 
+			COUNT(*), HOUR(DATE_ADD(datePlayed, INTERVAL 2 HOUR)) AS time 
+				FROM played 
+				WHERE playedBy LIKE ? 
+				GROUP BY HOUR(datePlayed)";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$userID = htmlspecialchars(strip_tags($userID));
+
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $userID);
+		$stmt->execute();
+
+		return $stmt;
+	}
 }
