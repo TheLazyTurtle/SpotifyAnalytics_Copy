@@ -35,8 +35,8 @@ if ($num > 0) {
 		$img = $img != null ? $img : "https://fakeimg.pl/300/?text=no new song";
 
 		$resultsItem = array(
-			"new" => $items,
-			"img" => $img
+			"new" => (int)$new,
+			"img" => $img,
 		);
 		array_push($resultsArr["records"], $resultsItem);
 	}

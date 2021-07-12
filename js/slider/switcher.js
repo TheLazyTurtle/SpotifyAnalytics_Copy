@@ -11,7 +11,7 @@ sliderItems["topSongs"] = {
 sliderItems["topArtist"] = {
     api: "/api/artist/topArtist.php",
     id: "#topArtist",
-    text: `Top artist {timeFrame}:  {name} -  {amount}`,
+    text: `Top artist {timeFrame}: {name} - {amount}`,
     dataType1: "y",
     dataType2: "label",
 }
@@ -26,14 +26,14 @@ sliderItems["timelistend"] = {
 sliderItems["amountSongs"] = {
     api: "/api/played/amountSongs.php",
     id: "#amountSongs",
-    text: `Total songs listend {timeFrame}:  {amount}`,
+    text: `Total songs listend {timeFrame}: {amount}`,
     dataType1: "times",
 }
 
 sliderItems["amountNewSongs"] = {
     api: "/api/played/amountNewSongs.php",
     id: "#amountNewSongs",
-    text: `New songs {timeFrame}:  {amount}`,
+    text: `New songs {timeFrame}: {amount}`,
     dataType1: "new",
 }
 

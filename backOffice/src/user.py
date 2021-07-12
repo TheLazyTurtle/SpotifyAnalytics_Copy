@@ -19,10 +19,10 @@ class User():
         self.fetcher = fetcher.Fetcher(self.userID)
         self.inserter = inserter.Inserter(self.userID, apiUrl)
 
-        # Set default fetch values
-        amount, time = self.getTimeAndAmount()
-
         while True:
+            # Set default fetch values
+            amount, time = self.getTimeAndAmount()
+
             # This returns the songs objects and insert them into the db
             try:
                 songs = self.fetcher.run(amount)

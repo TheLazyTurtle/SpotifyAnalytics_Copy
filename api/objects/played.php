@@ -223,25 +223,32 @@ class Played
 	// TODO: This one is a total mess i think have to look at it
 	function newSongs($userID, $minDate, $maxDate)
 	{
-		$query = "SELECT COUNT(new) as items, s.img as img
-				FROM (
-					SELECT p.songID as songID, MIN(p.datePlayed) new
-					FROM played p 
-					WHERE p.playedBy LIKE ?
-					AND p.datePlayed BETWEEN ? AND ?
-					GROUP BY p.songID
-				) p
-				INNER JOIN song s ON s.songID = p.songID";
+		$query = "SELECT COUNT(*) AS new, img 
+			FROM (
+				SELECT songID 
+				FROM played 
+				WHERE playedBy LIKE ? 
+				GROUP BY songID 
+				HAVING MIN(datePlayed) >= ?) a 
+			INNER JOIN song s ON s.songID = a.songID";
+		//$query = "SELECT COUNT(new) as items, s.img as img
+		//FROM (
+		//SELECT p.songID as songID, MIN(p.datePlayed) new
+		//FROM played p 
+		//WHERE p.playedBy LIKE ?
+		//AND p.datePlayed BETWEEN ? AND ?
+		//GROUP BY p.songID
+		//) p
+		//INNER JOIN song s ON s.songID = p.songID";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
 		$userID = htmlspecialchars(strip_tags($userID));
 		$minDate = htmlspecialchars(strip_tags($minDate));
-		$maxDate = htmlspecialchars(strip_tags($maxDate));
+		//$maxDate = htmlspecialchars(strip_tags($maxDate));
 
-		$stmt->bindParam(1, $userID);
-		$stmt->bindParam(2, $minDate);
-		$stmt->bindParam(3, $maxDate);
+		$stmt->bindParam(1, $userID, PDO::PARAM_STR);
+		$stmt->bindParam(2, $minDate, PDO::PARAM_STR);
 		$stmt->execute();
 
 		return $stmt;
