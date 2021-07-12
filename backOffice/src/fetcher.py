@@ -26,9 +26,13 @@ class Fetcher():
 
                 return spotipy.Spotify(auth=token)
             else:
+                printc("Failed to get cache file for user:",
+                       "red", self.userID, "white")
                 return False
 
         except Exception as e:
+            printc("Failed to get token for user:", "red",
+                   self.userID, "white", e, "white")
             return False
 
     # Get the songs
@@ -36,7 +40,6 @@ class Fetcher():
         try:
             self.token = self.getToken()
             if self.token:
-                # TODO: Implement GH issue #45
                 result = self.token.current_user_recently_played(limit=amount)
             else:
                 self.cacher.makeFile()
@@ -46,7 +49,6 @@ class Fetcher():
             if result:
                 return result
         except AttributeError as ae:
-            # TODO: check infinite loop???
             if ae == "current_user_recently_played":
                 getResult()
         except Exception as e:

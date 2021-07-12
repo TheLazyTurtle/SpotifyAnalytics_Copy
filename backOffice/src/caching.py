@@ -2,6 +2,7 @@ import os
 import requests
 import json
 from shutil import copy
+from printer import printc
 from creds import apiUrl
 
 
@@ -37,12 +38,14 @@ class Caching():
     # Checks if a user has cache files
     def getAuthTokens(self):
         try:
-            r = requests.get(
-                apiUrl + "user/getAuthTokens.php", params={"userID": self.userID})
+            r = requests.post(
+                apiUrl + "user/getAuthTokens.php", data={"userID": self.userID})
             result = json.loads(r.text)
 
             return result["records"][0]
         except Exception as e:
+            printc("Failed to get auth tokens for user:",
+                   "red", self.userID, "white", e, "white")
             return False
 
     # Edits a new cache file and adds the correct tokens from the user in the file
@@ -52,7 +55,8 @@ class Caching():
                 fileData = file.read()
 
         except Exception as e:
-            print(e)
+            printc("Failed to edit cache file for:",
+                   "red", self.userID, "white", e, "white")
             return False
 
         # Replace the placeholder data with the users acutal auth tokens
