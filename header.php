@@ -4,11 +4,12 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link rel="stylesheet" type="text/css" href="/css/slider.css">
-	<meta charset="utf-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Spotify analytics</title>
 
 	<!-- jQuery & Bootstrap 4 JavaScript libraries -->
@@ -17,5 +18,4 @@ session_start();
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 	<script src="/js/check_jwt.js"></script>
-    </head>
-
+</head>

@@ -15,7 +15,7 @@ function buttonArray(mainDiv, containerID) {
 
     for (var i = 0; i < timeframes.length; i++) {
         var button = document.createElement("button")
-        button.className = containerID + "-button btn"
+        button.className = containerID + "-button btn timeFrameBtn"
         button.value = timeframes[i][0]
         button.id = containerID + "-" + timeframes[i][0]
         button.innerHTML = timeframes[i][1]

@@ -92,3 +92,28 @@ a {
 .ui-menu-item-wrapper {
     margin-left: -35px;
 }
+
+/* mobile css */
+@media only screen and (max-width: 460px) {
+	.inputField {
+		width: 40%;
+		margin-right: 2%;
+	}
+
+	.button-array {
+		width: 100%;
+	}
+
+	.timeFrameBtn {
+		margin: 2% 1%;
+		width: 31%;
+
+	}
+}
+
+/* ultra wide monitor */
+@media only screen and (min-width: 1930px) {
+	.container {
+		margin-top: 2%;
+	}
+}

@@ -5,16 +5,16 @@
     transition: all 0.3s ease-in-out;
 }
 
-.gallery-item-next-left .gallery-img,
-.gallery-item-next-right .gallery-img {
-    width: 150px;
-    height: 150px;
-}
-
 .gallery-item-left .gallery-img,
 .gallery-item-right .gallery-img {
     width: 200px;
     height: 200px;
+}
+
+.gallery-item-next-left .gallery-img,
+.gallery-item-next-right .gallery-img {
+    width: 150px;
+    height: 150px;
 }
 
 .gallery {
@@ -205,4 +205,37 @@
 .divider {
     margin-top: 1%;
     margin-bottom: 1%;
+}
+
+/* Mobile css */
+/* Everything under 370 pixels will have these settings */
+@media only screen and (max-width: 460px) {
+	.gallery-container {
+		transform: scale(0.9);
+	}
+
+	/* Controls */
+	.gallery-controls {
+		margin-top: 5px;
+		margin-bottom: 40px;
+	}
+
+	/* timeFrame buttons */
+	.gallery-time-buttons {
+		margin-top: 5.0%;
+		text-align: center;
+	}
+
+	.time-btn {
+		width: 25%;
+	}
+
+	.divider {
+		margin: 5% 0;
+	}
+
+	.gallery {
+		margin-top: -20%;
+		width: 100%;
+	}
 }
