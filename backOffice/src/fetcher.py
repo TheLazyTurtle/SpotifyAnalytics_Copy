@@ -142,8 +142,8 @@ class Fetcher():
     # Checks if the artists already has an image. If the artist already have an image than don't add the artist because we already have it in the database
     # TODO: If the artist exists but doesn't yet have an image than try to update the img
     def artistHasImg(self, artistID):
-        r = req.get(creds.apiUrl + "artist/getImage.php",
-                    params={"artistID": artistID})
+        r = req.post(creds.apiUrl + "artist/getImage.php",
+                     data={"artistID": artistID})
         httpResponse = r.status_code
 
         if httpResponse == 200:

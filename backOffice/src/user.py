@@ -19,9 +19,15 @@ class User():
         self.fetcher = fetcher.Fetcher(self.userID)
         self.inserter = inserter.Inserter(self.userID, apiUrl)
 
+        nextHour = datetime.now().hour + 1
+        amount, time = self.getTimeAndAmount()
+
         while True:
-            # Set default fetch values
-            amount, time = self.getTimeAndAmount()
+            if datetime.now().hour == nextHour:
+                nextHour = datetime.now().hour + 1
+
+                # Set default fetch values
+                amount, time = self.getTimeAndAmount()
 
             # This returns the songs objects and insert them into the db
             try:
@@ -37,7 +43,7 @@ class User():
                 printc("Failed to get songs for:", "red",
                        self.userID, "white", e, "white")
 
-            sleep(time)
+            sleep(10)
 
     def getTimeAndAmount(self):
         # Get the current time and active rate of the user
@@ -61,8 +67,9 @@ class User():
                     amount = 5
                     time = 300
 
-        printc("Fetching " + str(amount) + " over " + str(time) +
-               " seconds for:", "green", self.userID, "white")
+        if amount != 5:
+            printc("Fetching " + str(amount) + " over " + str(time) +
+                   " seconds for:", "green", self.userID, "white")
         return amount, time
 
     def getActiveHours(self):
