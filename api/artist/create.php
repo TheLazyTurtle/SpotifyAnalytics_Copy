@@ -8,6 +8,7 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 
 // Get db connection
 include_once '../config/database.php';
+include_once '../config/authBackEnd.php';
 include_once '../objects/artists.php';
 
 // Make connection and make artist object

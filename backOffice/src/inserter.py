@@ -1,6 +1,8 @@
 import requests as req
 from datetime import datetime
 from printer import printc
+from creds import beUser
+from creds import bePass
 
 
 class Inserter():
@@ -8,6 +10,7 @@ class Inserter():
         self.url = baseUrl
         self.userID = userID
         self.songs = []
+        self.auth = (beUser, bePass)
 
     def insertSong(self, song):
         values = {
@@ -19,7 +22,7 @@ class Inserter():
             "preview": song["preview"]
         }
 
-        r = req.post(self.url + "song/create.php", data=values)
+        r = req.post(self.url + "song/create.php", data=values, auth=self.auth)
         httpResponse = r.status_code
 
         if httpResponse == 201:
@@ -40,7 +43,8 @@ class Inserter():
                 "img": artist["img"]
             }
 
-            r = req.post(self.url + "artist/create.php", data=values)
+            r = req.post(self.url + "artist/create.php",
+                         data=values, auth=self.auth)
             httpResponse = r.status_code
 
             if httpResponse == 201:
@@ -59,7 +63,8 @@ class Inserter():
             "songName": song["name"]
         }
 
-        r = req.post(self.url + '/played/create.php', data=values)
+        r = req.post(self.url + '/played/create.php',
+                     data=values, auth=self.auth)
         httpResponse = r.status_code
 
         if httpResponse == 201:
@@ -80,7 +85,7 @@ class Inserter():
             }
 
             r = req.post(self.url + "song/linkArtistToSong.php",
-                         data=values)
+                         data=values, auth=self.auth)
             httpResponse = r.status_code
 
             if httpResponse == 201:

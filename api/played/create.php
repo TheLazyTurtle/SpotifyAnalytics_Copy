@@ -9,6 +9,7 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 
 // Get db connection and get played object
 require '../config/database.php';
+require '../config/authBackEnd.php';
 require '../objects/played.php';
 
 // Make db connection and make new played object

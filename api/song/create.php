@@ -8,6 +8,7 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 
 // Get db connection and get song object
 require '../config/database.php';
+require '../config/authBackEnd.php';
 require '../objects/songs.php';
 
 // Make db connection and make new song object

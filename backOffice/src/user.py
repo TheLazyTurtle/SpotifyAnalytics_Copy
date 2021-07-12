@@ -43,7 +43,7 @@ class User():
                 printc("Failed to get songs for:", "red",
                        self.userID, "white", e, "white")
 
-            sleep(10)
+            sleep(time)
 
     def getTimeAndAmount(self):
         # Get the current time and active rate of the user
