@@ -54,7 +54,7 @@ class User():
         time = 3600
 
         for hour in hours:
-            if hour["time"] == currentHour:
+            if int(hour["time"]) == int(currentHour):
                 percent = round(float(hour["percentage"]))
 
                 if percent <= 1:
@@ -67,9 +67,8 @@ class User():
                     amount = 5
                     time = 300
 
-        if amount != 5:
-            printc("Fetching " + str(amount) + " over " + str(time) +
-                   " seconds for:", "green", self.userID, "white")
+        printc("Fetching " + str(amount) + " over " + str(time) +
+               " seconds for:", "green", self.userID, "white", percent, "white")
         return amount, time
 
     def getActiveHours(self):

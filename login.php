@@ -17,7 +17,7 @@ require 'header.php';
 			    <input type="password" name="password" placeholder="Password" class="form-field login-form"><br>
 			    <button type="submit" class="btn login-btn">Login</button>
 			</form>
-			<p>Don't have an account? Make one <a class="register-link" href="/register.php">here</a></p>
+			<p>Don't have an account? Make one <a class="register-link" href="/getTokens.php">here</a></p>
 		    </div>
 		</div>
 	    `;

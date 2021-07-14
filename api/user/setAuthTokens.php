@@ -8,38 +8,36 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 
 // Get db connection and get played object
 require '../config/database.php';
-require '../config/authBackEnd.php';
-require '../objects/played.php';
+require '../objects/user.php';
 
-// Make db connection and make new played object
+// Make db and user object
 $database = new Database();
 $db = $database->getConnection();
-$played = new Played($db);
+$user = new User($db);
 
 // Get posted data
 $data = $_POST;
 
-// Check if data is not empty
 if (
-	!empty($data["songID"]) &&
-	!empty($data["datePlayed"]) &&
-	!empty($data["playedBy"]) &&
-	!empty($data["songName"])
+	!empty($data["userID"]) &&
+	!empty($data["accessToken"]) &&
+	!empty($data["refreshToken"]) &&
+	!empty($data["expireTime"])
 ) {
-	$played->songID = $data["songID"];
-	$played->datePlayed = $data["datePlayed"];
-	$played->playedBy = $data["playedBy"];
-	$played->songName = $data["songName"];
-
-	if ($played->create()) {
+	if ($user->setAuthTokens(
+		$data["userID"],
+		$data["accessToken"],
+		$data["refreshToken"],
+		$data["expireTime"]
+	)) {
 		// Set response to created
 		http_response_code(201);
 
-		echo json_encode(array("message" => "entry added"));
+		echo json_encode(array("message" => "Saved tokens"));
 	} else {
 		http_response_code(503);
 
-		echo json_encode(array("message" => "Unable to add entry"));
+		echo json_encode(array("message" => "Tokens already existed"));
 	}
 } else {
 	// Set response to bad request

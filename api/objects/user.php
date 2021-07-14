@@ -8,10 +8,12 @@ class User
 
 	// Object properties
 	public $id;
+	public $username;
 	public $firstname;
 	public $lastname;
 	public $email;
 	public $password;
+	public $isAdmin;
 
 	public function __construct($db)
 	{
@@ -21,24 +23,26 @@ class User
 
 	function create()
 	{
-		$query = "INSERT INTO user SET firstname = :firstname, lastname = :lastname, email = :email, password = :password";
-
+		$query = "INSERT INTO user (userID, username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?, ?)";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input values
+		$this->username = htmlspecialchars(strip_tags($this->username));
 		$this->firstname = htmlspecialchars(strip_tags($this->firstname));
 		$this->lastname = htmlspecialchars(strip_tags($this->lastname));
 		$this->email = htmlspecialchars(strip_tags($this->email));
 		$this->password = htmlspecialchars(strip_tags($this->password));
 
 		// Bind values
-		$stmt->bindParam(':firstname', $this->firstname);
-		$stmt->bindParam(':lastname', $this->lastname);
-		$stmt->bindParam(':email', $this->email);
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $this->username);
+		$stmt->bindParam(3, $this->firstname);
+		$stmt->bindParam(4, $this->lastname);
+		$stmt->bindParam(5, $this->email);
 
 		// Hash the password
 		$passwordHash = password_hash($this->password, PASSWORD_BCRYPT);
-		$stmt->bindParam(':password', $passwordHash);
+		$stmt->bindParam(6, $passwordHash);
 
 		// Execute query and check if success
 		if ($stmt->execute()) {
@@ -196,6 +200,28 @@ class User
 		return $stmt;
 	}
 
+	// This will set the auth tokens for the user
+	function setAuthTokens($userID, $accessToken, $refreshToken, $expireTime)
+	{
+		$query = "INSERT INTO spotifyData (userID, authToken, refreshToken, ExpireDate) VALUES (?, ?, ?, ?)";
+		$stmt = $this->conn->prepare($query);
+
+		// clean input
+		$userID = htmlspecialchars(strip_tags($userID));
+		$accessToken = htmlspecialchars(strip_tags($accessToken));
+		$refreshToken = htmlspecialchars(strip_tags($refreshToken));
+		$expireTime = htmlspecialchars(strip_tags($expireTime));
+
+		// Bind params
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $accessToken);
+		$stmt->bindParam(3, $refreshToken);
+		$stmt->bindParam(4, $expireTime);
+
+		return $stmt->execute();
+	}
+
+	// This will get the time when a user is active
 	function getActiveHours($userID)
 	{
 		$query = "SELECT 

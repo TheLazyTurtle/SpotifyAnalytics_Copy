@@ -1,6 +1,3 @@
-// Get the userID form the session
-var userID = '<%= Session["userID"] %>'
-
 // This will contain all the graphs
 var graphs = []
 

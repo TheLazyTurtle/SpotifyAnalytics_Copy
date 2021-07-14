@@ -1,6 +1,8 @@
 .cache-11182819693
 .cache-icq6mdabqpzvx0wpc1w4hhxmp
 .gitignore
+composer.json
+composer.lock
 data.json
 todo.md
 .nvimlog
