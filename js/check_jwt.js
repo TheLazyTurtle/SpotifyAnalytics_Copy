@@ -3,15 +3,15 @@ $(document).ready(function () {
 
     // Validates the jwt token
     $.ajax({
-        url: "api/system/validate_token.php",
+        url: "../api/system/validate_token.php",
         type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify({ jwt: jwt }),
+        //contentType: "application/json",
+        data: { jwt: jwt },
         success: function (result) {
-            if (!document.URL.includes("index.php")) {
-                window.location.href = "/index.php"
-                return true
-            }
+            //if (!document.URL.includes("index.php")) {
+            //window.location.href = "/index.php"
+            return true
+            //}
         },
         error: function (result) {
             if (

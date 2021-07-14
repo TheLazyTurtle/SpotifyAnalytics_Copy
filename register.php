@@ -1,5 +1,4 @@
-<?php
-require "header.php";
+<?php require "header.php";
 require 'vendor/autoload.php';
 
 // Get spotifyID and email
@@ -24,6 +23,7 @@ $_SESSION["userID"] = $user->id;
 				<input type="email" name="email" placeholder="Email" class="form-field register-form"><br>
 				<input type="password" name="password" placeholder="Password" class="form-field register-form"><br>
 				<input type="password" name="repeatPassword" placeholder="Repeat password" class="form-field register-form"><br>
+				<input type="checkbox" name="agree" value="readIt" id="privacyCheckbox">I agree to the <a href="./assets/privacy.php">privacy thing</a><br>
 				<button type="submit" class="btn register-btn">Register</button>
 			</form>
 			<p>Already have an account? Log in <a class="login-link" href="/login.php">here</a></p>
@@ -35,30 +35,35 @@ $_SESSION["userID"] = $user->id;
 		$(document).ready(function() {
 			// Trigger when Register form is submitted
 			$(document).on('submit', "#register_form", function() {
-				// Get form data
-				var sign_up_form = $(this);
-				var form_data = sign_up_form.serializeObject();
-				console.log(form_data)
+				if ($("#privacyCheckbox").is(":checked")) {
 
-				// Submit form data to api
-				$.ajax({
-					url: "api/user/create_user.php",
-					type: "POST",
-					//contentType: "application/json",
-					data: form_data,
-					success: function(result) {
-						console.log(result)
-						// TODO: Do something successful
-						window.location.href = "/saveTokens.php";
-					},
-					error: function(xhr, resp, text) {
-						console.log(xhr)
-						console.log(xhr + " - " + text + " - " + resp)
+					// Get form data
+					var sign_up_form = $(this);
+					var form_data = sign_up_form.serializeObject();
+
+					if (form_data["password"] === form_data["repeatPassword"]) {
+						// Submit form data to api
+						$.ajax({
+							url: "api/user/create_user.php",
+							type: "POST",
+							//contentType: "application/json",
+							data: form_data,
+							success: function(result) {
+								// TODO: Do something successful
+								window.location.href = "/saveTokens.php";
+							},
+							error: function(xhr, resp, text) {
+								// TODO: Disapoint the user
+								//window.location.href = "index.php";
+							}
+						});
+						return false;
+					} else {
 						// TODO: Disapoint the user
-						//window.location.href = "index.php";
 					}
-				});
-				return false;
+				} else {
+					// TODO: Show error message that box is not checked
+				}
 			});
 
 			// Cleans the data up
