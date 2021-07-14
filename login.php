@@ -13,7 +13,7 @@ require 'header.php';
 		    <div class="login-box">
 			<h2>Login</h2>
 			<form method="POST" id="login_form">
-			    <input type="email" name="email" placeholder="Email" class="form-field login-form"><br>
+			    <input type="text" name="username" placeholder="Username" class="form-field login-form"><br>
 			    <input type="password" name="password" placeholder="Password" class="form-field login-form"><br>
 			    <button type="submit" class="btn login-btn">Login</button>
 			</form>

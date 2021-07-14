@@ -128,6 +128,35 @@ class User
 		return false;
 	}
 
+	// Checks if the username exists
+	function usernameExists()
+	{
+		$query = "SELECT * FROM user WHERE username = ? LIMIT 0,1";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$this->username = htmlspecialchars(strip_tags($this->username));
+
+		// Bind Params
+		$stmt->bindParam(1, $this->username);
+		$stmt->execute();
+		$num = $stmt->rowCount();
+
+		if ($num > 0) {
+			$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+			$this->id = $row["userID"];
+			$this->firstname = $row["firstname"];
+			$this->lastname = $row["lastname"];
+			$this->email = $row["email"];
+			$this->password = $row["password"];
+
+			return true;
+		}
+
+		return false;
+	}
+
 	// Get all user filterSettings
 	function readFilterSettings($userID)
 	{
