@@ -35,11 +35,14 @@ function getGraphData(
     // If the filter setting has a song in it convert the song and artist name to a songID to show the correct data
     if (filterSettings.hasOwnProperty("song") && filterSettings.song != "") {
         data = filterSettings.song.split(" - ")
+        console.log(data)
         $.ajax({
             url: "/api/song/searchByArtist.php",
+            type: "POST",
             data: { song: data[0], artist: data[1] },
             success: function (result) {
                 filterSettings.song = result[0]
+                console.table(result)
 
                 $.ajax({
                     url: graphData.api,
