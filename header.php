@@ -1,5 +1,8 @@
 <?php
 session_start();
+$url = $_SERVER["REQUEST_URI"];
+$url = str_replace("/", '', $url);
+$url = str_replace(".php", '', $url);
 ?>
 
 <!DOCTYPE html>
@@ -20,16 +23,22 @@ session_start();
 	<script src="/js/check_jwt.js"></script>
 </head>
 
-<header>
-	<div class="header">
-		<div class="col col-left">
-			<button class="btn" onclick="window.location.href='/index.php'">Home</button>
+<?php
+if ($url != "login" && $url != "register") {
+?>
+	<header>
+		<div class="header">
+			<div class="col col-left">
+				<button class="btn" onclick="window.location.href='/index.php'">Home</button>
+			</div>
+			<div class="col col-middel">
+				<input id="search-box" type="text" name="Search" placeholder="search">
+			</div>
+			<div class="col col-right">
+				<button class="btn" onclick="window.location.href='/logout.php'">Uitloggen</button>
+			</div>
 		</div>
-		<div class="col col-middel">
-			<input id="search-box" type="text" name="Search" placeholder="search">
-		</div>
-		<div class="col col-right">
-			<button class="btn" onclick="window.location.href='/logout.php'">Uitloggen</button>
-		</div>
-	</div>
-</header>
+	</header>
+<?php
+}
+?>
