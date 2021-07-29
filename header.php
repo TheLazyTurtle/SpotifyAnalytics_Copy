@@ -21,6 +21,13 @@ $url = str_replace(".php", '', $url);
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 	<script src="/js/check_jwt.js"></script>
+	<script src="/js/user.js"></script>
+	<script src="js/autocomplete.js"></script>
+	<script src="js/inputFields.js"></script>
+	<script src="js/buttons.js"></script>
+	<script src="js/dateProcessing.js"></script>
+	<script src="js/Graph.js"></script>
+	<script src="js/makeGraphs.js"></script>
 </head>
 
 <?php

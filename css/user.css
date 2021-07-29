@@ -1,0 +1,46 @@
+/* User info */
+.user-info {
+	max-width: 1200px;
+	width: 1200px;
+	height: 200px;
+	margin: auto;
+}
+
+.user-info-img-wrapper {
+	width: 20%;
+	display: inline;
+	float: left;
+}
+
+.user-info-text-wrapper {
+	width: 80%;
+	display: inline;
+	float: right;
+}
+
+.user-info-img {
+	width: 150px;
+	height: 150px;
+}
+
+.user-info-text {
+	color: white;
+}
+
+/* Selector items */
+.selector-wrapper {
+	width: 1000px;
+	height: 50px;
+	margin: auto;
+	margin-top: -20px;
+	text-align: center;
+}
+
+.selector-item {
+	width: 50px;
+	display: inline;
+}
+
+.selector {
+	margin-right: 25px;
+}

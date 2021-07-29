@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $song = new Played($db);
 
 // Get posted data
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "";
 $amount = isset($_POST["amount"]) ? $_POST["amount"] : 10;
 

@@ -25,6 +25,8 @@ function getGraphData(
         type: type,
     }
 
+    makeDiv(graphData.containerID)
+
     // If we make the graph with input fields than make the amount of input fields we have defined here with the names given in the object of input fields
     if (graphData.inputFields) {
         for (var i = 0; i < Object.keys(graphData.inputFields).length; i++) {
@@ -143,4 +145,13 @@ function setError(containerID) {
     graphs[containerID].options.data[0].dataPoints = []
     graphs[containerID].options.title.text = "No data found"
     graphs[containerID].render()
+}
+
+// This makes the div where the graph will be placed in
+function makeDiv(containerID) {
+    let div = document.createElement("div")
+    div.className = "main"
+    div.id = containerID + "-main"
+
+    $(".content").append(div)
 }

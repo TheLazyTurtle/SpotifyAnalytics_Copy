@@ -11,6 +11,7 @@ class User
 	public $username;
 	public $firstname;
 	public $lastname;
+	public $img;
 	public $email;
 	public $password;
 	public $isAdmin;
@@ -95,6 +96,30 @@ class User
 		}
 
 		return false;
+	}
+
+	// This will get all usefull info from the user
+	function read_one()
+	{
+		$query = "SELECT * FROM user WHERE username LIKE ?";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$this->username = htmlspecialchars(strip_tags($this->username));
+
+		// Bind params
+		$stmt->bindParam(1, $this->username);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+			$this->id = $userID;
+			$this->firstname = $firstname;
+			$this->lastname = $lastname;
+			$this->email = $email;
+			$this->isAdmin = $isAdmin;
+			$this->img = $img;
+		}
 	}
 
 	// Search for users

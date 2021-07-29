@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get posted data
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "%";
 $amount = isset($_GET["amount"]) ? $_GET["amount"] : 10;
 

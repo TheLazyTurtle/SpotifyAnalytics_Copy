@@ -50,9 +50,9 @@ function makeElement(data) {
     name.innerText = data["name"]
 
     if (data["type"] == "user") {
-        name.href = `/user?user= ${data["name"]}`
+        name.href = `/user.php?user=${data["name"]}`
     } else {
-        name.href = `/artist?artist= ${data["name"]}`
+        name.href = `/artist.php?artist=${data["name"]}`
     }
 
     imgHolder.append(img)

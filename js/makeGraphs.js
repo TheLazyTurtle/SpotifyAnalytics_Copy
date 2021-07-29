@@ -53,10 +53,14 @@ function getFilterSettings(
         success: function (results) {
             var filterSettings = {}
 
-            for (var i = 0; i < results["records"].length; i++) {
-                var res = results["records"][i]
+            if (userID) {
+                filterSettings["userID"] = userID
+            } else {
+                for (var i = 0; i < results["records"].length; i++) {
+                    var res = results["records"][i]
 
-                filterSettings[res["name"]] = res["value"]
+                    filterSettings[res["name"]] = res["value"]
+                }
             }
 
             getInputFields(

@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get posted data
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
 $maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
 $amount = isset($_POST["amount"]) && !empty($_POST["amount"]) ? $_POST["amount"] : 10;

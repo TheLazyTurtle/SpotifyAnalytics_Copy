@@ -126,7 +126,8 @@ header {
 
 #search-results {
 	width: 300px;
-	height: 300px;
+	min-height: 70px;
+	max-height: 300px;
 	z-index: 20;
 	border-radius: 6px;
 	position: absolute;
