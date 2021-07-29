@@ -1,5 +1,5 @@
 <?php
-require "../config/check_cookie.php";
+require_once "../config/check_cookie.php";
 
 class User
 {
@@ -95,6 +95,23 @@ class User
 		}
 
 		return false;
+	}
+
+	// Search for users
+	function search($keyword)
+	{
+		$query = "SELECT username as name FROM user WHERE username LIKE ?";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$keyword = htmlspecialchars(strip_tags($keyword));
+		$keyword = "%$keyword%";
+
+		// Bind param
+		$stmt->bindParam(1, $keyword);
+		$stmt->execute();
+
+		return $stmt;
 	}
 
 	// Check if the email exists in the db

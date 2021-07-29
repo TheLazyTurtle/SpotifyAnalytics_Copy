@@ -39,6 +39,7 @@ if ($url != "login" && $url != "register") {
 			</div>
 		</div>
 	</header>
+	<script src="/js/search.js"></script>
 <?php
 }
 ?>

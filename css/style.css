@@ -119,8 +119,50 @@ header {
 	display: inline-block;
 }
 
+/* Search stuff */
 #search-box {
 	margin: auto;
+}
+
+#search-results {
+	width: 300px;
+	height: 300px;
+	z-index: 20;
+	border-radius: 6px;
+	position: absolute;
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: white;
+	margin-left: -2%;
+}
+
+.search-result {
+	padding: 10px 0 0 10px;
+	z-index: 20;
+	width: 300px;
+	height: 50px;
+	background-color: white;
+}
+
+.search-result-text-holder {
+	height: 100px;
+}
+
+.splitter {
+	display: inline;
+	width: 50%;
+}
+
+.search-result-profile-picture {
+	width: 50px;
+	height: 50px;
+}
+
+.search-result-name {
+	vertical-align: top;
+	margin: 0;
+	height: 50%;
+	padding-left: 10px;
 }
 
 /* mobile css */
