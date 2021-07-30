@@ -7,7 +7,7 @@ function autoComplete(graphData, inputFieldId, api) {
                 $.ajax({
                     type: "POST",
                     url: api,
-                    data: { keyword: request.term, amount: 10 },
+                    data: { keyword: request.term, amount: 10, userID: userID },
                     success: function (data) {
                         // If its a song do difficult route because we have to worry about IDs and not names
                         // because songs are more likely to have the same name

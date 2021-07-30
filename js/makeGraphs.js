@@ -1,5 +1,5 @@
 // This will contain all the graphs
-var graphs = []
+let graphs = []
 
 // TODO: Refactor these things so that there is not a huge list of params passed
 // ... in but just an object
@@ -10,15 +10,17 @@ function getGraphs() {
         type: "POST",
         success: function (result) {
             for (var i = 0; i <= result["records"].length; i++) {
-                var res = result["records"][i]
-                var containerID = res["containerID"]
-                var title = res["title"]
-                var titleX = res["titleX"]
-                var titleY = res["titleY"]
-                var xValueType = res["xValueType"]
-                var api = res["api"]
-                var type = res["type"]
-                var graphID = res["id"]
+                let res = result["records"][i]
+                let containerID = res["containerID"]
+                let title = res["title"]
+                let titleX = res["titleX"]
+                let titleY = res["titleY"]
+                let xValueType = res["xValueType"]
+                let api = res["api"]
+                let type = res["type"]
+                let graphID = res["id"]
+
+                makeDiv(containerID)
 
                 getFilterSettings(
                     containerID,
@@ -120,6 +122,14 @@ function getInputFields(
             )
         },
     })
+}
+
+// This makes the div where the graph will be placed in
+function makeDiv(containerID) {
+    let div = document.createElement("div")
+    div.className = "main"
+    div.id = containerID + "-main"
+    $(".content").append(div)
 }
 
 getGraphs()

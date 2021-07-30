@@ -168,6 +168,15 @@ header {
 
 /* mobile css */
 @media only screen and (max-width: 460px) {
+	.col-left {
+		display: none;
+	}
+
+	.col {
+		width: 40%;
+		margin-left: 9%;
+	}
+
 	.inputField {
 		width: 40%;
 		margin-right: 2%;

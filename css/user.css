@@ -8,14 +8,12 @@
 
 .user-info-img-wrapper {
 	width: 20%;
-	display: inline;
-	float: left;
+	display: inline-block;
 }
 
 .user-info-text-wrapper {
-	width: 80%;
-	display: inline;
-	float: right;
+	width: 30%;
+	display: inline-block;
 }
 
 .user-info-img {
@@ -43,4 +41,14 @@
 
 .selector {
 	margin-right: 25px;
+}
+
+@media only screen and (max-width: 460px) {
+	.user-info-text-wrapper {
+		display: block;
+	}
+
+	.selector-wrapper {
+		width: 100%;
+	}
 }

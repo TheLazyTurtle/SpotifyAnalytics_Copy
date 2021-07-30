@@ -23,7 +23,7 @@ class Graph
 	// Get all graphs
 	function read()
 	{
-		$query = "SELECT * FROM graph";
+		$query = "SELECT * FROM graph ORDER BY graphID";
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 
