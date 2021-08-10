@@ -107,6 +107,10 @@ header {
 	background-color: #4a4a4a;
 }
 
+.mobile-header {
+	display: none;
+}
+
 .header {
 	width: 100%;
 	height: 50px;
@@ -120,11 +124,11 @@ header {
 }
 
 /* Search stuff */
-#search-box {
+.search-box {
 	margin: auto;
 }
 
-#search-results {
+.search-results {
 	width: 300px;
 	min-height: 70px;
 	max-height: 300px;
@@ -168,15 +172,6 @@ header {
 
 /* mobile css */
 @media only screen and (max-width: 460px) {
-	.col-left {
-		display: none;
-	}
-
-	.col {
-		width: 40%;
-		margin-left: 9%;
-	}
-
 	.inputField {
 		width: 40%;
 		margin-right: 2%;
@@ -190,6 +185,32 @@ header {
 		margin: 2% 1%;
 		width: 31%;
 
+	}
+
+	/* hide the normal header and show the mobile "header" */
+	.header {
+		display: none;
+	}
+
+	.mobile-header {
+		display: block;
+		background-color: white;
+		width: 100%;
+		height: 40px;
+		z-index: 10;
+		position: fixed;
+		bottom: 0;
+	}
+
+	.col {
+		text-align: center;
+		width: 30%;
+		margin-top: 2%;
+	}
+
+	.fas {
+		font-size: 20px;
+		color: black
 	}
 }
 

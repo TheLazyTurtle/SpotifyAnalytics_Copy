@@ -19,6 +19,7 @@ $url = str_replace(".php", '', $url);
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script src="https://kit.fontawesome.com/7fe26f8076.js" crossorigin="anonymous"></script>
 
 	<script src="/js/check_jwt.js"></script>
 	<script src="js/autocomplete.js"></script>
@@ -38,11 +39,24 @@ if ($url != "login" && $url != "register") {
 				<button class="btn" onclick="window.location.href='/index.php'">Home</button>
 			</div>
 			<div class="col col-middel">
-				<input id="search-box" type="text" name="Search" placeholder="search">
+				<input class="search-box" type="text" name="Search" placeholder="search">
 			</div>
 			<div class="col col-right">
 				<button class="btn" onclick="window.location.href='/logout.php'">Uitloggen</button>
 			</div>
+		</div>
+
+		<div class="mobile-header">
+			<div class="col col-left">
+				<a href='/index.php'><i class="fas fa-home"></i></a>
+			</div>
+			<div class="col col-middel">
+				<a href='search.php'><i class="fas fa-search"></i></a>
+			</div>
+			<div class="col col-right">
+				<a href='profile.php'><i class="fas fa-user-alt"></i></a>
+			</div>
+
 		</div>
 	</header>
 	<script src="/js/search.js"></script>

@@ -1,10 +1,10 @@
-$("#search-box").on("input", function () {
+$(".search-box").on("input", function () {
     let searchTerm = $(this).val()
 
     if (searchTerm.length >= 3) {
-        if ($("#search-results").length <= 0) {
+        if ($(".search-results").length <= 0) {
             let searchResults = document.createElement("DIV")
-            searchResults.id = "search-results"
+            searchResults.className = "search-results"
 
             $(".col-middel").append(searchResults)
         }
@@ -14,20 +14,26 @@ $("#search-box").on("input", function () {
             type: "POST",
             data: { keyword: searchTerm },
             success: function (data) {
+                console.table(data["records"])
                 // Remove all the old results
-                $("#search-results").empty()
+                $(".search-results").empty()
 
                 // Add the new results
                 data = data["records"]
                 for (var i = 0; i <= data.length; i++) {
                     var element = makeElement(data[i])
-                    $("#search-results").append(element)
+                    $(".search-results").append(element)
                 }
+            },
+            error: function (e, e2, e3) {
+                console.warning(e)
+                console.warning(e2)
+                console.warning(e3)
             },
         })
     } else if (searchTerm.length == 0) {
-        $("#search-results").empty()
-        $("#search-results").remove()
+        $(".search-results").empty()
+        $(".search-results").remove()
     }
 })
 
