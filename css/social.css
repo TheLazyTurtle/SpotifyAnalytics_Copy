@@ -1,0 +1,95 @@
+/* User/artist info */
+.user-info, .artist-info {
+	max-width: 1200px;
+	width: 1200px;
+	height: 200px;
+	margin: auto;
+}
+
+.user-info-img-wrapper, .artist-info-img-wrapper {
+	width: 20%;
+	display: inline-block;
+}
+
+.user-info-text-wrapper, .user-info-text-wrapper {
+	width: 30%;
+	display: inline-block;
+}
+
+.user-info-img, .artist-info-img {
+	width: 150px;
+	height: 150px;
+}
+
+.user-info-text, .artist-info-text {
+	color: white;
+}
+
+/* Artist top songs */
+.top-songs-wrapper {
+	text-align: center;
+}
+
+.top-songs-wrapper {
+	width: 1200px;
+	margin: auto;
+	color: white
+}
+
+th {
+	width: 25%;
+}
+
+.top-songs {
+	width: 100%;
+	margin: auto;
+}
+
+.top-song-img {
+	display: inline-block;
+	width: 80px;
+}
+
+.top-song-title {
+	display: inline-block;
+}
+
+.top-song-amount {
+	display: inline-block;
+}
+
+.top-song-hidden {
+	display: none;
+}
+
+.top-song-display {
+	display: table-footer-group;
+}
+
+/* Selector items */
+.selector-wrapper {
+	width: 1000px;
+	height: 50px;
+	margin: auto;
+	margin-top: -20px;
+	text-align: center;
+}
+
+.selector-item {
+	width: 50px;
+	display: inline;
+}
+
+.selector {
+	margin-right: 25px;
+}
+
+@media only screen and (max-width: 460px) {
+	.user-info-text-wrapper, .artist-info-text-wrapper {
+		display: block;
+	}
+
+	.selector-wrapper {
+		width: 100%;
+	}
+}

@@ -21,9 +21,7 @@ function getUserInfo() {
         type: "POST",
         data: { username: username },
         success: function (result) {
-            setUserID(result)
-            setImg(result)
-            setName(result)
+            setUserInfo(result)
         },
         error: function (jqXHR, textStatus, error) {
             // TODO: Show a user not found thingy
@@ -31,18 +29,14 @@ function getUserInfo() {
     })
 }
 
-// This will set the profile picture of the user you are watching
-function setImg(result) {
+function setUserInfo(result) {
+    // This will set the profile picture
     $(".user-info-img").attr("src", result["img"])
-}
 
-// This will set the name of the user you are watching
-function setName(result) {
+    // This will set the name
     $(".user-info-text").text(result["username"])
-}
 
-// This function will set a global variable with the userID
-function setUserID(result) {
+    // Set the userID
     userID = result["id"]
 }
 
@@ -52,11 +46,12 @@ function getButtonPressed() {
             let button = $(this)
             let buttonID = button[0].attributes[1].nodeValue
 
+            // Might have to do this differently where it will use the array to switch or something like that
             switch (buttonID) {
                 case "memories":
                     showMemories()
                 default:
-                    // TODO: Fix That graphs go in random order
+                    // TODO: Fix that when you press the button it won't remake the graphs when they are already there
                     getGraphs()
             }
         })

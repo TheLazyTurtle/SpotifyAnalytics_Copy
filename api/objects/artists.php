@@ -32,17 +32,17 @@ class Artist
 	// This will only read one artist from the db
 	function readOne()
 	{
-		$collection = $this->conn->artist;
+		$query = "SELECT * FROM artist WHERE name LIKE ? LIMIT 1";
+		$stmt = $this->conn->prepare($query);
 
-		$query = ['artistID' => $this->id];
-		$cursor = $collection->find($query);
+		$stmt->bindParam(1, $this->name);
+		$stmt->execute();
 
-		foreach ($cursor as $row) {
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$this->id = $row["artistID"];
 			$this->name = $row["name"];
 			$this->url = $row["url"];
-			$this->dateAdded = $row["dateAdded"];
-			$this->addedBy = $row["addedBy"];
 			$this->img = $row["img"];
 		}
 	}
@@ -184,5 +184,29 @@ class Artist
 		}
 
 		return false;
+	}
+
+	// This will get the top song of an artist
+	function topSongs($artistID)
+	{
+		$query = "SELECT count(*) as count, s.preview as preview, s.img as img, s.name as title
+				FROM played p 
+				INNER JOIN song s ON p.songID = s.songID
+				INNER JOIN artist_has_song ahs ON p.songID = ahs.songID
+				INNER JOIN artist a ON ahs.artistID = a.artistID
+				WHERE a.artistID = ? AND ahs.artistID = ?
+				GROUP BY p.songID 
+				ORDER BY count(*) DESC
+				LIMIT 10";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$artistID = htmlspecialchars(strip_tags($artistID));
+
+		$stmt->bindParam(1, $artistID);
+		$stmt->bindParam(2, $artistID);
+		$stmt->execute();
+
+		return $stmt;
 	}
 }
