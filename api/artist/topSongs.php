@@ -34,7 +34,8 @@ if ($num > 0) {
 			"title" => $title,
 			"preview" => $preview,
 			"img" => $img,
-			"count" => $count
+			"count" => $count,
+			"url" => $url
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}

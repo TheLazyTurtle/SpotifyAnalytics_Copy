@@ -189,7 +189,7 @@ class Artist
 	// This will get the top song of an artist
 	function topSongs($artistID)
 	{
-		$query = "SELECT count(*) as count, s.preview as preview, s.img as img, s.name as title
+		$query = "SELECT count(*) as count, s.preview as preview, s.img as img, s.name as title, s.url as url
 				FROM played p 
 				INNER JOIN song s ON p.songID = s.songID
 				INNER JOIN artist_has_song ahs ON p.songID = ahs.songID

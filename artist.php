@@ -10,7 +10,7 @@ require "header.php";
 		<div class="artist-info-img-wrapper">
 			<img class="artist-info-img"></img>
 		</div>
-		<div class="user-info-text-wrapper">
+		<div class="artist-info-text-wrapper">
 			<a class="artist-link" target="_blank">
 				<h1 class="artist-info-text"></h1>
 			</a>

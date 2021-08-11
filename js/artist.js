@@ -77,6 +77,7 @@ function showArtistsTopSongs() {
                 let row = document.createElement("tr")
                 row.id = song["title"]
 
+                // Add preview
                 row.append(
                     addElement(
                         "audio",
@@ -85,17 +86,24 @@ function showArtistsTopSongs() {
                         song["preview"]
                     )
                 )
+
+                // Add img
                 row.append(
                     addElement("img", "top-song-img", "src", song["img"])
                 )
+
+                // Add title (with link to official spotify)
                 row.append(
                     addElement(
                         "p",
                         "top-song-title",
                         "innerHTML",
-                        song["title"]
+                        song["title"],
+                        song["url"]
                     )
                 )
+
+                // Add the count
                 row.append(
                     addElement(
                         "p",
@@ -118,56 +126,6 @@ function showArtistsTopSongs() {
     $(".top-songs-wrapper").append(table)
 
     showMoreSongs()
-}
-
-// This will make the show more button
-function showMoreSongs() {
-    // Add a show more button
-    let showMore = document.createElement("p")
-    showMore.innerHTML = "Show more"
-    showMore.id = "top-songs-show-more"
-    $(".top-songs-wrapper").append(showMore)
-
-    $("#top-songs-show-more").click(function () {
-        let curText = $(this)[0].innerHTML
-
-        // Switch the text on the button when pressed
-        if (curText === "Show more") {
-            $(this).text("Show less")
-
-            $(".top-song-hidden").each(function () {
-                $(this)[0].className = "top-song-display"
-            })
-        } else {
-            $(this).text("Show more")
-
-            $(".top-song-display").each(function () {
-                $(this)[0].className = "top-song-hidden"
-            })
-        }
-    })
-}
-
-// This will add an top song row to the table of top songs
-function addElement(elementType, className, contentType, value) {
-    let cell = document.createElement("td")
-
-    let element = document.createElement(elementType)
-    element.className = className
-
-    if (contentType == "innerHTML") {
-        element.innerHTML = value
-    } else if (contentType == "src") {
-        element.src = value
-    } else if (contentType == "audio") {
-        element.controls = "controls"
-        element.src = value
-        element.type = "audio/mpeg"
-    }
-
-    cell.append(element)
-
-    return cell
 }
 
 // This will make the header for the top songs table
@@ -196,6 +154,69 @@ function makeTableHeader() {
     row.append(amount)
 
     return row
+}
+
+// This will add an top song row to the table of top songs
+function addElement(elementType, className, contentType, value, url = null) {
+    const tdClass = className.replace("top-song-", "")
+
+    let cell = document.createElement("td")
+    cell.className = tdClass
+
+    let element = document.createElement(elementType)
+    element.className = className
+
+    if (contentType == "innerHTML") {
+        element.innerHTML = value
+
+        // If there is a url give add it to the text
+        if (url !== null) {
+            let link = document.createElement("a")
+            link.href = url
+            link.target = "_blank"
+
+            link.append(element)
+            cell.append(link)
+            return cell
+        }
+    } else if (contentType == "src") {
+        element.src = value
+    } else if (contentType == "audio") {
+        element.controls = "controls"
+        element.src = value
+        element.type = "audio/mpeg"
+    }
+    cell.append(element)
+
+    return cell
+}
+
+// This will make the show more button
+function showMoreSongs() {
+    // Add a show more button
+    let showMore = document.createElement("p")
+    showMore.innerHTML = "Show more"
+    showMore.id = "top-songs-show-more"
+    $(".top-songs-wrapper").append(showMore)
+
+    $("#top-songs-show-more").click(function () {
+        let curText = $(this)[0].innerHTML
+
+        // Switch the text on the button when pressed
+        if (curText === "Show more") {
+            $(this).text("Show less")
+
+            $(".top-song-hidden").each(function () {
+                $(this)[0].className = "top-song-display"
+            })
+        } else {
+            $(this).text("Show more")
+
+            $(".top-song-display").each(function () {
+                $(this)[0].className = "top-song-hidden"
+            })
+        }
+    })
 }
 
 // This will check if a selector button is pressed
