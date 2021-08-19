@@ -1,17 +1,15 @@
 <?php
-// Require hearders
+// required headers
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset-UTF-8");
-header("Access-Control-Allow_Methods: POST");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Get db connection and get song object
-require '../config/database.php';
-require '../config/authBackEnd.php';
-require '../objects/songs.php';
+include '../config/database.php';
+include '../objects/songs.php';
 
-// Make db connection and make new song object
+// Make db and song object
 $database = new Database();
 $db = $database->getConnection();
 $song = new Song($db);
@@ -27,7 +25,7 @@ if (
 	!empty($data["url"]) &&
 	!empty($data["img"]) &&
 	!empty($data["preview"]) &&
-	!empty($data["albumID"]) &&
+	!empty($data["album"]) &&
 	!empty($data["releaseDate"]) &&
 	!empty($data["explicit"])
 ) {
@@ -37,24 +35,23 @@ if (
 	$song->url = $data["url"];
 	$song->img = $data["img"];
 	$song->preview = $data["preview"];
-	$song->albumID = $data["albumID"];
+	$song->album = $data["album"];
 	$song->releaseDate = $data["releaseDate"];
 	$song->explicit = $data["explicit"];
 
-	if ($song->createOne()) {
-		// Set response code created
+	if ($song->update()) {
+		// Set response code to updated
 		http_response_code(201);
 
-		// Tell the user
-		echo json_encode(array("message" => "song added"));
+		echo json_encode(array("message" => "updated the song"));
 	} else {
-		// Set response code service unavailable
+		// Set response to service unavailable
 		http_response_code(503);
 
-		echo json_encode(array("message" => "Unable to add song"));
+		echo json_encode(array("message" => "Unable to update song"));
 	}
 } else {
-	// set response code bad request
+	// Set response to bad request
 	http_response_code(400);
 
 	echo json_encode(array("message" => "Data incomplete"));

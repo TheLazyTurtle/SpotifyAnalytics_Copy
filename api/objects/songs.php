@@ -5,7 +5,6 @@ class Song
 {
 	// Db connection and table
 	private $conn;
-	private $collection;
 
 	// Object properties
 	public $id;
@@ -13,9 +12,11 @@ class Song
 	public $length;
 	public $url;
 	public $img;
-	public $dateAdded;
-	public $addedBy;
 	public $preview;
+	public $albumID;
+	public $releaseDate;
+	public $explicit;
+	public $artists = array();
 
 	public function __construct($db)
 	{
@@ -55,11 +56,9 @@ class Song
 	}
 
 	// Add a song to the db
-	// TODO: Might have to make create batch where you can input an object
-	// of artist and it will insert them one by one
 	function createOne()
 	{
-		$query = "INSERT INTO song (songID, name, length, url, img, preview) VALUES (?, ?, ?, ?, ?, ?)";
+		$query = "INSERT INTO song (songID, name, length, url, img, preview, albumID, releaseDate, explicit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean data from specialchars
@@ -68,9 +67,10 @@ class Song
 		$this->length = htmlspecialchars(strip_tags($this->length));
 		$this->url = htmlspecialchars(strip_tags($this->url));
 		$this->img = htmlspecialchars(strip_tags($this->img));
-		$this->dateAdded = htmlspecialchars(strip_tags($this->dateAdded));
-		$this->addedBy = htmlspecialchars(strip_tags($this->addedBy));
 		$this->preview = htmlspecialchars(strip_tags($this->preview));
+		$this->albumID = htmlspecialchars(strip_tags($this->albumID));
+		$this->releaseDate = htmlspecialchars(strip_tags($this->releaseDate));
+		$this->explicit = htmlspecialchars(strip_tags($this->explicit));
 
 		$stmt->bindParam(1, $this->id);
 		$stmt->bindParam(2, $this->name);
@@ -78,10 +78,45 @@ class Song
 		$stmt->bindParam(4, $this->url);
 		$stmt->bindParam(5, $this->img);
 		$stmt->bindParam(6, $this->preview);
+		$stmt->bindParam(7, $this->albumID);
+		$stmt->bindParam(8, $this->releaseDate);
+		$stmt->bindParam(9, $this->explicit, PDO::PARAM_BOOL);
 
 		return $stmt->execute();
 	}
 
+	// Update the song
+	function update()
+	{
+		$query = "UPDATE song SET songID = ?, name = ?, length = ?, url = ?, img = ?, preview = ?, album = ?, releaseDate = ?, explicit = ? WHERE songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean data from specialchars
+		$this->id = htmlspecialchars(strip_tags($this->id));
+		$this->name = htmlspecialchars(strip_tags($this->name));
+		$this->length = htmlspecialchars(strip_tags($this->length));
+		$this->url = htmlspecialchars(strip_tags($this->url));
+		$this->img = htmlspecialchars(strip_tags($this->img));
+		$this->preview = htmlspecialchars(strip_tags($this->preview));
+		$this->album = htmlspecialchars(strip_tags($this->album));
+		$this->releaseDate = htmlspecialchars(strip_tags($this->releaseDate));
+		$this->explicit = htmlspecialchars(strip_tags($this->explicit));
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $this->name);
+		$stmt->bindParam(3, $this->length);
+		$stmt->bindParam(4, $this->url);
+		$stmt->bindParam(5, $this->img);
+		$stmt->bindParam(6, $this->preview);
+		$stmt->bindParam(7, $this->album);
+		$stmt->bindParam(8, $this->releaseDate);
+		$stmt->bindParam(9, $this->explicit, PDO::PARAM_BOOL);
+		$stmt->bindParam(10, $this->id);
+
+		return $stmt->execute();
+	}
+
+	// Link the artist to the song
 	function linkArtistToSong($songID, $artistID)
 	{
 		$query = "INSERT INTO artist_has_song (songID, artistID) VALUES (?, ?)";
@@ -163,5 +198,37 @@ class Song
 			extract($row);
 			return $img;
 		}
+	}
+
+	// This will get all the songs from an album
+	function getAlbumSongs($artist)
+	{
+		$query = "SELECT * FROM song WHERE albumID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$this->albumID = htmlspecialchars(strip_tags($this->albumID));
+		$stmt->bindParam(1, $this->albumID);
+		$stmt->execute();
+
+		$songArr = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$songItem = array(
+				"songID" => $songID,
+				"name" => $name,
+				"img" => $img,
+				"url" => $url,
+				"releaseDate" => $releaseDate,
+				"length" => $length,
+				"preview" => $preview,
+				"explicit" => $explicit,
+				"artists" => $artist->getSongArtists($songID)
+			);
+			array_push($songArr, $songItem);
+		}
+		return $songArr;
 	}
 }

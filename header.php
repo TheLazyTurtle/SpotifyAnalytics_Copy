@@ -39,7 +39,7 @@ if ($url != "login" && $url != "register") {
 				<button class="btn" onclick="window.location.href='/index.php'">Home</button>
 			</div>
 			<div class="col col-middel">
-				<input class="search-box" type="text" name="Search" placeholder="search">
+				<input autocomplete="off" class="search-box" type="text" name="Search" placeholder="search">
 			</div>
 			<div class="col col-right">
 				<button class="btn" onclick="window.location.href='/logout.php'">Uitloggen</button>

@@ -19,7 +19,9 @@ class Inserter():
             "length": song["length"],
             "url": song["url"],
             "img": song["img"],
-            "preview": song["preview"]
+            "preview": song["preview"],
+            "album": song["name"],
+            "releaseDate": "2029-01-01"
         }
 
         r = req.post(self.url + "song/create.php", data=values, auth=self.auth)
@@ -63,12 +65,12 @@ class Inserter():
             "songName": song["name"]
         }
 
-        r = req.post(self.url + '/played/create.php',
+        r = req.post(self.url + 'played/create.php',
                      data=values, auth=self.auth)
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added song as played", "green",
+            printc("Added song as played:", "green",
                    song["name"], "white", self.userID, "white")
             return True
         elif httpResponse == 503:
@@ -89,7 +91,7 @@ class Inserter():
             httpResponse = r.status_code
 
             if httpResponse == 201:
-                printc("Linked artist to song", "green",
+                printc("Linked artist to song:", "green",
                        artist["name"] + " - " + song["name"], "white")
             elif httpResponse == 503:
                 pass

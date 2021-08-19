@@ -26,11 +26,15 @@ if ($num > 0) {
 		$songItem = array(
 			"id" => $songID,
 			"name" => $name,
-			"img" => $img,
 			"length" => $length,
 			"url" => $url,
-			"preview" => $preview
+			"img" => $img,
+			"preview" => $preview,
+			"albumID" => $albumID,
+			"releaseDate" => $releaseDate,
+			"explicit" => $explicit
 		);
+
 		array_push($songArr["records"], $songItem);
 	}
 

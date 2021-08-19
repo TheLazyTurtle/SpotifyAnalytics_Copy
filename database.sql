@@ -1,4 +1,4 @@
--- Use stuff
+-- User stuff
 CREATE TABLE IF NOT EXISTS user (
     userID VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL,
@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS inputfield (
     PRIMARY KEY (graphID, inputFieldID, name)
 );
 
+-- Data storage
 CREATE TABLE IF NOT EXISTS artist (
 	artistID varchar(23) NOT NULL,
 	name varchar(45) NOT NULL,
@@ -82,4 +83,14 @@ CREATE TABLE IF NOT EXISTS song (
 	img varchar(255) NOT NULL,
 	preview varchar(255) NULL,
 	primary key(songID)
+);
+
+CREATE TABLE IF NOT EXISTS album (
+	albumID varchar(23) NOT NULL,
+	name varchar(255) NOT NULL,
+	releaseDate datetime NOT NULL,
+	primaryArtistID varchar(23) NOT NULL,
+	url varchar(255) NOT NULL,
+	img varchar(255) NOT NULL,
+	primary key (albumID)
 );

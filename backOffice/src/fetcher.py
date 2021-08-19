@@ -104,10 +104,10 @@ class Fetcher():
 
         # Try to get song preview url
         # Needs to be in try catch because not every song has a preview
-        try:
+        if not songInfo["preview_url"] == None:
             preview = songInfo["preview_url"]
-        except Exception:
-            preview = None
+        else:
+            preview = "NULL"
 
         return {
             'songID': songID,

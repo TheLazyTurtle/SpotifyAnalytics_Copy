@@ -1,13 +1,14 @@
 /*general*/
 body {
-    background-color: #32373A;
+	/*background-color: #32373A;*/
+	background-color: rgb(35, 35, 35);
     color: black;
 	overflow-x: hidden;
 }
 
 a {
     text-decoration: none;
-    color: #0095F6;
+    color: #1DB954;
 }
 
 .container {

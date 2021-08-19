@@ -4,6 +4,8 @@ import requests as req
 import json
 from creds import apiUrl, beUser, bePass
 
+# TODO: KEEP IN MIND: IT IS NICE TO SAVE THE POSITON OF WHERE THEY ARE IN THE ALBUM SO WE CAN PLACE THEM IN THE SAME ORDER
+
 scope = "user-read-recently-played"
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     scope=scope, username="11182819693"))

@@ -1,5 +1,5 @@
 <?php
-require '../config/check_cookie.php';
+require_once '../config/check_cookie.php';
 
 class Artist
 {
@@ -208,5 +208,61 @@ class Artist
 		$stmt->execute();
 
 		return $stmt;
+	}
+
+	// This will get all the artists that are part of the album
+	function getAlbumArtists($albumID)
+	{
+		$query = "SELECT a.* FROM artist a
+		   	INNER JOIN artist_has_song ahs ON a.artistID = ahs.artistID
+			INNER JOIN song s ON s.songID = ahs.songID
+			WHERE s.albumID = ?
+			GROUP BY a.artistID";
+		$stmt = $this->conn->prepare($query);
+
+		$albumID = htmlspecialchars(strip_tags($albumID));
+
+		$stmt->bindParam(1, $albumID);
+		$stmt->execute();
+
+		$artistArr = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$artistItem = array(
+				"artistID" => $artistID,
+				"name" => $name,
+				"img" => $img,
+				"url" => $url,
+			);
+			array_push($artistArr, $artistItem);
+		}
+		return $artistArr;
+	}
+
+	// This will get all the artists that are part of a song
+	function getSongArtists($songID)
+	{
+		$query = "SELECT a.* FROM artist a INNER JOIN artist_has_song ahs ON a.artistID = ahs.artistID INNER JOIN song s ON s.songID = ahs.songID WHERE s.songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$songID = htmlspecialchars(strip_tags($songID));
+		$stmt->bindParam(1, $songID);
+		$stmt->execute();
+
+		$artistArr = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$artistItem = array(
+				"artistID" => $artistID,
+				"name" => $name,
+				"url" => $url,
+				"img" => $img
+			);
+			array_push($artistArr, $artistItem);
+		}
+
+		return $artistArr;
 	}
 }

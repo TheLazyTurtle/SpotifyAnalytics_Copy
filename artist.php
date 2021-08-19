@@ -27,12 +27,14 @@ require "header.php";
 		</div>
 	</div>
 
-	<!-- This should kinda contain 2 things -->
-	<!-- All songs from an artist. We have to change the db kinda because I would like to have them in the album they are from, and i would like to have the date the song was uploaded to spotify so that when a user is following the artist they will be notified by new uploads from the artist -->
-	<!-- Graphs. Lets just have the same graphs as the user but than for the artist. So you can see that the song X from artist Y has been listend to Z amount of times -->
 	<div class="content">
 		<div class="top-songs-wrapper">
 			<h2 class="top-songs-title">Top Songs</h2>
+		</div>
+
+		<hr class="divider">
+
+		<div class="albums-wrapper">
 		</div>
 	</div>
 </div>

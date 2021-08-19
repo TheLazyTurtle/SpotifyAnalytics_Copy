@@ -19,78 +19,17 @@ class User():
         self.fetcher = fetcher.Fetcher(self.userID)
         self.inserter = inserter.Inserter(self.userID, apiUrl)
 
-        nextHour = datetime.now().hour + 1
-        amount, time = self.getTimeAndAmount()
-
         while True:
-            if datetime.now().hour == nextHour:
-                nextHour = datetime.now().hour + 1
-
-                # Set default fetch values
-                amount, time = self.getTimeAndAmount()
-
             # This returns the songs objects and insert them into the db
             try:
-                songs = self.fetcher.run(amount)
-                if self.inserter.run(songs):
-                    # If the amound added as played == the amount fetched than fetch again but than the max amount of songs to prevent any songs to get lost
-                    printc("Refetching to prevent loss of songs for:",
-                           "green", self.userID, "white")
-                    songs = self.fetcher.run(50)
-                    self.inserter.run(songs)
+                songs = self.fetcher.run(50)
+                self.inserter.run(songs)
 
             except Exception as e:
                 printc("Failed to get songs for:", "red",
                        self.userID, "white", e, "white")
 
-            sleep(time)
-
-    def getTimeAndAmount(self):
-        # Get the current time and active rate of the user
-        hours = self.getActiveHours()
-        currentHour = self.getCurrentTime()
-
-        amount = 50
-        time = 3600
-        if hours:
-            for hour in hours:
-                if int(hour["time"]) == int(currentHour):
-                    percent = round(float(hour["percentage"]))
-
-                    if percent <= 1:
-                        amount = 50
-                        time = 3600
-                    elif percent > 1 and percent <= 3:
-                        amount = 25
-                        time = 1800
-                    elif percent > 3:
-                        amount = 5
-                        time = 300
-
-            printc("Fetching " + str(amount) + " over " + str(time) +
-                   " seconds for:", "green", self.userID, "white", percent, "white")
-        return amount, time
-
-    def getActiveHours(self):
-        r = req.get(apiUrl + "user/getActiveHours.php",
-                    params={"userID": self.userID})
-        status = r.status_code
-
-        # If user already has songs played
-        if status == 200:
-            hours = r.text
-            hours = json.loads(hours)
-            hours = hours['records']
-            return hours
-        else:
-            # If a user does not yet have any data return some default
-            return False
-
-    def getCurrentTime(self):
-        now = datetime.now()
-
-        current_time = now.strftime("%H")
-        return current_time
+            sleep(3600)
 
     # This will run all the tasks that need to be run for a user
     def run(self):
