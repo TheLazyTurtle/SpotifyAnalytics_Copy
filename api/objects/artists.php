@@ -32,10 +32,20 @@ class Artist
 	// This will only read one artist from the db
 	function readOne()
 	{
-		$query = "SELECT * FROM artist WHERE name LIKE ? LIMIT 1";
-		$stmt = $this->conn->prepare($query);
+		$query = "SELECT * FROM artist WHERE ";
 
-		$stmt->bindParam(1, $this->name);
+		if (isset($this->id)) {
+			$query = $query . "artistID LIKE ? LIMIT 1";
+
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(1, $this->id);
+		} else if (isset($this->name)) {
+			$query = $query . "name LIKE ? LIMIT 1";
+
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(1, $this->name);
+		}
+
 		$stmt->execute();
 
 
@@ -67,6 +77,35 @@ class Artist
 		$stmt->bindParam(4, $this->img);
 
 		return $stmt->execute();
+	}
+
+	// This will search all artists using a songID
+	function searchBySongID($songID)
+	{
+		$query = "SELECT a.* 
+			FROM artist a 
+			INNER JOIN artist_has_song ahs ON a.artistID = ahs.artistID 
+			WHERE ahs.songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$songID = htmlspecialchars(strip_tags($songID));
+		$stmt->bindParam(1, $songID);
+		$stmt->execute();
+
+		$artistArr = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$artistItem = array(
+				"artistID" => $artistID,
+				"url" => $url,
+				"img" => $img,
+				"name" => $name
+			);
+			array_push($artistArr, $artistItem);
+		}
+
+		return $artistArr;
 	}
 
 	// Get artist based on keywords
@@ -111,7 +150,7 @@ class Artist
 	// Gets the top artist of a user
 	function topArtist($userID, $minDate, $maxDate, $amount)
 	{
-		$query = "SELECT a.name, COUNT(*) times, a.img 
+		$query = "SELECT a.name, COUNT(*) times, a.img
 			FROM played p
 			INNER JOIN artist_has_song ahs ON p.songID = ahs.songID
 			RIGHT JOIN artist a ON ahs.artistID = a.artistID

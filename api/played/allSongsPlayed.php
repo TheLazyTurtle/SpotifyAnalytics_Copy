@@ -37,6 +37,7 @@ if ($num > 0) {
 		$resultItem = array(
 			"label" => $name,
 			"y" => (int)$times,
+			"albumID" => $albumID
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}

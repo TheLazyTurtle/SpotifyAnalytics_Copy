@@ -1,7 +1,7 @@
 $(".search-box").on("input", function () {
     let searchTerm = $(this).val()
 
-    if (searchTerm.length >= 3) {
+    if (searchTerm.length >= 2) {
         if ($(".search-results").length <= 0) {
             let searchResults = document.createElement("DIV")
             searchResults.className = "search-results"

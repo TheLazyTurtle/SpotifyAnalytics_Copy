@@ -37,7 +37,7 @@ if ($num > 0) {
 		$resultItem = array(
 			"label" => $name,
 			"y" => (int)$times,
-			"img" => $img
+			"img" => $img,
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}

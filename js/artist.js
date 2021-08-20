@@ -55,7 +55,7 @@ function setArtistInfo(result) {
 // This will show do everything to show the songs thingys
 function showSongs() {
     showArtistsTopSongs()
-    showArtistAlbums()
+    showArtistAlbums(artistID)
 }
 
 // This will show the top Artists songs

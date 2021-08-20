@@ -41,6 +41,7 @@ if ($num > 0) {
 			"label" => $songName,
 			"y" => (int)$times,
 			"img" => $song->getImage($songID),
+			"albumID" => $albumID
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}
