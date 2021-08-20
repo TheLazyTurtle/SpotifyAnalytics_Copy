@@ -159,6 +159,33 @@ th {
 	width: 15vw;
 }
 
+/* Album expander / contractor */
+.expander-wrapper {
+	width: 100%;
+}
+
+.expander-wrapper:hover {
+	background-color: rgb(50, 50, 50);
+	border-radius: 0 0 8px 8px;
+}
+
+.expander {
+	text-align: center;
+}
+
+.open {
+	display: block;
+}
+
+.closed {
+	display: none;
+}
+
+.fa-sort-up, .fa-sort-down {
+	margin: 0 24vw 0 24vw;
+	font-size: 30px;
+}
+
 @media only screen and (max-width: 460px) {
 	.user-info-text-wrapper, .artist-info-text-wrapper {
 		display: block;

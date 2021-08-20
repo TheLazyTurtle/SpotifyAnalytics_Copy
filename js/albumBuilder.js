@@ -7,7 +7,7 @@ function getAlbumInfo() {
         type: "POST",
         data: { albumID: albumID },
         success: function (result) {
-            $(".albums-wrapper").append(makeAlbum(result["records"][0]))
+            $(".albums-wrapper").append(makeAlbum(result["records"][0], "open"))
         },
         error: function (error) {
             console.log(error)
@@ -23,7 +23,9 @@ function showArtistAlbums(artistID) {
         data: { artistID: artistID },
         success: function (result) {
             for (var i = 0; i < result["records"].length; i++) {
-                $(".albums-wrapper").append(makeAlbum(result["records"][i]))
+                $(".albums-wrapper").append(
+                    makeAlbum(result["records"][i], "closed")
+                )
             }
         },
         error: function (x, y, z) {
@@ -35,7 +37,7 @@ function showArtistAlbums(artistID) {
 }
 
 // This will make the base of the album like title and img
-function makeAlbum(album) {
+function makeAlbum(album, state) {
     // This will contain everything for the album
     let albumWrapper = document.createElement("div")
     albumWrapper.className = "album-wrapper"
@@ -82,6 +84,7 @@ function makeAlbum(album) {
     } else {
         albumInfoArtist.innerHTML = getArtistName()
     }
+
     albumInfoArtistLink.append(albumInfoArtist)
     albumInfoTextWrapper.append(albumInfoArtistLink)
 
@@ -94,15 +97,18 @@ function makeAlbum(album) {
     // Add everything to the wrapper
     albumWrapper.append(albumInfoWrapper)
     albumWrapper.append(divider)
-    albumWrapper.append(addAlbumSongs(album["songs"]))
+    albumWrapper.append(addAlbumSongs(album["songs"], state))
+
+    // Add the folding thingy
+    albumWrapper.append(addExpander())
 
     return albumWrapper
 }
 
 // This will add the songs of the album to the base
-function addAlbumSongs(songs) {
+function addAlbumSongs(songs, state) {
     let albumSongsWrapper = document.createElement("div")
-    albumSongsWrapper.className = "album-songs-wrapper"
+    albumSongsWrapper.className = "album-songs-wrapper " + state
 
     for (var i = 0; i < songs.length; i++) {
         song = songs[i]
@@ -187,4 +193,35 @@ function addAlbumSongs(songs) {
     }
 
     return albumSongsWrapper
+}
+
+// Button to make albums fold and expand
+function addExpander() {
+    let expanderWrapper = document.createElement("div")
+    expanderWrapper.className = "expander-wrapper"
+
+    let expander = document.createElement("div")
+    expander.className = "expander"
+    expander.innerHTML = '<i class="fas fa-sort-down"></i>'
+
+    expanderWrapper.append(expander)
+    expanderAndFolder(expanderWrapper)
+
+    return expanderWrapper
+}
+
+// This will expand and fold the albums
+function expanderAndFolder(expander) {
+    $(expander).click(function () {
+        let expDiv = $(this)[0].parentElement.children[2]
+        let iconParent = $(this)[0].parentElement.children[3].children[0]
+
+        if (expDiv.className.includes("closed")) {
+            expDiv.className = expDiv.className.replace("closed", "open")
+            iconParent.innerHTML = '<i class="fas fa-sort-up"></i>'
+        } else {
+            expDiv.className = expDiv.className.replace("open", "closed")
+            iconParent.innerHTML = '<i class="fas fa-sort-down"></i>'
+        }
+    })
 }
