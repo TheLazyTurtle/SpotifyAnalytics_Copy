@@ -17,12 +17,20 @@
 }
 
 .user-info-img, .artist-info-img {
+	margin-top: 1vw;
 	width: 150px;
 	height: 150px;
+	object-fit: cover;
 }
 
 .user-info-text, .artist-info-text {
 	color: white;
+}
+
+/* follow button */
+.btn-following {
+	border: 2px #1DB954 solid;
+	background-color: rgb(70, 70, 70);
 }
 
 /* Artist top songs */
@@ -186,9 +194,45 @@ th {
 	font-size: 30px;
 }
 
+
+/* Profile page */
+.user-info-text {
+	display: inline-block;
+}
+
+.followers-wrapper {
+	color: white;
+}
+
+.followers, .following {
+	display: inline-block;
+	margin-right: 1vw;
+	font-weight: normal;
+}
+
+.fa-cog {
+	color: white;
+	display: inline-block;
+	font-size: 20px;
+	margin-left: 1vw;
+}
+
+/* Settings */
+.user-info-img-uploader {
+	display: none;
+}
+
 @media only screen and (max-width: 460px) {
+	.divider {
+		margin: 25vw 0 10vw 0;
+	}
+
 	.user-info-text-wrapper, .artist-info-text-wrapper {
 		display: block;
+	}
+
+	.user-info-text {
+		margin: 5vw 0 0 0;
 	}
 
 	.selector-wrapper {

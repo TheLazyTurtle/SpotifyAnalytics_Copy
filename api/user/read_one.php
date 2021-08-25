@@ -18,6 +18,8 @@ $user->username = isset($_POST["username"]) ? $_POST["username"] : die();
 
 // Query user
 $stmt = $user->read_one();
+$user->getFollowersCount();
+$user->getFollowingCount();
 
 // Found data
 if ($user->id != null) {
@@ -26,6 +28,8 @@ if ($user->id != null) {
 		"username" => $user->username,
 		"firstname" => $user->firstname,
 		"lastname" => $user->lastname,
+		"following" => $user->following,
+		"followers" => $user->followers,
 		"email" => $user->email,
 		"img" => $user->img,
 		"isAdmin" => $user->isAdmin

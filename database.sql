@@ -14,6 +14,13 @@ CREATE TABLE IF NOT EXISTS user (
     PRIMARY KEY (userID)
 );
 
+CREATE TABLE IF NOT EXISTS followers (
+	follower VARCHAR(45) NOT NULL,
+	following VARCHAR(45) NOT NULL,
+	creationDate DATETIME NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY(follower, following)
+);
+
 CREATE TABLE IF NOT EXISTS spotifyData(
     userID varchar(45) NOT NULL,
     authToken VARCHAR(255) NOT NULL,

@@ -10,6 +10,7 @@ vendor/
 /api/config/core.php
 /api/config/database.php
 /backOffice/src/creds.py
+/uploads/*
 .vim
 creds.py
 __tests__

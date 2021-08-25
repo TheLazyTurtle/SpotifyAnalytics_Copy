@@ -15,6 +15,8 @@ class User
 	public $email;
 	public $password;
 	public $isAdmin;
+	public $following;
+	public $followers;
 
 	public function __construct($db)
 	{
@@ -292,24 +294,104 @@ class User
 		return $stmt->execute();
 	}
 
-	// This will get the time when a user is active
-	function getActiveHours($userID)
+	// This will get how many followers a person has
+	function getFollowersCount()
 	{
-		$query = "SELECT 
-			(COUNT(*) / (SELECT COUNT(*) FROM played WHERE playedBy LIKE ?) * 100) AS percent, 
-			COUNT(*), HOUR(DATE_ADD(datePlayed, INTERVAL 2 HOUR)) AS time 
-				FROM played 
-				WHERE playedBy LIKE ? 
-				GROUP BY HOUR(datePlayed)";
+		$query = "SELECT count(*) as followers FROM followers WHERE following = ?";
 		$stmt = $this->conn->prepare($query);
 
-		// Clean input
-		$userID = htmlspecialchars(strip_tags($userID));
-
-		$stmt->bindParam(1, $userID);
-		$stmt->bindParam(2, $userID);
+		$stmt->bindParam(1, $this->id);
 		$stmt->execute();
 
-		return $stmt;
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$this->followers = $followers;
+		}
+	}
+
+	// This will get how many people a person follows
+	function getFollowingCount()
+	{
+		$query = "SELECT count(*) as following FROM followers WHERE follower = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$this->following = $following;
+		}
+	}
+
+	// This will update the profile picture location of the user in the database
+	function updateProfilePicture()
+	{
+		$query = "UPDATE user set img = ? WHERE userID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$this->img = htmlspecialchars(strip_tags($this->img));
+		$this->id = htmlspecialchars(strip_tags($this->id));
+
+		$stmt->bindParam(1, $this->img);
+		$stmt->bindParam(2, $this->id);
+
+		return $stmt->execute();
+	}
+
+	// Makes you follow a person
+	function follow($userToFollow)
+	{
+		$query = "INSERT INTO followers (follower, following) VALUES (?, ?)";
+		$stmt = $this->conn->prepare($query);
+
+		$userToFollow = htmlspecialchars(strip_tags($userToFollow));
+		$this->id = htmlspecialchars(strip_tags($this->id));
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $userToFollow);
+
+		return $stmt->execute();
+	}
+
+	// Makes you unfollow a person
+	function unFollow($userToUnfollow)
+	{
+		$query = "DELETE FROM followers WHERE follower = ? AND following = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$userToUnfollow = htmlspecialchars(strip_tags($userToUnfollow));
+		$this->id = htmlspecialchars(strip_tags($this->id));
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $userToUnfollow);
+
+		return $stmt->execute();
+	}
+
+	// Checks if you are following a person
+	function isFollowing($user)
+	{
+		$query = "SELECT COUNT(*) AS count FROM followers WHERE follower = ? AND following = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$user = htmlspecialchars(strip_tags($user));
+		$this->id = htmlspecialchars(strip_tags($this->id));
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $user);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			if ($count > 0) {
+				return True;
+			} else {
+				return False;
+			}
+		}
 	}
 }
