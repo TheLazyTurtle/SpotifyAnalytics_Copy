@@ -106,7 +106,7 @@ function makeNewGraph(data, graphData) {
         data: [
             {
                 click: function (data) {
-                    goTopage(data)
+                    goToPage(data)
                 },
                 color: graphData.color,
                 type: graphData.type,
@@ -124,13 +124,15 @@ function makeNewGraph(data, graphData) {
 }
 
 // This will send you to the artist or song page on which you clicked
-function goTopage(data) {
+function goToPage(data) {
     let graphTitle = data.chart.options.title.text
 
     if (graphTitle.includes("Song")) {
         let albumID = data.dataPoint.albumID
+        let songName = data.dataPoint.label
+        console.log(data)
 
-        location.href = `/album.php?album=${albumID}`
+        location.href = `/album.php?album=${albumID}&song=${songName}`
     } else if (graphTitle.includes("Artist")) {
         let title = data.dataPoint.label
 

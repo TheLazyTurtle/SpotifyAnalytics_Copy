@@ -8,6 +8,7 @@ function getAlbumID() {
     const addr = window.location.search
     const params = new URLSearchParams(addr)
     const albumID = params.get("album")
+    songName = params.get("song")
 
     return albumID
 }

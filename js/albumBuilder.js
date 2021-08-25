@@ -8,6 +8,9 @@ function getAlbumInfo() {
         data: { albumID: albumID },
         success: function (result) {
             $(".albums-wrapper").append(makeAlbum(result["records"][0], "open"))
+
+            let selectedSong = document.getElementById(songName)
+            selectedSong.scrollIntoView()
         },
         error: function (error) {
             console.log(error)
@@ -111,7 +114,7 @@ function addAlbumSongs(songs, state) {
     albumSongsWrapper.className = "album-songs-wrapper " + state
 
     for (var i = 0; i < songs.length; i++) {
-        song = songs[i]
+        let song = songs[i]
 
         // This will hold all the song info
         let albumSongWrapper = document.createElement("div")
