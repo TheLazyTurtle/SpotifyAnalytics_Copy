@@ -24,8 +24,10 @@ function getUserInfo() {
         success: function (result) {
             setUserInfo(result)
             checkIfFollowing()
+            checkIfSelf(result["username"])
         },
-        error: function (jqXHR, textStatus, error) {
+        error: function (error) {
+            console.warn(error)
             // TODO: Show a user not found thingy
         },
     })
@@ -111,9 +113,30 @@ function followButton() {
     })
 }
 
+// This will check if you are looking at your own profile. If you are then send you to the profile page.
+function checkIfSelf(username) {
+    let name = "username="
+    let decodedCookie = decodeURIComponent(document.cookie)
+    let ca = decodedCookie.split(";")
+
+    for (var i = 0; i < ca.length; i++) {
+        let c = ca[i]
+        while (c.charAt(0) == " ") {
+            c = c.substring(1)
+        }
+        if (c.indexOf(name) == 0) {
+            let user = c.substring(name.length, c.length)
+
+            // Send user to their profile page
+            if (user == username) {
+                window.location = "/profile.php"
+            }
+        }
+    }
+}
+
 // This will check if the user is following the person they are visiting
 function checkIfFollowing() {
-    console.log(userID)
     $.ajax({
         url: "api/user/isFollowing.php",
         type: "post",

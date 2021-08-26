@@ -9,7 +9,7 @@ function getGraphs() {
         url: "/api/graph/read.php",
         type: "POST",
         success: function (result) {
-            for (var i = 0; i <= result["records"].length; i++) {
+            for (var i = 0; i < result["records"].length; i++) {
                 let res = result["records"][i]
                 let containerID = res["containerID"]
                 let title = res["title"]

@@ -25,7 +25,7 @@ function getUserInfo() {
 
 // This will get the username from cookie
 function getUserName() {
-    let name = "username" + "="
+    let name = "username="
     let decodedCookie = decodeURIComponent(document.cookie)
     let ca = decodedCookie.split(";")
 
