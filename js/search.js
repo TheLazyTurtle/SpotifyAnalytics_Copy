@@ -14,21 +14,18 @@ $(".search-box").on("input", function () {
             type: "POST",
             data: { keyword: searchTerm },
             success: function (data) {
-                console.table(data["records"])
                 // Remove all the old results
                 $(".search-results").empty()
 
                 // Add the new results
                 data = data["records"]
-                for (var i = 0; i <= data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     var element = makeElement(data[i])
                     $(".search-results").append(element)
                 }
             },
-            error: function (e, e2, e3) {
-                console.warning(e)
-                console.warning(e2)
-                console.warning(e3)
+            error: function (e) {
+                console.warn(e)
             },
         })
     } else if (searchTerm.length == 0) {

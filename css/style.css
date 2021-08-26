@@ -133,7 +133,7 @@ header {
 .search-results {
 	width: 300px;
 	min-height: 70px;
-	max-height: 300px;
+	max-height: 305px;
 	z-index: 20;
 	border-radius: 6px;
 	position: absolute;

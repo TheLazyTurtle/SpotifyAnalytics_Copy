@@ -127,7 +127,7 @@ class User
 	// Search for users
 	function search($keyword)
 	{
-		$query = "SELECT username as name FROM user WHERE username LIKE ?";
+		$query = "SELECT username as name, img FROM user WHERE username LIKE ?";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input

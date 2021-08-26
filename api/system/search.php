@@ -46,7 +46,7 @@ if ($userStmt->rowCount() > 0) {
 
 		$resultItem = array(
 			"name" => $name,
-			"img" => "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352160-stock-illustration-default-placeholder-profile-icon.jpg",
+			"img" => $img,
 			"type" => "user"
 		);
 		array_push($resultsArr["records"], $resultItem);
