@@ -66,8 +66,14 @@ function makeAlbum(album, state) {
 
     // Title
     let albumInfoTitleLink = document.createElement("a")
-    albumInfoTitleLink.href = album["url"]
-    albumInfoTitleLink.target = "_blank"
+
+    // A poor mans check to see if we have to url to external url or internal url
+    if (state == "open") {
+        albumInfoTitleLink.href = album["url"]
+        albumInfoTitleLink.target = "_blank"
+    } else {
+        albumInfoTitleLink.href = "/album.php?album=" + album["albumID"]
+    }
 
     let albumInfoTitle = document.createElement("h1")
     albumInfoTitle.className = "album-info-title"
@@ -168,8 +174,8 @@ function addAlbumSongs(songs, state) {
         for (var j = 0; j < song["artists"].length; j++) {
             let albumSongArtistLink = document.createElement("a")
             albumSongArtistLink.className = "album-song-artist"
-            albumSongArtistLink.href = song["artists"][j]["url"]
-            albumSongArtistLink.target = "_blank"
+            albumSongArtistLink.href =
+                "/artist.php?artist=" + song["artists"][j]["name"]
 
             let albumSongArtist = document.createElement("p")
             albumSongArtist.innerHTML = song["artists"][j]["name"] + ", "
