@@ -15,7 +15,7 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get input
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : "";
+$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
 $name = isset($_POST["name"]) ? $_POST["name"] : "";
 $graphID = isset($_POST["graphID"]) ? $_POST["graphID"] : "";
 

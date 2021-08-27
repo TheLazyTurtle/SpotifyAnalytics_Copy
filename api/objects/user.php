@@ -214,7 +214,7 @@ class User
 	// Get one user filterSetting
 	function readOneFilterSetting($userID, $name, $graphID)
 	{
-		$query = "SELECT * FROM filterSetting WHERE userID = ? AND name = ? OR graphID = ?";
+		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ?";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
@@ -222,8 +222,7 @@ class User
 
 		// Bind values
 		$stmt->bindParam(1, $userID);
-		$stmt->bindParam(2, $name);
-		$stmt->bindParam(3, $graphID);
+		$stmt->bindParam(2, $graphID);
 		$stmt->execute();
 		return $stmt;
 	}
@@ -393,5 +392,38 @@ class User
 				return False;
 			}
 		}
+	}
+
+	function createFilterSettings($userID)
+	{
+		$query = "INSERT INTO filterSetting (graphID, userID, name, value) VALUES 
+			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
+			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxPlayed', ''),
+			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
+			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minPlayed', '0'),
+			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
+			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
+			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'amount', 10),
+			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'artist', ''),
+			('3', 'icq6mdabqpzvx0wpc1w4hhxmp', 'amount', 10),
+			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
+			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
+			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'song', '')";
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $userID);
+		$stmt->bindParam(3, $userID);
+		$stmt->bindParam(4, $userID);
+		$stmt->bindParam(5, $userID);
+		$stmt->bindParam(6, $userID);
+		$stmt->bindParam(7, $userID);
+		$stmt->bindParam(8, $userID);
+		$stmt->bindParam(9, $userID);
+		$stmt->bindParam(10, $userID);
+		$stmt->bindParam(11, $userID);
+		$stmt->bindParam(12, $userID);
+
+		return $stmt->execute();
 	}
 }
