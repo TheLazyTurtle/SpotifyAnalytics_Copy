@@ -8,15 +8,18 @@ header("Content-Type: application/json; charset=UTF-8");
 // Include db and object file
 require "../config/database.php";
 require "../objects/artists.php";
+require "../objects/played.php";
 require "../config/core.php";
 
 // Make db and artist object
 $database = new Database();
 $db = $database->getConnection();
 $artist = new Artist($db);
+$played = new Played($db);
 
 // Get posted data
 $artistID = isset($_POST["artistID"]) ? $_POST["artistID"] : die();
+$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : "";
 
 // Query the results
 $stmt = $artist->topSongs($artistID);
@@ -35,7 +38,8 @@ if ($num > 0) {
 			"preview" => $preview,
 			"img" => $img,
 			"count" => $count,
-			"url" => $url
+			"url" => $url,
+			"userCount" => $played->songCount($userID, $songID)
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}

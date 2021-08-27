@@ -17,7 +17,7 @@ class Graph
 	public function __construct($db)
 	{
 		$this->conn = $db;
-		checkCookie();
+		//checkCookie();
 	}
 
 	// Get all graphs

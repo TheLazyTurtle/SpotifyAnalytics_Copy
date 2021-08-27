@@ -255,4 +255,24 @@ class Played
 
 		return $stmt;
 	}
+
+	// This will get how often a person has listend to a song
+	function songCount($userID, $songID)
+	{
+		$query = "SELECT count(*) as count FROM played WHERE playedBy = ? AND songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$userID = htmlspecialchars(strip_tags($userID));
+		$songID = htmlspecialchars(strip_tags($songID));
+
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $songID);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return $count;
+		}
+	}
 }

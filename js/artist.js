@@ -73,6 +73,7 @@ function showArtistsTopSongs() {
         type: "POST",
         data: { artistID: artistID },
         success: function (result) {
+            console.log(result["records"])
             topSongs = result["records"]
             for (var i = 0; i < topSongs.length; i++) {
                 let song = topSongs[i]
@@ -112,7 +113,7 @@ function showArtistsTopSongs() {
                         "p",
                         "top-song-amount",
                         "innerHTML",
-                        song["count"]
+                        song["userCount"] + " / " + song["count"]
                     )
                 )
 
@@ -153,7 +154,7 @@ function makeTableHeader() {
 
     let amount = document.createElement("th")
     amount.className = "top-song-header-amount"
-    amount.innerHTML = "amount"
+    amount.innerHTML = "you / total"
     row.append(amount)
 
     return row

@@ -3,23 +3,32 @@ $(document).ready(function () {
 
     // Validates the jwt token
     $.ajax({
-        url: "../api/system/validate_token.php",
+        url: "/api/system/validate_token.php",
         type: "POST",
-        //contentType: "application/json",
         data: { jwt: jwt },
-        success: function (result) {
-            //if (!document.URL.includes("index.php")) {
-            //window.location.href = "/index.php"
+        success: function () {
+            // If a user has a valid token than return true
             return true
-            //}
         },
-        error: function (result) {
+        error: function () {
+            // If a users token has expired or is invalid than send them to the login page
             if (
                 !document.URL.includes("login.php") &&
-                !document.URL.includes("register.php")
+                !document.URL.includes("register.php") &&
+                !document.URL.includes("album.php") &&
+                !document.URL.includes("search.php") &&
+                !document.URL.includes("user.php") &&
+                !document.URL.includes("artist.php")
             ) {
                 window.location.href = "/login.php"
             }
+
+            // Change logout button to login button when you are not logged in
+            $("#login-btn")[0].innerHTML = "Inloggen"
+            $("#login-btn")[0].onclick = "window.location.href='/login.php'"
+
+            $("#follow").remove()
+
             return false
         },
     })
