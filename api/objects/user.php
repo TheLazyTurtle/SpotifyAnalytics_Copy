@@ -103,19 +103,28 @@ class User
 	// This will get all usefull info from the user
 	function read_one()
 	{
-		$query = "SELECT * FROM user WHERE username LIKE ?";
-		$stmt = $this->conn->prepare($query);
+		$query = "SELECT * FROM user WHERE ";
 
-		// Clean input
-		$this->username = htmlspecialchars(strip_tags($this->username));
+		if (isset($this->username)) {
+			$query = $query . "username LIKE ?";
+			$stmt = $this->conn->prepare($query);
 
-		// Bind params
-		$stmt->bindParam(1, $this->username);
+			$this->username = htmlspecialchars(strip_tags($this->username));
+			$stmt->bindParam(1, $this->username);
+		} else if (isset($this->id)) {
+			$query = $query . "userID LIKE ?";
+			$stmt = $this->conn->prepare($query);
+
+			$this->id = htmlspecialchars(strip_tags($this->id));
+			$stmt->bindParam(1, $this->id);
+		}
+
 		$stmt->execute();
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			extract($row);
 			$this->id = $userID;
+			$this->username = $username;
 			$this->firstname = $firstname;
 			$this->lastname = $lastname;
 			$this->email = $email;

@@ -101,7 +101,7 @@ function makeAlbum(album, state) {
 
     // Divider
     let divider = document.createElement("hr")
-    divider.className = "divider"
+    divider.className = "album-divider"
 
     // Add everything to the wrapper
     albumWrapper.append(albumInfoWrapper)

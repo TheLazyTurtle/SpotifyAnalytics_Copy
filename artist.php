@@ -18,15 +18,6 @@ require "header.php";
 		</div>
 	</div>
 	<hr class="divider">
-	<div class="selector-wrapper">
-		<!-- TODO: These kinda should be made automatically based on the array -->
-		<div class="selector-item">
-			<button class="btn selector" id="songs">songs</button>
-		</div>
-		<div class="selector-item">
-			<button class="btn selector" id="graphs">graphs</button>
-		</div>
-	</div>
 
 	<div class="content">
 		<div class="top-songs-wrapper">

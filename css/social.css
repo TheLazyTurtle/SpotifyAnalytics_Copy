@@ -227,6 +227,10 @@ th {
 		margin: 25vw 0 10vw 0;
 	}
 
+	.album-divider {
+		margin: 5vw 0;
+	}
+
 	.user-info-text-wrapper, .artist-info-text-wrapper {
 		display: block;
 	}
@@ -240,7 +244,7 @@ th {
 	}
 
 	/* mobile artist page */
-	.artist-info {
+	.artist-info, .user-info {
 		width: 100vw;
 		height: 360px;
 	}
@@ -251,17 +255,18 @@ th {
 		position: absolute;
 	}
 
-	.artist-info-img-wrapper {
+	.artist-info-img-wrapper, .user-info-img-wrapper {
 		width: 100vw;
 	}
 
-	.artist-info-img {
+	.artist-info-img, .user-info-img {
 		width: 100%;
 		height: 300px;
 		object-fit: cover;
 	}
 
-	.artist-info-text-wrapper {
+	.artist-info-text-wrapper, .user-info-text-wrapper {
+		width: 100vw;
 		margin: -1.5% 2%;
 	}	
 

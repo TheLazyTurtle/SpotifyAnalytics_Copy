@@ -1,0 +1,121 @@
+.feed {
+	width: 60vw;
+	margin: auto;
+}
+
+.post {
+	max-width: 600px;
+	margin: 1vw auto;
+	background-color: white;
+	border-radius: 8px;
+}
+
+/* Post header */
+.profile-img-wrapper {
+	display: inline-block;
+}
+
+.profile-img {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	margin: 0.2vw 0 0 0.2vw;
+}
+
+.username-wrapper {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.divider {
+	margin-bottom: 0;
+}
+
+/* Post body */
+.post-body {
+	width: 100%;
+}
+
+.post-img {
+	width: 100%;
+	object-fit: cover;
+}
+
+/* Post footer */
+.fa-heart, .number {
+	font-size: 20px;
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 0;
+}
+
+.fas.fa-heart {
+	color: red;
+}
+
+.username, .description {
+	display: inline-block;
+	margin-left: 10px;
+	margin-top: 0;
+}
+
+/* Post songs */
+.song-img {
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.song-name {
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 10px;
+	width: 10vw;
+}
+
+.artist {
+	display: inline-block;
+	margin-left: 1%;
+}
+
+.song-divider {
+	margin-bottom: 1%;
+}
+
+.closed {
+	display: none;
+}
+
+.open {
+	display: block;
+}
+
+.expander {
+	text-align: center;
+}
+
+.fa-sort-up, .fa-sort-down {
+	font-size: 30px;
+}
+
+.preview {
+	margin-left: 1vw;
+}
+
+@media only screen and (max-width: 460px) {
+	.feed {
+		width: 100vw;
+		position: absolute;
+		left: 0;
+		min-height: 110vh;
+	}
+
+	.expander {
+		margin-bottom: 10vw;
+	}
+
+	.preview {
+		display: block;
+	}
+}

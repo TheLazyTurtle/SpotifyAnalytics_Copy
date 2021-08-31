@@ -1,4 +1,3 @@
-let selectors = ["songs", "graphs"]
 let artistID = false
 
 // This will load on page load
@@ -28,7 +27,8 @@ function getArtistInfo() {
             //showArtistsTopSongs()
             showSongs()
         },
-        error: function (jqXHR, textStatus, error) {
+        error: function (error) {
+            console.error(error)
             // TODO: show a artist not found thingy
         },
     })
@@ -73,7 +73,6 @@ function showArtistsTopSongs() {
         type: "POST",
         data: { artistID: artistID },
         success: function (result) {
-            console.log(result["records"])
             topSongs = result["records"]
             for (var i = 0; i < topSongs.length; i++) {
                 let song = topSongs[i]
@@ -221,24 +220,6 @@ function showMoreSongs() {
             })
         }
     })
-}
-
-// This will check if a selector button is pressed
-function getButtonPressed() {
-    for (var i = 0; i < selectors.length; i++) {
-        $("#" + selectors[i]).click(function () {
-            let button = $(this)
-            let buttonID = button[0].attributes[1].nodeValue
-
-            // Might have to do this differently where it will use the array to switch or something like that
-            switch (buttonID) {
-                case "graphs":
-                //getGraphs()
-                default:
-                    showSongs()
-            }
-        })
-    }
 }
 
 // This will that all the albums

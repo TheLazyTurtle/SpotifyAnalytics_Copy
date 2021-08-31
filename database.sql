@@ -29,6 +29,32 @@ CREATE TABLE IF NOT EXISTS spotifyData(
     PRIMARY KEY (userID)
 );
 
+-- Memories stuff
+CREATE TABLE IF NOT EXISTS post( 
+	postID INT NOT NULL,
+	userID varchar(45) NOT NULL,
+	description varchar(255) NOT NULL,
+	datePosted datetime DEFAULT current_timestamp(),
+	img varchar(255) NOT NULL,
+
+	PRIMARY KEY (postID)
+);
+
+CREATE TABLE IF NOT EXISTS likes (
+	postID INT NOT NULL,
+	userID varchar(45) NOT NULL,
+	dateLiked datetime DEFAULT current_timestamp(),
+
+	PRIMARY KEY (postID, userID)
+);
+
+CREATE TABLE IF NOT EXISTS post_has_song (
+	postID INT NOT NULL,
+	songID varchar(23),
+
+	PRIMARY KEY (postID, songID)
+);
+
 -- Graph Stuff
 CREATE TABLE IF NOT EXISTS graph (
     graphID INT NOT NULL,

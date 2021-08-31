@@ -77,6 +77,24 @@ function getFilterSettings(
                 graphID
             )
         },
+        error: function () {
+            $.ajax({
+                url: "api/user/createFilterSettings.php",
+                type: "POST",
+                success: function () {
+                    getFilterSettings(
+                        containerID,
+                        title,
+                        titleX,
+                        titleY,
+                        xValueType,
+                        api,
+                        type,
+                        graphID
+                    )
+                },
+            })
+        },
     })
 }
 

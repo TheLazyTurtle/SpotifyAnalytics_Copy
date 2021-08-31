@@ -206,11 +206,11 @@ header {
 
 	.col {
 		text-align: center;
-		width: 30%;
+		width: 23%;
 		margin-top: 2%;
 	}
 
-	.fas {
+	.fas, .far {
 		font-size: 20px;
 		color: black
 	}
