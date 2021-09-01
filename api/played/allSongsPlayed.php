@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $graph = new Played($db);
 
 // Get posted data 
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $minPlayed = isset($_POST["minPlayed"]) && !empty($_POST["minPlayed"]) ? $_POST["minPlayed"] : $minPlayed_def;
 $maxPlayed = isset($_POST["maxPlayed"]) && !empty($_POST["maxPlayed"]) ? $_POST["maxPlayed"] : $maxPlayed_def;
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
@@ -37,6 +37,7 @@ if ($num > 0) {
 		$resultItem = array(
 			"label" => $name,
 			"y" => (int)$times,
+			"albumID" => $albumID
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}

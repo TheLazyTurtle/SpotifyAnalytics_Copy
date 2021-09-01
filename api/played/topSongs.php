@@ -18,7 +18,7 @@ $played = new Played($db);
 $song = new Song($db);
 
 // Get posted data
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
 $maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
 $artist = isset($_POST["artist"]) && !empty($_POST["artist"]) ? $_POST["artist"] : "";
@@ -41,6 +41,7 @@ if ($num > 0) {
 			"label" => $songName,
 			"y" => (int)$times,
 			"img" => $song->getImage($songID),
+			"albumID" => $albumID
 		);
 		array_push($resultsArr["records"], $resultItem);
 	}

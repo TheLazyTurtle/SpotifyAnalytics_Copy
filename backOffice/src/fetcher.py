@@ -60,6 +60,7 @@ class Fetcher():
         try:
             for song in data["items"]:
                 songData = self.extractSong(song)
+                album = self.extractAlbum(song)
 
                 artists = []
                 for artist in song["track"]["artists"]:
@@ -79,6 +80,9 @@ class Fetcher():
                     "length": songData["length"],
                     "preview": songData["preview"],
                     "playedAt": playedAt,
+                    "explicit": songData["explicit"],
+                    "trackNumber": songData["trackNumber"],
+                    "album": album,
                     "artists": artists
                 }
 
@@ -101,13 +105,15 @@ class Fetcher():
         name = songInfo["name"]
         img = songInfo["album"]["images"][0]["url"]
         length = songInfo["duration_ms"]
+        explicit = songInfo["explicit"]
+        trackNumber = songInfo["track_number"]
 
         # Try to get song preview url
         # Needs to be in try catch because not every song has a preview
-        try:
+        if not songInfo["preview_url"] == None:
             preview = songInfo["preview_url"]
-        except Exception:
-            preview = None
+        else:
+            preview = "NULL"
 
         return {
             'songID': songID,
@@ -116,10 +122,39 @@ class Fetcher():
             'img': img,
             'length': length,
             'preview': preview,
-            'playedAt': playedAt
+            'playedAt': playedAt,
+            'explicit': explicit,
+            'trackNumber': trackNumber
         }
 
-    # Get the artists from the song object provided by spotify
+    # Get the album data from the object provided by spotify
+    def extractAlbum(self, song):
+        album = song['track']['album']
+
+        albumID = album["id"]
+        name = album["name"]
+        releaseDate = album["release_date"]
+        url = album["external_urls"]["spotify"]
+        img = album["images"][0]["url"]
+        albumType = album['album_type']
+
+        # Primary artist is only needed when albumType = album, because when it's a single all artist are primary
+        if albumType == 'album':
+            primaryArtist = song["track"]["album"]["artists"][0]["id"]
+        else:
+            primaryArtist = "NULL"
+
+        return {
+            "albumID": albumID,
+            "name": name,
+            "releaseDate": releaseDate,
+            "url": url,
+            "img": img,
+            "albumType": albumType,
+            "primaryArtist": primaryArtist
+        }
+
+        # Get the artists from the song object provided by spotify
     def extractArtist(self, artist):
         artistID = artist["id"]
         name = artist["name"]
@@ -163,6 +198,31 @@ class Fetcher():
             return artist["images"][0]["url"]
         except Exception as e:
             return "http://www.techspot.com/images2/downloads/topdownload/2016/12/spotify-icon-18.png"
+
+    def getAlbumSongs(self, albumID, albumImg):
+        self.token = self.getToken()
+        albumRaw = self.token.album_tracks(albumID, limit=50)
+        songs = []
+
+        for song in albumRaw["items"]:
+            artists = []
+            for artist in song["artists"]:
+                artists.append(self.extractArtist(artist))
+
+            songObject = {
+                "songID": song["id"],
+                "name": song["name"],
+                "length": song["duration_ms"],
+                "url": song["external_urls"]["spotify"],
+                "img": albumImg,
+                "preview": song["preview_url"],
+                "explicit": song["explicit"],
+                "album": {"albumID": albumID},
+                "trackNumber": song["track_number"],
+                "artists": artists
+            }
+            songs.append(songObject)
+        return songs
 
     def run(self, amount):
         return self.createSongObject(self.getResult(amount))

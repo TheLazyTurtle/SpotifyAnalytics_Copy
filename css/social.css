@@ -1,0 +1,333 @@
+/* User/artist info */
+.user-info, .artist-info {
+	max-width: 1200px;
+	width: 1200px;
+	height: 200px;
+	margin: auto;
+}
+
+.user-info-img-wrapper, .artist-info-img-wrapper {
+	width: 20%;
+	display: inline-block;
+}
+
+.user-info-text-wrapper, .artist-info-text-wrapper {
+	width: 30%;
+	display: inline-block;
+}
+
+.user-info-img, .artist-info-img {
+	margin-top: 1vw;
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+}
+
+.user-info-text, .artist-info-text {
+	color: white;
+}
+
+/* follow button */
+.btn-following {
+	border: 2px #1DB954 solid;
+	background-color: rgb(70, 70, 70);
+}
+
+/* Artist top songs */
+.top-songs-wrapper {
+	text-align: center;
+}
+
+.top-songs-wrapper {
+	width: 1200px;
+	margin: auto;
+	color: white
+}
+
+th {
+	width: 25%;
+}
+
+.top-songs {
+	width: 100%;
+	margin: auto;
+}
+
+.top-song-img {
+	display: inline-block;
+	width: 80px;
+}
+
+.top-song-title {
+	display: inline-block;
+}
+
+.title a {
+	color: white;
+}
+
+.top-song-amount {
+	display: inline-block;
+}
+
+.top-song-hidden {
+	display: none;
+}
+
+.top-song-display {
+	display: table-footer-group;
+}
+
+/* Selector items */
+.selector-wrapper {
+	width: 1000px;
+	height: 50px;
+	margin: auto;
+	margin-top: -20px;
+	text-align: center;
+}
+
+.selector-item {
+	width: 50px;
+	display: inline;
+}
+
+.selector {
+	margin-right: 25px;
+}
+
+/* Songs and albums */
+.albums-wrapper {
+	width: 90vw;
+	margin: 2vw auto 0 auto;
+}
+
+.album-wrapper {
+	margin: 0 20vw 2vw 20vw;
+	background-color: rgb(45, 45, 45);
+	border-radius: 8px;
+}
+
+.album-info-img-wrapper {
+	width: 150px;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 1vw;
+}
+
+.album-info-img {
+	width: 150px;
+}
+
+.album-info-text-wrapper {
+	display: inline-block;
+	margin: 0 1vw;
+}
+
+.album-info-title {
+	color: white;
+}
+
+.album-song-img {
+	width: 80px;
+}
+
+.album-song-wrapper, .album-info-wrapper {
+	margin-left: 1vw;
+	padding-bottom: 0.5vw;
+}
+
+.album-song-index-wrapper {
+	color: white;
+	width: 1vw;
+	display: inline-block;
+}
+
+.album-song-img-wrapper {
+	display: inline-block;
+	width: 5vw;
+}
+
+.album-song-text {
+	display: inline-block;
+	width: 25vw;
+}
+
+.album-song-artist {
+	display: inline-block;
+	padding-right: 5px;
+}
+
+.album-song-title {
+	color: white !important;
+}
+
+.album-song-preview-wrapper {
+	display: inline-block;
+	width: 15vw;
+}
+
+/* Album expander / contractor */
+.expander-wrapper {
+	width: 100%;
+}
+
+.expander-wrapper:hover {
+	background-color: rgb(50, 50, 50);
+	border-radius: 0 0 8px 8px;
+}
+
+.expander {
+	text-align: center;
+}
+
+.open {
+	display: block;
+}
+
+.closed {
+	display: none;
+}
+
+.fa-sort-up, .fa-sort-down {
+	margin: 0 24vw 0 24vw;
+	font-size: 30px;
+}
+
+
+/* Profile page */
+.user-info-text {
+	display: inline-block;
+}
+
+.followers-wrapper {
+	color: white;
+}
+
+.followers, .following {
+	display: inline-block;
+	margin-right: 1vw;
+	font-weight: normal;
+}
+
+.fa-cog {
+	color: white;
+	display: inline-block;
+	font-size: 20px;
+	margin-left: 1vw;
+}
+
+/* Settings */
+.user-info-img-uploader {
+	display: none;
+}
+
+@media only screen and (max-width: 460px) {
+	.divider {
+		margin: 25vw 0 10vw 0;
+	}
+
+	.album-divider {
+		margin: 5vw 0;
+	}
+
+	.user-info-text-wrapper, .artist-info-text-wrapper {
+		display: block;
+	}
+
+	.user-info-text {
+		margin: 5vw 0 0 0;
+	}
+
+	.selector-wrapper {
+		width: 100vw;
+	}
+
+	/* mobile artist page */
+	.artist-info, .user-info {
+		width: 100vw;
+		height: 360px;
+	}
+
+	.container {
+		top: 0;
+		left: 0;
+		position: absolute;
+	}
+
+	.artist-info-img-wrapper, .user-info-img-wrapper {
+		width: 100vw;
+	}
+
+	.artist-info-img, .user-info-img {
+		width: 100%;
+		height: 300px;
+		object-fit: cover;
+	}
+
+	.artist-info-text-wrapper, .user-info-text-wrapper {
+		width: 100vw;
+		margin: -1.5% 2%;
+	}	
+
+	.top-song-header-preview {
+		display: none;
+	}
+	.preview {
+		display: none;
+	}
+
+	.top-songs-wrapper {
+		width: 100vw;
+		margin: 0;
+	}
+
+	/* Album and songs*/
+	.albums-wrapper {
+		margin: 0;
+	}
+
+	.album-wrapper {
+		width: 100vw;
+		margin: 10vw 0 0 0;
+		border-radius: 20px;
+	}
+
+	.album-info-img-wrapper {
+		width: 100vw;
+		height: 50vw;
+	}
+
+	.album-info-img {
+		width: 100%;
+		height: 200px;
+		position: absolute;
+		left: 0;
+		object-fit: cover;
+		border-radius: 20px 20px 0 0;
+	}
+
+	.album-song-preview-wrapper, .album-song-index-wrapper {
+		display: none;
+	}
+
+	.album-song-text {
+		display: block;
+	}
+
+	.album-song-img {
+		padding-left: 1vw;
+	}
+
+	.album-song-img-wrapper {
+		display: inline-block;
+		width: 25vw;
+		height: 25vw;
+	}
+
+	.album-song-text {
+		display: inline-block;
+		width: 74vw;
+		height: 25vw;
+	}
+}

@@ -1,4 +1,4 @@
--- Use stuff
+-- User stuff
 CREATE TABLE IF NOT EXISTS user (
     userID VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL,
@@ -14,12 +14,45 @@ CREATE TABLE IF NOT EXISTS user (
     PRIMARY KEY (userID)
 );
 
+CREATE TABLE IF NOT EXISTS followers (
+	follower VARCHAR(45) NOT NULL,
+	following VARCHAR(45) NOT NULL,
+	creationDate DATETIME NOT NULL DEFAULT current_timestamp(),
+	PRIMARY KEY(follower, following)
+);
+
 CREATE TABLE IF NOT EXISTS spotifyData(
     userID varchar(45) NOT NULL,
     authToken VARCHAR(255) NOT NULL,
     refreshToken VARCHAR(255) NOT NULL,
     ExpireDate INT NULL NOT NULL,
     PRIMARY KEY (userID)
+);
+
+-- Memories stuff
+CREATE TABLE IF NOT EXISTS post( 
+	postID INT NOT NULL,
+	userID varchar(45) NOT NULL,
+	description varchar(255) NOT NULL,
+	datePosted datetime DEFAULT current_timestamp(),
+	img varchar(255) NOT NULL,
+
+	PRIMARY KEY (postID)
+);
+
+CREATE TABLE IF NOT EXISTS likes (
+	postID INT NOT NULL,
+	userID varchar(45) NOT NULL,
+	dateLiked datetime DEFAULT current_timestamp(),
+
+	PRIMARY KEY (postID, userID)
+);
+
+CREATE TABLE IF NOT EXISTS post_has_song (
+	postID INT NOT NULL,
+	songID varchar(23),
+
+	PRIMARY KEY (postID, songID)
 );
 
 -- Graph Stuff
@@ -52,6 +85,7 @@ CREATE TABLE IF NOT EXISTS inputfield (
     PRIMARY KEY (graphID, inputFieldID, name)
 );
 
+-- Data storage
 CREATE TABLE IF NOT EXISTS artist (
 	artistID varchar(23) NOT NULL,
 	name varchar(45) NOT NULL,
@@ -82,4 +116,14 @@ CREATE TABLE IF NOT EXISTS song (
 	img varchar(255) NOT NULL,
 	preview varchar(255) NULL,
 	primary key(songID)
+);
+
+CREATE TABLE IF NOT EXISTS album (
+	albumID varchar(23) NOT NULL,
+	name varchar(255) NOT NULL,
+	releaseDate datetime NOT NULL,
+	primaryArtistID varchar(23) NOT NULL,
+	url varchar(255) NOT NULL,
+	img varchar(255) NOT NULL,
+	primary key (albumID)
 );

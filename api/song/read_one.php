@@ -8,13 +8,15 @@ header("Content-Type: application/json");
 // Include objects
 include_once '../config/database.php';
 include_once '../objects/songs.php';
+include "../objects/artists.php";
 
 // Make db connection
 $database = new Database();
 $db = $database->getConnection();
-
-// Make new song object and get the song based on the songID
 $song = new Song($db);
+$artist = new Artist($db);
+
+// Get posted data
 $song->id = isset($_POST['songID']) ? $_POST["songID"] : die();
 
 // fetch that one song
@@ -28,7 +30,8 @@ if ($song->name != null) {
 		"length" => $song->length,
 		"url" => $song->url,
 		"img" => $song->img,
-		"preview" => $song->preview
+		"preview" => $song->preview,
+		"artists" => $artist->searchBySongID($song->id)
 	);
 
 	// Set response code to ok

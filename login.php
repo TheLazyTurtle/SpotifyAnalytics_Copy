@@ -39,6 +39,7 @@ require 'header.php';
 					success: function(result) {
 						// Store jwt to cookie
 						setCookie("jwt", result.jwt, 1);
+						setCookie("username", login_data.username, 1)
 
 						// Go to home page
 						window.location.href = "/index.php";

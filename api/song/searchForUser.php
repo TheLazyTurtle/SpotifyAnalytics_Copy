@@ -26,27 +26,27 @@ $limit = isset($_POST["limit"]) ? $_POST["limit"] : 10;
 $stmt = $song->searchForUser($userID, $keyword, $limit);
 
 foreach ($stmt as $row) {
-    $songItem = array (
-	"songID" => $row["songID"],
-	"name" => $$row["name"],
-	"length" => $row["length"],
-	"url" => $row["url"],
-	"img" => $row["img"],
-	"dateAdded" => $row["dateAdded"]->toDateTime()->format("Y-m-d H:i:s"),
-	"addedBy" => $row["addedBy"],
-	"preview" => $row["preview"]
-    );
-    array_push($songsArr["records"], $songItem);
+	$songItem = array(
+		"songID" => $row["songID"],
+		"name" => $$row["name"],
+		"length" => $row["length"],
+		"url" => $row["url"],
+		"img" => $row["img"],
+		"dateAdded" => $row["dateAdded"]->toDateTime()->format("Y-m-d H:i:s"),
+		"addedBy" => $row["addedBy"],
+		"preview" => $row["preview"]
+	);
+	array_push($songsArr["records"], $songItem);
 }
 
 if (count($songsArr["records"]) > 0) {
-    // Set response to ok
-    http_response_code(200);
+	// Set response to ok
+	http_response_code(200);
 
-    echo json_encode($songsArr);
+	echo json_encode($songsArr);
 } else {
-    // Set response to bad request
-    http_response_code(400);
+	// Set response to bad request
+	http_response_code(400);
 
-    echo json_encode(array("message" => "No songs found"));
+	echo json_encode(array("message" => "No songs found"));
 }

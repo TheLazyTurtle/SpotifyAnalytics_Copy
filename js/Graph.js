@@ -23,6 +23,12 @@ function getGraphData(
         filterSettings: filterSettings,
         inputFields: inputFields,
         type: type,
+        color: null,
+    }
+
+    // TODO: Find a better way to do this.
+    if (containerID == "played_Per_Day") {
+        graphData.color = "#1DB954"
     }
 
     // If we make the graph with input fields than make the amount of input fields we have defined here with the names given in the object of input fields
@@ -35,14 +41,12 @@ function getGraphData(
     // If the filter setting has a song in it convert the song and artist name to a songID to show the correct data
     if (filterSettings.hasOwnProperty("song") && filterSettings.song != "") {
         data = filterSettings.song.split(" - ")
-        console.log(data)
         $.ajax({
             url: "/api/song/searchByArtist.php",
             type: "POST",
             data: { song: data[0], artist: data[1] },
             success: function (result) {
                 filterSettings.song = result[0]
-                console.table(result)
 
                 $.ajax({
                     url: graphData.api,
@@ -101,6 +105,10 @@ function makeNewGraph(data, graphData) {
         },
         data: [
             {
+                click: function (data) {
+                    goToPage(data)
+                },
+                color: graphData.color,
                 type: graphData.type,
                 xValueType: graphData.xValueType,
                 indexLabel: "{y}",
@@ -113,6 +121,23 @@ function makeNewGraph(data, graphData) {
     graphs[graphData.containerID].render()
     readInputFields(graphData)
     getButtonPressed(graphData)
+}
+
+// This will send you to the artist or song page on which you clicked
+function goToPage(data) {
+    let graphTitle = data.chart.options.title.text
+
+    if (graphTitle.includes("Song")) {
+        let albumID = data.dataPoint.albumID
+        let songName = data.dataPoint.label
+        console.log(data)
+
+        location.href = `/album.php?album=${albumID}&song=${songName}`
+    } else if (graphTitle.includes("Artist")) {
+        let title = data.dataPoint.label
+
+        location.href = `/artist.php?artist=${title}`
+    }
 }
 
 // Update the data of the graph based on the timeframe change

@@ -26,7 +26,10 @@ if (
 	!empty($data["length"]) &&
 	!empty($data["url"]) &&
 	!empty($data["img"]) &&
-	!empty($data["preview"])
+	!empty($data["preview"]) &&
+	!empty($data["albumID"]) &&
+	!empty($data["trackNumber"]) &&
+	!empty($data["explicit"])
 ) {
 	$song->id = $data["songID"];
 	$song->name = $data["name"];
@@ -34,8 +37,11 @@ if (
 	$song->url = $data["url"];
 	$song->img = $data["img"];
 	$song->preview = $data["preview"];
+	$song->albumID = $data["albumID"];
+	$song->trackNumber = $data["trackNumber"];
+	$song->explicit = $data["explicit"];
 
-	if ($song->createOne()) {
+	if ($stmt = $song->createOne()) {
 		// Set response code created
 		http_response_code(201);
 

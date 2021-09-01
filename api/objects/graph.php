@@ -17,13 +17,13 @@ class Graph
 	public function __construct($db)
 	{
 		$this->conn = $db;
-		checkCookie();
+		//checkCookie();
 	}
 
 	// Get all graphs
 	function read()
 	{
-		$query = "SELECT * FROM graph";
+		$query = "SELECT * FROM graph ORDER BY graphID";
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 

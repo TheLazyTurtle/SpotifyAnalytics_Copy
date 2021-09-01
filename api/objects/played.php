@@ -53,9 +53,10 @@ class Played
 	// This will get all songs played by a user
 	function allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate)
 	{
-		$query = "SELECT DISTINCT p.songName as name, count(p.songID) as times
+		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as name, count(p.songID) as times
 			FROM played p
 			INNER JOIN artist_has_song sfa ON p.songID = sfa.songID
+			INNER JOIN song s ON sfa.songID = s.songID
 			RIGHT JOIN artist a ON sfa.artistID = a.artistID
 			WHERE p.playedBy LIKE ?
 			AND datePlayed BETWEEN ? AND ?
@@ -84,9 +85,10 @@ class Played
 	// This will get the top songs of a user
 	function topSongs($userID, $artist, $minDate, $maxDate, $amount)
 	{
-		$query = "SELECT DISTINCT p.songName as songName, count(p.songID) as times, p.songID
+		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as songName, count(p.songID) as times, p.songID
 			FROM played p
 			INNER JOIN artist_has_song ahs ON ahs.songID = p.songID 
+			INNER JOIN song s ON ahs.songID = s.songID
 			RIGHT JOIN artist a on ahs.artistID = a.artistID
 			WHERE a.name LIKE ?
 			AND p.playedBy LIKE ?
@@ -252,5 +254,25 @@ class Played
 		$stmt->execute();
 
 		return $stmt;
+	}
+
+	// This will get how often a person has listend to a song
+	function songCount($userID, $songID)
+	{
+		$query = "SELECT count(*) as count FROM played WHERE playedBy = ? AND songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$userID = htmlspecialchars(strip_tags($userID));
+		$songID = htmlspecialchars(strip_tags($songID));
+
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $songID);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return $count;
+		}
 	}
 }

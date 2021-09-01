@@ -1,5 +1,5 @@
 <?php
-require '../config/check_cookie.php';
+require_once '../config/check_cookie.php';
 
 class Artist
 {
@@ -32,17 +32,27 @@ class Artist
 	// This will only read one artist from the db
 	function readOne()
 	{
-		$collection = $this->conn->artist;
+		$query = "SELECT * FROM artist WHERE ";
 
-		$query = ['artistID' => $this->id];
-		$cursor = $collection->find($query);
+		if (isset($this->id)) {
+			$query = $query . "artistID LIKE ? LIMIT 1";
 
-		foreach ($cursor as $row) {
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(1, $this->id);
+		} else if (isset($this->name)) {
+			$query = $query . "name LIKE ? LIMIT 1";
+
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(1, $this->name);
+		}
+
+		$stmt->execute();
+
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$this->id = $row["artistID"];
 			$this->name = $row["name"];
 			$this->url = $row["url"];
-			$this->dateAdded = $row["dateAdded"];
-			$this->addedBy = $row["addedBy"];
 			$this->img = $row["img"];
 		}
 	}
@@ -67,6 +77,35 @@ class Artist
 		$stmt->bindParam(4, $this->img);
 
 		return $stmt->execute();
+	}
+
+	// This will search all artists using a songID
+	function searchBySongID($songID)
+	{
+		$query = "SELECT a.* 
+			FROM artist a 
+			INNER JOIN artist_has_song ahs ON a.artistID = ahs.artistID 
+			WHERE ahs.songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$songID = htmlspecialchars(strip_tags($songID));
+		$stmt->bindParam(1, $songID);
+		$stmt->execute();
+
+		$artistArr = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$artistItem = array(
+				"artistID" => $artistID,
+				"url" => $url,
+				"img" => $img,
+				"name" => $name
+			);
+			array_push($artistArr, $artistItem);
+		}
+
+		return $artistArr;
 	}
 
 	// Get artist based on keywords
@@ -111,7 +150,7 @@ class Artist
 	// Gets the top artist of a user
 	function topArtist($userID, $minDate, $maxDate, $amount)
 	{
-		$query = "SELECT a.name, COUNT(*) times, a.img 
+		$query = "SELECT a.name, COUNT(*) times, a.img
 			FROM played p
 			INNER JOIN artist_has_song ahs ON p.songID = ahs.songID
 			RIGHT JOIN artist a ON ahs.artistID = a.artistID
@@ -184,5 +223,85 @@ class Artist
 		}
 
 		return false;
+	}
+
+	// This will get the top song of an artist
+	function topSongs($artistID)
+	{
+		$query = "SELECT count(*) as count, s.songID as songID, s.preview as preview, s.img as img, s.name as title, s.url as url
+				FROM played p 
+				INNER JOIN song s ON p.songID = s.songID
+				INNER JOIN artist_has_song ahs ON p.songID = ahs.songID
+				INNER JOIN artist a ON ahs.artistID = a.artistID
+				WHERE a.artistID = ? AND ahs.artistID = ?
+				GROUP BY p.songID 
+				ORDER BY count(*) DESC
+				LIMIT 10";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean input
+		$artistID = htmlspecialchars(strip_tags($artistID));
+
+		$stmt->bindParam(1, $artistID);
+		$stmt->bindParam(2, $artistID);
+		$stmt->execute();
+
+		return $stmt;
+	}
+
+	// This will get all the artists that are part of the album
+	function getAlbumArtists($albumID)
+	{
+		$query = "SELECT a.* FROM artist a
+		   	INNER JOIN artist_has_song ahs ON a.artistID = ahs.artistID
+			INNER JOIN song s ON s.songID = ahs.songID
+			WHERE s.albumID = ?
+			GROUP BY a.artistID";
+		$stmt = $this->conn->prepare($query);
+
+		$albumID = htmlspecialchars(strip_tags($albumID));
+
+		$stmt->bindParam(1, $albumID);
+		$stmt->execute();
+
+		$artistArr = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$artistItem = array(
+				"artistID" => $artistID,
+				"name" => $name,
+				"img" => $img,
+				"url" => $url,
+			);
+			array_push($artistArr, $artistItem);
+		}
+		return $artistArr;
+	}
+
+	// This will get all the artists that are part of a song
+	function getSongArtists($songID)
+	{
+		$query = "SELECT a.* FROM artist a INNER JOIN artist_has_song ahs ON a.artistID = ahs.artistID INNER JOIN song s ON s.songID = ahs.songID WHERE s.songID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$songID = htmlspecialchars(strip_tags($songID));
+		$stmt->bindParam(1, $songID);
+		$stmt->execute();
+
+		$artistArr = array();
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			$artistItem = array(
+				"artistID" => $artistID,
+				"name" => $name,
+				"url" => $url,
+				"img" => $img
+			);
+			array_push($artistArr, $artistItem);
+		}
+
+		return $artistArr;
 	}
 }
