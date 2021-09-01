@@ -31,8 +31,8 @@ if ($num > 0) {
 			"img" => $img,
 			"preview" => $preview,
 			"albumID" => $albumID,
-			"releaseDate" => $releaseDate,
-			"explicit" => $explicit
+			"explicit" => $explicit,
+			"trackNumber" => $trackNumber
 		);
 
 		array_push($songArr["records"], $songItem);

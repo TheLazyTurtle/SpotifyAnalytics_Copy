@@ -14,6 +14,7 @@ class Album
 	public $primaryArtistID;
 	public $url;
 	public $img;
+	public $type;
 
 
 	public function __construct($db)
@@ -81,7 +82,7 @@ class Album
 	// Add new album to database
 	function create()
 	{
-		$query = "INSERT INTO album (albumID, name, releaseDate, url, primaryArtistID, img) VALUES (?, ?, ?, ?, ?, ?)";
+		$query = "INSERT INTO album (albumID, name, releaseDate, url, primaryArtistID, img, type) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $this->conn->prepare($query);
 
 		$this->id = htmlspecialchars(strip_tags($this->id));
@@ -90,6 +91,7 @@ class Album
 		$this->releaseDate = htmlspecialchars(strip_tags($this->releaseDate));
 		$this->primaryArtistID = htmlspecialchars(strip_tags($this->primaryArtistID));
 		$this->img = htmlspecialchars(strip_tags($this->img));
+		$this->type = htmlspecialchars(strip_tags($this->type));
 
 		$stmt->bindParam(1, $this->id);
 		$stmt->bindParam(2, $this->name);
@@ -97,6 +99,7 @@ class Album
 		$stmt->bindParam(4, $this->url);
 		$stmt->bindParam(5, $this->primaryArtistID);
 		$stmt->bindParam(6, $this->img);
+		$stmt->bindParam(7, $this->type);
 
 		return $stmt->execute();
 	}
@@ -104,7 +107,7 @@ class Album
 	// Update the album
 	function update()
 	{
-		$query = "UPDATE album SET albumID = ?, name = ?, releaseDate = ?, primaryArtistID = ?, url = ?, img = ? WHERE albumID = ?";
+		$query = "UPDATE album SET albumID = ?, name = ?, releaseDate = ?, primaryArtistID = ?, url = ?, img = ?, type = ? WHERE albumID = ?";
 		$stmt = $this->conn->prepare($query);
 
 		$this->id = htmlspecialchars(strip_tags($this->id));
@@ -113,6 +116,7 @@ class Album
 		$this->primaryArtistID = htmlspecialchars(strip_tags($this->primaryArtistID));
 		$this->url = htmlspecialchars(strip_tags($this->url));
 		$this->img = htmlspecialchars(strip_tags($this->img));
+		$this->type = htmlspecialchars(strip_tags($this->type));
 
 		$stmt->bindParam(1, $this->id);
 		$stmt->bindParam(2, $this->name);
@@ -120,6 +124,7 @@ class Album
 		$stmt->bindParam(4, $this->primaryArtistID);
 		$stmt->bindParam(5, $this->url);
 		$stmt->bindParam(6, $this->img);
-		$stmt->bindParam(7, $this->albumID);
+		$stmt->bindParam(7, $this->type);
+		$stmt->bindParam(8, $this->albumID);
 	}
 }

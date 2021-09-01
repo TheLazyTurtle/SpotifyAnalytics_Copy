@@ -25,8 +25,8 @@ if (
 	!empty($data["url"]) &&
 	!empty($data["img"]) &&
 	!empty($data["preview"]) &&
-	!empty($data["album"]) &&
-	!empty($data["releaseDate"]) &&
+	!empty($data["albumID"]) &&
+	!empty($data["trackNumber"]) &&
 	!empty($data["explicit"])
 ) {
 	$song->id = $data["songID"];
@@ -35,8 +35,8 @@ if (
 	$song->url = $data["url"];
 	$song->img = $data["img"];
 	$song->preview = $data["preview"];
-	$song->album = $data["album"];
-	$song->releaseDate = $data["releaseDate"];
+	$song->albumID = $data["albumID"];
+	$song->trackNumber = $data["trackNumber"];
 	$song->explicit = $data["explicit"];
 
 	if ($song->update()) {

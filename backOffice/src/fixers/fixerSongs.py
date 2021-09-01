@@ -22,7 +22,7 @@ def getThingy(sp):
         num += 1
 
         if num % 50 == 0:
-            songs = sp.tracks(["7zutbVaWvikceF0vENlLML"])
+            songs = sp.tracks(songIDs)
 
             for song in songs["tracks"]:
                 try:
@@ -32,10 +32,10 @@ def getThingy(sp):
                         "length": song["duration_ms"],
                         "url": song["external_urls"]["spotify"],
                         "img": song["album"]["images"][0]["url"],
-                        "preview": song["preview_url"],
-                        "album": song["album"]["id"],
-                        "releaseDate": song["album"]["release_date"],
-                        "explicit": song["explicit"]
+                        "preview": str(song["preview_url"]),
+                        "albumID": song["album"]["id"],
+                        "trackNumber": song["track_number"],
+                        "explicit": str(song["explicit"])
                     }
                     updateThingy(songObject)
                 except Exception as e:
@@ -46,7 +46,11 @@ def getThingy(sp):
 def updateThingy(songObject):
     try:
         r = req.post(apiUrl+"song/update.php",
-                     data=songObject, auth=(beUser, bePass))
+                     data=songObject)
+        http_response = r.status_code
+
+        if http_response == 400:
+            print("Bad request:", songObject["name"])
     except Exception:
         print(songObject)
 
