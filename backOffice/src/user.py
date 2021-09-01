@@ -28,6 +28,7 @@ class User():
             except Exception as e:
                 printc("Failed to get songs for:", "red",
                        self.userID, "white", e, "white")
+                continue
 
             sleep(3600)
 
