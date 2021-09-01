@@ -36,6 +36,7 @@ class Inserter():
         else:
             printc("Failed to add song:", "red",
                    song["name"], "white", httpResponse, "white")
+            print(values)
 
     def insertArtist(self, song):
         for artist in song["artists"]:
@@ -117,7 +118,8 @@ class Inserter():
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added album:", "green", album["name"], "white")
+            printc("Added album:", "green",
+                   album["name"], "white")
 
             songs = fetcher.Fetcher(
                 self.userID).getAlbumSongs(values["albumID"], values["img"])

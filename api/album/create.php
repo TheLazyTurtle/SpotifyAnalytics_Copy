@@ -25,6 +25,7 @@ if (
 	!empty($data["name"]) &&
 	!empty($data["url"]) &&
 	!empty($data["img"]) &&
+	!empty($data["albumType"]) &&
 	!empty($data["primaryArtistID"]) &&
 	!empty($data["releaseDate"])
 ) {
@@ -32,10 +33,11 @@ if (
 	$album->name = $data["name"];
 	$album->url = $data["url"];
 	$album->img = $data["img"];
+	$album->type = $data["albumType"];
 	$album->primaryArtistID = $data["primaryArtistID"];
 	$album->releaseDate = $data["releaseDate"];
 
-	if ($album->create()) {
+	if ($stmt = $album->create()) {
 		// Set response to created
 		http_response_code(201);
 
