@@ -34,7 +34,7 @@ def makeAlbum(sp, albumID):
         "primaryArtistID": albumRaw["artists"][0]["id"],
         "url": albumRaw["external_urls"]["spotify"],
         "img": albumRaw["images"][0]["url"],
-        "type": albumRaw["album_type"]
+        "albumType": albumRaw["album_type"]
     }
 
     r = req.post(apiUrl + "album/create.php",
@@ -60,7 +60,7 @@ def addNewSongs(songsRaw, albumImg, albumID, releaseDate, sp):
             "preview": song['preview_url'],
             "albumID": albumID,
             "explicit": song['explicit'],
-            "albumNumber": song["track_number"]
+            "trackNumber": song["track_number"]
         }
 
         r = req.post(apiUrl + "song/create.php",
@@ -69,13 +69,13 @@ def addNewSongs(songsRaw, albumImg, albumID, releaseDate, sp):
         if resp == 201:
             print("Song:", songData["name"])
         else:
-            print("Song failed:", songData["name"])
+            pass
+            # print("Song failed:", songData["name"])
 
         addArtist(song, songData)
 
 
 def addArtist(song, songData):
-    global i
     for artist in song["artists"]:
         artistData = {
             "artistID": artist['id'],
@@ -94,7 +94,6 @@ def addArtist(song, songData):
 
 
 def linkArtist(artistData, songData):
-    global i
     linkArtistToSong = {
         "artistID": artistData["artistID"],
         "songID": songData["songID"]

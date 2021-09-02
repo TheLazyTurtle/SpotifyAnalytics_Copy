@@ -3,6 +3,7 @@ let userID = false
 
 $(document).ready(function () {
     getUserInfo()
+    followButton()
 })
 
 function getUsername() {

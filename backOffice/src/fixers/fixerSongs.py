@@ -51,6 +51,8 @@ def updateThingy(songObject):
 
         if http_response == 400:
             print("Bad request:", songObject["name"])
+        elif http_response == 201:
+            print("Updated:", songObject["name"])
     except Exception:
         print(songObject)
 

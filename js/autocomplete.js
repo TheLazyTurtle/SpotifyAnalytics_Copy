@@ -4,10 +4,16 @@ function autoComplete(graphData, inputFieldId, api) {
         // This makes gives the autocomplete the filterable settings with the tags given above
         $(inputFieldId).autocomplete({
             source: function (request, response) {
+                let data = { keyword: request.term, amount: 10 }
+
+                if (userID != false) {
+                    data.push({ userID: userID })
+                }
+
                 $.ajax({
                     type: "POST",
                     url: api,
-                    data: { keyword: request.term, amount: 10, userID: userID },
+                    data: data,
                     success: function (data) {
                         // If its a song do difficult route because we have to worry about IDs and not names
                         // because songs are more likely to have the same name

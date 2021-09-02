@@ -147,16 +147,26 @@ class Played
 	// Gets the played per day graph
 	function playedPerDay($userID, $songID, $minDate, $maxDate)
 	{
-		// TODO: Intergrate a timewindows feature where if the selected timeframe is day or yesterday (and mabye week)
-		// also group by hour so you don't just have a dot but can see the difference between hours of the day
+		// Calculate difference between minDate and maxDate in days
+		$origin = new DateTime($minDate);
+		$target = new DateTime($maxDate);
+		$interval = $origin->diff($target);
+		$days = (int)$interval->format("%R%a");
 
 		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 AS date, count(*) AS times 
 			FROM played p
 			WHERE songID LIKE ?
 			AND p.playedBy LIKE ?
-			AND p.datePlayed BETWEEN ? AND ?
-			GROUP BY DAY(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed)
-			ORDER BY date DESC";
+			AND p.datePlayed BETWEEN ? AND ?";
+
+		if ($days >= 1 && $days <= 31) {
+			$query = $query . "GROUP BY MINUTE(p.datePlayed)";
+		} else {
+			$query = $query . "GROUP BY DAY(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed)";
+		}
+
+		$query = $query . "ORDER BY date DESC";
+
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input

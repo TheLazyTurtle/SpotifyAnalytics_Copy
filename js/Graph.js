@@ -82,7 +82,7 @@ function makeNewGraph(data, graphData) {
     var mainDiv = "#" + graphData.containerID + "-main"
 
     // Make a button array
-    buttonArray(mainDiv, graphData.containerID)
+    buttonArray(mainDiv, graphData)
 
     // Make the div where the graph will be placed in
     var graphDiv = document.createElement("div")
@@ -120,7 +120,6 @@ function makeNewGraph(data, graphData) {
     })
     graphs[graphData.containerID].render()
     readInputFields(graphData)
-    getButtonPressed(graphData)
 }
 
 // This will send you to the artist or song page on which you clicked
@@ -160,7 +159,12 @@ function updateData(graphData) {
             graphs[graphData.containerID].render()
         },
         error: function () {
-            setError(graphData.containerID)
+            if (graphData.filterSettings["minPlayed"] > 0) {
+                graphData.filterSettings["minPlayed"] = 0
+                updateData(graphData)
+            } else {
+                setError(graphData.containerID)
+            }
         },
     })
 }

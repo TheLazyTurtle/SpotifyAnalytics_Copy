@@ -125,5 +125,6 @@ CREATE TABLE IF NOT EXISTS album (
 	primaryArtistID varchar(23) NOT NULL,
 	url varchar(255) NOT NULL,
 	img varchar(255) NOT NULL,
+	type varchar(255) NOT NULL,
 	primary key (albumID)
 );
