@@ -62,13 +62,13 @@ class Album
 		$query = "SELECT * FROM album WHERE ";
 
 		if (isset($this->name)) {
-			$query = $query . "name = ?";
+			$query = $query . "name = ? ORDER BY releaseDate DESC";
 			$stmt = $this->conn->prepare($query);
 
 			$this->name = htmlspecialchars(strip_tags($this->name));
 			$stmt->bindParam(1, $this->name);
 		} else if (isset($this->primaryArtistID)) {
-			$query = $query . "primaryArtistID = ?";
+			$query = $query . "primaryArtistID = ? ORDER BY releaseDate DESC";
 			$stmt = $this->conn->prepare($query);
 
 			$this->primaryArtistID = htmlspecialchars(strip_tags($this->primaryArtistID));

@@ -229,7 +229,7 @@ class Song
 	// This will get all the songs from an album
 	function getAlbumSongs($artist)
 	{
-		$query = "SELECT * FROM song WHERE albumID = ?";
+		$query = "SELECT * FROM song WHERE albumID = ? ORDER BY trackNumber";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
