@@ -1,5 +1,5 @@
 <?php
-require "header.php";
+require "src/header.php";
 ?>
 
 <link rel="stylesheet" type="text/css" href="/css/social.css">

@@ -20,12 +20,12 @@ $(document).ready(function () {
                 !document.URL.includes("user.php") &&
                 !document.URL.includes("artist.php")
             ) {
-                window.location.href = "/login.php"
+                window.location.href = "login.php"
             }
 
             // Change logout button to login button when you are not logged in
             $("#login-btn")[0].innerHTML = "Inloggen"
-            $("#login-btn")[0].onclick = "window.location.href='/login.php'"
+            $("#login-btn")[0].onclick = "window.location.href='login.php'"
 
             $("#follow").remove()
 

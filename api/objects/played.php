@@ -159,7 +159,7 @@ class Played
 			AND p.playedBy LIKE ?
 			AND p.datePlayed BETWEEN ? AND ?";
 
-		if ($days >= 1 && $days <= 31) {
+		if ($days >= 0 && $days <= 31) {
 			$query = $query . "GROUP BY MINUTE(p.datePlayed)";
 		} else {
 			$query = $query . "GROUP BY DAY(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed)";

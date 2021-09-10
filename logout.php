@@ -1,5 +1,5 @@
 <?php
-require "header.php";
+require "src/header.php";
 
 session_unset();
 session_destroy();

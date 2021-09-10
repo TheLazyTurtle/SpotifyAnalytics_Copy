@@ -1,4 +1,5 @@
-<?php require "header.php";
+<?php
+require "src/header.php";
 require 'vendor/autoload.php';
 
 // Get spotifyID and email
