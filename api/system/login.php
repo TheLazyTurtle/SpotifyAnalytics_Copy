@@ -51,8 +51,7 @@ if ($username_exists && password_verify($_POST["password"], $user->password)) {
 	$jwt = JWT::encode($token, $key);
 	echo json_encode(
 		array(
-			"message" => "successful login",
-			"jwt" => $jwt
+			array("message" => "successful login", "jwt" => $jwt)
 		)
 	);
 } else {

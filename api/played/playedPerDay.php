@@ -29,7 +29,6 @@ $num = $stmt->rowCount();
 if ($num > 0) {
 	// This will make results array
 	$resultsArr = array();
-	$resultsArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -38,7 +37,7 @@ if ($num > 0) {
 			"x" => (int)$date,
 			"y" => (int)$times,
 		);
-		array_push($resultsArr["records"], $resultItem);
+		array_push($resultsArr, $resultItem);
 	}
 
 	// Set response to ok

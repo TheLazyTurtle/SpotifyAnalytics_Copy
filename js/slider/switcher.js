@@ -20,24 +20,24 @@ sliderItems["timelistend"] = {
     api: "/api/played/timeListend.php",
     id: "#timeListend",
     text: `Time listend {timeFrame}: {amount}`,
-    dataType1: "totalTime",
+    dataType1: "y",
 }
 
 sliderItems["amountSongs"] = {
     api: "/api/played/amountSongs.php",
     id: "#amountSongs",
     text: `Total songs listend {timeFrame}: {amount}`,
-    dataType1: "times",
+    dataType1: "y",
 }
 
 sliderItems["amountNewSongs"] = {
     api: "/api/played/amountNewSongs.php",
     id: "#amountNewSongs",
     text: `New songs {timeFrame}: {amount}`,
-    dataType1: "new",
+    dataType1: "y",
 }
 
-// On document load load the slider in
+// On document load, load the slider in
 $(document).ready(function () {
     // Makes sure to load default info on page load
     var dates = convertTime("today")
@@ -96,11 +96,13 @@ function fetchSliderData(dates, sliderInfo, timeFrame, type) {
         data: { minDate: minDate, maxDate: maxDate, amount: 1 },
         success: function (data) {
             // If the result contains time in ms convert it to usable date (hh:mm:ss)
-            data["records"][0].totalTime = msToTime(
-                data["records"][0].totalTime
-            )
+			if ("totalTime" in data[0]) {
+				data[0].y = msToTime(
+					data[0].y
+				)
+			}
 
-            setSliderItem(id, data["records"][0], timeFrame, type, sliderInfo)
+            setSliderItem(id, data[0], timeFrame, type, sliderInfo)
         },
         error: {
             function() {

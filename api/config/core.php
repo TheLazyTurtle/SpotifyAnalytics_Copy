@@ -10,7 +10,7 @@ date_default_timezone_set("Europe/Amsterdam");
 $key = "superFancyKey";
 $issued_at = time();
 $expiration_time = $issued_at + (24 * 60 * 60 * 1000); // valid for one hour
-$issuer = "http://localhost/";
+$issuer = "http://192.168.2.198/";
 $minDate_def = "2020-01-01";
 $maxDate_def = "2099-01-01";
 $maxDate_def = new DateTime();

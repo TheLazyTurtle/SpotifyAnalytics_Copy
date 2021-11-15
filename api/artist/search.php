@@ -23,7 +23,6 @@ $num = $stmt->rowCount();
 if ($num > 0) {
 	// Result arrays
 	$artistArr = array();
-	$artistArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -34,7 +33,7 @@ if ($num > 0) {
 			"url" => $url,
 			"img" => $img,
 		);
-		array_push($artistArr["records"], $artistItem);
+		array_push($artistArr, $artistItem);
 	}
 
 	// Set ok response

@@ -35,7 +35,6 @@ $num = $stmt->rowcount();
 if ($num > 0) {
 	// Make result array
 	$albumArr = array();
-	$albumArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -50,7 +49,7 @@ if ($num > 0) {
 			"albumArtists" => $artist->getAlbumArtists($albumID),
 			"songs" => $song->getAlbumSongs($artist)
 		);
-		array_push($albumArr["records"], $albumItem);
+		array_push($albumArr, $albumItem);
 	}
 
 	// Set response to ok

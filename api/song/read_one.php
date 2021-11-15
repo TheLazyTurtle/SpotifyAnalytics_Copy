@@ -21,10 +21,11 @@ $song->id = isset($_POST['songID']) ? $_POST["songID"] : die();
 
 // fetch that one song
 $song->readOne();
+$songArr = array();
 
 // Found data
 if ($song->name != null) {
-	$songArr = array(
+	$songItem = array(
 		"songID" => $song->id,
 		"name" => $song->name,
 		"length" => $song->length,
@@ -34,6 +35,7 @@ if ($song->name != null) {
 		"artists" => $artist->searchBySongID($song->id)
 	);
 
+	array_push($songArr, $songItem);
 	// Set response code to ok
 	http_response_code(200);
 

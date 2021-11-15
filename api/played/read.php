@@ -23,18 +23,17 @@ $num = $stmt->rowCount();
 // If result
 if ($num > 0) {
     $playedArr = array();
-    $playedArr["records"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
+		extract($row);
 
-	$playedItem = array(
-	    "songID" => $songID,
-	    "dateAdded" => $dateAdded,
-	    "addedBy" => $addedBy
-	);
+		$playedItem = array(
+			"songID" => $songID,
+			"dateAdded" => $dateAdded,
+			"addedBy" => $addedBy
+		);
 
-	array_push($playedArr["records"], $playedItem);
+		array_push($playedArr, $playedItem);
     }
     // Set ok response
     http_response_code(200);

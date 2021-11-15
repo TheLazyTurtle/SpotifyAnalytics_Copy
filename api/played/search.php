@@ -27,7 +27,6 @@ $num = $stmt->rowCount();
 // If results
 if ($num > 0) {
 	$playedArr = array();
-	$playedArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -37,7 +36,7 @@ if ($num > 0) {
 			"datePlayed" => $datePlayed,
 			"playedBy" => $playedBy
 		);
-		array_push($playedArr["records"], $playedItem);
+		array_push($playedArr, $playedItem);
 	}
 
 	// Set response to ok

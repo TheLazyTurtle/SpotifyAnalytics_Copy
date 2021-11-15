@@ -7,7 +7,7 @@ function getAlbumInfo() {
         type: "POST",
         data: { albumID: albumID },
         success: function (result) {
-            $(".albums-wrapper").append(makeAlbum(result["records"][0], "open"))
+            $(".albums-wrapper").append(makeAlbum(result[0], "open"))
 
             let selectedSong = document.getElementById(songName)
             selectedSong.scrollIntoView()
@@ -25,9 +25,9 @@ function showArtistAlbums(artistID) {
         type: "POST",
         data: { artistID: artistID },
         success: function (result) {
-            for (var i = 0; i < result["records"].length; i++) {
+            for (var i = 0; i < result.length; i++) {
                 $(".albums-wrapper").append(
-                    makeAlbum(result["records"][i], "closed")
+                    makeAlbum(result[i], "closed")
                 )
             }
         },

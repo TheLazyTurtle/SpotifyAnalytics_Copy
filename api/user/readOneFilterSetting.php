@@ -26,7 +26,6 @@ $num = $stmt->rowCount();
 // If results
 if ($num > 0) {
 	$filterSettingsArr = array();
-	$filterSettingsArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -37,7 +36,7 @@ if ($num > 0) {
 			"name" => $name,
 			"value" => $value
 		);
-		array_push($filterSettingsArr["records"], $filterSetting);
+		array_push($filterSettingsArr, $filterSetting);
 	}
 
 	// Set response to ok

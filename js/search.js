@@ -18,7 +18,6 @@ $(".search-box").on("input", function () {
                 $(".search-results").empty()
 
                 // Add the new results
-                data = data["records"]
                 for (var i = 0; i < data.length; i++) {
                     var element = makeElement(data[i])
                     $(".search-results").append(element)

@@ -19,7 +19,6 @@ $num = $stmt->rowcount();
 if ($num > 0) {
 	// Make results array
 	$songArr = array();
-	$songArr["records"] = array();
 
 	while ($row = $stmt->FETCH(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -35,7 +34,7 @@ if ($num > 0) {
 			"trackNumber" => $trackNumber
 		);
 
-		array_push($songArr["records"], $songItem);
+		array_push($songArr, $songItem);
 	}
 
 	// Set response to ok

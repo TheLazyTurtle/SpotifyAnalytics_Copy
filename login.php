@@ -38,13 +38,14 @@ require 'src/header.php';
 					data: login_data,
 					success: function(result) {
 						// Store jwt to cookie
-						setCookie("jwt", result.jwt, 1);
+						setCookie("jwt", result[0].jwt, 1);
 						setCookie("username", login_data.username, 1)
 
 						// Go to home page
 						window.location.href = "/index.php";
 					},
 					error: function(xhr, resp, text) {
+						console.error(xhr)
 						console.error(resp + " " + text);
 						// TODO: Do something to disapoint the user
 					}

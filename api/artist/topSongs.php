@@ -29,7 +29,6 @@ $num = $stmt->rowCount();
 if ($num > 0) {
 	// Make result arrays
 	$resultsArr = array();
-	$resultsArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -41,7 +40,7 @@ if ($num > 0) {
 			"url" => $url,
 			"userCount" => $played->songCount($userID, $songID)
 		);
-		array_push($resultsArr["records"], $resultItem);
+		array_push($resultsArr, $resultItem);
 	}
 
 	// Set response to ok

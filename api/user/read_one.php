@@ -14,7 +14,7 @@ require '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
-$user->username = isset($_POST["username"]) ? $_POST["username"] : die();
+$user->username = isset($_GET["username"]) ? $_GET["username"] : die();
 
 // Query user
 $stmt = $user->read_one();

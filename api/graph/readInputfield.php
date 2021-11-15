@@ -22,7 +22,6 @@ $num = $stmt->rowCount();
 // If result
 if ($num > 0) {
     $inputfields = array();
-    $inputfields["records"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 	extract($row);
@@ -35,7 +34,7 @@ if ($num > 0) {
 	    "type" => $type
 	);
 
-	array_push($inputfields["records"], $inputfield);
+	array_push($inputfields, $inputfield);
     }
 
     // Set response to ok

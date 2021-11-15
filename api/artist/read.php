@@ -14,7 +14,6 @@ $artist = new Artist($db);
 
 // Result arrays
 $artistArr = array();
-$artistArr["records"] = array();
 
 // Query artist
 $stmt = $artist->read();
@@ -30,11 +29,11 @@ foreach ($stmt as $row) {
 	"img" =>$row["img"] 
     );
 
-    array_push($artistArr["records"], $artistItem);
+    array_push($artistArr, $artistItem);
 }
 
 // If there are results
-if (count($artistArr["records"]) > 0) {
+if (count($artistArr) > 0) {
     // Set ok
     http_response_code(200);
 

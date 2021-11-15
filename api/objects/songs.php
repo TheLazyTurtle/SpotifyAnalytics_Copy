@@ -27,7 +27,7 @@ class Song
 	// Get all songs from the db
 	function read()
 	{
-		$query = "SELECT * FROM song";
+		$query = "SELECT * FROM song LIMIT 10";
 		$stmt = $this->conn->prepare($query);
 		$stmt->execute();
 

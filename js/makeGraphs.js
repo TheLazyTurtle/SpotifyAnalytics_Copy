@@ -9,8 +9,8 @@ function getGraphs() {
         url: "/api/graph/read.php",
         type: "POST",
         success: function (result) {
-            for (var i = 0; i < result["records"].length; i++) {
-                let res = result["records"][i]
+            for (var i = 0; i < result.length; i++) {
+                let res = result[i]
                 let containerID = res["containerID"]
                 let title = res["title"]
                 let titleX = res["titleX"]
@@ -58,8 +58,8 @@ function getFilterSettings(
             if (userID) {
                 filterSettings["userID"] = userID
             } else {
-                for (var i = 0; i < results["records"].length; i++) {
-                    var res = results["records"][i]
+                for (var i = 0; i < results.length; i++) {
+                    var res = results[i]
 
                     filterSettings[res["name"]] = res["value"]
                 }
@@ -116,8 +116,8 @@ function getInputFields(
         success: function (results) {
             var inputFields = {}
 
-            for (var i = 0; i < results["records"].length; i++) {
-                res = results["records"][i]
+            for (var i = 0; i < results.length; i++) {
+                res = results[i]
                 inputFields[i] = {}
                 inputFields[i]["index"] = i
                 inputFields[i]["name"] = res["name"]

@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $song = new Played($db);
 
 // Get posted data
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
 $maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
 
@@ -28,17 +28,17 @@ $num = $stmt->rowCount();
 if ($num > 0) {
 	// Result arrays
 	$resultsArr = array();
-	$resultsArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
 		$img = $img != null ? $img : "https://fakeimg.pl/300/?text=no new song";
 
 		$resultsItem = array(
-			"new" => (int)$new,
+			"y" => (int)$new,
 			"img" => $img,
+			"label" => ""
 		);
-		array_push($resultsArr["records"], $resultsItem);
+		array_push($resultsArr, $resultsItem);
 	}
 
 	// Set response to ok

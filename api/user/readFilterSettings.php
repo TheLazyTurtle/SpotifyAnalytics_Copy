@@ -24,18 +24,17 @@ $num = $stmt->rowCount();
 // If results
 if ($num > 0) {
     $filterSettingArr = array();
-    $filterSettingArr["records"] = array();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	extract($row);
+		extract($row);
 
-	$filterSetting = array (
-	    "graphID" => $graphID,
-	    "userID" => $userID,
-	    "name" => $name,
-	    "value" => $value
-	);
-	array_push($filterSettingArr["records"], $filterSetting);
+		$filterSetting = array (
+			"graphID" => $graphID,
+			"userID" => $userID,
+			"name" => $name,
+			"value" => $value
+		);
+		array_push($filterSettingArr, $filterSetting);
     }
 
     // Set response to ok

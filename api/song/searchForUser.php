@@ -15,7 +15,6 @@ $song = new Song($db);
 
 // Make results array
 $songsArr = array();
-$songsArr["records"] = array();
 
 // Get the keyword
 $userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
@@ -36,10 +35,10 @@ foreach ($stmt as $row) {
 		"addedBy" => $row["addedBy"],
 		"preview" => $row["preview"]
 	);
-	array_push($songsArr["records"], $songItem);
+	array_push($songsArr, $songItem);
 }
 
-if (count($songsArr["records"]) > 0) {
+if (count($songsArr) > 0) {
 	// Set response to ok
 	http_response_code(200);
 

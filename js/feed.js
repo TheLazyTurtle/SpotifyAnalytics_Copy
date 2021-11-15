@@ -3,8 +3,8 @@ $(document).ready(function () {
         url: "/api/memory/read.php",
         type: "post",
         success: function (data) {
-            for (let i = 0; i < data["records"].length; i++) {
-                $(".feed").append(new Post(data["records"][i]).makePost())
+            for (let i = 0; i < data.length; i++) {
+                $(".feed").append(new Post(data[i]).makePost())
             }
         },
         error: function (error) {

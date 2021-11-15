@@ -2,10 +2,10 @@
 class Database
 {
 	// DB creds
-	private $username = "remote";
-	private $password = "***REMOVED***";
+	private $username = "root";
+	private $password = "root";
 	private $host = "localhost";
-	private $db_name = "spotifyDev";
+	private $db_name = "spotify";
 	public $conn;
 
 	// Make db connection

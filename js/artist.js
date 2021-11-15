@@ -73,7 +73,7 @@ function showArtistsTopSongs() {
         type: "POST",
         data: { artistID: artistID },
         success: function (result) {
-            topSongs = result["records"]
+            topSongs = result
             for (var i = 0; i < topSongs.length; i++) {
                 let song = topSongs[i]
 
@@ -230,10 +230,10 @@ function showArtistAlbums() {
         type: "POST",
         data: { artistID: artistID },
         success: function (result) {
-            console.table(result["records"])
+            console.table(result)
 
-            for (var i = 0; i < result["records"].length; i++) {
-                $(".albums-wrapper").append(makeAlbum(result["records"][i]))
+            for (var i = 0; i < result.length; i++) {
+                $(".albums-wrapper").append(makeAlbum(result[i]))
             }
         },
         error: function (x, y, z) {

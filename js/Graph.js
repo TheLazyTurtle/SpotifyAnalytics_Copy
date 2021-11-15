@@ -53,7 +53,7 @@ function getGraphData(
                     type: "POST",
                     data: filterSettings,
                     success: function (result) {
-                        makeNewGraph(result["records"], graphData)
+                        makeNewGraph(result, graphData)
                     },
                     error: function () {
                         setError(graphData.containerID)
@@ -68,7 +68,7 @@ function getGraphData(
             type: "POST",
             data: filterSettings,
             success: function (result) {
-                makeNewGraph(result["records"], graphData)
+                makeNewGraph(result, graphData)
             },
             error: function () {
                 setError(graphData.containerID)
@@ -150,9 +150,9 @@ function updateData(graphData) {
         success: function (result) {
             graphs[graphData.containerID].options.data[0].dataPoints = []
 
-            for (var i = 0; i < result["records"].length; i++) {
+            for (var i = 0; i < result.length; i++) {
                 graphs[graphData.containerID].options.data[0].dataPoints.push(
-                    result["records"][i]
+                    result[i]
                 )
             }
             graphs[graphData.containerID].options.title.text = graphData.title

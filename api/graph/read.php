@@ -19,7 +19,6 @@ $num = $stmt->rowCount();
 // If results
 if ($num > 0) {
 	$graphArr = array();
-	$graphArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -34,7 +33,7 @@ if ($num > 0) {
 			"xValueType" => $xValueType,
 			"containerID" => $containerID
 		);
-		array_push($graphArr["records"], $graphItem);
+		array_push($graphArr, $graphItem);
 	}
 
 	// Set response to ok

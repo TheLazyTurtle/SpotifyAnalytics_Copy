@@ -17,7 +17,6 @@ $user = new User($db);
 
 // Result arrays
 $resultsArr = array();
-$resultsArr["records"] = array();
 
 // Get keyword
 $keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "";
@@ -36,7 +35,7 @@ if ($songStmt->rowCount() > 0) {
 			"img" => $img,
 			"type" => "artist"
 		);
-		array_push($resultsArr["records"], $resultItem);
+		array_push($resultsArr, $resultItem);
 	}
 }
 
@@ -49,11 +48,11 @@ if ($userStmt->rowCount() > 0) {
 			"img" => $img,
 			"type" => "user"
 		);
-		array_push($resultsArr["records"], $resultItem);
+		array_push($resultsArr, $resultItem);
 	}
 }
 
-if (count($resultsArr["records"]) > 0) {
+if (count($resultsArr) > 0) {
 	// Set response to ok
 	http_response_code(200);
 

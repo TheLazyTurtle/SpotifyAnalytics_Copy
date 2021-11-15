@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $song = new Played($db);
 
 // Get posted data
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
 $maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
 
@@ -28,7 +28,6 @@ $num = $stmt->rowCount();
 if ($num > 0) {
 	// Results arrays
 	$resultsArr = array();
-	$resultsArr["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -36,10 +35,12 @@ if ($num > 0) {
 		$time = $time != null ? $time : "00:00:00";
 
 		$resultItem = array(
-			"totalTime" => $time,
-			"img" => "https://i.pinimg.com/736x/f9/4c/95/f94c9574933ce9404f323fb58f5e7f5c.jpg"
+			"y" => $time,
+			"img" => "https://i.pinimg.com/736x/f9/4c/95/f94c9574933ce9404f323fb58f5e7f5c.jpg",
+			"label" => "",
+			"totalTime" => "totalTime"
 		);
-		array_push($resultsArr["records"], $resultItem);
+		array_push($resultsArr, $resultItem);
 	}
 
 	// Set response to ok
