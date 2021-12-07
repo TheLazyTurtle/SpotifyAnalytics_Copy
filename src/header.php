@@ -21,8 +21,7 @@ $url = str_replace(".php", '', $url);
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	<script src="https://kit.fontawesome.com/7fe26f8076.js" crossorigin="anonymous"></script>
 
-	<script src="/js/check_jwt.js"></script>
-
+	<script src="../js/check_jwt.js"></script>
 	<?php
 	if ($url == "index" || $url == "profile" || strpos($url, "user") !== false) {
 	?>
@@ -32,7 +31,9 @@ $url = str_replace(".php", '', $url);
 		<script src="js/dateProcessing.js"></script>
 		<script src="js/Graph.js"></script>
 		<script src="js/makeGraphs.js"></script>
-	<?php } ?>
+	<?php
+	}
+	?>
 </head>
 
 <?php

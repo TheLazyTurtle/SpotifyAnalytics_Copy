@@ -203,6 +203,7 @@ class User
 			$this->lastname = $row["lastname"];
 			$this->email = $row["email"];
 			$this->password = $row["password"];
+			$this->img = $row["img"];
 
 			return true;
 		}
