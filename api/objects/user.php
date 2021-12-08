@@ -224,7 +224,7 @@ class User
 	// Get one user filterSetting
 	function readOneFilterSetting($userID, $name, $graphID)
 	{
-		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ?";
+		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ?AND name = ?";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
@@ -233,6 +233,7 @@ class User
 		// Bind values
 		$stmt->bindParam(1, $userID);
 		$stmt->bindParam(2, $graphID);
+		$stmt->bindParam(3, $name);
 		$stmt->execute();
 		return $stmt;
 	}
