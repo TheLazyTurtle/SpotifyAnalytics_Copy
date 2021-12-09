@@ -120,12 +120,12 @@ class Graph {
             },
             select: function(element, event) {
                 var input = event.item.value
-                that.filterSettings[settingName] = input
+                that.setFilterSetting(settingName, input)
                 that.updateGraph();
             },
             change: function(element) {
                 if ($(this).val().length <= 0) {
-                    that.filterSettings[settingName] = ""
+                    that.setFilterSetting(settingName, "")
                     that.updateGraph()
                 }
             }
@@ -149,7 +149,7 @@ class Graph {
             if (api !== null) {
                 that.autoComplete(inputField, api, name)
             } else {
-                that.filterSettings[name] = val
+                that.setFilterSetting(name, val)
                 that.updateGraph()
             }
         })
@@ -221,6 +221,23 @@ class Graph {
             this.graph.options.data[0].dataPoints.push(data[i])
         }
         this.graph.render()
+    }
+
+    async setFilterSetting(settingName, value) { 
+        this.filterSettings[settingName] = value
+
+        var data = {
+            settingname: settingName,
+            value: value,
+            graphID: this.graphId
+        }
+
+        $.ajax({
+            url: "/api/user/updateFilterSetting.php",
+            type: "POST",
+            async: true,
+            data: data
+        })
     }
 }
 
