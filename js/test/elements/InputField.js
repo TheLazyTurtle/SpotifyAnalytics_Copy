@@ -6,6 +6,7 @@ class InputField{
 		this.graphName = graphName
 		this.graphId = graphId
 		this.settingValue
+		this.field
 	}
 
 	async create() {
@@ -27,7 +28,7 @@ class InputField{
 			field.min = 0
 		}
 
-		return field
+		this.field = field
 	}
 
 	async getFilterSettings() {
@@ -38,6 +39,4 @@ class InputField{
 			data: {graphID: this.graphId, name: this.name}
 		})
 	}
-
-	//TODO: Add autocomplete
 }

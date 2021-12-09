@@ -31,7 +31,9 @@ if ($num > 0) {
 	    "inputFieldID" => $inputFieldID,
 	    "name" => $name,
 	    "value" => $value,
-	    "type" => $type
+	    "type" => $type,
+		"autoComplete" => $autoComplete,
+		"api" => $api
 	);
 
 	array_push($inputfields, $inputfield);

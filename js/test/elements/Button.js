@@ -4,6 +4,7 @@ class Button {
 		this.value = value
 		this.id = id
 		this.innerHTML = innerHTML
+		this.button
 	}
 
 	create() {
@@ -13,6 +14,6 @@ class Button {
 		button.value = this.value
 		button.innerHTML = this.innerHTML
 
-		return button
+		this.button = button
 	}
 }

@@ -13,6 +13,7 @@ class Graph {
         this.titleX = titleX
         this.titleY = titleY
         this.data = []
+        // TODO: Make these two arrays hold the full object and make the object hold the element. This will make things way easier
         this.buttons = []
         this.inputFields = []
         this.filterSettings = {}
@@ -98,23 +99,59 @@ class Graph {
         for (let i = 0; i < fields.length; i++) {
             let fd = fields[i]
             var field = new InputField(fd.name, fd.value, fd.type, this.name, this.graphId)
-            var fieldElement = await field.create()
-            this.readInputField(fieldElement, fd.name)
-            this.inputFields.push(fieldElement)
+            await field.create()
+
+            this.readInputField(field.field, fd.name, fd.api)
+            this.inputFields.push(field)
 
             this.filterSettings[fd.name] = field.settingValue
-            $("#" + this.name + "_input_array").append(fieldElement)
+            $("#" + this.name + "_input_array").append(field.field)
         }
     }
 
+	async autoComplete(element, api, settingName) {
+        var that = this
+        $(element).autocomplete({
+            source: async function(request, response) {
+                let data = {keyword: request.term, amount: 10}
+                var autoCompleteData = await that.getAutoCompleteData(api, data)
+
+                response(autoCompleteData)
+            },
+            select: function(element, event) {
+                var input = event.item.value
+                that.filterSettings[settingName] = input
+                that.updateGraph();
+            },
+            change: function(element) {
+                if ($(this).val().length <= 0) {
+                    that.filterSettings[settingName] = ""
+                    that.updateGraph()
+                }
+            }
+        })
+	}
+
+	async getAutoCompleteData(api, data) {
+		return await $.ajax({
+			type: "POST",
+			url: api,
+			data: data,
+		})
+	}
+
     // Reads the data from the input field when the data has changed
-    readInputField(inputField, name) {
+    readInputField(inputField, name, api) {
         var that = this
         $(inputField).on("input", function() {
             var val = $(this).val()
-            that.filterSettings[name] = val
-            //TODO: Make it save changes in the database
-            that.updateGraph()
+
+            if (api !== null) {
+                that.autoComplete(inputField, api, name)
+            } else {
+                that.filterSettings[name] = val
+                that.updateGraph()
+            }
         })
     }
 
@@ -133,12 +170,13 @@ class Graph {
         for (let i = 0; i < buttons.length; i++) {
             // Make the button
             var bd = buttons[i];
-            var button = new Button(bd.class, bd.value, "test", bd.innerHTML).create()
-            this.onClick(button)
+            var button = new Button(bd.class, bd.value, "test", bd.innerHTML)
+            button.create()
+            this.onClick(button.button)
 
             // Add the button
-            this.buttons.push(button)
-            $("#" + this.name + "_array").append(button)
+            this.buttons.push(button.button)
+            $("#" + this.name + "_array").append(button.button)
         }
     }
 
@@ -148,7 +186,6 @@ class Graph {
 		$(button).click(async function() {
             var timeframe = $(this).val()
             that.timeframe = timeframe
-            //var test = await that.getData(that.timeframe, that.filterSettings)
             that.updateGraph()
         })
 	}
@@ -175,9 +212,9 @@ class Graph {
         })
     }
 
+    // This will update the graph
     async updateGraph() {
         var data = await this.getData(this.timeframe, this.filterSettings)
-        console.log(this.filterSettings)
         this.graph.options.data[0].dataPoints = []
 
         for (let i = 0; i < data.length; i++) {
