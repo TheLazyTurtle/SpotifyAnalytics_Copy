@@ -1,177 +1,262 @@
-// Get the data to make the graph
-function getGraphData(
-    graphID,
-    containerID,
-    title,
-    titleX,
-    titleY,
-    xValueType,
-    api,
-    filterSettings,
-    inputFields,
-    type = "column"
-) {
-    var graphData = {
-        graphID: graphID,
-        containerID: containerID,
-        title: title,
-        titleX: titleX,
-        titleY: titleY,
-        xValueType: xValueType,
-        indexLabelFontColor: "#5a6767",
-        api: api,
-        filterSettings: filterSettings,
-        inputFields: inputFields,
-        type: type,
-        color: null,
+class Graph {
+    constructor(
+        graphId,
+        name,
+        title,
+        titleX,
+        titleY,
+        api,
+        type,
+        xValueType
+    ) {
+        // Init basic vars
+        this.graphId = graphId
+        this.name = name
+        this.title = title
+        this.titleX = titleX
+        this.titleY = titleY
+        this.api = api
+        this.type = type
+        this.xValueType = xValueType
+
+        this.data = []
+        this.buttons = []
+        this.inputFields = []
+        this.filterSettings = {}
+        this.dataType = "song"
+        this.timeframe = "year"
+
+        // Build the containers needed to place the graphs
+        this.buildWrapper()
     }
 
-    // TODO: Find a better way to do this.
-    if (containerID == "played_Per_Day") {
-        graphData.color = "#1DB954"
+    buildWrapper() {
+        var wrapper = document.createElement("div")
+        wrapper.className = "main"
+        wrapper.id = this.name + "_main"
+
+        var inputWrapper = document.createElement("div")
+        inputWrapper.className = "input-array"
+        inputWrapper.id = this.name + "_input_array"
+
+        var buttonWrapper = document.createElement("div")
+        buttonWrapper.className = "button-array"
+        buttonWrapper.id = this.name + "_array"
+
+        var graphWrapper = document.createElement("div")
+        graphWrapper.id = this.name
+
+        wrapper.appendChild(inputWrapper)
+        wrapper.appendChild(buttonWrapper)
+        wrapper.appendChild(graphWrapper)
+
+        $(".content").append(wrapper)
     }
 
-    // If we make the graph with input fields than make the amount of input fields we have defined here with the names given in the object of input fields
-    if (graphData.inputFields) {
-        for (var i = 0; i < Object.keys(graphData.inputFields).length; i++) {
-            makeInputFields(graphData, i)
+    async buildGraph() {
+        await this.addInputFields()
+        this.data = await this.getData(this.timeframe, this.filterSettings)
+        this.addButtons()
+
+        var dataType = this.dataType
+        this.graph = new CanvasJS.Chart(this.name, {
+            theme: "dark2",
+            title: {
+                text: this.title
+            },
+            axisX: {
+                title: this.titleX
+            },
+            axisY: {
+                includeZero: true,
+                title: this.titleY
+            },
+            data: [
+                {
+                    click: function(data) {
+                        goToPage(data, dataType)
+                    },
+                    type: this.type,
+                    xValueType: this.xValueType,
+                    indexLabel: "{y}",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "#5a6767",
+                    dataPoints: this.data,
+                }
+            ]
+        })
+        this.graph.render()
+    }
+
+    // This will get all the input field that are part of a graph
+    async getInputFields(graphId) {
+        return await $.ajax({
+            url: "/api/graph/readInputfield.php",
+            type: "GET",
+            async: true,
+            data: {graphID: graphId}
+        })
+    }
+
+    // This will add the input fieled to the screen
+    async addInputFields() {
+        var fields = await this.getInputFields(this.graphId);
+
+        for (let i = 0; i < fields.length; i++) {
+            let fd = fields[i]
+            var field = new InputField(fd.name, fd.value, fd.type, this.name, this.graphId)
+            await field.create()
+
+            this.readInputField(field.field, fd.name, fd.api)
+            this.inputFields.push(field)
+
+            this.filterSettings[fd.name] = field.settingValue
+            $("#" + this.name + "_input_array").append(field.field)
         }
     }
 
-    // If the filter setting has a song in it convert the song and artist name to a songID to show the correct data
-    if (filterSettings.hasOwnProperty("song") && filterSettings.song != "") {
-        data = filterSettings.song.split(" - ")
-        $.ajax({
-            url: "/api/song/searchByArtist.php",
-            type: "POST",
-            data: { song: data[0], artist: data[1] },
-            success: function (result) {
-                filterSettings.song = result[0]
+	async autoComplete(element, api, settingName) {
+        var that = this
+        $(element).autocomplete({
+            source: async function(request, response) {
+                let data = {keyword: request.term, amount: 10}
+                var autoCompleteData = await that.getAutoCompleteData(api, data)
 
-                $.ajax({
-                    url: graphData.api,
-                    type: "POST",
-                    data: filterSettings,
-                    success: function (result) {
-                        makeNewGraph(result, graphData)
-                    },
-                    error: function () {
-                        setError(graphData.containerID)
-                    },
-                })
+                response(autoCompleteData)
             },
-        })
-    } else {
-        // Else just show the data
-        $.ajax({
-            url: graphData.api,
-            type: "POST",
-            data: filterSettings,
-            success: function (result) {
-                makeNewGraph(result, graphData)
+            select: function(element, event) {
+                var input = event.item.value
+                that.setFilterSetting(settingName, input)
+                that.updateGraph();
             },
-            error: function () {
-                setError(graphData.containerID)
-            },
-        })
-    }
-}
-
-// Make the graph based on the data fetched in getGraphData
-function makeNewGraph(data, graphData) {
-    var mainDiv = "#" + graphData.containerID + "-main"
-
-    // Make a button array
-    buttonArray(mainDiv, graphData)
-
-    // Make the div where the graph will be placed in
-    var graphDiv = document.createElement("div")
-    graphDiv.id = graphData.containerID
-    $(mainDiv).append(graphDiv)
-
-    // Make the graph
-    graphs[graphData.containerID] = new CanvasJS.Chart(graphData.containerID, {
-        animationEnables: true,
-        theme: "dark2",
-        title: {
-            text: graphData.title,
-        },
-        axisX: {
-            title: graphData.titleX,
-        },
-        axisY: {
-            includeZero: true,
-            title: graphData.titleY,
-        },
-        data: [
-            {
-                click: function (data) {
-                    goToPage(data)
-                },
-                color: graphData.color,
-                type: graphData.type,
-                xValueType: graphData.xValueType,
-                indexLabel: "{y}",
-                indexLabelFontColor: graphData.indexLabelFontColor,
-                indexLabelPlacement: "inside",
-                dataPoints: data,
-            },
-        ],
-    })
-    graphs[graphData.containerID].render()
-    readInputFields(graphData)
-}
-
-// This will send you to the artist or song page on which you clicked
-function goToPage(data) {
-    let graphTitle = data.chart.options.title.text
-
-    if (graphTitle.includes("Song")) {
-        let albumID = data.dataPoint.albumID
-        let songName = data.dataPoint.label
-        console.log(data)
-
-        location.href = `/album.php?album=${albumID}&song=${songName}`
-    } else if (graphTitle.includes("Artist")) {
-        let title = data.dataPoint.label
-
-        location.href = `/artist.php?artist=${title}`
-    }
-}
-
-// Update the data of the graph based on the timeframe change
-function updateData(graphData) {
-    // TODO: Make maxPlayed be the max amount of played and convert that to the next round number so 00 => 100 and 1387 => 1400 || 1500
-
-    $.ajax({
-        url: graphData.api,
-        type: "POST",
-        data: graphData.filterSettings,
-        success: function (result) {
-            graphs[graphData.containerID].options.data[0].dataPoints = []
-
-            for (var i = 0; i < result.length; i++) {
-                graphs[graphData.containerID].options.data[0].dataPoints.push(
-                    result[i]
-                )
+            change: function(element) {
+                if ($(this).val().length <= 0) {
+                    that.setFilterSetting(settingName, "")
+                    that.updateGraph()
+                }
             }
-            graphs[graphData.containerID].options.title.text = graphData.title
-            graphs[graphData.containerID].render()
-        },
-        error: function () {
-            if (graphData.filterSettings["minPlayed"] > 0) {
-                graphData.filterSettings["minPlayed"] = 0
-                updateData(graphData)
+        })
+	}
+
+	async getAutoCompleteData(api, data) {
+		return await $.ajax({
+			type: "POST",
+			url: api,
+			data: data,
+		})
+	}
+
+    // Reads the data from the input field when the data has changed
+    readInputField(inputField, name, api) {
+        var that = this
+        $(inputField).on("input", function() {
+            var val = $(this).val()
+
+            if (api !== null) {
+                that.autoComplete(inputField, api, name)
             } else {
-                setError(graphData.containerID)
+                that.setFilterSetting(name, val)
+                that.updateGraph()
             }
-        },
-    })
+        })
+    }
+
+    // This will get all the buttons needed for this graph
+    async getButtons() {
+        return await $.ajax({
+            url: "/api/element/getTimeframeButtons.php",
+            type: "POST",
+            async: true
+        })
+    }
+
+    // Create buttons and add them to the screen
+    async addButtons() {
+        var buttons = await this.getButtons()
+        for (let i = 0; i < buttons.length; i++) {
+            // Make the button
+            var bd = buttons[i];
+            var button = new Button(bd.class, bd.value, "test", bd.innerHTML)
+            button.create()
+            this.onClick(button.button)
+
+            // Add the button
+            this.buttons.push(button.button)
+            $("#" + this.name + "_array").append(button.button)
+        }
+    }
+
+    // The onClick event handler for the buttons
+	onClick(button) {
+        var that = this
+		$(button).click(async function() {
+            var timeframe = $(this).val()
+            that.timeframe = timeframe
+            that.updateGraph()
+        })
+	}
+
+    // Get the data to fill the graph
+    async getData(timeframe, filterSettings) {
+        let date = convertTime(timeframe);
+        var data = {
+            minDate: date.minDate,
+            maxDate: date.maxDate,
+        }
+
+        console.log(filterSettings)
+        // Add filter settings to the query
+        for (const[key, value] of Object.entries(filterSettings)) {
+            data[key] = value
+        }
+
+        // Fetch the data
+        return await $.ajax({
+            url: this.api,
+            type: "POST",
+            async: true,
+            data: data,
+        })
+    }
+
+    // This will update the graph
+    async updateGraph() {
+        var data = await this.getData(this.timeframe, this.filterSettings)
+        this.graph.options.data[0].dataPoints = []
+
+        for (let i = 0; i < data.length; i++) {
+            this.graph.options.data[0].dataPoints.push(data[i])
+        }
+        this.graph.render()
+    }
+
+    async setFilterSetting(settingName, value) { 
+        this.filterSettings[settingName] = value
+
+        var data = {
+            settingname: settingName,
+            value: value,
+            graphID: this.graphId
+        }
+
+        $.ajax({
+            url: "/api/user/updateFilterSetting.php",
+            type: "POST",
+            async: true,
+            data: data
+        })
+    }
 }
 
-// Empty the graph and change the title to show an error for when it can't find results
-function setError(containerID) {
-    graphs[containerID].options.data[0].dataPoints = []
-    graphs[containerID].options.title.text = "No data found"
-    graphs[containerID].render()
+function goToPage(data, dataType) {
+    if(dataType == "song") {
+        let albumId = data.dataPoint.albumID
+        let songName = data.dataPoint.label
+
+        location.href = `/album.php?album=${albumId}&song=${songName}`
+    } else if (dataType = "artist") {
+        let artist = data.dataPoint.label
+
+        location.href = `/artist.php?artist=${artist}`
+    }
 }

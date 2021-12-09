@@ -22,18 +22,7 @@ $url = str_replace(".php", '', $url);
 	<script src="https://kit.fontawesome.com/7fe26f8076.js" crossorigin="anonymous"></script>
 
 	<script src="../js/check_jwt.js"></script>
-	<?php
-	if ($url == "index" || $url == "profile" || strpos($url, "user") !== false) {
-	?>
-		<script src="js/autocomplete.js"></script>
-		<script src="js/inputFields.js"></script>
-		<script src="js/buttons.js"></script>
-		<script src="js/dateProcessing.js"></script>
-		<script src="js/Graph.js"></script>
-		<script src="js/makeGraphs.js"></script>
-	<?php
-	}
-	?>
+	<script src="js/dateProcessing.js"></script>
 </head>
 
 <?php
