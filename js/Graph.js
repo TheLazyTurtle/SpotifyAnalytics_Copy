@@ -7,7 +7,8 @@ class Graph {
         titleY,
         api,
         type,
-        xValueType
+        xValueType,
+        userId = null
     ) {
         // Init basic vars
         this.graphId = graphId
@@ -18,6 +19,7 @@ class Graph {
         this.api = api
         this.type = type
         this.xValueType = xValueType
+        this.userId = userId
 
         this.data = []
         this.buttons = []
@@ -104,7 +106,7 @@ class Graph {
 
         for (let i = 0; i < fields.length; i++) {
             let fd = fields[i]
-            var field = new InputField(fd.name, fd.value, fd.type, this.name, this.graphId)
+            var field = new InputField(fd.name, fd.value, fd.type, this.name, this.graphId, this.userId)
             await field.create()
 
             this.readInputField(field.field, fd.name, fd.api)
@@ -202,9 +204,9 @@ class Graph {
         var data = {
             minDate: date.minDate,
             maxDate: date.maxDate,
+            userID: this.userId
         }
 
-        console.log(filterSettings)
         // Add filter settings to the query
         for (const[key, value] of Object.entries(filterSettings)) {
             data[key] = value
@@ -236,7 +238,8 @@ class Graph {
         var data = {
             settingname: settingName,
             value: value,
-            graphID: this.graphId
+            graphID: this.graphId,
+            userID: this.userId
         }
 
         $.ajax({

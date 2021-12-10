@@ -16,7 +16,7 @@ $db = $database->getConnection();
 $graph = new Played($db);
 
 // Get posted data
-$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
+$userID = isset($_POST["userID"]) && !empty($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
 $song = isset($_POST["song"]) && !empty($_POST["song"]) ? $_POST["song"] : "%";
 $minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
 $maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;

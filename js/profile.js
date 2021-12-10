@@ -1,18 +1,19 @@
 var selectors = ["graphs", "memories"]
-let userID = false
+let userID = null
 
-$(document).ready(function () {
-    getUserInfo()
+$(document).ready(async function () {
+    await getUserInfo()
     changeProfilePicture()
+    buildGraphs(userID)
 })
 
 // This will get the info of the user
-function getUserInfo() {
+async function getUserInfo() {
     let username = getUserName()
 
-    $.ajax({
+    await $.ajax({
         url: "/api/user/read_one.php",
-        type: "POST",
+        type: "GET",
         data: { username: username },
         success: function (result) {
             setUserInfo(result)

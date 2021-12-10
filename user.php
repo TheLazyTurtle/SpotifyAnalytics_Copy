@@ -4,6 +4,10 @@ require "src/header.php";
 
 <link rel="stylesheet" type="text/css" href="/css/social.css">
 <script src="/js/user.js"></script>
+<script src="js/elements/Button.js"></script>
+<script src="js/elements/InputField.js"></script>
+<script src="js/Graph.js"></script>
+<script src="js/makeGraphs.js"></script>
 
 <div class="container">
 	<div class="user-info">

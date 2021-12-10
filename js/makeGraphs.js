@@ -9,15 +9,12 @@ async function getGraphs() {
     })
 }
 
-async function buildGraphs() {
+async function buildGraphs(userId = null) {
     let graphsData = await getGraphs();
-    console.table(graphsData)
 
     for (let i = 0; i < graphsData.length; i++) {
         let gd = graphsData[i];
-        graphs[gd.title] = new Graph(gd.id, gd.containerID, gd.title, gd.titleX, gd.titleY, gd.api, gd.type, gd.xValueType)
+        graphs[gd.title] = new Graph(gd.id, gd.containerID, gd.title, gd.titleX, gd.titleY, gd.api, gd.type, gd.xValueType, userId)
         graphs[gd.title].buildGraph()
     }
 }
-
-buildGraphs()

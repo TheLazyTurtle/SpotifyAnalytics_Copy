@@ -1,11 +1,10 @@
 <?php
 require 'src/header.php';
-
 ?>
 
 <body>
 	<div class="scripts">
-		<script src="js/user.js"></script>
+		<script src="js/profile.js"></script>
 		<script src="js/elements/Button.js"></script>
 		<script src="js/elements/InputField.js"></script>
 		<script src="js/Graph.js"></script>

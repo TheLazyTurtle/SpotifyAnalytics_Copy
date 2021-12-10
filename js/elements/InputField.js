@@ -1,10 +1,11 @@
 class InputField{
-	constructor(name, value, type, graphName, graphId) {
+	constructor(name, value, type, graphName, graphId, userId = null) {
 		this.name = name
 		this.value = value
 		this.type = type
 		this.graphName = graphName
 		this.graphId = graphId
+		this.userId = userId
 		this.settingValue
 		this.field
 	}
@@ -36,7 +37,11 @@ class InputField{
 			url: "/api/user/readOneFilterSetting.php",
 			type: "POST",
 			async: true,
-			data: {graphID: this.graphId, name: this.name}
+			data: {
+				graphID: this.graphId, 
+				name: this.name,
+				userID: this.userId
+			}
 		})
 	}
 }

@@ -1,9 +1,10 @@
 var selectors = ["graphs", "memories"]
 let userID = false
 
-$(document).ready(function () {
-    getUserInfo()
+$(document).ready(async function () {
+    await getUserInfo()
     followButton()
+    buildGraphs(userID)
 })
 
 function getUsername() {
@@ -14,12 +15,13 @@ function getUsername() {
     return username
 }
 
-function getUserInfo() {
+async function getUserInfo() {
     let username = getUsername()
 
-    $.ajax({
+    await $.ajax({
         url: "/api/user/read_one.php",
-        type: "POST",
+        type: "GET",
+        async: true,
         data: { username: username },
         success: function (result) {
             setUserInfo(result)
@@ -59,7 +61,7 @@ function getButtonPressed() {
                     showMemories()
                 default:
                     // TODO: Fix that when you press the button it won't remake the graphs when they are already there
-                    getGraphs()
+                    buildGraphs(userID)
             }
         })
     }
