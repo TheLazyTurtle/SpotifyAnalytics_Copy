@@ -124,10 +124,24 @@ class Graph {
                 let data = {keyword: request.term, amount: 10}
                 var autoCompleteData = await that.getAutoCompleteData(api, data)
 
-                response(autoCompleteData)
+				if (settingName == "song") {
+					response(
+						autoCompleteData.map(function(item){
+							return item["name"] + " - " + item["artist"]
+						})
+					)
+				} else {
+					response(autoCompleteData)
+				}
             },
-            select: function(element, event) {
+            select: async function(element, event) {
                 var input = event.item.value
+
+				if (settingName == "song") {
+					var data = input.split(" - ")
+					var songId = await that.getSongId(data)
+				}
+
                 that.setFilterSetting(settingName, input)
                 that.updateGraph();
             },
@@ -144,7 +158,16 @@ class Graph {
 		return await $.ajax({
 			type: "GET",
 			url: api,
+			async: true,
 			data: data,
+		})
+	}
+
+	async getSongId(data) {
+		return await $.ajax({
+			type: "GET",
+			url: "/api/song/searchByArtist.php",
+			data: {song: data[0], artist: data[1]}
 		})
 	}
 
@@ -209,7 +232,14 @@ class Graph {
 
         // Add filter settings to the query
         for (const[key, value] of Object.entries(filterSettings)) {
-            data[key] = value
+			if (key == "song" && value != null) {
+				var songArtist = value.split(" - ")
+				data["song"] = songArtist[0]
+				data["artist"] = songArtist[1]
+
+			} else {
+				data[key] = value
+			}
         }
 
         // Fetch the data
