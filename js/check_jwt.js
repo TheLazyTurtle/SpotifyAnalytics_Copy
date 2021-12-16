@@ -1,16 +1,15 @@
 $(document).ready(function () {
-    var jwt = getCookie("jwt")
+    //var jwt = getCookie("jwt")
 
     // Validates the jwt token
     $.ajax({
-        url: "/api/system/validate_token.php",
+        url: "/api/system/validate_login.php",
         type: "POST",
-        data: { jwt: jwt },
         success: function () {
             // If a user has a valid token than return true
             return true
         },
-        error: function () {
+        error: function (data) {
             // If a users token has expired or is invalid than send them to the login page
             if (
                 !document.URL.includes("login.php") &&
@@ -24,10 +23,10 @@ $(document).ready(function () {
             }
 
             // Change logout button to login button when you are not logged in
-            $("#login-btn")[0].innerHTML = "Inloggen"
-            $("#login-btn")[0].onclick = "window.location.href='login.php'"
+            // $("#login-btn")[0].innerHTML = "Inloggen"
+            // $("#login-btn")[0].onclick = "window.location.href='login.php'"
 
-            $("#follow").remove()
+            // $("#follow").remove()
 
             return false
         },

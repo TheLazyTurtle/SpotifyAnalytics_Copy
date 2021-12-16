@@ -5,8 +5,13 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/user.php";
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and user object
 $database = new Database();
@@ -14,7 +19,7 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get input
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$userID = isset($tokenUserId) ? $tokenUserId : die(json_encode(array("message" => "No user provided")));
 $settingname = isset($_POST["settingname"]) && !empty($_POST["settingname"]) ? $_POST["settingname"] : "";
 $value = isset($_POST["value"]) && !empty($_POST["value"]) ? $_POST["value"] : "";
 $graphID = isset($_POST["graphID"]) && !empty($_POST["graphID"]) ? $_POST["graphID"] : "";

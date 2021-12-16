@@ -7,8 +7,13 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Get db connection and get song object
+require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/songs.php';
+
+if (!validate_token()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make new database connection and make new song object
 $database = new Database();

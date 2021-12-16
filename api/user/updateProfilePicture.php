@@ -8,19 +8,25 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 session_start();
 
+include '../system/validate_token.php';
 include '../config/database.php';
 include '../objects/user.php';
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // make db and user object
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
+$username = !empty($_COOKIE["username"]) ? $_COOKIE["username"] : die(json_encode(array("message" => "No user provided")));
 
 // Process the img
 $target_dir = realpath(dirname(getcwd())) . "/../uploads/profile/";
 $fileName = basename($_FILES["file"]["name"]);
 $imageFileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-$fileName = $_COOKIE["username"] . "." . $imageFileType;
+$fileName = $username . "." . $imageFileType;
 $target_file = $target_dir . $fileName;
 $uploadOk = 1;
 
@@ -38,7 +44,7 @@ if (isset($_POST["file"])) {
 
 // Check file size
 // Max file size = 800kb
-if ($_FILES["file"]["size"] > 800000) {
+if ($_FILES["file"]["size"] > 10000000) {
 	http_response_code(400);
 	echo json_encode(array("message" => "File is too big"));
 	$uploadOk = 0;

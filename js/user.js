@@ -17,6 +17,7 @@ function getUsername() {
 
 async function getUserInfo() {
     let username = getUsername()
+	console.log(username);
 
     await $.ajax({
         url: "/api/user/read_one.php",
@@ -27,6 +28,7 @@ async function getUserInfo() {
             setUserInfo(result)
             checkIfFollowing()
             checkIfSelf(result["username"])
+			console.table(result)
         },
         error: function () {
             // TODO: Show a user not found thingy
@@ -76,7 +78,7 @@ function followButton() {
         if (className.includes("following")) {
             $.ajax({
                 url: "api/user/unFollow.php",
-                type: "post",
+                type: "POST",
                 data: { userToUnFollow: userID },
                 success: function () {
                     button.innerHTML = "follow"

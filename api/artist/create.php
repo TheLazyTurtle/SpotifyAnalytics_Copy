@@ -7,9 +7,14 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Get db connection
+include_once '../system/validate_token.php';
 include_once '../config/database.php';
 include_once '../config/authBackEnd.php';
 include_once '../objects/artists.php';
+
+if(validate_token()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make connection and make artist object
 $database = new Database();

@@ -6,16 +6,21 @@ header("Content-Type: application/json; charset=UTF-8");
 session_start();
 
 // Include db and object files
+require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/user.php';
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and user object
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
 
-$following = isset($_POST["user"]) ? $_POST["user"] : die();
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
+$following = isset($_GET["user"]) ? $_GET["user"] : die(json_encode(array("message" => "No user provided")));
+$userID = isset($tokenUserId) ? $tokenUserId : die(json_encode(array("message" => "No user provided")));
 
 $user->id = $userID;
 

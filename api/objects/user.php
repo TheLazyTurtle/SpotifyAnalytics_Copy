@@ -105,7 +105,7 @@ class User
 	{
 		$query = "SELECT * FROM user WHERE ";
 
-		if (isset($this->username)) {
+		if (isset($this->username) && $this->username != null) {
 			$query = $query . "username LIKE ?";
 			$stmt = $this->conn->prepare($query);
 

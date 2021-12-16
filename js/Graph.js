@@ -142,7 +142,7 @@ class Graph {
 
 	async getAutoCompleteData(api, data) {
 		return await $.ajax({
-			type: "POST",
+			type: "GET",
 			url: api,
 			data: data,
 		})
@@ -167,7 +167,7 @@ class Graph {
     async getButtons() {
         return await $.ajax({
             url: "/api/element/getTimeframeButtons.php",
-            type: "POST",
+            type: "GET",
             async: true
         })
     }
@@ -215,7 +215,7 @@ class Graph {
         // Fetch the data
         return await $.ajax({
             url: this.api,
-            type: "POST",
+            type: "GET",
             async: true,
             data: data,
         })

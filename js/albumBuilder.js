@@ -4,7 +4,7 @@ function getAlbumInfo() {
 
     $.ajax({
         url: "/api/album/readOne.php",
-        type: "POST",
+        type: "GET",
         data: { albumID: albumID },
         success: function (result) {
             $(".albums-wrapper").append(makeAlbum(result[0], "open"))
@@ -22,7 +22,7 @@ function getAlbumInfo() {
 function showArtistAlbums(artistID) {
     $.ajax({
         url: "/api/album/search.php",
-        type: "POST",
+        type: "GET",
         data: { artistID: artistID },
         success: function (result) {
             for (var i = 0; i < result.length; i++) {

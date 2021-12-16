@@ -35,7 +35,7 @@ class InputField{
 	async getFilterSettings() {
 		return await $.ajax({
 			url: "/api/user/readOneFilterSetting.php",
-			type: "POST",
+			type: "GET",
 			async: true,
 			data: {
 				graphID: this.graphId, 

@@ -5,6 +5,7 @@ require 'src/header.php';
 <body>
 	<div id="content"></div>
 
+	<script src="js/auth.js"></script>
 	<script>
 		$(document).ready(function() {
 			// Make the form
@@ -24,7 +25,6 @@ require 'src/header.php';
 
 			// Load the form
 			$("#content").html(html);
-
 			// Process the input data
 			$(document).on('submit', "#login_form", function() {
 				// Get form data
@@ -38,8 +38,9 @@ require 'src/header.php';
 					data: login_data,
 					success: function(result) {
 						// Store jwt to cookie
-						setCookie("jwt", result[0].jwt, 1);
+						//setCookie("jwt", result[0].jwt, 1);
 						setCookie("username", login_data.username, 1)
+						store.setJWT(result[0].jwt)
 
 						// Go to home page
 						window.location.href = "/index.php";

@@ -17,8 +17,8 @@ $song = new Song($db);
 $artist = new Artist($db);
 
 // Get keywords
-$name = isset($_POST["name"]) ? $_POST["name"] : Null;
-$primaryArtistID = isset($_POST["artistID"]) ? $_POST["artistID"] : Null;
+$name = isset($_GET["name"]) ? $_GET["name"] : Null;
+$primaryArtistID = isset($_GET["artistID"]) ? $_GET["artistID"] : Null;
 
 if ($name != Null) {
 	$album->name = $name;

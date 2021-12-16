@@ -20,7 +20,7 @@ function getArtistInfo() {
 
     $.ajax({
         url: "/api/artist/read_one.php",
-        type: "POST",
+        type: "GET",
         data: { artist: artist },
         success: function (result) {
             setArtistInfo(result)
@@ -70,7 +70,7 @@ function showArtistsTopSongs() {
     // Get the top songs
     $.ajax({
         url: "/api/artist/topSongs.php",
-        type: "POST",
+        type: "GET",
         data: { artistID: artistID },
         success: function (result) {
             topSongs = result
@@ -227,7 +227,7 @@ function showMoreSongs() {
 function showArtistAlbums() {
     $.ajax({
         url: "/api/album/search.php",
-        type: "POST",
+        type: "GET",
         data: { artistID: artistID },
         success: function (result) {
             console.table(result)

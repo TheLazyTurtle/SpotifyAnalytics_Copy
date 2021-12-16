@@ -17,7 +17,7 @@ $song = new Song($db);
 $artist = new Artist($db);
 
 // Get posted data
-$song->id = isset($_POST['songID']) ? $_POST["songID"] : die();
+$song->id = isset($_GET['songID']) ? $_GET["songID"] : die(json_encode(array("message" => "No song provided")));
 
 // fetch that one song
 $song->readOne();

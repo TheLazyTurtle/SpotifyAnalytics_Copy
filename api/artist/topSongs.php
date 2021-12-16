@@ -6,10 +6,15 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/artists.php";
 require "../objects/played.php";
 require "../config/core.php";
+
+if (!$userID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and artist object
 $database = new Database();
@@ -18,8 +23,8 @@ $artist = new Artist($db);
 $played = new Played($db);
 
 // Get posted data
-$artistID = isset($_POST["artistID"]) ? $_POST["artistID"] : die();
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : "";
+$artistID = isset($_GET["artistID"]) ? $_GET["artistID"] : die(json_encode(array("message" => "No artist provided")));
+$userID = isset($userID) ? $userID : "";
 
 // Query the results
 $stmt = $artist->topSongs($artistID);

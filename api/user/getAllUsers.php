@@ -6,8 +6,13 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/user.php";
+
+if (!$tokenUserID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and user object
 $database = new Database();
@@ -21,7 +26,6 @@ $num = $stmt->rowCount();
 // If results
 if ($num > 0) {
 	$users = array();
-	$users["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -30,7 +34,7 @@ if ($num > 0) {
 			"userID" => $userID,
 		);
 
-		array_push($users["records"], $user);
+		array_push($users, $user);
 	}
 
 	// Set response to ok

@@ -92,7 +92,7 @@ function fetchSliderData(dates, sliderInfo, timeFrame, type) {
     var userId = null
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: api,
         data: { minDate: minDate, maxDate: maxDate, amount: 1, userID: userId},
         success: function (data) {

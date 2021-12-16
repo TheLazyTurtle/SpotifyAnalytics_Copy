@@ -1,4 +1,6 @@
 <?php
+ini_set("session.cookie_httponly", True);
+
 // Require headers
 header("Access-Control-Alow-Origin: http://localhost");
 header("Content-Type: application/json; charset=UTF-8");
@@ -35,25 +37,20 @@ if ($username_exists && password_verify($_POST["password"], $user->password)) {
 		"iat" => $issued_at,
 		"exp" => $expiration_time,
 		"iss" => $issuer,
-		"data" => array(
-			"id" => $user->id,
-			"firstname" => $user->firstname,
-			"lastname" => $user->lastname,
-			"username" => $user->username,
-			"email" => $user->email,
-		)
+		"id" => $user->id,
 	);
 
-	// Set respones code to ok
+	// Set response code to ok
 	http_response_code(200);
 
 	// Generate jwt token
-	$jwt = JWT::encode($token, $key);
+	$jwt = JWT::encode($token, $key, 'HS512');
+	setcookie("jwt", $jwt, time()+(60*60*24), "/", "", "", "true");
 	echo json_encode(
 		array(
 			array(
 				"message" => "successful login", 
-				"jwt" => $jwt,
+				//"jwt" => $jwt,
 				"userID" => $user->id,
 				"username" => $user->username,
 				"image" => $user->img
@@ -61,7 +58,7 @@ if ($username_exists && password_verify($_POST["password"], $user->password)) {
 		)
 	);
 } else {
-	// set respones code to failed
+	// set response code to failed
 	http_response_code(401);
 	echo json_encode(array("message" => "failed to login"));
 }

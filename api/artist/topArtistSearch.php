@@ -6,9 +6,14 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/artists.php";
 require "../config/core.php";
+
+if (!$tokenUserID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make database and artist object
 $database = new Database();
@@ -16,9 +21,9 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get posted data
-$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
-$keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "%";
-$amount = isset($_POST["amount"]) ? $_POST["amount"] : 10;
+$userID = isset($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "%";
+$amount = isset($_GET["amount"]) ? $_GET["amount"] : 10;
 
 // Query the results
 $stmt = $artist->topArtistSearch($userID, $keyword, $amount);

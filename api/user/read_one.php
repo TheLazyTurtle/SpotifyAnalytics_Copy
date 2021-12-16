@@ -7,14 +7,20 @@ header("Acces-Control-Allow_credentials: true");
 header("Content-Type: application/json");
 
 // Include db and object files
+require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/user.php';
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and user object
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
-$user->username = isset($_GET["username"]) ? $_GET["username"] : die();
+$user->username = !empty($_GET["username"]) ? $_GET["username"] : null;
+$user->id = isset($tokenUserId) ? $tokenUserId : null;
 
 // Query user
 $stmt = $user->read_one();
