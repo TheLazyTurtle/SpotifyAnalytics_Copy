@@ -37,7 +37,7 @@ if ($url != "login" && $url != "register") {
 				<input autocomplete="off" class="search-box" type="text" name="Search" placeholder="search">
 			</div>
 			<div class="col col-right">
-				<a href='feed.php'><i class="far fa-images"></i></a>
+				<!--<a href='feed.php'><i class="far fa-images"></i></a> -->
 				<a href='profile.php'><i class="fas fa-user-alt"></i></a>
 				<button class="btn" id="login-btn" onclick="window.location.href='logout.php'">Uitloggen</button>
 			</div>

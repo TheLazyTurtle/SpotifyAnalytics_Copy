@@ -17,7 +17,6 @@ function getUsername() {
 
 async function getUserInfo() {
     let username = getUsername()
-	console.log(username);
 
     await $.ajax({
         url: "/api/user/read_one.php",
@@ -28,7 +27,6 @@ async function getUserInfo() {
             setUserInfo(result)
             checkIfFollowing()
             checkIfSelf(result["username"])
-			console.table(result)
         },
         error: function () {
             // TODO: Show a user not found thingy
@@ -142,7 +140,7 @@ function checkIfSelf(username) {
 function checkIfFollowing() {
     $.ajax({
         url: "api/user/isFollowing.php",
-        type: "post",
+        type: "GET",
         data: { user: userID },
         success: function () {
             let followButton = $("#follow")[0]
@@ -152,7 +150,7 @@ function checkIfFollowing() {
                 "following"
             )
             followButton.innerHTML = "Unfollow"
-        },
+		}, 
     })
 }
 
