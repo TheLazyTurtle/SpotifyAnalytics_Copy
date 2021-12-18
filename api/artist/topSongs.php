@@ -12,9 +12,7 @@ require "../objects/artists.php";
 require "../objects/played.php";
 require "../config/core.php";
 
-if (!$userID = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
+$userID = validateToken();
 
 // Make db and artist object
 $database = new Database();
@@ -24,7 +22,7 @@ $played = new Played($db);
 
 // Get posted data
 $artistID = isset($_GET["artistID"]) ? $_GET["artistID"] : die(json_encode(array("message" => "No artist provided")));
-$userID = isset($userID) ? $userID : "";
+$userID = !empty($userID) ? $userID : "";
 
 // Query the results
 $stmt = $artist->topSongs($artistID);
