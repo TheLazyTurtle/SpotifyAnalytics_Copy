@@ -148,8 +148,12 @@ function followButton() {
 
 // This will check if you are looking at your own profile. If you are then send you to the profile page.
 function checkIfSelf(username) {
-	if (username.toLowerCase() == parseCookie().toLowerCase()) {
-		window.location.href = "/profile.php"
+	try {
+		if (username.toLowerCase() == parseCookie().toLowerCase()) {
+			window.location.href = "/profile.php"
+		}
+	} catch (err) {
+		console.error(err)
 	}
 }
 

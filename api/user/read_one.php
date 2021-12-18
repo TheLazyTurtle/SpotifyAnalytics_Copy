@@ -12,9 +12,7 @@ require '../system/hasViewingRights.php';
 require_once '../config/database.php';
 require_once '../objects/user.php';
 
-if (!$tokenUserId = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
+$tokenUserId = validateToken();
 
 // Make db and user object
 $database = new Database();

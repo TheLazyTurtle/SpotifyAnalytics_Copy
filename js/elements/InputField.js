@@ -33,7 +33,7 @@ class InputField{
 	}
 
 	async getFilterSettings() {
-		return await $.ajax({
+		var data = await $.ajax({
 			url: "/api/user/readOneFilterSetting.php",
 			type: "GET",
 			async: true,
@@ -43,5 +43,15 @@ class InputField{
 				userID: this.userId
 			}
 		})
+
+
+		// If request is from user page than set reset the values
+		if (this.userId != null) {
+			for (var i = 0; i < data.length; i++) {
+				data[i]["value"] = ""
+			}
+		}
+
+		return data
 	}
 }
