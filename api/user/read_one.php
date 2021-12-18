@@ -8,8 +8,9 @@ header("Content-Type: application/json");
 
 // Include db and object files
 require '../system/validate_token.php';
-require '../config/database.php';
-require '../objects/user.php';
+require '../system/hasViewingRights.php';
+require_once '../config/database.php';
+require_once '../objects/user.php';
 
 if (!$tokenUserId = validateToken()) {
 	die(json_encode(array("message" => "Not a valid token")));
@@ -19,8 +20,12 @@ if (!$tokenUserId = validateToken()) {
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
-$user->username = !empty($_GET["username"]) ? $_GET["username"] : null;
-$user->id = isset($tokenUserId) ? $tokenUserId : null;
+if (!empty($_GET["username"])) {
+	$user->username = $_GET["username"];
+	$hasViewingRights = hasViewingRights($tokenUserId, $_GET["username"]);
+} else {
+	$user->id = isset($tokenUserId) ? $tokenUserId : null;
+}
 
 // Query user
 $stmt = $user->read_one();
@@ -32,13 +37,10 @@ if ($user->id != null) {
 	$userArr = array(
 		"id" => $user->id,
 		"username" => $user->username,
-		"firstname" => $user->firstname,
-		"lastname" => $user->lastname,
 		"following" => $user->following,
 		"followers" => $user->followers,
-		"email" => $user->email,
 		"img" => $user->img,
-		"isAdmin" => $user->isAdmin
+		"viewingRights" => $hasViewingRights
 	);
 
 	// Set response to ok

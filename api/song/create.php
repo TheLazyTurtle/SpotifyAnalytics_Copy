@@ -9,10 +9,9 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 // Get db connection and get song object
 require '../system/validate_token.php';
 require '../config/database.php';
-require '../config/authBackEnd.php';
 require '../objects/songs.php';
 
-if (!validate_token()) {
+if (!($userID = validateToken()) || $userID != "system") {
 	die(json_encode(array("message" => "Not a valid token")));
 }
 

@@ -1,3 +1,7 @@
+.content-locked {
+	text-align: center;
+}
+
 /* User/artist info */
 .user-info, .artist-info {
 	max-width: 1200px;
@@ -25,6 +29,14 @@
 
 .user-info-text, .artist-info-text {
 	color: white;
+}
+
+/* Account locked */
+.fa-lock {
+	color: white;
+	font-size: 200px;
+	font-weight: 1000;
+	margin-top: 50px;
 }
 
 /* follow button */

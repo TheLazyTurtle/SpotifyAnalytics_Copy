@@ -11,7 +11,7 @@ require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/played.php';
 
-if (!$tokenUserID = validateToken()){
+if (!($tokenUserID = validateToken()) || $tokenUserID != "system"){
 	die(json_encode(array("message" => "Not a valid token")));
 }
 

@@ -10,7 +10,7 @@ include '../system/validate_token.php';
 include '../config/database.php';
 include '../objects/album.php';
 
-if (!validateToken()) {
+if (!($userID = validateToken()) || $userID != "system") {
 	die(json_encode(array("message" => "Not a valid token")));
 }
 

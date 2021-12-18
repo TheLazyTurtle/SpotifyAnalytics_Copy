@@ -9,10 +9,9 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 // Get db connection
 include_once '../system/validate_token.php';
 include_once '../config/database.php';
-include_once '../config/authBackEnd.php';
 include_once '../objects/artists.php';
 
-if(validate_token()) {
+if(!($userID = validateToken()) || $userID != "system") {
 	die(json_encode(array("message" => "Not a valid token")));
 }
 

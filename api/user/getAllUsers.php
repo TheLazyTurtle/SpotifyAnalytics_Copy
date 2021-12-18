@@ -10,7 +10,7 @@ require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/user.php";
 
-if (!$tokenUserID = validateToken()) {
+if (!($tokenUserID = validateToken()) || $tokenUserID != "system") {
 	die(json_encode(array("message" => "Not a valid token")));
 }
 
