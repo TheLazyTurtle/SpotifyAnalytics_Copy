@@ -32,6 +32,7 @@ if ($num > 0) {
 
 		$user = array(
 			"userID" => $userID,
+			"username" => $username,
 		);
 
 		array_push($users, $user);

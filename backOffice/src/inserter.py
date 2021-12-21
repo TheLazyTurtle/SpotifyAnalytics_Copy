@@ -2,16 +2,13 @@ import requests as req
 from datetime import datetime
 from printer import printc
 import fetcher
-from creds import beUser
-from creds import bePass
-
+import creds
 
 class Inserter():
-    def __init__(self, userID, baseUrl):
-        self.url = baseUrl
+    def __init__(self, userID, username):
         self.userID = userID
+        self.username = username
         self.songs = []
-        self.auth = (beUser, bePass)
 
     def insertSong(self, song):
         values = {
@@ -23,10 +20,11 @@ class Inserter():
             "preview": song["preview"],
             "albumID": song["album"]["albumID"],
             "explicit": str(song["explicit"]),
-            "trackNumber": song["trackNumber"]
+            "trackNumber": song["trackNumber"],
+            "jwt": creds.authToken
         }
 
-        r = req.post(self.url + "song/create.php", data=values, auth=self.auth)
+        r = req.post(creds.apiUrl + "song/create.php", data=values)
         httpResponse = r.status_code
 
         if httpResponse == 201:
@@ -36,7 +34,6 @@ class Inserter():
         else:
             printc("Failed to add song:", "red",
                    song["name"], "white", httpResponse, "white")
-            print(values)
 
     def insertArtist(self, song):
         for artist in song["artists"]:
@@ -44,11 +41,11 @@ class Inserter():
                 "artistID": artist["artistID"],
                 "name": artist["name"],
                 "url": artist["url"],
-                "img": artist["img"]
+                "img": artist["img"],
+                "jwt": creds.authToken
             }
 
-            r = req.post(self.url + "artist/create.php",
-                         data=values, auth=self.auth)
+            r = req.post(creds.apiUrl + "artist/create.php", data=values)
             httpResponse = r.status_code
 
             if httpResponse == 201:
@@ -64,32 +61,32 @@ class Inserter():
             "songID": song["songID"],
             "datePlayed": song["playedAt"],
             "playedBy": self.userID,
-            "songName": song["name"]
+            "songName": song["name"],
+            "jwt": creds.authToken
         }
 
-        r = req.post(self.url + 'played/create.php',
-                     data=values, auth=self.auth)
+        r = req.post(creds.apiUrl + 'played/create.php', data=values)
         httpResponse = r.status_code
 
         if httpResponse == 201:
             printc("Added song as played:", "green",
-                   song["name"], "white", self.userID, "white")
+                   song["name"], "white", self.username, "white")
             return True
         elif httpResponse == 503:
             pass
         else:
             printc("Failed to add song as played:", "red",
-                   song["name"], "white", self.userID, "white")
+                   song["name"], "white", self.username, "white")
 
     def linkArtistToSong(self, song):
         for artist in song["artists"]:
             values = {
                 "songID": song["songID"],
-                "artistID": artist["artistID"]
+                "artistID": artist["artistID"],
+                "jwt": creds.authToken
             }
 
-            r = req.post(self.url + "song/linkArtistToSong.php",
-                         data=values, auth=self.auth)
+            r = req.post(creds.apiUrl + "song/linkArtistToSong.php", data=values)
             httpResponse = r.status_code
 
             if httpResponse == 201:
@@ -110,11 +107,11 @@ class Inserter():
             "primaryArtistID": album["primaryArtist"],
             "url": album["url"],
             "img": album["img"],
-            "albumType": album["albumType"]
+            "albumType": album["albumType"],
+            "jwt": creds.authToken
         }
 
-        r = req.post(self.url + "album/create.php",
-                     data=values, auth=self.auth)
+        r = req.post(creds.apiUrl + "album/create.php", data=values)
         httpResponse = r.status_code
 
         if httpResponse == 201:
@@ -122,7 +119,7 @@ class Inserter():
                    album["name"], "white")
 
             songs = fetcher.Fetcher(
-                self.userID).getAlbumSongs(values["albumID"], values["img"])
+                self.userID, self.username).getAlbumSongs(values["albumID"], values["img"])
             self.runAlbumSongs(songs)
         elif httpResponse == 503:
             pass
@@ -141,7 +138,7 @@ class Inserter():
     def run(self, songs):
         # If songs is an boolean than it didn't get an result and print an error
         if isinstance(songs, bool):
-            printc("Failed to run inserters:", "red", self.userID, "white")
+            printc("Failed to run inserters:", "red", self.username, "white")
         else:
             self.songs = songs
             added = 0

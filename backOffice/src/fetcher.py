@@ -7,9 +7,10 @@ from printer import printc
 
 
 class Fetcher():
-    def __init__(self, userID):
+    def __init__(self, userID, username):
         self.userID = userID
-        self.cacher = caching.Caching(self.userID)
+        self.username = username
+        self.cacher = caching.Caching(self.userID, username)
 
     # Get the auth token from the cache file
     # (Might not need this as we might check this before running this)
@@ -27,12 +28,12 @@ class Fetcher():
                 return spotipy.Spotify(auth=token)
             else:
                 printc("Failed to get cache file for user:",
-                       "red", self.userID, "white")
+                       "red", self.username, "white")
                 return False
 
         except Exception as e:
             printc("Failed to get token for user:", "red",
-                   self.userID, "white", e, "white")
+                   self.username, "white", e, "white")
             return False
 
     # Get the songs
@@ -44,7 +45,7 @@ class Fetcher():
             else:
                 self.cacher.makeFile()
                 printc("Failed to get results for user:",
-                       "red", self.userID, "white")
+                       "red", self.username, "white")
 
             if result:
                 return result
@@ -179,8 +180,11 @@ class Fetcher():
     # Checks if the artists already has an image. If the artist already have an image than don't add the artist because we already have it in the database
     # TODO: If the artist exists but doesn't yet have an image than try to update the img
     def artistHasImg(self, artistID):
-        r = req.post(creds.apiUrl + "artist/getImage.php",
-                     data={"artistID": artistID})
+        data = {
+            "artistID": artistID
+        }
+
+        r = req.get(creds.apiUrl + "artist/getImage.php", data)
         httpResponse = r.status_code
 
         if httpResponse == 200:

@@ -50,7 +50,7 @@ if ($username_exists && password_verify($_POST["password"], $user->password)) {
 		array(
 			array(
 				"message" => "successful login", 
-				//"jwt" => $jwt,
+				"jwt" => $jwt,
 				"userID" => $user->id,
 				"username" => $user->username,
 				"image" => $user->img

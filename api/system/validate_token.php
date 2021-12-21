@@ -25,7 +25,10 @@ function validateToken() {
 	// Get the token
 	if (!empty($_GET["jwt"])) {
 		$data = $_GET["jwt"];
-	} else if (!empty($_COOKIE["jwt"])) {
+	} else if (!empty($_POST["jwt"])) {
+		$data = $_POST["jwt"];
+	}
+   	else if (!empty($_COOKIE["jwt"])) {
 		$data = $_COOKIE["jwt"];
 	}
 	
