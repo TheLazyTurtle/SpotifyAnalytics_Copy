@@ -89,11 +89,12 @@ function fetchSliderData(dates, sliderInfo, timeFrame, type) {
     var id = sliderInfo.id
     var minDate = dates.minDate
     var maxDate = dates.maxDate
+    var userId = null
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: api,
-        data: { minDate: minDate, maxDate: maxDate, amount: 1 },
+        data: { minDate: minDate, maxDate: maxDate, amount: 1, userID: userId},
         success: function (data) {
             // If the result contains time in ms convert it to usable date (hh:mm:ss)
 			if ("totalTime" in data[0]) {

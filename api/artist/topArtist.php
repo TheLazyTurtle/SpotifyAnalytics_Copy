@@ -6,9 +6,14 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/artists.php";
 require "../config/core.php";
+
+if (!$tokenUserID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and artists object
 $database = new Database();
@@ -16,10 +21,10 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get posted data
-$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
-$minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
-$maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
-$amount = isset($_POST["amount"]) && !empty($_POST["amount"]) ? $_POST["amount"] : 10;
+$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
+$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
+$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
+$amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
 
 // Query the results
 $stmt = $artist->topArtist($userID, $minDate, $maxDate, $amount);

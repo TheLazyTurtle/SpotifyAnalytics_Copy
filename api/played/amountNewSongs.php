@@ -6,9 +6,14 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/played.php";
 require "../config/core.php";
+
+if(!$tokenUserID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and songs object
 $database = new Database();
@@ -16,9 +21,9 @@ $db = $database->getConnection();
 $song = new Played($db);
 
 // Get posted data
-$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
-$minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
-$maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
+$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
+$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
+$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 
 // Query the results
 $stmt = $song->newSongs($userID, $minDate, $maxDate);

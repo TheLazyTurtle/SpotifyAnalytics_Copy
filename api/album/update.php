@@ -6,8 +6,13 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+include '../system/validate_token.php';
 include '../config/database.php';
 include '../objects/album.php';
+
+if (!($userID = validateToken()) || $userID != "system") {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and album object
 $database = new Database();

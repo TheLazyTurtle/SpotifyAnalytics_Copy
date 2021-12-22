@@ -15,8 +15,8 @@ $db = $database->getConnection();
 $song = new Song($db);
 
 // Get the keywords
-$songName = isset($_POST["song"]) && !empty($_POST["song"]) ? $_POST["song"] : "%";
-$artist = isset($_POST["artist"]) && !empty($_POST["artist"]) ? $_POST["artist"] : "%";
+$songName = isset($_GET["song"]) && !empty($_GET["song"]) ? $_GET["song"] : "%";
+$artist = isset($_GET["artist"]) && !empty($_GET["artist"]) ? $_GET["artist"] : "%";
 
 // Get songs
 $stmt = $song->searchByArtist($songName, $artist);

@@ -7,9 +7,13 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Get db connection and get song object
+require '../system/validate_token.php';
 require '../config/database.php';
-require '../config/authBackEnd.php';
 require '../objects/album.php';
+
+if(!($userID = validateToken()) || $userID != "system") {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db connection and make new album object
 $database = new Database();
@@ -19,7 +23,7 @@ $album = new Album($db);
 // Get posted data
 $data = $_POST;
 
-// Chekc if data is complete
+// Check if data is complete
 if (
 	!empty($data["albumID"]) &&
 	!empty($data["name"]) &&

@@ -145,7 +145,7 @@ class Played
 	}
 
 	// Gets the played per day graph
-	function playedPerDay($userID, $songID, $minDate, $maxDate)
+	function playedPerDay($userID, $song, $artist, $minDate, $maxDate)
 	{
 		// Calculate difference between minDate and maxDate in days
 		$origin = new DateTime($minDate);
@@ -153,9 +153,12 @@ class Played
 		$interval = $origin->diff($target);
 		$days = (int)$interval->format("%R%a");
 
-		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 AS date, count(*) AS times 
-			FROM played p
-			WHERE songID LIKE ?
+		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 as date, count(*) as times
+			from played p
+			INNER JOIN artist_has_song ahs on p.songID = ahs.songID
+			RIGHT JOIN artist a ON a.artistID = ahs.artistID
+			WHERE songName LIKE ?
+			AND a.name like ?
 			AND p.playedBy LIKE ?
 			AND p.datePlayed BETWEEN ? AND ?";
 
@@ -171,14 +174,16 @@ class Played
 
 		// Clean input
 		$userID = htmlspecialchars(strip_tags($userID));
-		$songID = htmlspecialchars(strip_tags($songID));
+		$song = htmlspecialchars(strip_tags($song));
+		$artist = htmlspecialchars(strip_tags($artist));
 		$minDate = htmlspecialchars(strip_tags($minDate));
 		$maxDate = htmlspecialchars(strip_tags($maxDate));
 
-		$stmt->bindParam(1, $songID);
-		$stmt->bindParam(2, $userID);
-		$stmt->bindParam(3, $minDate);
-		$stmt->bindParam(4, $maxDate);
+		$stmt->bindParam(1, $song);
+		$stmt->bindParam(2, $artist);
+		$stmt->bindParam(3, $userID);
+		$stmt->bindParam(4, $minDate);
+		$stmt->bindParam(5, $maxDate);
 		$stmt->execute();
 
 		return $stmt;

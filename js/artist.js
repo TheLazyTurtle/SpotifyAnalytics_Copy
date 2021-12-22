@@ -20,11 +20,10 @@ function getArtistInfo() {
 
     $.ajax({
         url: "/api/artist/read_one.php",
-        type: "POST",
+        type: "GET",
         data: { artist: artist },
         success: function (result) {
             setArtistInfo(result)
-            //showArtistsTopSongs()
             showSongs()
         },
         error: function (error) {
@@ -59,7 +58,6 @@ function showSongs() {
 }
 
 // This will show the top Artists songs
-// TODO: Make it show how many times you have listend to the song compared to the total ex. 143/1023
 function showArtistsTopSongs() {
     // Make a table where all the songs will be placed in
     let table = document.createElement("table")
@@ -70,7 +68,7 @@ function showArtistsTopSongs() {
     // Get the top songs
     $.ajax({
         url: "/api/artist/topSongs.php",
-        type: "POST",
+        type: "GET",
         data: { artistID: artistID },
         success: function (result) {
             topSongs = result
@@ -227,7 +225,7 @@ function showMoreSongs() {
 function showArtistAlbums() {
     $.ajax({
         url: "/api/album/search.php",
-        type: "POST",
+        type: "GET",
         data: { artistID: artistID },
         success: function (result) {
             console.table(result)

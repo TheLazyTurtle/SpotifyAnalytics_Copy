@@ -1,14 +1,15 @@
 import os
 import requests
 import json
+import creds
 from shutil import copy
 from printer import printc
-from creds import apiUrl
 
 
 class Caching():
-    def __init__(self, userID):
+    def __init__(self, userID, username):
         self.userID = userID
+        self.username = username
 
     # Checks if the user has a cache file
     def fileExists(self):
@@ -26,11 +27,12 @@ class Caching():
         try:
             curPath = os.path.dirname(os.path.realpath(__file__))
             tempFile = curPath + "/.cache-template"
-            destFile = curPath + "/.cache-" + self.userID
+            destFilename = ".cache-" + self.userID
+            destFile = curPath + "/" + destFilename
 
             copy(tempFile, destFile)
 
-            self.editFile(".cache-"+self.userID, self.getAuthTokens())
+            self.editFile(destFilename, self.getAuthTokens())
 
         except Exception as e:
             return False
@@ -38,11 +40,16 @@ class Caching():
     # Checks if a user has cache files
     def getAuthTokens(self):
         try:
-            r = requests.post(
-                apiUrl + "user/getAuthTokens.php", data={"userID": self.userID})
-            result = json.loads(r.text)
+            data = {
+                "userID": self.userID,
+                "jwt": creds.authToken
+            }
 
-            return result["records"][0]
+            r = requests.get(creds.apiUrl + "user/getAuthTokens.php", data)
+            result = json.loads(r.text)
+            print(result)
+
+            return result[0]
         except Exception as e:
             printc("Failed to get auth tokens for user:",
                    "red", self.userID, "white", e, "white")

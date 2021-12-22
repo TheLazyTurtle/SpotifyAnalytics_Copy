@@ -16,8 +16,8 @@ $album = new Album($db);
 $song = new Song($db);
 $artist = new Artist($db);
 
-$name = isset($_POST["name"]) ? $_POST["name"] : Null;
-$albumID = isset($_POST["albumID"]) ? $_POST["albumID"] : Null;
+$name = isset($_GET["name"]) ? $_GET["name"] : Null;
+$albumID = isset($_GET["albumID"]) ? $_GET["albumID"] : Null;
 
 if ($name != Null) {
 	$album->name = $name;

@@ -6,9 +6,14 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/played.php";
 require "../config/core.php";
+
+if (!$userID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and graphs object
 $database = new Database();
@@ -16,11 +21,12 @@ $db = $database->getConnection();
 $graph = new Played($db);
 
 // Get posted data 
-$userID = isset($_POST["userID"]) ? $_POST["userID"] : $_SESSION["userID"];
-$minPlayed = isset($_POST["minPlayed"]) && !empty($_POST["minPlayed"]) ? $_POST["minPlayed"] : $minPlayed_def;
-$maxPlayed = isset($_POST["maxPlayed"]) && !empty($_POST["maxPlayed"]) ? $_POST["maxPlayed"] : $maxPlayed_def;
-$minDate = isset($_POST["minDate"]) ? $_POST["minDate"] : $minDate_def;
-$maxDate = isset($_POST["maxDate"]) ? $_POST["maxDate"] : $maxDate_def;
+//TODO: Check if you are actually following this person because otherwise you can view other peoples data when their profile is private
+$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $userID;
+$minPlayed = isset($_GET["minPlayed"]) && !empty($_GET["minPlayed"]) ? $_GET["minPlayed"] : $minPlayed_def;
+$maxPlayed = isset($_GET["maxPlayed"]) && !empty($_GET["maxPlayed"]) ? $_GET["maxPlayed"] : $maxPlayed_def;
+$minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
+$maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 
 // Query results
 $stmt = $graph->allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate);

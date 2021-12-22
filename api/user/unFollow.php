@@ -9,8 +9,13 @@ header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers,
 session_start();
 
 // Get db connection and get song object
+require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/user.php';
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make database and user object
 $database = new Database();
@@ -18,8 +23,8 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get posted data
-$userToUnFollow = $_POST["userToUnFollow"];
-$user->id = $_SESSION["userID"];
+$userToUnFollow = !empty($_POST["userToUnFollow"]) ? $_POST["userToUnFollow"] : die(json_encode(array("message" => "no user provided")));
+$user->id = $tokenUserId;
 
 // Check if data is empty
 if (!empty($userToUnFollow) &	!empty($user->id)) {

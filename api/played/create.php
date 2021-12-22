@@ -7,9 +7,13 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Get db connection and get played object
+require '../system/validate_token.php';
 require '../config/database.php';
-require '../config/authBackEnd.php';
 require '../objects/played.php';
+
+if (!($tokenUserID = validateToken()) || $tokenUserID != "system"){
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db connection and make new played object
 $database = new Database();

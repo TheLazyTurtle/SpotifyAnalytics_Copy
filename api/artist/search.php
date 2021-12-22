@@ -13,7 +13,7 @@ $db = $database->getConnection();
 $artist = new Artist($db);
 
 // Get the keywords
-$keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "%";
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "%";
 
 // Get the artist
 $stmt = $artist->search($keyword);

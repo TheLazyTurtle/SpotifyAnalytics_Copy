@@ -13,7 +13,7 @@ $db = $database->getConnection();
 $song = new Song($db);
 
 // Get the keyword
-$keyword = isset($_POST["keyword"]) ? $_POST["keyword"] : "";
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
 
 // Get the songs 
 $stmt = $song->search($keyword);

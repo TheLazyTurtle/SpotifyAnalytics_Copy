@@ -100,12 +100,28 @@ class User
 		return false;
 	}
 
+	function getUserIDByusername($username) {
+		$query = "SELECT userID FROM user WHERE username LIKE ?";
+		$stmt = $this->conn->prepare($query);
+
+		$username = htmlspecialchars(strip_tags($username));
+		$stmt->bindParam(1, $username);
+
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return $userID;
+		}
+	}
+
 	// This will get all usefull info from the user
 	function read_one()
 	{
 		$query = "SELECT * FROM user WHERE ";
 
-		if (isset($this->username)) {
+		if (isset($this->username) && $this->username != null) {
 			$query = $query . "username LIKE ?";
 			$stmt = $this->conn->prepare($query);
 
@@ -224,7 +240,7 @@ class User
 	// Get one user filterSetting
 	function readOneFilterSetting($userID, $name, $graphID)
 	{
-		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ?";
+		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ?AND name = ?";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
@@ -233,6 +249,7 @@ class User
 		// Bind values
 		$stmt->bindParam(1, $userID);
 		$stmt->bindParam(2, $graphID);
+		$stmt->bindParam(3, $name);
 		$stmt->execute();
 		return $stmt;
 	}
@@ -401,6 +418,22 @@ class User
 			} else {
 				return False;
 			}
+		}
+	}
+
+	function isAdmin($userID) {
+		$query = "SELECT COUNT(*) as count FROM user WHERE userID = ? AND isAdmin = 1";
+		$stmt = $this->conn->prepare($query);
+
+		$userID = htmlspecialchars(strip_tags($userID));
+
+		$stmt->bindParam(1, $userID);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return $count > 0;
 		}
 	}
 

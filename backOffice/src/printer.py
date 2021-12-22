@@ -1,7 +1,17 @@
 from termcolor import colored
 from datetime import datetime
+import colorama
+
+colorama.init()
+
+def printc(*args):
+    string = colored(datetime.now().strftime("%H:%M:%S") + " -", "white")
+
+    for x in range(0, len(args), 2):
+        try:
+            string += " " + colored(args[x], args[x + 1])
+        except Exception:
+            string += " " + colored(args[x], "white")
 
 
-def printc(m1, c1, m2="", c2="white", m3="", c3="white"):
-    print(colored(datetime.now().strftime("%H:%M:%S") + " -", "white"),
-          colored(m1, c1), colored(m2, c2), colored(m3, c3))
+    print(string)

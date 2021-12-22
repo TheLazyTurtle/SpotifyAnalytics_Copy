@@ -18,13 +18,22 @@ $user = new User($db);
 // Get posted data
 $data = $_POST;
 
-// set user values
-$user->id = $data['userID'];
-$user->username = $data['username'];
-$user->firstname = $data['firstname'];
-$user->lastname = $data['lastname'];
-$user->email = $data['email'];
-$user->password = $data['password'];
+if (
+	!empty($data->id) &&
+	!empty($data->username) &&
+	!empty($data->firstname) &&
+	!empty($data->lastname) &&
+	!empty($data->email) &&
+	!empty($data->password)
+) {
+	// set user values
+	$user->id = $data['userID'];
+	$user->username = $data['username'];
+	$user->firstname = $data['firstname'];
+	$user->lastname = $data['lastname'];
+	$user->email = $data['email'];
+	$user->password = $data['password'];
+}
 
 // Create the user
 if (

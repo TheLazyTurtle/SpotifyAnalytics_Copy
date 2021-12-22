@@ -1,153 +1,20 @@
-// This will contain all the graphs
+// This will hold all the graphs
 let graphs = []
 
-// TODO: Refactor these things so that there is not a huge list of params passed
-// ... in but just an object
-// This will get all the graphs from the database
-function getGraphs() {
-    $.ajax({
+async function getGraphs() {
+    return $.ajax({
         url: "/api/graph/read.php",
-        type: "POST",
-        success: function (result) {
-            for (var i = 0; i < result.length; i++) {
-                let res = result[i]
-                let containerID = res["containerID"]
-                let title = res["title"]
-                let titleX = res["titleX"]
-                let titleY = res["titleY"]
-                let xValueType = res["xValueType"]
-                let api = res["api"]
-                let type = res["type"]
-                let graphID = res["id"]
-
-                makeDiv(containerID)
-
-                getFilterSettings(
-                    containerID,
-                    title,
-                    titleX,
-                    titleY,
-                    xValueType,
-                    api,
-                    type,
-                    graphID
-                )
-            }
-        },
+        type: "GET",
+        async: true
     })
 }
 
-// This will get all the settings from the user for the graph thats passed in
-function getFilterSettings(
-    containerID,
-    title,
-    titleX,
-    titleY,
-    xValueType,
-    api,
-    type,
-    graphID
-) {
-    $.ajax({
-        url: "/api/user/readOneFilterSetting.php",
-        type: "POST",
-        data: { graphID: graphID },
-        success: function (results) {
-            var filterSettings = {}
+async function buildGraphs(userId = null) {
+    let graphsData = await getGraphs();
 
-            if (userID) {
-                filterSettings["userID"] = userID
-            } else {
-                for (var i = 0; i < results.length; i++) {
-                    var res = results[i]
-
-                    filterSettings[res["name"]] = res["value"]
-                }
-            }
-
-            getInputFields(
-                containerID,
-                title,
-                titleX,
-                titleY,
-                xValueType,
-                api,
-                filterSettings,
-                type,
-                graphID
-            )
-        },
-        error: function () {
-            $.ajax({
-                url: "api/user/createFilterSettings.php",
-                type: "POST",
-                success: function () {
-                    getFilterSettings(
-                        containerID,
-                        title,
-                        titleX,
-                        titleY,
-                        xValueType,
-                        api,
-                        type,
-                        graphID
-                    )
-                },
-            })
-        },
-    })
+    for (let i = 0; i < graphsData.length; i++) {
+        let gd = graphsData[i];
+        graphs[gd.title] = new Graph(gd.id, gd.containerID, gd.title, gd.titleX, gd.titleY, gd.api, gd.type, gd.xValueType, userId)
+        graphs[gd.title].buildGraph()
+    }
 }
-
-// This will get the input fields that are part of the graph
-function getInputFields(
-    containerID,
-    title,
-    titleX,
-    titleY,
-    xValueType,
-    api,
-    filterSettings,
-    type,
-    graphID
-) {
-    $.ajax({
-        url: "/api/graph/readInputfield.php",
-        data: { graphID: graphID },
-        success: function (results) {
-            var inputFields = {}
-
-            for (var i = 0; i < results.length; i++) {
-                res = results[i]
-                inputFields[i] = {}
-                inputFields[i]["index"] = i
-                inputFields[i]["name"] = res["name"]
-                inputFields[i]["placeholder"] = res["value"]
-                inputFields[i]["type"] = res["type"]
-                inputFields[i]["value"] = filterSettings[res["name"]]
-            }
-
-            getGraphData(
-                graphID,
-                containerID,
-                title,
-                titleX,
-                titleY,
-                xValueType,
-                api,
-                filterSettings,
-                inputFields,
-                type
-            )
-        },
-    })
-}
-
-// This makes the div where the graph will be placed in
-function makeDiv(containerID) {
-    let div = document.createElement("div")
-    div.className = "main"
-    div.id = containerID + "-main"
-    $(".content").append(div)
-}
-
-getGraphs()

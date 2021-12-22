@@ -50,7 +50,7 @@ class Graph
 		$this->api = $row["api"];
 	}
 
-	// This will get inputfields
+	// This will get inputFields
 	function read_inputfield($graphID)
 	{
 		$query = "SELECT * FROM inputfield WHERE graphID = ?";

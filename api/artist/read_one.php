@@ -15,7 +15,7 @@ $db = $database->getConnection();
 
 // Make new artist object
 $artist = new Artist($db);
-$artist->name = isset($_POST["artist"]) ? $_POST["artist"] : die();
+$artist->name = isset($_GET["artist"]) ? $_GET["artist"] : die(json_encode(array("message" => "No valid artist name")));
 
 // Fetch the one artist
 $artist->readOne();

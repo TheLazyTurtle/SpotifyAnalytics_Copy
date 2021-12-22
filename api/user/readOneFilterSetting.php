@@ -6,8 +6,13 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/user.php";
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and user object
 $database = new Database();
@@ -15,9 +20,9 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get input
-$userID = isset($_SESSION["userID"]) ? $_SESSION["userID"] : die();
-$name = isset($_POST["name"]) ? $_POST["name"] : "";
-$graphID = isset($_POST["graphID"]) ? $_POST["graphID"] : "";
+$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserId;
+$name = isset($_GET["name"]) ? $_GET["name"] : "";
+$graphID = isset($_GET["graphID"]) ? $_GET["graphID"] : "";
 
 // Query the filterSettings
 $stmt = $user->readOneFilterSetting($userID, $name, $graphID);

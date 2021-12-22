@@ -6,8 +6,13 @@ header("Access-control-Allow_Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
+require "../system/validate_token.php";
 require "../config/database.php";
 require "../objects/user.php";
+
+if (!$tokenUserID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make db and user object
 $database = new Database();
@@ -15,7 +20,7 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get input
-$userID = isset($_POST["userID"]) && !empty($_POST["userID"]) ? $_POST["userID"] : die();
+$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
 
 // Query the auth tokens
 $stmt = $user->getAuthTokens($userID);
@@ -24,7 +29,6 @@ $num = $stmt->rowCount();
 // If results
 if ($num > 0) {
 	$tokens = array();
-	$tokens["records"] = array();
 
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		extract($row);
@@ -34,7 +38,7 @@ if ($num > 0) {
 			"refresh" => $refreshToken,
 			"expire" => $ExpireDate
 		);
-		array_push($tokens["records"], $token);
+		array_push($tokens, $token);
 	}
 
 	// Set response to ok

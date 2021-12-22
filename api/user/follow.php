@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Require hearders
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset-UTF-8");
@@ -6,11 +7,14 @@ header("Access-Control-Allow_Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-session_start();
-
 // Get db connection and get song object
+require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/user.php';
+
+if (!$tokenUserID = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Make database and user object
 $database = new Database();
@@ -18,8 +22,8 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get posted data
+$user->id = $tokenUserID;
 $userToFollow = $_POST["userToFollow"];
-$user->id = $_SESSION["userID"];
 
 // Check if data is empty
 if (!empty($userToFollow) &	!empty($user->id)) {
