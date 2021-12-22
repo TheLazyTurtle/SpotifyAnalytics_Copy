@@ -9,6 +9,7 @@ class Inserter():
         self.userID = userID
         self.username = username
         self.songs = []
+        self.lastInserted = []
 
     def insertSong(self, song):
         values = {
@@ -28,7 +29,7 @@ class Inserter():
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added song:", "green", song["name"])
+            printc("Added song:", "green", song["name"], "white")
         elif httpResponse == 503:
             pass
         else:
@@ -69,8 +70,7 @@ class Inserter():
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added song as played:", "green",
-                   song["name"], "white", self.username, "white")
+            printc("Added song as played:", "green", song["name"], "white", "-", "white", self.username, "white")
             return True
         elif httpResponse == 503:
             pass
@@ -141,15 +141,20 @@ class Inserter():
             printc("Failed to run inserters:", "red", self.username, "white")
         else:
             self.songs = songs
-            added = 0
 
             for song in self.songs:
-                if self.markAsPlayed(song):
-                    added += 1
-                self.insertSong(song)
-                self.insertArtist(song)
-                self.linkArtistToSong(song)
-                self.insertAlbum(song)
+                if song["playedAt"] not in self.lastInserted:
+                    self.markAsPlayed(song)
+                    self.insertSong(song)
+                    self.insertArtist(song)
+                    self.linkArtistToSong(song)
+                    self.insertAlbum(song)
 
-            if added == len(self.songs):
-                return True
+                    # This is a performance thingy where we will only send the data that is needed to be send
+                    if (len(self.lastInserted) >= 50):
+                        printc("empting list", "green", self.username, "white")
+                        self.lastInserted.deque()
+                    self.lastInserted.append(song["playedAt"]) 
+
+
+

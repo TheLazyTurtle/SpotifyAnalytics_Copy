@@ -26,9 +26,10 @@ class User():
                 songs = self.fetcher.run(50)
                 self.inserter.run(songs)
 
+            except KeyboardInterrupt:
+                exit()
             except Exception as e:
-                printc("Failed to get songs for:", "red",
-                       self.username, "white", e, "white")
+                printc("Failed to get songs for:", "red", self.username, "white", e.stacktrace, "white")
                 continue
 
             sleep(3600)

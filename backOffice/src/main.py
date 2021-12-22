@@ -23,12 +23,13 @@ def getUsers(token):
 
 def addUser(usr):
     newUser = user.User(usr['userID'], usr["username"])
-    users.append(usr['userID'])
 
-    printc('Stared fetching for:', 'green', usr['userID'], 'white')
+    printc('Stared fetching for:', 'green', usr['username'], 'white')
 
     x = threading.Thread(target=newUser.run)
+    users[usr['userID']] = x
     x.start()
+
 
 #TODO: Add some error checking
 def getAuthTokens():
@@ -40,10 +41,15 @@ def getAuthTokens():
 
 
 # This holds all the active users
-users = []
+users = {}
 
 # This will get all users every hour
 while True:
-    creds.authToken = getAuthTokens()
-    getUsers(creds.authToken)
-    sleep(3600)
+    try:
+        creds.authToken = getAuthTokens()
+        getUsers(creds.authToken)
+        sleep(3600)
+    except KeyboardInterrupt:
+        for x in users:
+            users[x].join()
+        exit()
