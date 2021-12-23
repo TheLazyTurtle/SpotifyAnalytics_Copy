@@ -3,7 +3,7 @@ require "src/header.php";
 
 ?>
 <link rel="stylesheet" type="text/css" href="/css/social.css">
-<script src="/js/profile.js"></script>
+<script src="js/profile.js"></script>
 <script src="js/elements/Button.js"></script>
 <script src="js/elements/InputField.js"></script>
 <script src="js/Graph.js"></script>
@@ -23,6 +23,7 @@ require "src/header.php";
 				<h3 class="followers"></h3>
 				<h3 class="following"></h3>
 			</div>
+			<button id="settings" class="btn">settings</button>
 		</div>
 	</div>
 
@@ -31,11 +32,12 @@ require "src/header.php";
 		<div class="selector-item">
 			<button class="btn selector" id="graphs">graphs</button>
 		</div>
+	<!--  	
 		<div class="selector-item">
 			<button class="btn selector" id="memories">memories</button>
 		</div>
+	-->
 	</div>
 
-	<div class="content">
-	</div>
+	<div class="content"/>
 </div>
