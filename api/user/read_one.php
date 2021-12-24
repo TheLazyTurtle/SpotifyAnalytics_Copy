@@ -13,6 +13,7 @@ require_once '../config/database.php';
 require_once '../objects/user.php';
 
 $tokenUserId = validateToken();
+$extended = False;
 
 // Make db and user object
 $database = new Database();
@@ -23,6 +24,7 @@ if (!empty($_GET["username"])) {
 	$hasViewingRights = hasViewingRights($tokenUserId, $_GET["username"]);
 } else {
 	$user->id = isset($tokenUserId) ? $tokenUserId : null;
+	$extended = True;
 }
 
 // Query user
@@ -32,14 +34,30 @@ $user->getFollowingCount();
 
 // Found data
 if ($user->id != null) {
-	$userArr = array(
-		"id" => $user->id,
-		"username" => $user->username,
-		"following" => $user->following,
-		"followers" => $user->followers,
-		"img" => $user->img,
-		"viewingRights" => $hasViewingRights
-	);
+	// If the user gets their own stuff get everything.
+	// Else just get the basic stuff
+	if ($extended) {
+		$userArr = array(
+			"id" => $user->id,
+			"username" => $user->username,
+			"following" => $user->following,
+			"followers" => $user->followers,
+			"img" => $user->img,
+			"firstname" => $user->firstname,
+			"lastname" => $user->lastname,
+			"email" => $user->email,
+			"privateAccount" => $user->privateAccount
+		);
+	} else {
+		$userArr = array(
+			"id" => $user->id,
+			"username" => $user->username,
+			"following" => $user->following,
+			"followers" => $user->followers,
+			"img" => $user->img,
+			"viewingRights" => $hasViewingRights
+		);
+	}
 
 	// Set response to ok
 	http_response_code(200);

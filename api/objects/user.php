@@ -17,6 +17,7 @@ class User
 	public $isAdmin;
 	public $following;
 	public $followers;
+	public $privateAccount;
 
 	public function __construct($db)
 	{
@@ -48,11 +49,7 @@ class User
 		$stmt->bindParam(6, $passwordHash);
 
 		// Execute query and check if success
-		if ($stmt->execute()) {
-			return true;
-		} else {
-			return false;
-		}
+		return $stmt->execute();
 	}
 
 	// Update the user record
@@ -146,6 +143,7 @@ class User
 			$this->email = $email;
 			$this->isAdmin = $isAdmin;
 			$this->img = $img;
+			$this->privateAccount = $privateAccount;
 		}
 	}
 
@@ -440,18 +438,18 @@ class User
 	function createFilterSettings($userID)
 	{
 		$query = "INSERT INTO filterSetting (graphID, userID, name, value) VALUES 
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxPlayed', ''),
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minPlayed', '0'),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'amount', 10),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'artist', ''),
-			('3', 'icq6mdabqpzvx0wpc1w4hhxmp', 'amount', 10),
-			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
-			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
-			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'song', '')";
+			('1', ?, 'maxDate', '2099-01-01'),
+			('1', ?, 'maxPlayed', ''),
+			('1', ?, 'minDate', '2020-01-01'),
+			('1', ?, 'minPlayed', '0'),
+			('2', ?, 'maxDate', '2099-01-01'),
+			('2', ?, 'minDate', '2020-01-01'),
+			('2', ?, 'amount', 10),
+			('2', ?, 'artist', ''),
+			('3', ?, 'amount', 10),
+			('4', ?, 'maxDate', '2099-01-01'),
+			('4', ?, 'minDate', '2020-01-01'),
+			('4', ?, 'song', '')";
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->bindParam(1, $userID);

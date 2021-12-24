@@ -3,6 +3,7 @@ require "src/header.php";
 
 ?>
 <link rel="stylesheet" type="text/css" href="/css/social.css">
+<link rel="stylesheet" type="text/css" href="/css/settings.css">
 <script src="js/profile.js"></script>
 <script src="js/elements/Button.js"></script>
 <script src="js/elements/InputField.js"></script>
@@ -23,7 +24,7 @@ require "src/header.php";
 				<h3 class="followers"></h3>
 				<h3 class="following"></h3>
 			</div>
-			<button id="settings" class="btn">settings</button>
+			<button id="settings-button" name="settingsButton" class="btn">settings</button>
 		</div>
 	</div>
 
@@ -39,5 +40,48 @@ require "src/header.php";
 	-->
 	</div>
 
-	<div class="content"/>
+	<div class="content"></div>
+</div>
+
+<!-- Setting thingy -->
+<div id="settings-wrapper" class="show">
+	<div class="settings-holder">
+		<div class="settings">
+			<div class="setting-item">
+				<label>Username:</label><br>
+				<input class="form-field" id="setting-username" name="username" placeholder="Username" type="text"/>
+			</div>
+			<div class="setting-item">
+				<label>Firstname:</label><br>
+				<input class="form-field" id="setting-firstname" name="firstname" placeholder="Firstname" type="text"/>
+			</div>
+			<div class="setting-item">
+				<label>Lastname:</label><br>
+				<input class="form-field" id="setting-lastname" name="lastname" placeholder="Lastname" type="text"/>
+			</div>
+			<div class="setting-item">
+				<label>Email:</label><br>
+				<input class="form-field" id="setting-email" name="email" placeholder="Email" type="email"/>
+			</div>
+			<div class="setting-item">
+				<label>Password:</label><br>
+				<input class="form-field" id="setting-password" name="password" placeholder="Password" type="password"/>
+			</div>
+			<div class="setting-item">
+				<label>Repeat password:</label><br>
+				<input class="form-field" id="setting-repeat-password" name="repeatPassword" placeholder="Repeat Password" type="password"/>
+			</div>
+			<div class="setting-item">
+				<label>Private Account</label>
+				<input name="privateAccount" id="setting-private" type="checkbox"/>
+			</div>
+			<div class="setting-item">
+				<input class="btn" name="cancel" type="submit" value="Cancel"/>
+				<input class="btn" name="submitChanges" type="submit" value="Submit"/>
+			</div>	
+			<div class="setting-item">
+				<p id="setting-status"></p>
+			</div>	
+		</div>
+	</div>
 </div>

@@ -19,12 +19,12 @@ $user = new User($db);
 $data = $_POST;
 
 if (
-	!empty($data->id) &&
-	!empty($data->username) &&
-	!empty($data->firstname) &&
-	!empty($data->lastname) &&
-	!empty($data->email) &&
-	!empty($data->password)
+	!empty($data["userID"]) &&
+	!empty($data["username"]) &&
+	!empty($data["firstname"]) &&
+	!empty($data["lastname"]) &&
+	!empty($data["email"]) &&
+	!empty($data["password"])
 ) {
 	// set user values
 	$user->id = $data['userID'];
@@ -33,6 +33,11 @@ if (
 	$user->lastname = $data['lastname'];
 	$user->email = $data['email'];
 	$user->password = $data['password'];
+} else {
+	// Set response to bad request
+	http_response_code(400);
+	echo json_encode(array("message" => "Data incomplete"));
+	die();
 }
 
 // Create the user
@@ -43,7 +48,7 @@ if (
 	!empty($user->lastname) &&
 	!empty($user->email) &&
 	!empty($user->password) &&
-	$user->create()
+    $user->create()
 ) {
 	// Set respones code to ok
 	http_response_code(200);

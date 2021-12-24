@@ -11,10 +11,6 @@ require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/user.php';
 
-if (!$tokenUserId = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
-
 // Make db and user object
 $database = new Database();
 $db = $database->getConnection();

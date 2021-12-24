@@ -14,7 +14,6 @@ async function getUserInfo() {
     await $.ajax({
         url: "/api/user/read_one.php",
         type: "GET",
-        data: { username: username },
         success: function (result) {
             setUserInfo(result)
         },
@@ -53,6 +52,64 @@ function setUserInfo(data) {
     // Set followers and following
     $(".followers").html("<b>" + data["followers"] + "</b> followers")
     $(".following").html("<b>" + data["following"] + "</b> following")
+
+	setUpdateProfileItems(data)
+}
+
+function setUpdateProfileItems(data) {
+	setProfileItem("username", data["username"])
+	setProfileItem("firstname", data["firstname"])
+	setProfileItem("lastname", data["lastname"])
+	setProfileItem("email", data["email"])
+	setProfileItem("private", data["privateAccount"], true)
+
+	onSettingButtonPress()
+}
+
+function setProfileItem(id, value, checkbox = false) {
+	if (checkbox) {
+		$("#setting-"+id)[0].checked = value
+	} else {
+		$("#setting-"+id)[0].value = value
+	}
+}
+
+function onSettingButtonPress() {
+	// If one of the buttons is pressed
+	$(".btn").click(function() {
+		let name = $(this)[0].name
+		if (name == "cancel") {
+			$("#settings-wrapper")[0].className = "hidden"
+		} else if (name == "submitChanges") {
+			updateSettings()
+		} else if (name == "settingsButton") {
+			$("#settings-wrapper")[0].className = "show"
+		}
+	})
+
+	// When clicked besides the main setting part close the screen
+	//$("#settings-wrapper").click(function() {
+		//$("#settings-wrapper")[0].className = "hidden"
+	//})
+}
+
+function updateSettings() {
+	const values = extractSettings()
+	console.table(values)
+}
+
+function extractSettings() {
+	const items = $(".setting-item")
+	let values = []
+
+	for (let i = 0; i < items.length -3; i++) {
+		let input = items[i].children[2]
+		const name = input.name
+		const value = input.value
+		values.push({name, value})
+	}
+
+	return values
 }
 
 // This will give the popup screen for a user to change their settings

@@ -49,8 +49,19 @@ if ($num > 0) {
 
 	echo json_encode($filterSettingsArr);
 } else {
-	// Set response to bad request
-	http_response_code(400);
+	$user->createFilterSettings($userID);
+	$filterSettingsArr = array();
 
-	echo json_encode(array("message" => "No results found"));
+	$filterSetting = array(
+		"graphID" => $graphID,
+		"userID" => $userID,
+		"name" => $name,
+		"value" => ""
+	);
+	array_push($filterSettingsArr, $filterSetting);
+
+	// Set response to bad request
+	http_response_code(200);
+
+	echo json_encode($filterSettingsArr);
 }

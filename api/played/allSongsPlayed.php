@@ -53,7 +53,7 @@ if ($num > 0) {
 	echo json_encode($resultsArr);
 } else {
 	// Set response to bad request 
-	http_response_code(400);
+	http_response_code(200);
 
-	echo json_encode(array("message" => "No results found"));
+	echo json_encode(null);
 }
