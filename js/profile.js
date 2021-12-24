@@ -95,7 +95,12 @@ function onSettingButtonPress() {
 
 function updateSettings() {
 	const values = extractSettings()
-	console.table(values)
+
+	$.ajax({
+		url: "api/user/update_user.php",
+		type: "POST",
+		data: values
+	})
 }
 
 function extractSettings() {

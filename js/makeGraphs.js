@@ -14,7 +14,7 @@ async function buildGraphs(userId = null) {
 
     for (let i = 0; i < graphsData.length; i++) {
         let gd = graphsData[i];
-        graphs[gd.title] = new Graph(gd.id, gd.containerID, gd.title, gd.titleX, gd.titleY, gd.api, gd.type, gd.xValueType, userId)
+        graphs[gd.title] = new Graph(gd.id, gd.containerID, gd.title, gd.titleX, gd.titleY, gd.api, gd.type, gd.xValueType, gd.dataType, userId)
         graphs[gd.title].buildGraph()
     }
 }

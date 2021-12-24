@@ -48,13 +48,15 @@ if ($url != "login" && $url != "register") {
 				<a href='/index.php'><i class="fas fa-home"></i></a>
 			</div>
 			<div class="col col-middel">
-				<a href='/src/search.php'><i class="fas fa-search"></i></a>
+				<a href='/search.php'><i class="fas fa-search"></i></a>
 			</div>
 			<div class="col col-middel">
-				<a href='/src/feed.php'><i class="far fa-images"></i></a>
+<!-- 
+				<a href='/feed.php'><i class="far fa-images"></i></a>
+ -->
 			</div>
 			<div class="col col-right">
-				<a href='/src/profile.php'><i class="fas fa-user-alt"></i></a>
+				<a href='/profile.php'><i class="fas fa-user-alt"></i></a>
 			</div>
 
 		</div>

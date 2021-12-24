@@ -7,6 +7,7 @@ $refreshToken = $_SESSION["refreshToken"];
 $expireTime = $_SESSION["expireTime"];
 $userID = $_SESSION["userID"];
 
+print_r($_SESSION);
 $url = $issuer . "api/user/setAuthTokens.php";
 $data = array(
 	"userID" => $userID,
