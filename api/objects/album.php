@@ -68,7 +68,12 @@ class Album
 			$this->name = htmlspecialchars(strip_tags($this->name));
 			$stmt->bindParam(1, $this->name);
 		} else if (isset($this->primaryArtistID)) {
-			$query = $query . "primaryArtistID = ? ORDER BY releaseDate DESC";
+			$query = $query . "albumID IN (
+				SELECT s.albumID FROM artist_has_song ahs
+				INNER JOIN song s ON s.songID = ahs.songID
+				RIGHT JOIN artist a ON a.artistID = ahs.artistID
+				WHERE a.artistID = ?)
+				ORDER BY releaseDate DESC";
 			$stmt = $this->conn->prepare($query);
 
 			$this->primaryArtistID = htmlspecialchars(strip_tags($this->primaryArtistID));
