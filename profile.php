@@ -4,6 +4,7 @@ require "src/header.php";
 ?>
 <link rel="stylesheet" type="text/css" href="/css/social.css">
 <link rel="stylesheet" type="text/css" href="/css/settings.css">
+<script src="js/settings.js"></script>
 <script src="js/profile.js"></script>
 <script src="js/elements/Button.js"></script>
 <script src="js/elements/InputField.js"></script>
