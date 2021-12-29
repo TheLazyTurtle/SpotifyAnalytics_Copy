@@ -68,7 +68,7 @@ function setUpdateProfileItems(data) {
 
 function setProfileItem(id, value, checkbox = false) {
 	if (checkbox) {
-		$("#setting-"+id)[0].checked = value
+		$("#setting-"+id)[0].checked = parseInt(value)
 	} else {
 		$("#setting-"+id)[0].value = value
 	}
@@ -99,8 +99,22 @@ function updateSettings() {
 	$.ajax({
 		url: "api/user/update_user.php",
 		type: "POST",
-		data: values
+		data: values,
+		success: function(result) {
+			$("#setting-status")[0].innerHTML = result["message"]
+			clearPasswordFields()
+		},
+		error: function(result) {
+			$("#setting-status")[0].innerHTML = result["responseJSON"]["message"]
+			clearPasswordFields()
+		}
 	})
+}
+
+function clearPasswordFields() {
+	$("#setting-password").val("");
+	$("#setting-repeat-password").val("");
+	$("#setting-old-password").val("");
 }
 
 function extractSettings() {
@@ -113,6 +127,9 @@ function extractSettings() {
 		const value = input.value
 		values.push({name, value})
 	}
+	const name = "privateAccount"
+	const value = items[7].children[1].checked
+	values.push({name, value})
 
 	return values
 }

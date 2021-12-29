@@ -283,7 +283,6 @@ class Graph {
 }
 
 function goToPage(data, dataType) {
-	console.log(dataType)
     if(dataType == "song") {
         let albumId = data.dataPoint.albumID
         let songName = data.dataPoint.label

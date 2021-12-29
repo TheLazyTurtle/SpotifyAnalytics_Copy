@@ -44,7 +44,7 @@ require "src/header.php";
 </div>
 
 <!-- Setting thingy -->
-<div id="settings-wrapper" class="show">
+<div id="settings-wrapper" class="hidden">
 	<div class="settings-holder">
 		<div class="settings">
 			<div class="setting-item">
@@ -64,6 +64,10 @@ require "src/header.php";
 				<input class="form-field" id="setting-email" name="email" placeholder="Email" type="email"/>
 			</div>
 			<div class="setting-item">
+				<label>Old password:</label><br>
+				<input class="form-field" id="setting-old-password" name="oldPassword" placeholder="Old Password" type="password"/>
+			</div>
+			<div class="setting-item">
 				<label>Password:</label><br>
 				<input class="form-field" id="setting-password" name="password" placeholder="Password" type="password"/>
 			</div>
@@ -73,14 +77,14 @@ require "src/header.php";
 			</div>
 			<div class="setting-item">
 				<label>Private Account</label>
-				<input name="privateAccount" id="setting-private" type="checkbox"/>
+				<input id="setting-private" name="privateAccount" type="checkbox"/>
 			</div>
 			<div class="setting-item">
 				<input class="btn" name="cancel" type="submit" value="Cancel"/>
 				<input class="btn" name="submitChanges" type="submit" value="Submit"/>
 			</div>	
 			<div class="setting-item">
-				<p id="setting-status"></p>
+				<label id="setting-status"></label>
 			</div>	
 		</div>
 	</div>

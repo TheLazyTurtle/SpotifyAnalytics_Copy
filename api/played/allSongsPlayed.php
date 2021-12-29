@@ -7,26 +7,36 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
 require "../system/validate_token.php";
-require "../config/database.php";
+require "../system/hasViewingRights.php";
+require_once "../config/database.php";
+require_once "../objects/user.php";
 require "../objects/played.php";
 require "../config/core.php";
 
-if (!$userID = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
+$tokenUserID = validateToken();
 
 // Make db and graphs object
 $database = new Database();
 $db = $database->getConnection();
 $graph = new Played($db);
+$user = new User($db);
 
 // Get posted data 
-//TODO: Check if you are actually following this person because otherwise you can view other peoples data when their profile is private
-$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $userID;
+$userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
 $minPlayed = isset($_GET["minPlayed"]) && !empty($_GET["minPlayed"]) ? $_GET["minPlayed"] : $minPlayed_def;
 $maxPlayed = isset($_GET["maxPlayed"]) && !empty($_GET["maxPlayed"]) ? $_GET["maxPlayed"] : $maxPlayed_def;
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
+
+// Check if you have viewing rights
+if (!$tokenUserID) {
+	$hasViewingRights = hasViewingRights($tokenUserID, $userID);
+	if (!$hasViewingRights) {
+		http_response_code(400);
+		echo json_encode(array("message" => "No viewing rights"));
+		die();
+	}
+}
 
 // Query results
 $stmt = $graph->allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate);

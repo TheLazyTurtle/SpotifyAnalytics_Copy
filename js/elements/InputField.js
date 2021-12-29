@@ -44,7 +44,6 @@ class InputField{
 			}
 		})
 
-
 		// If request is from user page than set reset the values
 		if (this.userId != null) {
 			for (var i = 0; i < data.length; i++) {

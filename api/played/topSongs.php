@@ -7,20 +7,21 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
 require "../system/validate_token.php";
-require "../config/database.php";
+require "../system/hasViewingRights.php";
+require_once "../config/database.php";
+require_once "../objects/user.php";
 require "../objects/played.php";
 require "../objects/songs.php";
 require "../config/core.php";
 
-if (!$tokenUserID = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
+$tokenUserID = validateToken();
 
 // Make db and songs object
 $database = new Database();
 $db = $database->getConnection();
 $played = new Played($db);
 $song = new Song($db);
+$user = new User($db);
 
 // Get posted data
 $userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
@@ -28,6 +29,16 @@ $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 $artist = isset($_GET["artist"]) && !empty($_GET["artist"]) ? $_GET["artist"] : "";
 $amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
+
+// Check if you have viewing rights
+if (!$tokenUserID) {
+	$hasViewingRights = hasViewingRights($tokenUserID, $userID);
+	if (!$hasViewingRights) {
+		http_response_code(400);
+		echo json_encode(array("message" => "No viewing rights"));
+		die();
+	}
+}
 
 // Query the results
 $stmt = $played->topSongs($userID, $artist, $minDate, $maxDate, $amount);

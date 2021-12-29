@@ -56,16 +56,19 @@ class User
 	function update()
 	{
 		// If password needs to be updated
-		$passwordSet = !empty($this->password) ? ", password = :password" : "";
+		$passwordSet = !empty($this->password) ? ", password = ?" : "";
+		$incPass = False;
 
 		// If no posted password, do not update the password
-		$query = "UPDATE temp_user 
+		$query = "UPDATE user 
 	    SET 
-		firstname = :firstname,
-		lastname = :lastname,
-		email = :email
+		firstname = ?,
+		lastname = ?,
+		email = ?,
+		username = ?,
+		privateAccount = ?
 		{$passwordSet}
-	    WHERE id = :id";
+	    WHERE userID = ?";
 
 		$stmt = $this->conn->prepare($query);
 
@@ -73,28 +76,32 @@ class User
 		$this->firstname = htmlspecialchars(strip_tags($this->firstname));
 		$this->lastname = htmlspecialchars(strip_tags($this->lastname));
 		$this->email = htmlspecialchars(strip_tags($this->email));
+		$this->privateAccount = $this->privateAccount == "true" ? 1 : 0;
 
 		// Bind values to query
-		$stmt->bindParam(':firstname', $this->firstname);
-		$stmt->bindParam(':lastname', $this->lastname);
-		$stmt->bindParam(':email', $this->email);
+		$stmt->bindParam(1, $this->firstname);
+		$stmt->bindParam(2, $this->lastname);
+		$stmt->bindParam(3, $this->email);
+		$stmt->bindParam(4, $this->username);
+		$stmt->bindParam(5, $this->privateAccount, PDO::PARAM_BOOL);
 
 		// Hash the password
 		if (!empty($this->password)) {
 			$this->password = htmlspecialchars(strip_tags($this->password));
 			$passwordHash = password_hash($this->password, PASSWORD_BCRYPT);
-			$stmt->bindParam(':password', $passwordHash);
+			$stmt->bindParam(6, $passwordHash);
+			$incPass = True;
 		}
 
 		// bind the id of the user to be edited
-		$stmt->bindParam(":id", $this->id);
-
-		// Execute query
-		if ($stmt->execute()) {
-			return true;
+		if ($incPass) {
+			$stmt->bindParam(7, $this->id);
+		} else {
+			$stmt->bindParam(6, $this->id);
 		}
 
-		return false;
+		// Execute query
+		return $stmt->execute();
 	}
 
 	function getUserIDByusername($username) {
@@ -143,7 +150,7 @@ class User
 			$this->email = $email;
 			$this->isAdmin = $isAdmin;
 			$this->img = $img;
-			$this->privateAccount = $privateAccount;
+			$this->privateAccount = $privateAccount == "1" ? False : True;
 		}
 	}
 
@@ -198,14 +205,21 @@ class User
 	// Checks if the username exists
 	function usernameExists()
 	{
-		$query = "SELECT * FROM user WHERE username = ? LIMIT 0,1";
+		$query = "";
+		$value = "";
+
+		if (isset($this->username)) {
+			$query = "SELECT * FROM user WHERE username = ? LIMIT 0,1";
+			$value = htmlspecialchars(strip_tags($this->username));
+		} else {
+			$query = "SELECT * FROM user WHERE userID = ? LIMIT 0,1";
+			$value = htmlspecialchars(strip_tags($this->id));
+		}
+
 		$stmt = $this->conn->prepare($query);
 
-		// Clean input
-		$this->username = htmlspecialchars(strip_tags($this->username));
-
 		// Bind Params
-		$stmt->bindParam(1, $this->username);
+		$stmt->bindParam(1, $value);
 		$stmt->execute();
 		$num = $stmt->rowCount();
 
@@ -419,7 +433,7 @@ class User
 		}
 	}
 
-	function isAdmin($userID) {
+	function checkIfAdmin($userID) {
 		$query = "SELECT COUNT(*) as count FROM user WHERE userID = ? AND isAdmin = 1";
 		$stmt = $this->conn->prepare($query);
 
@@ -432,6 +446,23 @@ class User
 			extract($row);
 
 			return $count > 0;
+		}
+	}
+
+	function isAccountPublic($userID) {
+		$query = "SELECT privateAccount FROM user WHERE userID = ? OR username = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$userID = htmlspecialchars(strip_tags($userID));
+
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $userID);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return !$privateAccount;
 		}
 	}
 

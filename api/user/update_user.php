@@ -7,12 +7,14 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
 // required to encode json web token
-include_once 'config/core.php';
-require_once 'system/validate_token.php';
-include_once 'libs/php-jwt-master/src/BeforeValidException.php';
-include_once 'libs/php-jwt-master/src/ExpiredException.php';
-include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt-master/src/JWT.php';
+include_once '../config/core.php';
+include_once '../config/database.php';
+include_once '../objects/user.php';
+require_once '../system/validate_token.php';
+include_once '../libs/php-jwt/src/BeforeValidException.php';
+include_once '../libs/php-jwt/src/ExpiredException.php';
+include_once '../libs/php-jwt/src/SignatureInvalidException.php';
+include_once '../libs/php-jwt/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 if (!$tokenUserId = validateToken()) {
@@ -29,14 +31,44 @@ $user = new User($db);
 // Get posted data
 $data = $_POST;
 
-if (
+$user->id = $tokenUserId;
+$username_exists = $user->usernameExists();
+if (!empty($data["oldPassword"])) {
+	if (empty($data["oldPassword"]) || empty($data["password"]) || empty($data["repeatPassword"])) {
+		http_response_code(400);
+		echo json_encode(array("message" => "Not all fields are filled in"));
+		die();
+	}
+}
 
+if (!empty($data["oldPassword"]) && !empty($data["password"] && !empty($data["repeatPassword"]))) {
+	if(!password_verify($data["oldPassword"], $user->password)) {
+		http_response_code(400);
+		echo json_encode(array("message" => "Password not correct"));
+		die();
+	}
+
+	if ($data["password"] != $data["repeatPassword"]) {
+		http_response_code(400);
+		echo json_encode(array("message" => "Passwords don't match"));
+		die();
+	}
+}
+
+if (
+	!empty($data["username"]) &&
+	!empty($data["firstname"]) &&
+	!empty($data["lastname"]) &&
+	!empty($data["email"]) &&
+	!empty($tokenUserId)
 ) {
-	$user->firstname = $data["firstname"];
-	$user->lastname = $data["lastname"];
-	$user->email = $data["email"];
-	$user->password = $data["password"];
-	$user->id = $data["userID"];
+	$user->username = trim($data["username"]);
+	$user->firstname = trim($data["firstname"]);
+	$user->lastname = trim($data["lastname"]);
+	$user->email = trim($data["email"]);
+	$user->password = !empty($data["password"]) ? trim($data["password"]) : "";
+	$user->privateAccount = $data["privateAccount"];
+	$user->id = $tokenUserId;
 
 	// Update user record
 	if ($user->update()) {

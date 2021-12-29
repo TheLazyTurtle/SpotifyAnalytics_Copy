@@ -7,20 +7,17 @@ $db = $database->getConnection();
 $user = new User($db);
 
 function hasViewingRights($userID, $userToCheck) {
-	if (isAccountPublic($userID) || isAdmin($userID) || isFollowing($userID, $userToCheck)) {
-		return True;
-	}
-
-	return False;
+	return isAccountPublic($userToCheck) || isAdmin($userID) || isFollowing($userID, $userToCheck);
 }
 
 function isAdmin($userID) {
 	global $user;
-	return $user->isAdmin($userID);
+	return $user->checkIfAdmin($userID);
 }
 
 function isAccountPublic($userID) {
-	return False;
+	global $user;
+	return $user->isAccountPublic($userID);
 }
 
 function isFollowing($userID, $usernameToCheck) {

@@ -1,7 +1,8 @@
 /*general*/
 body {
 	/*background-color: #32373A;*/
-	background-color: rgb(35, 35, 35);
+	/*background-color: rgb(35, 35, 35);*/
+	background-color: rgb(26, 29, 30);
     color: black;
 	overflow-x: hidden;
 }
@@ -106,7 +107,8 @@ header {
 	margin-top: -5px;
 	margin-left: -10px;
 	/* TODO: Fix the color to something nicer*/
-	background-color: #4a4a4a;
+	/*background-color: #4a4a4a;*/
+	background-color: rgb(56, 60, 63);
 }
 
 .mobile-header {

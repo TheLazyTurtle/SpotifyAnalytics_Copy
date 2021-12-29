@@ -55,7 +55,7 @@ if ($user->id != null) {
 			"following" => $user->following,
 			"followers" => $user->followers,
 			"img" => $user->img,
-			"viewingRights" => $hasViewingRights
+			"viewingRights" => $hasViewingRights,
 		);
 	}
 
