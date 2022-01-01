@@ -17,6 +17,7 @@ class User
 	public $isAdmin;
 	public $following;
 	public $followers;
+	public $privateAccount;
 
 	public function __construct($db)
 	{
@@ -48,27 +49,26 @@ class User
 		$stmt->bindParam(6, $passwordHash);
 
 		// Execute query and check if success
-		if ($stmt->execute()) {
-			return true;
-		} else {
-			return false;
-		}
+		return $stmt->execute();
 	}
 
 	// Update the user record
 	function update()
 	{
 		// If password needs to be updated
-		$passwordSet = !empty($this->password) ? ", password = :password" : "";
+		$passwordSet = !empty($this->password) ? ", password = ?" : "";
+		$incPass = False;
 
 		// If no posted password, do not update the password
-		$query = "UPDATE temp_user 
+		$query = "UPDATE user 
 	    SET 
-		firstname = :firstname,
-		lastname = :lastname,
-		email = :email
+		firstname = ?,
+		lastname = ?,
+		email = ?,
+		username = ?,
+		privateAccount = ?
 		{$passwordSet}
-	    WHERE id = :id";
+	    WHERE userID = ?";
 
 		$stmt = $this->conn->prepare($query);
 
@@ -76,28 +76,32 @@ class User
 		$this->firstname = htmlspecialchars(strip_tags($this->firstname));
 		$this->lastname = htmlspecialchars(strip_tags($this->lastname));
 		$this->email = htmlspecialchars(strip_tags($this->email));
+		$this->privateAccount = $this->privateAccount == "true" ? 1 : 0;
 
 		// Bind values to query
-		$stmt->bindParam(':firstname', $this->firstname);
-		$stmt->bindParam(':lastname', $this->lastname);
-		$stmt->bindParam(':email', $this->email);
+		$stmt->bindParam(1, $this->firstname);
+		$stmt->bindParam(2, $this->lastname);
+		$stmt->bindParam(3, $this->email);
+		$stmt->bindParam(4, $this->username);
+		$stmt->bindParam(5, $this->privateAccount, PDO::PARAM_BOOL);
 
 		// Hash the password
 		if (!empty($this->password)) {
 			$this->password = htmlspecialchars(strip_tags($this->password));
 			$passwordHash = password_hash($this->password, PASSWORD_BCRYPT);
-			$stmt->bindParam(':password', $passwordHash);
+			$stmt->bindParam(6, $passwordHash);
+			$incPass = True;
 		}
 
 		// bind the id of the user to be edited
-		$stmt->bindParam(":id", $this->id);
-
-		// Execute query
-		if ($stmt->execute()) {
-			return true;
+		if ($incPass) {
+			$stmt->bindParam(7, $this->id);
+		} else {
+			$stmt->bindParam(6, $this->id);
 		}
 
-		return false;
+		// Execute query
+		return $stmt->execute();
 	}
 
 	function getUserIDByusername($username) {
@@ -146,6 +150,7 @@ class User
 			$this->email = $email;
 			$this->isAdmin = $isAdmin;
 			$this->img = $img;
+			$this->privateAccount = $privateAccount == "1" ? True : False;
 		}
 	}
 
@@ -200,14 +205,21 @@ class User
 	// Checks if the username exists
 	function usernameExists()
 	{
-		$query = "SELECT * FROM user WHERE username = ? LIMIT 0,1";
+		$query = "";
+		$value = "";
+
+		if (isset($this->username)) {
+			$query = "SELECT * FROM user WHERE username = ? LIMIT 0,1";
+			$value = htmlspecialchars(strip_tags($this->username));
+		} else {
+			$query = "SELECT * FROM user WHERE userID = ? LIMIT 0,1";
+			$value = htmlspecialchars(strip_tags($this->id));
+		}
+
 		$stmt = $this->conn->prepare($query);
 
-		// Clean input
-		$this->username = htmlspecialchars(strip_tags($this->username));
-
 		// Bind Params
-		$stmt->bindParam(1, $this->username);
+		$stmt->bindParam(1, $value);
 		$stmt->execute();
 		$num = $stmt->rowCount();
 
@@ -368,15 +380,15 @@ class User
 	}
 
 	// Makes you follow a person
-	function follow($userToFollow)
+	function follow($requesterUserID, $userToFollow)
 	{
 		$query = "INSERT INTO followers (follower, following) VALUES (?, ?)";
 		$stmt = $this->conn->prepare($query);
 
 		$userToFollow = htmlspecialchars(strip_tags($userToFollow));
-		$this->id = htmlspecialchars(strip_tags($this->id));
+		$requesterUserID = htmlspecialchars(strip_tags($requesterUserID));
 
-		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(1, $requesterUserID);
 		$stmt->bindParam(2, $userToFollow);
 
 		return $stmt->execute();
@@ -421,7 +433,26 @@ class User
 		}
 	}
 
-	function isAdmin($userID) {
+	function hasFollowRequestOpen($requester, $receiver) {
+		$query = "SELECT COUNT(*) as count FROM notifications WHERE senderUserID = ? AND receiverUserID = ? AND notificationTypeID = 1";
+		$stmt = $this->conn->prepare($query);
+
+		$requester = htmlspecialchars(strip_tags($requester));
+		$receiver = htmlspecialchars(strip_tags($receiver));
+
+		$stmt->bindParam(1, $requester);
+		$stmt->bindParam(2, $receiver);
+
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return $count > 0;
+		}
+	}
+
+	function checkIfAdmin($userID) {
 		$query = "SELECT COUNT(*) as count FROM user WHERE userID = ? AND isAdmin = 1";
 		$stmt = $this->conn->prepare($query);
 
@@ -437,21 +468,38 @@ class User
 		}
 	}
 
+	function isAccountPublic($userID) {
+		$query = "SELECT privateAccount FROM user WHERE userID = ? OR username = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$userID = htmlspecialchars(strip_tags($userID));
+
+		$stmt->bindParam(1, $userID);
+		$stmt->bindParam(2, $userID);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return !$privateAccount;
+		}
+	}
+
 	function createFilterSettings($userID)
 	{
 		$query = "INSERT INTO filterSetting (graphID, userID, name, value) VALUES 
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxPlayed', ''),
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
-			('1', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minPlayed', '0'),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'amount', 10),
-			('2', 'icq6mdabqpzvx0wpc1w4hhxmp', 'artist', ''),
-			('3', 'icq6mdabqpzvx0wpc1w4hhxmp', 'amount', 10),
-			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'maxDate', '2099-01-01'),
-			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'minDate', '2020-01-01'),
-			('4', 'icq6mdabqpzvx0wpc1w4hhxmp', 'song', '')";
+			('1', ?, 'maxDate', '2099-01-01'),
+			('1', ?, 'maxPlayed', ''),
+			('1', ?, 'minDate', '2020-01-01'),
+			('1', ?, 'minPlayed', '0'),
+			('2', ?, 'maxDate', '2099-01-01'),
+			('2', ?, 'minDate', '2020-01-01'),
+			('2', ?, 'amount', 10),
+			('2', ?, 'artist', ''),
+			('3', ?, 'amount', 10),
+			('4', ?, 'maxDate', '2099-01-01'),
+			('4', ?, 'minDate', '2020-01-01'),
+			('4', ?, 'song', '')";
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->bindParam(1, $userID);

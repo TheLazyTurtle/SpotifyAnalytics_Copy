@@ -31,7 +31,8 @@ if ($num > 0) {
 			"api" => $api,
 			"type" => $type,
 			"xValueType" => $xValueType,
-			"containerID" => $containerID
+			"containerID" => $containerID,
+			"dataType" => $dataType
 		);
 		array_push($graphArr, $graphItem);
 	}

@@ -1,5 +1,5 @@
 <?php
-require 'header.php';
+require 'src/header.php';
 require 'vendor/autoload.php';
 
 $session = new SpotifyWebAPI\Session(
@@ -8,7 +8,7 @@ $session = new SpotifyWebAPI\Session(
 	"http://localhost/callback.php"
 );
 
-$state = $session->generateState();
+$state = $session->getAccessToken();
 $options = [
 	'scope' => [
 		'user-read-recently-played',

@@ -13,6 +13,9 @@ require '../config/database.php';
 require '../objects/user.php';
 
 if (!$tokenUserID = validateToken()) {
+	// Set response to bad request
+	http_response_code(400);
+
 	die(json_encode(array("message" => "Not a valid token")));
 }
 
@@ -22,12 +25,12 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get posted data
-$user->id = $tokenUserID;
-$userToFollow = $_POST["userToFollow"];
+$requesterUserID = !empty($_POST["requesterUserID"]) ? $_POST["requesterUserID"] : $tokenUserID;
+$userToFollow = !empty($_POST["userToFollow"]) ? $_POST["userToFollow"] : die(json_encode(array("message" => "No user provided")));
 
 // Check if data is empty
-if (!empty($userToFollow) &	!empty($user->id)) {
-	if ($user->follow($userToFollow)) {
+if (!empty($userToFollow) &	!empty($requesterUserID)) {
+	if ($user->follow($requesterUserID, $userToFollow)) {
 		// Set response to created
 		http_response_code(201);
 

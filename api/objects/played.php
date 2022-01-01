@@ -155,10 +155,14 @@ class Played
 
 		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 as date, count(*) as times
 			from played p
-			INNER JOIN artist_has_song ahs on p.songID = ahs.songID
-			RIGHT JOIN artist a ON a.artistID = ahs.artistID
-			WHERE songName LIKE ?
-			AND a.name like ?
+			WHERE songID IN (
+				SELECT s.songID
+				FROM song s
+				INNER JOIN artist_has_song ahs ON s.songID = ahs.songID
+				RIGHT JOIN artist a ON ahs.artistID = a.artistID
+				WHERE a.name LIKE ?
+				AND s.name LIKE ?
+			)
 			AND p.playedBy LIKE ?
 			AND p.datePlayed BETWEEN ? AND ?";
 

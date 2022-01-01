@@ -7,12 +7,19 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
 // required to encode json web token
-include_once 'config/core.php';
-include_once 'libs/php-jwt-master/src/BeforeValidException.php';
-include_once 'libs/php-jwt-master/src/ExpiredException.php';
-include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt-master/src/JWT.php';
+include_once '../config/core.php';
+include_once '../config/database.php';
+include_once '../objects/user.php';
+require_once '../system/validate_token.php';
+include_once '../libs/php-jwt/src/BeforeValidException.php';
+include_once '../libs/php-jwt/src/ExpiredException.php';
+include_once '../libs/php-jwt/src/SignatureInvalidException.php';
+include_once '../libs/php-jwt/src/JWT.php';
 use \Firebase\JWT\JWT;
+
+if (!$tokenUserId = validateToken()) {
+	die(json_encode(array("message" => "Not a valid token")));
+}
 
 // Files for db and user object
 $database = new Database();
@@ -22,66 +29,74 @@ $db = $database->getConnection();
 $user = new User($db);
 
 // Get posted data
-$data = json_decode(file_get_contents("php://input"));
+$data = $_POST;
 
-// get jwt
-$jwt = isset($data->jwt) ? $data->jwt : "";
+$user->id = $tokenUserId;
+$username_exists = $user->usernameExists();
+if (!empty($data["oldPassword"])) {
+	if (empty($data["oldPassword"]) || empty($data["password"]) || empty($data["repeatPassword"])) {
+		http_response_code(400);
+		echo json_encode(array("message" => "Not all fields are filled in"));
+		die();
+	}
+}
 
-// decode jwt
-if ($jwt) {
-    try {
-	$decoded = JWT::decode($jwt, $key, array("HS256"));
+if (!empty($data["oldPassword"]) && !empty($data["password"] && !empty($data["repeatPassword"]))) {
+	if(!password_verify($data["oldPassword"], $user->password)) {
+		http_response_code(400);
+		echo json_encode(array("message" => "Password not correct"));
+		die();
+	}
 
-	$user->firstname = $data->firstname;
-	$user->lastname = $data->lastname;
-	$user->email = $data->email;
-	$user->password = $data->password;
-	$user->id = $decoded->data->id;
+	if ($data["password"] != $data["repeatPassword"]) {
+		http_response_code(400);
+		echo json_encode(array("message" => "Passwords don't match"));
+		die();
+	}
+}
+
+if (
+	!empty($data["username"]) &&
+	!empty($data["firstname"]) &&
+	!empty($data["lastname"]) &&
+	!empty($data["email"]) &&
+	!empty($tokenUserId)
+) {
+	$user->username = trim($data["username"]);
+	$user->firstname = trim($data["firstname"]);
+	$user->lastname = trim($data["lastname"]);
+	$user->email = trim($data["email"]);
+	$user->password = !empty($data["password"]) ? trim($data["password"]) : "";
+	$user->privateAccount = $data["privateAccount"];
+	$user->id = $tokenUserId;
 
 	// Update user record
 	if ($user->update()) {
 	    // remake the jwt token because the user info has been changed
 	    $token = array(
-		"iat" => $issued_at,
-		"exp" => $expiration_time,
-		"iss" => $issuer,
-		"data" => array (
-		    "id" => $user->id,
-		    "firstname" => $user->firstname,
-		    "lastname" => $user->lastname,
-		    "email" => $user->email
-		)
-	    );
+			"iat" => $issued_at,
+			"exp" => $expiration_time,
+			"iss" => $issuer,
+			"id" => $user->id
+		);
 
-	    $jwt = JWT::encode($token, $key);
+	    $jwt = JWT::encode($token, $key, 'HS512');
+		setcookie("jwt", $jwt, time()+(60*60*24), "/", "", "", "true");
 
 	    // Set http respone to ok
 	    http_response_code(200);
 
-	    echo json_encode(array(
-		"message" => "user was updated",
-		"jwt" => $jwt
-	    ));
+	    echo json_encode(array( "message" => "user was updated"));
 	} else {
 	    // Set http respone to denied
-	    http_response_code(401);
+	    http_response_code(400);
 
 	    echo json_encode(array("message" => "unable to update user"));
 	}
-
-    } catch (Exception $e) {
-	// Set http response to denied
-	http_response_code(401);
-
-	echo json_encode(array(
-	    "message" => "access denied",
-	    "error" => $e->getMessage()
-	));
-    }
 } else {
-    // Set response code to denied
-    http_response_code(401);
+	// Set http response to denied
+	http_response_code(400);
 
-    echo json_encode(array("message" => "Access denied"));
+	echo json_encode(array( "message" => "Not all fields were set"));
 }
 ?>

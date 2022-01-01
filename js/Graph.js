@@ -8,6 +8,7 @@ class Graph {
         api,
         type,
         xValueType,
+		dataType,
         userId = null
     ) {
         // Init basic vars
@@ -25,7 +26,7 @@ class Graph {
         this.buttons = []
         this.inputFields = []
         this.filterSettings = {}
-        this.dataType = "song"
+        this.dataType = dataType
         this.timeframe = "year"
 
         // Build the containers needed to place the graphs

@@ -7,24 +7,35 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object file
 require "../system/validate_token.php";
-require "../config/database.php";
+require "../system/hasViewingRights.php";
+require_once "../config/database.php";
+require_once "../objects/user.php";
 require "../objects/artists.php";
 require "../config/core.php";
 
-if (!$tokenUserID = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
+$tokenUserID = validateToken();
 
 // Make db and artists object
 $database = new Database();
 $db = $database->getConnection();
 $artist = new Artist($db);
+$user = new User($db);
 
 // Get posted data
 $userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 $amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
+
+// Check if you have viewing rights
+if (!$tokenUserID) {
+	$hasViewingRights = hasViewingRights($tokenUserID, $userID);
+	if (!$hasViewingRights) {
+		http_response_code(400);
+		echo json_encode(array("message" => "No viewing rights"));
+		die();
+	}
+}
 
 // Query the results
 $stmt = $artist->topArtist($userID, $minDate, $maxDate, $amount);
@@ -52,7 +63,7 @@ if ($num > 0) {
 	echo json_encode($resultsArr);
 } else {
 	// Set response to bad request
-	http_response_code(400);
+	http_response_code(200);
 
-	echo json_encode(array("message" => "No results found"));
+	echo json_encode(null);
 }

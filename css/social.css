@@ -40,7 +40,7 @@
 }
 
 /* follow button */
-.btn-following {
+.btn-following, .btn-request-pending {
 	border: 2px #1DB954 solid;
 	background-color: rgb(70, 70, 70);
 }
@@ -116,7 +116,8 @@ th {
 
 .album-wrapper {
 	margin: 0 20vw 2vw 20vw;
-	background-color: rgb(45, 45, 45);
+	/*background-color: rgb(45, 45, 45);*/
+	background-color: rgb(56, 60, 63);
 	border-radius: 8px;
 }
 

@@ -14,7 +14,6 @@ async function getUserInfo() {
     await $.ajax({
         url: "/api/user/read_one.php",
         type: "GET",
-        data: { username: username },
         success: function (result) {
             setUserInfo(result)
         },
@@ -53,47 +52,16 @@ function setUserInfo(data) {
     // Set followers and following
     $(".followers").html("<b>" + data["followers"] + "</b> followers")
     $(".following").html("<b>" + data["following"] + "</b> following")
+
+	setUpdateProfileItems(data)
 }
 
-// This will give the popup screen for a user to change their settings
-function changeProfilePicture() {
-    // If you click the profile picture you can upload the new img
-    $(".user-info-img").click(function () {
-        document.querySelector("[type=file]").click()
+function setUpdateProfileItems(data) {
+	setProfileItem("username", data["username"])
+	setProfileItem("firstname", data["firstname"])
+	setProfileItem("lastname", data["lastname"])
+	setProfileItem("email", data["email"])
+	setProfileItem("private", data["privateAccount"], true)
 
-        // Check if there already is a submit button
-        if ($("#submit").length == 0) {
-            // Add submit button
-            let submit = document.createElement("button")
-            submit.className = "btn"
-            submit.id = "submit"
-            submit.innerHTML = "Submit"
-            $(".user-info-img-wrapper").append(submit)
-
-            // If button is pressed than upload img
-            $("#submit").click(function () {
-                let form = $("#fileForm")[0]
-                let data = new FormData(form)
-
-                $.ajax({
-                    type: "post",
-                    enctype: "multipart/form-data",
-                    url: "/api/user/updateProfilePicture.php",
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 800000,
-                    success: function (data) {
-                        // Reload the page on success
-                        window.location = window.location.href
-                        console.log(data)
-                    },
-                    error: function (error) {
-                        console.error(error)
-                    },
-                })
-            })
-        }
-    })
+	onSettingButtonPress()
 }
