@@ -40,7 +40,7 @@
 }
 
 /* follow button */
-.btn-following {
+.btn-following, .btn-request-pending {
 	border: 2px #1DB954 solid;
 	background-color: rgb(70, 70, 70);
 }

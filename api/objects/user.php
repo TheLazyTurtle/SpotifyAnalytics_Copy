@@ -150,7 +150,7 @@ class User
 			$this->email = $email;
 			$this->isAdmin = $isAdmin;
 			$this->img = $img;
-			$this->privateAccount = $privateAccount == "1" ? False : True;
+			$this->privateAccount = $privateAccount == "1" ? True : False;
 		}
 	}
 
@@ -380,15 +380,15 @@ class User
 	}
 
 	// Makes you follow a person
-	function follow($userToFollow)
+	function follow($requesterUserID, $userToFollow)
 	{
 		$query = "INSERT INTO followers (follower, following) VALUES (?, ?)";
 		$stmt = $this->conn->prepare($query);
 
 		$userToFollow = htmlspecialchars(strip_tags($userToFollow));
-		$this->id = htmlspecialchars(strip_tags($this->id));
+		$requesterUserID = htmlspecialchars(strip_tags($requesterUserID));
 
-		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(1, $requesterUserID);
 		$stmt->bindParam(2, $userToFollow);
 
 		return $stmt->execute();
@@ -430,6 +430,25 @@ class User
 			} else {
 				return False;
 			}
+		}
+	}
+
+	function hasFollowRequestOpen($requester, $receiver) {
+		$query = "SELECT COUNT(*) as count FROM notifications WHERE senderUserID = ? AND receiverUserID = ? AND notificationTypeID = 1";
+		$stmt = $this->conn->prepare($query);
+
+		$requester = htmlspecialchars(strip_tags($requester));
+		$receiver = htmlspecialchars(strip_tags($receiver));
+
+		$stmt->bindParam(1, $requester);
+		$stmt->bindParam(2, $receiver);
+
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+
+			return $count > 0;
 		}
 	}
 

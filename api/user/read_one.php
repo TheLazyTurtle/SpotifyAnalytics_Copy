@@ -56,6 +56,8 @@ if ($user->id != null) {
 			"followers" => $user->followers,
 			"img" => $user->img,
 			"viewingRights" => $hasViewingRights,
+			"privateAccount" => $user->privateAccount,
+			"hasFollowRequestOpen" => $user->hasFollowRequestOpen($tokenUserId, $user->getUserIDByusername($user->username))
 		);
 	}
 

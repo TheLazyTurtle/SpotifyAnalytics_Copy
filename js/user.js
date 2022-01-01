@@ -3,9 +3,9 @@ let userID = false
 
 $(document).ready(async function () {
     await getUserInfo()
-    followButton()
 })
 
+// Get the username from the url
 function getUsername() {
     let addr = window.location.search
     let params = new URLSearchParams(addr)
@@ -14,6 +14,7 @@ function getUsername() {
     return username
 }
 
+// Get the username from the cookies
 function parseCookie() {
 	const rawCookies = document.cookie
 	const cookies = rawCookies.split("; ")
@@ -25,6 +26,7 @@ function parseCookie() {
 	}
 }
 
+// Gets the info of the user you are viewing
 async function getUserInfo() {
     let username = getUsername()
 
@@ -34,9 +36,18 @@ async function getUserInfo() {
         async: true,
         data: { username: username },
         success: function (result) {
+			console.table(result)
+			// Set the correct data on screen for this person
             setUserInfo(result)
-            checkIfFollowing()
+
+			// Check if you are already following this person
+            checkIfFollowing(result["hasFollowRequestOpen"])
+
+			// Check if you are viewing your own account
             checkIfSelf(result["username"])
+
+			// Set click listener for follow button
+			followButton(result["privateAccount"])
 
 			if (result["viewingRights"]) {
 				setContent()
@@ -50,6 +61,7 @@ async function getUserInfo() {
     })
 }
 
+// Shows the correct user info on screen
 function setUserInfo(data) {
     // This will set the profile picture
     $(".user-info-img").attr("src", data["img"])
@@ -65,6 +77,7 @@ function setUserInfo(data) {
     userID = data["id"]
 }
 
+// This handels button presses for viewing graphs or memories
 function getButtonPressed() {
     for (var i = 0; i < selectors.length; i++) {
         $("#" + selectors[i]).click(function () {
@@ -83,6 +96,7 @@ function getButtonPressed() {
     }
 }
 
+// If you are not allowed to view this account than show a lock screen
 function setNoAccess() {
 	// Remove all data
 	$(".content").empty()
@@ -92,58 +106,97 @@ function setNoAccess() {
 	$(".content-locked").append("<p style='color:white'>Please follow this person to view their account</p>")
 }
 
+// If you have viewing rights show the content
 function setContent() {
 	$(".content").empty()
 	buildGraphs(userID)
 }
 
 // This handles the follow button
-function followButton() {
+function followButton(privateAccount) {
     $("#follow").click(function () {
-        let button = $(this)[0]
-        let className = button.className
+		let button = $(this)[0]
+		let className = button.className
 
-        if (className.includes("following")) {
-            $.ajax({
-                url: "api/user/unFollow.php",
-                type: "POST",
-                data: { userToUnFollow: userID },
-                success: function () {
-                    button.innerHTML = "follow"
-                    button.className = className.replace("following", "follow")
-
-                    // Update followers count
-                    let followers = $(".followers")[0]
-                    followers.children[0].innerHTML =
-                        parseInt(followers.children[0].innerHTML) - 1
-					location.reload()
-                },
-                error: function (error) {
-                    console.error(error)
-                },
-            })
-        } else {
-            $.ajax({
-                url: "api/user/follow.php",
-                type: "post",
-                data: { userToFollow: userID },
-                success: function () {
-                    button.innerHTML = "Unfollow"
-                    button.className = className.replace("follow", "following")
-
-                    // Update followers count
-                    let followers = $(".followers")[0]
-                    followers.children[0].innerHTML =
-                        parseInt(followers.children[0].innerHTML) + 1
-					location.reload()
-                },
-                error: function (error) {
-                    console.error(error)
-                },
-            })
-        }
-        className = button.className
+		if (className.includes("following")) {
+			unfollowUser(userID)
+		} else if (className.includes("request-pending")) {
+			retractRequest(userID)
+		} else {
+			followUser(userID, privateAccount)
+		}
     })
+}
+
+// This will cancel the follow request
+function retractRequest(userID) {
+	$.ajax({
+		url: "api/notification/delete.php",
+		type: "post",
+		data: {
+			receiverUserID: userID
+		},
+		success: function() {
+			location.reload()
+		}
+	})
+}
+
+// This will make the user unfollow the user they are viewing
+function unfollowUser(userID) {
+	$.ajax({
+		url: "api/user/unFollow.php",
+		type: "post",
+		data: { userToUnFollow: userID },
+		success: function () {
+			location.reload()
+		},
+		error: function (error) {
+			console.error(error)
+		},
+	})
+}
+
+// This will make the user follow the user they are viewing
+function followUser(userID, privateAccount) {
+	if (privateAccount) {
+		$.ajax({
+			url: "api/notification/create.php",
+			type: "post",
+			data: {
+				receiverUserID: userID,
+				typeID: "1"
+			},
+			success: function() {
+				location.reload()
+			}
+		})
+	} else {
+		$.ajax({
+			url: "api/user/follow.php",
+			type: "post",
+			data: { userToFollow: userID },
+			success: function () {
+				notifyOfFollow(userID)
+				location.reload()
+			},
+			error: function (error) {
+				console.error(error)
+			},
+		})
+	}
+}
+
+// Send the notification to the receiving user
+function notifyOfFollow(userID) {
+	$.ajax({
+		url: "api/notification/create.php",
+		type: "post",
+		data: {
+			receiverUserID: userID,
+			typeID: "2"
+		}
+	})
 }
 
 // This will check if you are looking at your own profile. If you are then send you to the profile page.
@@ -158,21 +211,29 @@ function checkIfSelf(username) {
 }
 
 // This will check if the user is following the person they are visiting
-function checkIfFollowing() {
-    $.ajax({
-        url: "api/user/isFollowing.php",
-        type: "GET",
-        data: { user: userID },
-        success: function () {
-            let followButton = $("#follow")[0]
+function checkIfFollowing(hasFollowRequestOpen) {
+	let followButton = $("#follow")[0]
 
-            followButton.className = followButton.className.replace(
-                "follow",
-                "following"
-            )
-            followButton.innerHTML = "Unfollow"
-		}, 
-    })
+	if (hasFollowRequestOpen) {
+		followButton.className = followButton.className.replace(
+			"follow",
+			"request-pending"
+		)
+		followButton.innerHTML = "Request pending"
+	} else {
+		$.ajax({
+			url: "api/user/isFollowing.php",
+			type: "GET",
+			data: { user: userID },
+			success: function () {
+				followButton.className = followButton.className.replace(
+					"follow",
+					"following"
+				)
+				followButton.innerHTML = "Unfollow"
+			}, 
+		})
+	}
 }
 
 function showMemories() {

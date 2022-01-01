@@ -23,6 +23,7 @@ $url = str_replace(".php", '', $url);
 
 	<script src="../js/check_jwt.js"></script>
 	<script src="js/dateProcessing.js"></script>
+	<script src="js/notifications.js"></script>
 </head>
 
 <?php
@@ -38,6 +39,7 @@ if ($url != "login" && $url != "register") {
 			</div>
 			<div class="col col-right">
 				<!--<a href='feed.php'><i class="far fa-images"></i></a> -->
+				<a id="notifications" ><i class="far fa-envelope"></i></a>
 				<a href='profile.php'><i class="fas fa-user-alt"></i></a>
 				<button class="btn" id="login-btn" onclick="window.location.href='logout.php'">Uitloggen</button>
 			</div>
@@ -54,6 +56,7 @@ if ($url != "login" && $url != "register") {
 <!-- 
 				<a href='/feed.php'><i class="far fa-images"></i></a>
  -->
+				<a href='messages.php'><i class="far fa-envelope"></i></a>
 			</div>
 			<div class="col col-right">
 				<a href='/profile.php'><i class="fas fa-user-alt"></i></a>

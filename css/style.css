@@ -174,6 +174,42 @@ header {
 	padding-left: 10px;
 }
 
+/* Notifications */
+.notification-popup-screen {
+	width: 300px;
+	max-height: 250px;
+	border-radius: 8px;
+	background-color: white !important;
+	margin-left: -5%;
+	top: 5%;
+	position: absolute;
+	z-index: 100;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.notification-message {
+	padding: 2.5%;
+	width: 75%;
+	height: 20px;
+	float: left;
+}
+
+.notification-button {
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	width: 10%;
+	height: 35px;
+	float: left;
+	padding-top: 6px;
+}
+
+.notification-divider {
+	margin-right: 5%;
+	margin: auto;
+	width: 95%;
+}
+
 /* mobile css */
 @media only screen and (max-width: 460px) {
 	.inputField {
