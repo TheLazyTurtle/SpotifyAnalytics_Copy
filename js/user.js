@@ -36,7 +36,6 @@ async function getUserInfo() {
         async: true,
         data: { username: username },
         success: function (result) {
-			console.table(result)
 			// Set the correct data on screen for this person
             setUserInfo(result)
 

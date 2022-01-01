@@ -56,7 +56,7 @@ if ($url != "login" && $url != "register") {
 <!-- 
 				<a href='/feed.php'><i class="far fa-images"></i></a>
  -->
-				<a href='messages.php'><i class="far fa-envelope"></i></a>
+				<a href='/notifications.php'><i class="far fa-envelope"></i></a>
 			</div>
 			<div class="col col-right">
 				<a href='/profile.php'><i class="fas fa-user-alt"></i></a>

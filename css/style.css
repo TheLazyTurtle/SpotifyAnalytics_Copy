@@ -177,6 +177,7 @@ header {
 /* Notifications */
 .notification-popup-screen {
 	width: 300px;
+	min-height: 35px;
 	max-height: 250px;
 	border-radius: 8px;
 	background-color: white !important;
@@ -251,6 +252,26 @@ header {
 	.fas, .far {
 		font-size: 20px;
 		color: black
+	}
+
+	/* notifications */
+	.notification-popup-screen {
+		width: 100%;
+		height: 100%;
+		
+		background-color: transparent !important;
+		color: #1DB954;
+		overflow-x: hidden;
+		overflow-y: auto;
+		margin-left: 0;
+		top: 0;
+	}
+
+	.fa-ban {
+		color: #1DB954;
+	}
+
+	.notification-message {
 	}
 }
 

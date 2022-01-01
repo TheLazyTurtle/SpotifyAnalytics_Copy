@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	createNotificationPopup()
 	let notificationState = false
 	$("#notifications").click(function() {
 		if (notificationState) {
@@ -22,9 +23,16 @@ async function createNotificationPopup() {
 	}
 
 	// Make sure there will only be one popup screen
-	if ($("#notifications").find(".notification-popup-screen").length == 0) {
-		$("#notifications").prepend(notificationPopupScreen)
+	let identifier = notificationClassExists() ? ".notifications" : "#notifications"
+	if ($(identifier).find(".notification-popup-screen").length == 0) {
+		$(identifier).prepend(notificationPopupScreen)
 	}
+}
+
+// A function to check if the class notifications exists.
+// If it does than do the mobile stuff
+function notificationClassExists() {
+	return $("body").find(".notifications").length > 0
 }
 
 function addNotification(data) {
