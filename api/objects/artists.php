@@ -30,33 +30,44 @@ class Artist
 	}
 
 	// This will only read one artist from the db
-	function readOne()
+	function readOne($useID = False)
 	{
 		$query = "SELECT * FROM artist WHERE ";
 
-		if (isset($this->id)) {
-			$query = $query . "artistID LIKE ? LIMIT 1";
+		if (isset($this->id) && isset($this->name) && !$useID) {
+			$query = $query . "name LIKE ? AND artistID LIKE ? LIMIT 1";
 
 			$stmt = $this->conn->prepare($query);
-			$stmt->bindParam(1, $this->id);
-		} else if (isset($this->name)) {
+			$stmt->bindParam(1, $this->name);
+			$stmt->bindParam(2, $this->id);
+		} 
+		else if (isset($this->name)) {
 			$query = $query . "name LIKE ? LIMIT 1";
 
 			$stmt = $this->conn->prepare($query);
 			$stmt->bindParam(1, $this->name);
+		} 
+		else if (isset($this->id)) {
+			$query = $query . "artistID LIKE ? LIMIT 1";
+
+			$stmt = $this->conn->prepare($query);
+			$stmt->bindParam(1, $this->id);
 		}
 
 		$stmt->execute();
+		$rows = $stmt->rowcount();
 
-
-		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-			$this->id = $row["artistID"];
-			$this->name = $row["name"];
-			$this->url = $row["url"];
-			$this->img = $row["img"];
+		if ($rows > 0) {
+			while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+				$this->id = $row["artistID"];
+				$this->name = $row["name"];
+				$this->url = $row["url"];
+				$this->img = $row["img"];
+			}
+		} else {
+			$this->readOne(True);
 		}
-	}
-
+	} 
 	// Add artist to db
 	// Might have to make create batch where you can input an object
 	// of artist and it will insert them one by one

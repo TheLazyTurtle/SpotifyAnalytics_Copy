@@ -31,6 +31,7 @@ if ($songStmt->rowCount() > 0) {
 		extract($row);
 
 		$resultItem = array(
+			"id" => $artistID,
 			"name" => $name,
 			"img" => $img,
 			"type" => "artist"

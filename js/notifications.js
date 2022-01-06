@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	createNotificationPopup()
 	let notificationState = false
 	$("#notifications").click(function() {
 		if (notificationState) {

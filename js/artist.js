@@ -1,8 +1,12 @@
 let artistID = false
 
 // This will load on page load
-$(document).ready(function () {
-    getArtistInfo()
+$(document).ready(async function () {
+	let artist = getArtistName()
+    let artistInfo = await getArtistInfo(artist, artistID)
+
+	await setArtistInfo(artistInfo)
+	showSongs()
 })
 
 // Get the artist name from the url
@@ -10,26 +14,21 @@ function getArtistName() {
     let addr = window.location.search
     let params = new URLSearchParams(addr)
     let artist = params.get("artist")
+	artistID = params.get("id")
 
     return artist
 }
 
 // Get all the info from the artist
-function getArtistInfo() {
-    let artist = getArtistName()
-
-    $.ajax({
+async function getArtistInfo(artist, id) {
+    return $.ajax({
         url: "/api/artist/read_one.php",
         type: "GET",
-        data: { artist: artist },
-        success: function (result) {
-            setArtistInfo(result)
-            showSongs()
-        },
-        error: function (error) {
-            console.error(error)
-            // TODO: show a artist not found thingy
-        },
+		async: true,
+		data: { 
+			artist: artist,
+			artistID: id
+		}
     })
 }
 
@@ -37,7 +36,7 @@ function getArtistInfo() {
 // * url to spotify page
 // * artist img
 // * name
-function setArtistInfo(result) {
+async function setArtistInfo(result) {
     // This sets the img
     $(".artist-info-img").attr("src", result["img"])
 
@@ -45,7 +44,7 @@ function setArtistInfo(result) {
     $(".artist-info-text").text(result["name"])
 
     // This sets the artistID
-    artistID = result["artistID"]
+	artistID = result["artistID"]
 
     // This will add the link to go to the official spotify page of the artist
     $(".artist-link").attr("href", result["url"])

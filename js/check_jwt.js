@@ -9,18 +9,11 @@ $(document).ready(function () {
             // If a user has a valid token than return true
             return true
         },
-        error: function (data) {
+        error: function () {
             // If a users token has expired or is invalid than send them to the login page
 			// TODO: Maybe change to if it includes
             if (
-                !document.URL.includes("login.php") &&
-                !document.URL.includes("register.php") &&
-                !document.URL.includes("album.php") &&
-                !document.URL.includes("search.php") &&
-                !document.URL.includes("user.php") &&
-                !document.URL.includes("artist.php") &&
-				!document.URL.includes("getTokens.php") && 
-				!document.URL.includes("saveTokens.php")
+                document.URL.includes("index.php")
             ) {
                 window.location.href = "login.php"
             }

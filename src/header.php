@@ -28,6 +28,7 @@ $url = str_replace(".php", '', $url);
 
 <?php
 if ($url != "login" && $url != "register") {
+	$loggedIn = isset($_COOKIE["username"]) ? True : False;
 ?>
 	<header>
 		<div class="header">
@@ -41,7 +42,14 @@ if ($url != "login" && $url != "register") {
 				<!--<a href='feed.php'><i class="far fa-images"></i></a> -->
 				<a id="notifications" ><i class="far fa-envelope"></i></a>
 				<a href='profile.php'><i class="fas fa-user-alt"></i></a>
-				<button class="btn" id="login-btn" onclick="window.location.href='logout.php'">Uitloggen</button>
+<?php
+
+	if ($loggedIn) {
+		echo '<button class="btn" id="login-btn" onclick="window.location.href=`logout.php`">logout</button>';
+	} else {
+		echo '<button class="btn" id="login-btn" onclick="window.location.href=`login.php`">Login</button>';
+	}
+?>
 			</div>
 		</div>
 
