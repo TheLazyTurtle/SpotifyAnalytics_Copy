@@ -5,7 +5,10 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Include db and object files
 require "../config/database.php";
+require "../system/validate_token.php";
 require "../objects/graph.php";
+
+$userID = validateToken();
 
 // Make db and graph object
 $database = new Database();
@@ -32,7 +35,8 @@ if ($num > 0) {
 			"type" => $type,
 			"xValueType" => $xValueType,
 			"containerID" => $containerID,
-			"dataType" => $dataType
+			"dataType" => $dataType,
+			"inputfields" => $graph->read_inputfield($graphID, $userID) 
 		);
 		array_push($graphArr, $graphItem);
 	}

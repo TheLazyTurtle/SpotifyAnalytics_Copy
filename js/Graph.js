@@ -1,32 +1,25 @@
 class Graph {
     constructor(
-        graphId,
-        name,
-        title,
-        titleX,
-        titleY,
-        api,
-        type,
-        xValueType,
-		dataType,
+		graphData,
         userId = null
     ) {
         // Init basic vars
-        this.graphId = graphId
-        this.name = name
-        this.title = title
-        this.titleX = titleX
-        this.titleY = titleY
-        this.api = api
-        this.type = type
-        this.xValueType = xValueType
+        this.graphId = graphData.graphId
+        this.name = graphData.containerID
+        this.title = graphData.title
+        this.titleX = graphData.titleX
+        this.titleY = graphData.titleY
+        this.api = graphData.api
+        this.type = graphData.type
+        this.xValueType = graphData.xValueType
+        this.dataType = graphData.dataType
         this.userId = userId
+		this.inputfieldData = graphData.inputfields
 
         this.data = []
         this.buttons = []
         this.inputFields = []
         this.filterSettings = {}
-        this.dataType = dataType
         this.timeframe = "year"
 
         // Build the containers needed to place the graphs
@@ -57,7 +50,7 @@ class Graph {
     }
 
     async buildGraph() {
-        await this.addInputFields()
+        await this.addInputFields(this.inputfieldData)
         this.data = await this.getData(this.timeframe, this.filterSettings)
         this.addButtons()
 
@@ -91,23 +84,12 @@ class Graph {
         this.graph.render()
     }
 
-    // This will get all the input field that are part of a graph
-    async getInputFields(graphId) {
-        return await $.ajax({
-            url: "/api/graph/readInputfield.php",
-            type: "GET",
-            async: true,
-            data: {graphID: graphId}
-        })
-    }
-
     // This will add the input fieled to the screen
-    async addInputFields() {
-        var fields = await this.getInputFields(this.graphId);
+    async addInputFields(fields) {
 
         for (let i = 0; i < fields.length; i++) {
             let fd = fields[i]
-            var field = new InputField(fd.name, fd.value, fd.type, this.name, this.graphId, this.userId)
+            var field = new InputField(fd, this.userId)
             await field.create()
 
             this.readInputField(field.field, fd.name, fd.api)
@@ -138,15 +120,10 @@ class Graph {
             select: async function(element, event) {
                 var input = event.item.value
 
-				if (settingName == "song") {
-					var data = input.split(" - ")
-					var songId = await that.getSongId(data)
-				}
-
                 that.setFilterSetting(settingName, input)
                 that.updateGraph();
             },
-            change: function(element) {
+            change: function() {
                 if ($(this).val().length <= 0) {
                     that.setFilterSetting(settingName, "")
                     that.updateGraph()
@@ -161,14 +138,6 @@ class Graph {
 			url: api,
 			async: true,
 			data: data,
-		})
-	}
-
-	async getSongId(data) {
-		return await $.ajax({
-			type: "GET",
-			url: "/api/song/searchByArtist.php",
-			data: {song: data[0], artist: data[1]}
 		})
 	}
 
@@ -187,22 +156,14 @@ class Graph {
         })
     }
 
-    // This will get all the buttons needed for this graph
-    async getButtons() {
-        return await $.ajax({
-            url: "/api/element/getTimeframeButtons.php",
-            type: "GET",
-            async: true
-        })
-    }
-
     // Create buttons and add them to the screen
     async addButtons() {
-        var buttons = await this.getButtons()
+		var buttons = Array.from(Button.timeframeButtons)
+
         for (let i = 0; i < buttons.length; i++) {
             // Make the button
             var bd = buttons[i];
-            var button = new Button(bd.class, bd.value, "test", bd.innerHTML)
+            var button = new Button(bd.className, bd.value, bd.innerHTML)
             button.create()
             this.onClick(button.button)
 
@@ -257,9 +218,12 @@ class Graph {
         var data = await this.getData(this.timeframe, this.filterSettings)
         this.graph.options.data[0].dataPoints = []
 
-        for (let i = 0; i < data.length; i++) {
-            this.graph.options.data[0].dataPoints.push(data[i])
-        }
+		// Check if data retruned
+		if (data != null) {
+			for (let i = 0; i < data.length; i++) {
+				this.graph.options.data[0].dataPoints.push(data[i])
+			}
+		}
         this.graph.render()
     }
 

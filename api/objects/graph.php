@@ -51,13 +51,49 @@ class Graph
 	}
 
 	// This will get inputFields
-	function read_inputfield($graphID)
+	function read_inputfield($graphID, $userID)
 	{
-		$query = "SELECT * FROM inputfield WHERE graphID = ?";
+		$query = "SELECT * FROM inputfield WHERE graphID = ? ORDER BY inputFieldID ASC";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(1, $graphID);
 		$stmt->execute();
 
-		return $stmt;
+		$inputfields = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+			$inputfield = array(
+				"inputfieldID" => $inputFieldID,
+				"name" => $name,
+				"value" => $value,
+				"type" => $type,
+				"autocomplete" => $autoComplete,
+				"api" => $api,
+				"filterSetting" => $this->read_filterSettings($name, $userID, $graphID)
+			);
+
+			array_push($inputfields, $inputfield);
+		}
+
+		return $inputfields;
+	}
+
+	function read_filterSettings($name, $userID, $graphID) {
+		$query = "SELECT * FROM filtersetting WHERE name = ? AND userID = ? AND graphID = ?";
+		$stmt = $this->conn->prepare($query);
+
+		$stmt->bindParam(1, $name);
+		$stmt->bindParam(2, $userID);
+		$stmt->bindParam(3, $graphID);
+		$stmt->execute();
+
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+			extract($row);
+			$filterSetting = array (
+				"name" => $name,
+				"value" => $value
+			);
+			return $filterSetting;
+		}
 	}
 }

@@ -1,5 +1,7 @@
 // Sets the already known values into the settings vields
 function setProfileItem(id, value, checkbox = false) {
+	if ($(document).find("#settings-wrapper").length <= 0) return
+
 	if (checkbox) {
 		$("#setting-"+id)[0].checked = parseInt(value)
 	} else {

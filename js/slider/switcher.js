@@ -97,13 +97,14 @@ function fetchSliderData(dates, sliderInfo, timeFrame, type) {
         data: { minDate: minDate, maxDate: maxDate, amount: 1, userID: userId},
         success: function (data) {
             // If the result contains time in ms convert it to usable date (hh:mm:ss)
-			if ("totalTime" in data[0]) {
-				data[0].y = msToTime(
-					data[0].y
-				)
+			if (data != null){
+				if ("totalTime" in data[0]) {
+					data[0].y = msToTime(
+						data[0].y
+					)
+				}
+				setSliderItem(id, data[0], timeFrame, type, sliderInfo)
 			}
-
-            setSliderItem(id, data[0], timeFrame, type, sliderInfo)
         },
         error: {
             function() {

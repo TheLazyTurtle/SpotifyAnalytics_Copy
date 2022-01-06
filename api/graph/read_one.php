@@ -23,14 +23,14 @@ $graph->read_one();
 // If result
 if ($graph->title != null) {
     $graphArr = array(
-	"graphID" => $graph->id,
-	"title" => $graph->title,
-	"titleX" => $graph->titleX,
-	"titleY" => $graph->titleY,
-	"type" => $graph->type,
-	"xValueType" => $graph->xValueType,
-	"api" => $graph->api,
-	"containerID" => $graph->containerID
+		"graphID" => $graph->id,
+		"title" => $graph->title,
+		"titleX" => $graph->titleX,
+		"titleY" => $graph->titleY,
+		"type" => $graph->type,
+		"xValueType" => $graph->xValueType,
+		"api" => $graph->api,
+		"containerID" => $graph->containerID
     );
 
     // Set response to ok
