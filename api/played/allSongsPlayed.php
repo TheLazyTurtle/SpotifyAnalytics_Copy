@@ -27,6 +27,11 @@ $minPlayed = isset($_GET["minPlayed"]) && !empty($_GET["minPlayed"]) ? $_GET["mi
 $maxPlayed = isset($_GET["maxPlayed"]) && !empty($_GET["maxPlayed"]) ? $_GET["maxPlayed"] : $maxPlayed_def;
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
+$relative = isset($_GET["relative"]) && $_GET["relative"] == "true" ? True : False;
+
+if ($relative && $maxPlayed == 9999) {
+	$maxPlayed = 999999;
+}
 
 // Check if you have viewing rights
 if (!$tokenUserID) {
@@ -39,7 +44,7 @@ if (!$tokenUserID) {
 }
 
 // Query results
-$stmt = $graph->allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate);
+$stmt = $graph->allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate, $relative);
 $num = $stmt->rowCount();
 
 // If results
@@ -65,5 +70,5 @@ if ($num > 0) {
 	// Set response to bad request 
 	http_response_code(200);
 
-	echo json_encode(null);
+	echo json_encode(array("message" => "No data found"));
 }

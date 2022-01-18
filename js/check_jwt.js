@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    //var jwt = getCookie("jwt")
-
     // Validates the jwt token
     $.ajax({
         url: "/api/system/validate_login.php",
@@ -11,39 +9,14 @@ $(document).ready(function () {
         },
         error: function () {
             // If a users token has expired or is invalid than send them to the login page
-			// TODO: Maybe change to if it includes
             if (
-                document.URL.includes("index.php")
+                document.URL.includes("index.php") ||
+				document.URL.slice(-1) == "/"
             ) {
                 window.location.href = "login.php"
             }
 
-            // Change logout button to login button when you are not logged in
-            // $("#login-btn")[0].innerHTML = "Inloggen"
-            // $("#login-btn")[0].onclick = "window.location.href='login.php'"
-
-            // $("#follow").remove()
-
             return false
         },
     })
-
-    // get or read cookie
-    function getCookie(cname) {
-        var name = cname + "="
-        var decodedCookie = decodeURIComponent(document.cookie)
-        var ca = decodedCookie.split(";")
-
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i]
-            while (c.charAt(0) == " ") {
-                c = c.substring(1)
-            }
-
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length)
-            }
-        }
-        return ""
-    }
 })

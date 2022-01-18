@@ -29,6 +29,7 @@ $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 $artist = isset($_GET["artist"]) && !empty($_GET["artist"]) ? $_GET["artist"] : "";
 $amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
+$relative = isset($_GET["relative"]) && $_GET["relative"] == "true" ? True : False;
 
 // Check if you have viewing rights
 if (!$tokenUserID) {
@@ -41,7 +42,7 @@ if (!$tokenUserID) {
 }
 
 // Query the results
-$stmt = $played->topSongs($userID, $artist, $minDate, $maxDate, $amount);
+$stmt = $played->topSongs($userID, $artist, $minDate, $maxDate, $amount, $relative);
 $num = $stmt->rowCount();
 
 // If results
@@ -54,7 +55,7 @@ if ($num > 0) {
 		extract($row);
 		$resultItem = array(
 			"label" => $songName,
-			"y" => (int)$times,
+			"y" => (double)round($times, 2),
 			"img" => $song->getImage($songID),
 			"albumID" => $albumID
 		);

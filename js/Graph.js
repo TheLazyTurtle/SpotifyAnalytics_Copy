@@ -21,6 +21,7 @@ class Graph {
         this.inputFields = []
         this.filterSettings = {}
         this.timeframe = "year"
+		this.relative = false
 
         // Build the containers needed to place the graphs
         this.buildWrapper()
@@ -61,11 +62,16 @@ class Graph {
                 text: this.title
             },
             axisX: {
-                title: this.titleX
+                title: this.titleX,
             },
             axisY: {
                 includeZero: true,
-                title: this.titleY
+                title: this.titleY,
+				interval: 60 * 1000,
+				labelFormatter: function(e) {
+					return CanvasJS.formatDate(e.value, "hh:mm:ss")
+				}
+				//valueFormatString: "HH:mm:ss"
             },
             data: [
                 {
@@ -117,7 +123,7 @@ class Graph {
 					response(autoCompleteData)
 				}
             },
-            select: async function(element, event) {
+            select: async function(_, event) {
                 var input = event.item.value
 
                 that.setFilterSetting(settingName, input)
@@ -132,6 +138,7 @@ class Graph {
         })
 	}
 
+	// This gets the data to fill the autocomplete list
 	async getAutoCompleteData(api, data) {
 		return await $.ajax({
 			type: "GET",
@@ -178,8 +185,13 @@ class Graph {
         var that = this
 		$(button).click(async function() {
             var timeframe = $(this).val()
-            that.timeframe = timeframe
-            that.updateGraph()
+			if (timeframe != "relative") {
+				that.timeframe = timeframe
+				that.updateGraph()
+			} else {
+				that.relative = that.relative ? false : true 
+				that.updateGraph()
+			}
         })
 	}
 
@@ -189,7 +201,8 @@ class Graph {
         var data = {
             minDate: date.minDate,
             maxDate: date.maxDate,
-            userID: this.userId
+            userID: this.userId,
+			relative: this.relative
         }
 
         // Add filter settings to the query
@@ -215,17 +228,32 @@ class Graph {
 
     // This will update the graph
     async updateGraph() {
+		// Update the title
+		var title = this.relative ? this.title + " (in hours)" : " (in times)"
+		this.graph.title.options.text = title
+
+		// Set the data
         var data = await this.getData(this.timeframe, this.filterSettings)
         this.graph.options.data[0].dataPoints = []
 
 		// Check if data retruned
 		if (data != null) {
 			for (let i = 0; i < data.length; i++) {
-				this.graph.options.data[0].dataPoints.push(data[i])
+
+				this.graph.options.data[0].dataPoints.push(this.parseData(data[i]))
+				this.graph.options.data[0].dataPoints[i].y.getTime()
 			}
 		}
         this.graph.render()
     }
+
+	// If the data is relative convert the data to time
+	parseData(data) {
+		if (this.relative) {
+			data.y = new Date(data.y)
+		}
+		return data
+	}
 
     async setFilterSetting(settingName, value) { 
         this.filterSettings[settingName] = value

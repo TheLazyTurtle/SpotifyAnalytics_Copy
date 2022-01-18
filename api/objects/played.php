@@ -51,9 +51,10 @@ class Played
 	}
 
 	// This will get all songs played by a user
-	function allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate)
+	function allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate, $relative)
 	{
-		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as name, count(p.songID) as times
+		$counter = $relative ? "SUM(s.length)" : "COUNT(p.songID)";
+		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as name, $counter as times
 			FROM played p
 			INNER JOIN artist_has_song sfa ON p.songID = sfa.songID
 			INNER JOIN song s ON sfa.songID = s.songID
@@ -83,9 +84,10 @@ class Played
 	}
 
 	// This will get the top songs of a user
-	function topSongs($userID, $artist, $minDate, $maxDate, $amount)
+	function topSongs($userID, $artist, $minDate, $maxDate, $amount, $relative)
 	{
-		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as songName, count(p.songID) as times, p.songID
+		$counter = $relative ? "((SUM(s.length)/1000)/60)/60" : "COUNT(p.songID)";
+		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as songName, $counter as times, p.songID
 			FROM played p
 			INNER JOIN artist_has_song ahs ON ahs.songID = p.songID 
 			INNER JOIN song s ON ahs.songID = s.songID
@@ -145,7 +147,7 @@ class Played
 	}
 
 	// Gets the played per day graph
-	function playedPerDay($userID, $song, $artist, $minDate, $maxDate)
+	function playedPerDay($userID, $song, $artist, $minDate, $maxDate, $relative)
 	{
 		// Calculate difference between minDate and maxDate in days
 		$origin = new DateTime($minDate);
@@ -153,7 +155,9 @@ class Played
 		$interval = $origin->diff($target);
 		$days = (int)$interval->format("%R%a");
 
-		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 as date, count(*) as times
+		$counter = $relative ? "SUM(s.length)" : "COUNT(*)";
+
+		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 as date, $counter as times
 			from played p
 			WHERE songID IN (
 				SELECT s.songID

@@ -27,6 +27,7 @@ $song = !empty($_GET["song"]) ? $_GET["song"] : "%";
 $artist = !empty($_GET["artist"]) ? $_GET["artist"] : "%";
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
+$relative = isset($_GET["relative"]) && $_GET["relative"] == "true" ? True : False;
 
 // Check if you have viewing rights
 if (!$tokenUserID) {
@@ -39,7 +40,7 @@ if (!$tokenUserID) {
 }
 
 // Query the results
-$stmt = $graph->playedPerDay($userID, $song, $artist, $minDate, $maxDate);
+$stmt = $graph->playedPerDay($userID, $song, $artist, $minDate, $maxDate, $relative);
 $num = $stmt->rowCount();
 
 // If results
@@ -52,7 +53,7 @@ if ($num > 0) {
 
 		$resultItem = array(
 			"x" => (int)$date,
-			"y" => (int)$times,
+			"y" => (double)round($times, 2),
 		);
 		array_push($resultsArr, $resultItem);
 	}
