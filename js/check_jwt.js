@@ -13,7 +13,8 @@ $(document).ready(function () {
             // If a users token has expired or is invalid than send them to the login page
 			// TODO: Maybe change to if it includes
             if (
-                document.URL.includes("index.php")
+                document.URL.includes("index.php") ||
+				document.URL.slice(-1) == "/"
             ) {
                 window.location.href = "login.php"
             }

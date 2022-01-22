@@ -227,6 +227,7 @@ class Graph {
         this.graph.render()
     }
 
+	// Update the filtersetting
     async setFilterSetting(settingName, value) { 
         this.filterSettings[settingName] = value
 

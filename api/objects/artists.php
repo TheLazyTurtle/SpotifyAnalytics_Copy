@@ -30,6 +30,7 @@ class Artist
 	}
 
 	// This will only read one artist from the db
+	// UseID is a bool to check if we should only use the id of the artist
 	function readOne($useID = False)
 	{
 		$query = "SELECT * FROM artist WHERE ";
@@ -65,7 +66,9 @@ class Artist
 				$this->img = $row["img"];
 			}
 		} else {
-			$this->readOne(True);
+			if (!$useID) {
+				$this->readOne(True);
+			}
 		}
 	} 
 	// Add artist to db

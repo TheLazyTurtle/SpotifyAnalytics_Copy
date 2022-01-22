@@ -14,9 +14,6 @@ require 'src/header.php';
 	</div>
 	<div class="container">
 		<?php require 'src/slider.php' ?>
-		<div class="content">
-		</div>
+		<div class="content"></div>
 	</div>
 </body>
-
-</html>
