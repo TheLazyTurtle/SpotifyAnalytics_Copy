@@ -19,7 +19,7 @@ class InputField{
 		field.id = this.graphName + "_" + this.name
 
 		// Add the filter setting to the field if it has one
-		if(this.setting != null) {
+		if (this.setting != null) {
 			if (this.setting.value) {
 				field.value = this.setting["value"]
 				this.settingValue = this.setting["value"]

@@ -1,11 +1,11 @@
 // This will get one album of an artist
 function getAlbumInfo() {
-    const albumID = getAlbumID()
+    const albumData = getAlbumData()
 
     $.ajax({
         url: "/api/album/readOne.php",
         type: "GET",
-        data: { albumID: albumID },
+        data: albumData,
         success: function (result) {
             $(".albums-wrapper").append(makeAlbum(result[0], "open"))
 
@@ -16,6 +16,19 @@ function getAlbumInfo() {
             console.log(error)
         },
     })
+}
+
+// This gets the album data from the url
+function getAlbumData() {
+    const addr = window.location.search
+    const params = new URLSearchParams(addr)
+    const albumID = params.get("album")
+    const songName = params.get("song")
+
+	return {
+		albumID: albumID,
+		songName: songName
+	}
 }
 
 // This will show all albums and artist has
