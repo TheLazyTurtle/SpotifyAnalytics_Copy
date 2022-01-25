@@ -278,7 +278,7 @@ class User
 		$settingName = htmlspecialchars(strip_tags($settingName));
 		$value = htmlspecialchars(strip_tags($value));
 		$graphID = htmlspecialchars(strip_tags($graphID));
-		$relative = $relative ? 1: 0;
+		$relative = $relative == "true" ? 1 : 0;
 
 		// Bind values
 		$stmt->bindParam(1, $value);
