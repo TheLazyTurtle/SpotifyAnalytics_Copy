@@ -17,7 +17,7 @@ a {
 }
 
 .main {
-    margin-bottom: 400px;
+    margin-bottom: 430px;
 }
 
 .graph {
@@ -46,6 +46,11 @@ a {
 
 .btn:active {
     transform: scale(0.9);
+}
+
+/* Make the relative button of the graphs be a bit more to the side */
+#relativeBtn {
+	margin-left: 10px;
 }
 
 .form-field {
@@ -213,6 +218,10 @@ header {
 
 /* mobile css */
 @media only screen and (max-width: 460px) {
+	#relativeBtn {
+		margin: 2% 1%;
+	}
+	
 	.inputField {
 		width: 40%;
 		margin-right: 2%;

@@ -159,12 +159,14 @@ class Artist
 	}
 
 	// Gets the top artist of a user
-	function topArtist($userID, $minDate, $maxDate, $amount)
+	function topArtist($userID, $minDate, $maxDate, $amount, $relative)
 	{
-		$query = "SELECT a.name, COUNT(*) times, a.img
+		$counter = $relative ? "SUM(s.length) / 1000 / 60" : "COUNT(p.songID)";
+		$query = "SELECT a.name, $counter as times, a.img
 			FROM played p
 			INNER JOIN artist_has_song ahs ON p.songID = ahs.songID
 			RIGHT JOIN artist a ON ahs.artistID = a.artistID
+			INNER JOIN song s ON s.songID = ahs.songID
 			WHERE p.playedBy LIKE ?
 			AND p.datePlayed BETWEEN ? AND ?
 			GROUP BY a.artistID

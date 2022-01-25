@@ -53,7 +53,7 @@ class Played
 	// This will get all songs played by a user
 	function allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate, $relative)
 	{
-		$counter = $relative ? "SUM(s.length)" : "COUNT(p.songID)";
+		$counter = $relative ? "SUM(s.length) / 1000 / 60" : "COUNT(p.songID)";
 		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as name, $counter as times
 			FROM played p
 			INNER JOIN artist_has_song sfa ON p.songID = sfa.songID
@@ -86,7 +86,7 @@ class Played
 	// This will get the top songs of a user
 	function topSongs($userID, $artist, $minDate, $maxDate, $amount, $relative)
 	{
-		$counter = $relative ? "((SUM(s.length)/1000)/60)/60" : "COUNT(p.songID)";
+		$counter = $relative ? "SUM(s.length) / 1000 / 60" : "COUNT(p.songID)";
 		$query = "SELECT DISTINCT s.albumID as albumID, p.songName as songName, $counter as times, p.songID
 			FROM played p
 			INNER JOIN artist_has_song ahs ON ahs.songID = p.songID 
@@ -155,11 +155,12 @@ class Played
 		$interval = $origin->diff($target);
 		$days = (int)$interval->format("%R%a");
 
-		$counter = $relative ? "SUM(s.length)" : "COUNT(*)";
+		$counter = $relative ? "SUM(s.length) / 1000 / 60" : "COUNT(*)";
 
 		$query = "SELECT unix_timestamp(p.datePlayed) * 1000 as date, $counter as times
 			from played p
-			WHERE songID IN (
+			INNER JOIN song s ON p.songID = s.songID
+			WHERE s.songID IN (
 				SELECT s.songID
 				FROM song s
 				INNER JOIN artist_has_song ahs ON s.songID = ahs.songID
@@ -173,7 +174,7 @@ class Played
 		if ($days >= 0 && $days <= 31) {
 			$query = $query . "GROUP BY MINUTE(p.datePlayed)";
 		} else {
-			$query = $query . "GROUP BY WEEK(p.datePlayed), MONTH(p.datePlayed), YEAR(p.datePlayed)";
+			$query = $query . "GROUP BY MONTH(p.datePlayed), YEAR(p.datePlayed)";
 		}
 
 		$query = $query . "ORDER BY date DESC";

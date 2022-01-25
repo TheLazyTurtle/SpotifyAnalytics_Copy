@@ -23,8 +23,9 @@ $userID = isset($tokenUserId) ? $tokenUserId : die(json_encode(array("message" =
 $settingname = isset($_POST["settingname"]) && !empty($_POST["settingname"]) ? $_POST["settingname"] : "";
 $value = isset($_POST["value"]) && !empty($_POST["value"]) ? $_POST["value"] : "";
 $graphID = isset($_POST["graphID"]) && !empty($_POST["graphID"]) ? $_POST["graphID"] : "";
+$relative = isset($_POST["relative"]) ? $_POST["relative"] : False;
 
-if ($user->updateFilterSetting($userID, $settingname, $value, $graphID)) {
+if ($user->updateFilterSetting($userID, $settingname, $value, $graphID, $relative)) {
     // Set response to ok
     http_response_code(200);
 

@@ -26,6 +26,7 @@ $userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserID;
 $minDate = isset($_GET["minDate"]) ? $_GET["minDate"] : $minDate_def;
 $maxDate = isset($_GET["maxDate"]) ? $_GET["maxDate"] : $maxDate_def;
 $amount = isset($_GET["amount"]) && !empty($_GET["amount"]) ? $_GET["amount"] : 10;
+$relative = isset($_GET["relative"]) && $_GET["relative"] == "true" ? True : False;
 
 // Check if you have viewing rights
 if (!$tokenUserID) {
@@ -38,7 +39,7 @@ if (!$tokenUserID) {
 }
 
 // Query the results
-$stmt = $artist->topArtist($userID, $minDate, $maxDate, $amount);
+$stmt = $artist->topArtist($userID, $minDate, $maxDate, $amount, $relative);
 $num = $stmt->rowCount();
 
 // If results

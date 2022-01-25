@@ -79,7 +79,7 @@ class Graph
 	}
 
 	function read_filterSettings($name, $userID, $graphID) {
-		$query = "SELECT * FROM filtersetting WHERE name = ? AND userID = ? AND graphID = ?";
+		$query = "SELECT * FROM filterSetting WHERE name = ? AND userID = ? AND graphID = ?";
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->bindParam(1, $name);

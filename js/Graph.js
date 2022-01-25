@@ -4,7 +4,7 @@ class Graph {
         userId = null
     ) {
         // Init basic vars
-        this.graphId = graphData.graphId
+        this.graphId = graphData.id
         this.name = graphData.containerID
         this.title = graphData.title
         this.titleX = graphData.titleX
@@ -27,6 +27,7 @@ class Graph {
         this.buildWrapper()
     }
 
+	// Make the wrapper where all the graph elements will be placed in
     buildWrapper() {
         var wrapper = document.createElement("div")
         wrapper.className = "main"
@@ -50,6 +51,7 @@ class Graph {
         $(".content").append(wrapper)
     }
 
+	// Make the actual graph
     async buildGraph() {
         await this.addInputFields(this.inputfieldData)
         this.data = await this.getData(this.timeframe, this.filterSettings)
@@ -59,7 +61,7 @@ class Graph {
         this.graph = new CanvasJS.Chart(this.name, {
             theme: "dark2",
             title: {
-                text: this.title
+                text: this.makeTitle()
             },
             axisX: {
                 title: this.titleX,
@@ -67,11 +69,6 @@ class Graph {
             axisY: {
                 includeZero: true,
                 title: this.titleY,
-				interval: 60 * 1000,
-				labelFormatter: function(e) {
-					return CanvasJS.formatDate(e.value, "hh:mm:ss")
-				}
-				//valueFormatString: "HH:mm:ss"
             },
             data: [
                 {
@@ -95,7 +92,7 @@ class Graph {
 
         for (let i = 0; i < fields.length; i++) {
             let fd = fields[i]
-            var field = new InputField(fd, this.userId)
+            var field = new InputField(fd, this.name, this.graphId, this.userId)
             await field.create()
 
             this.readInputField(field.field, fd.name, fd.api)
@@ -106,6 +103,7 @@ class Graph {
         }
     }
 
+	// Creates the auto complete menu
 	async autoComplete(element, api, settingName) {
         var that = this
         $(element).autocomplete({
@@ -169,14 +167,13 @@ class Graph {
 
         for (let i = 0; i < buttons.length; i++) {
             // Make the button
-            var bd = buttons[i];
-            var button = new Button(bd.className, bd.value, bd.innerHTML)
-            button.create()
-            this.onClick(button.button)
+            Button.timeframeButtons[i].create()
+			const button = Button.timeframeButtons[i].button
+            this.onClick(button)
 
             // Add the button
-            this.buttons.push(button.button)
-            $("#" + this.name + "_array").append(button.button)
+            this.buttons.push(button)
+            $("#" + this.name + "_array").append(button)
         }
     }
 
@@ -190,9 +187,34 @@ class Graph {
 				that.updateGraph()
 			} else {
 				that.relative = that.relative ? false : true 
+				
+				if (that.name == "all_Songs_Played") {
+					await that.changeFilterSettings()
+				}
+
+				that.changeRelativeButtonText(button)
 				that.updateGraph()
 			}
         })
+	}
+
+	// This changes the text of the relative button when you press it
+	// TODO: See if it makes more sense when it the naming is the other way around
+	changeRelativeButtonText(button) {
+		const newValue = button.innerHTML == "Absolute" ? "Relative" : "Absolute"
+		
+		button.innerHTML = newValue
+	}
+
+	// Change the filter settings when switching between relative and absolute
+	async changeFilterSettings() {
+		for (const key in this.filterSettings) {
+			const newFilterSetting = await this.getFilterSetting(key)
+			const newFilterSettingValue = newFilterSetting[0]["value"]
+			this.filterSettings[key] = newFilterSettingValue
+
+			$(`#${this.name}_${key}`)[0].value = newFilterSettingValue
+		}
 	}
 
     // Get the data to fill the graph
@@ -228,9 +250,7 @@ class Graph {
 
     // This will update the graph
     async updateGraph() {
-		// Update the title
-		var title = this.relative ? this.title + " (in hours)" : " (in times)"
-		this.graph.title.options.text = title
+		this.graph.title.options.text = this.makeTitle()
 
 		// Set the data
         var data = await this.getData(this.timeframe, this.filterSettings)
@@ -239,22 +259,18 @@ class Graph {
 		// Check if data retruned
 		if (data != null) {
 			for (let i = 0; i < data.length; i++) {
-
-				this.graph.options.data[0].dataPoints.push(this.parseData(data[i]))
-				this.graph.options.data[0].dataPoints[i].y.getTime()
+				this.graph.options.data[0].dataPoints.push(data[i])
 			}
 		}
         this.graph.render()
     }
 
-	// If the data is relative convert the data to time
-	parseData(data) {
-		if (this.relative) {
-			data.y = new Date(data.y)
-		}
-		return data
+	// This will update the graphs title
+	makeTitle() {
+		return this.relative ? this.title + " (in minutes)" : this.title + " (in times)"
 	}
 
+	// This will update the filter settings
     async setFilterSetting(settingName, value) { 
         this.filterSettings[settingName] = value
 
@@ -262,7 +278,8 @@ class Graph {
             settingname: settingName,
             value: value,
             graphID: this.graphId,
-            userID: this.userId
+            userID: this.userId,
+			relative: this.relative
         }
 
         $.ajax({
@@ -272,8 +289,23 @@ class Graph {
             data: data
         })
     }
+ 
+	// Get the filtersetting for when switching between relative and not
+	async getFilterSetting(filterSettingName) {
+		return $.ajax({
+			url: "/api/user/readOneFilterSetting.php",
+			type: "GET",
+			async: true,
+			data: {
+				name: filterSettingName,
+				graphID: this.graphId,
+				relative: this.relative
+			}
+		})
+	}
 }
 
+// Sends you to the artists page or the album page when you click on a graph item
 function goToPage(data, dataType) {
     if(dataType == "song") {
         let albumId = data.dataPoint.albumID

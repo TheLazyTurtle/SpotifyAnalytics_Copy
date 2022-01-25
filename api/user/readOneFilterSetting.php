@@ -21,9 +21,10 @@ $user = new User($db);
 $userID = !empty($_GET["userID"]) ? $_GET["userID"] : $tokenUserId;
 $name = isset($_GET["name"]) ? $_GET["name"] : "";
 $graphID = isset($_GET["graphID"]) ? $_GET["graphID"] : "";
+$relative = isset($_GET["relative"]) ? $_GET["relative"] : False;
 
 // Query the filterSettings
-$stmt = $user->readOneFilterSetting($userID, $name, $graphID);
+$stmt = $user->readOneFilterSetting($userID, $name, $graphID, $relative);
 $num = $stmt->rowCount();
 
 // If results

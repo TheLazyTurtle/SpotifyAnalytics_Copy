@@ -250,38 +250,42 @@ class User
 	}
 
 	// Get one user filterSetting
-	function readOneFilterSetting($userID, $name, $graphID)
+	function readOneFilterSetting($userID, $name, $graphID, $relative)
 	{
-		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ?AND name = ?";
+		$query = "SELECT * FROM filterSetting WHERE userID = ? AND graphID = ? AND name = ? AND relative = ?";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
 		$name = htmlspecialchars(strip_tags($name));
+		$relative = $relative == "true" ? 1 : 0;
 
 		// Bind values
 		$stmt->bindParam(1, $userID);
 		$stmt->bindParam(2, $graphID);
 		$stmt->bindParam(3, $name);
+		$stmt->bindParam(4, $relative);
 		$stmt->execute();
 		return $stmt;
 	}
 
 	// Update filterSetting
-	function updateFilterSetting($userID, $settingName, $value, $graphID)
+	function updateFilterSetting($userID, $settingName, $value, $graphID, $relative)
 	{
-		$query = "UPDATE filterSetting SET value = ? WHERE name = ? AND graphID = ? AND userID = ?";
+		$query = "UPDATE filterSetting SET value = ? WHERE name = ? AND graphID = ? AND userID = ? AND relative = ?";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
 		$settingName = htmlspecialchars(strip_tags($settingName));
 		$value = htmlspecialchars(strip_tags($value));
 		$graphID = htmlspecialchars(strip_tags($graphID));
+		$relative = $relative ? 1: 0;
 
 		// Bind values
 		$stmt->bindParam(1, $value);
 		$stmt->bindParam(2, $settingName);
 		$stmt->bindParam(3, $graphID);
 		$stmt->bindParam(4, $userID);
+		$stmt->bindParam(5, $relative);
 
 		$stmt->execute();
 		return $stmt;
@@ -487,19 +491,22 @@ class User
 
 	function createFilterSettings($userID)
 	{
-		$query = "INSERT INTO filterSetting (graphID, userID, name, value) VALUES 
-			('1', ?, 'maxDate', '2099-01-01'),
-			('1', ?, 'maxPlayed', ''),
-			('1', ?, 'minDate', '2020-01-01'),
-			('1', ?, 'minPlayed', '0'),
-			('2', ?, 'maxDate', '2099-01-01'),
-			('2', ?, 'minDate', '2020-01-01'),
-			('2', ?, 'amount', 10),
-			('2', ?, 'artist', ''),
-			('3', ?, 'amount', 10),
-			('4', ?, 'maxDate', '2099-01-01'),
-			('4', ?, 'minDate', '2020-01-01'),
-			('4', ?, 'song', '')";
+		$query = "INSERT IGNORE INTO filterSetting (graphID, userID, name, value, relative) VALUES 
+			('1', ?, 'maxDate', '2099-01-01', 0),
+			('1', ?, 'maxPlayed', '', 0),
+			('1', ?, 'minDate', '2020-01-01', 0),
+			('1', ?, 'minPlayed', '0', 0),
+			('1', ?, 'maxPlayed', '', 1),
+			('1', ?, 'minPlayed', '0', 1),
+			('2', ?, 'maxDate', '2099-01-01', 0),
+			('2', ?, 'minDate', '2020-01-01', 0),
+			('2', ?, 'amount', 10, 0),
+			('2', ?, 'artist', '', 0),
+			('3', ?, 'amount', 10, 0),
+			('4', ?, 'maxDate', '2099-01-01', 0),
+			('4', ?, 'minDate', '2020-01-01', 0),
+			('4', ?, 'song', '', 0)";
+
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->bindParam(1, $userID);
@@ -514,6 +521,8 @@ class User
 		$stmt->bindParam(10, $userID);
 		$stmt->bindParam(11, $userID);
 		$stmt->bindParam(12, $userID);
+		$stmt->bindParam(13, $userID);
+		$stmt->bindParam(14, $userID);
 
 		return $stmt->execute();
 	}

@@ -1,11 +1,12 @@
 class Button {
 	static timeframeButtons = []
 
-	constructor(className, value, innerHTML) {
-		this.className = className
-		this.value = value
-		this.innerHTML = innerHTML
-		this.button
+	constructor(buttonData) {
+		this.className = buttonData.class
+		this.value = buttonData.value
+		this.innerHTML = buttonData.innerHTML
+		this.id = buttonData.id
+		this.button = null
 	}
 
 	create() {
@@ -13,6 +14,10 @@ class Button {
 		button.className = this.className
 		button.value = this.value
 		button.innerHTML = this.innerHTML
+		
+		if (this.id != null) {
+			button.id = this.id
+		}
 
 		this.button = button
 	}
@@ -26,8 +31,10 @@ class Button {
 			type: "get",
 			success: function(result) {
 				for (let i = 0; i < result.length; i++) {
-					const button = result[i]
-					Button.timeframeButtons.push(new Button(button.class, button.value, button.innerHTML))
+					const buttonData = result[i]
+					Button.timeframeButtons.push(
+						new Button(buttonData)
+					)
 				}
 			}
 		})
