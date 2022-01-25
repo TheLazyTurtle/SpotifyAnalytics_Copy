@@ -172,13 +172,12 @@ class Played
 			AND p.datePlayed BETWEEN ? AND ?";
 
 		if ($days >= 0 && $days <= 31) {
-			$query = $query . "GROUP BY MINUTE(p.datePlayed)";
+			$query = $query . "GROUP BY HOUR(p.datePlayed)";
 		} else {
 			$query = $query . "GROUP BY MONTH(p.datePlayed), YEAR(p.datePlayed)";
 		}
 
 		$query = $query . "ORDER BY date DESC";
-
 		$stmt = $this->conn->prepare($query);
 
 		// Clean input
@@ -188,8 +187,8 @@ class Played
 		$minDate = htmlspecialchars(strip_tags($minDate));
 		$maxDate = htmlspecialchars(strip_tags($maxDate));
 
-		$stmt->bindParam(1, $song);
-		$stmt->bindParam(2, $artist);
+		$stmt->bindParam(1, $artist);
+		$stmt->bindParam(2, $song);
 		$stmt->bindParam(3, $userID);
 		$stmt->bindParam(4, $minDate);
 		$stmt->bindParam(5, $maxDate);
