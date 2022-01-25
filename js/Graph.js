@@ -65,6 +65,8 @@ class Graph {
             },
             axisX: {
                 title: this.titleX,
+				labelMaxWidth: 110,
+				labelWrap: false,
             },
             axisY: {
                 includeZero: true,

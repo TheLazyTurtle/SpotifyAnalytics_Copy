@@ -1,15 +1,21 @@
+/* Color variables */
+:root {
+	--green: #1DB95A;
+	--background: rgb(26, 29, 30);
+	--autocomplete: #4a4a4a;
+	--gray: rgb(56, 60, 63);
+}
+
 /*general*/
 body {
-	/*background-color: #32373A;*/
-	/*background-color: rgb(35, 35, 35);*/
-	background-color: rgb(26, 29, 30);
+	background-color: var(--background) ;
     color: black;
 	overflow-x: hidden;
 }
 
 a {
     text-decoration: none;
-    color: #1DB954;
+    color: var(--green);
 }
 
 .container {
@@ -32,8 +38,7 @@ a {
 
     margin-top: 10px;
 
-    /*background-color: #0095F6;*/
-	background-color: #1DB954;
+	background-color: var(--green);
     text-decoration: none;
 
     border: 1px;
@@ -41,7 +46,7 @@ a {
 }
 
 .btn:hover {
-    background-color: #ffffff;
+    background-color: white;
 }
 
 .btn:active {
@@ -90,7 +95,7 @@ a {
 
 /*Some autocomplete stuff*/
 .ui-autocomplete {
-    background: #4a4a4a;
+    background: var(--autocomplete);
     border-radius: 0px;
     list-style-type: none;
     width: 145px;
@@ -103,7 +108,7 @@ a {
 
 .ui-menu-item-wrapper {
     margin-left: -35px;
-	border-bottom: 1px solid #1DB954;
+	border-bottom: 1px solid var(--green);
 }
 
 /* Header stuff */
@@ -111,9 +116,7 @@ header {
 	width: 101%;
 	margin-top: -5px;
 	margin-left: -10px;
-	/* TODO: Fix the color to something nicer*/
-	/*background-color: #4a4a4a;*/
-	background-color: rgb(56, 60, 63);
+	background-color: var(--gray);
 }
 
 .mobile-header {
@@ -277,7 +280,7 @@ header {
 	}
 
 	.fa-ban {
-		color: #1DB954;
+		color: var(--green);
 	}
 
 	.notification-message {

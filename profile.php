@@ -22,7 +22,8 @@ require "src/header.php";
 				<h3 class="followers"></h3>
 				<h3 class="following"></h3>
 			</div>
-			<button id="settings-button" name="settingsButton" class="btn">settings</button>
+			<button id="settings-button" name="settingsButton" class="btn">Settings</button>
+			<button id="logout-button" name="logoutButton" class="btn" onclick="window.location.href='logout.php'">Logout</button>
 		</div>
 	</div>
 

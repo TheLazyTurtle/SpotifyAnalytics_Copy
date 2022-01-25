@@ -117,7 +117,7 @@ th {
 .album-wrapper {
 	margin: 0 20vw 2vw 20vw;
 	/*background-color: rgb(45, 45, 45);*/
-	background-color: rgb(56, 60, 63);
+	background-color: var(--gray);
 	border-radius: 8px;
 }
 
@@ -230,12 +230,15 @@ th {
 	margin-left: 1vw;
 }
 
-/* Settings */
-.user-info-img-uploader {
+#logout-button {
 	display: none;
 }
 
 @media only screen and (max-width: 460px) {
+	#logout-button {
+		display: inline-block;
+	}
+
 	.divider {
 		margin: 25vw 0 10vw 0;
 	}
