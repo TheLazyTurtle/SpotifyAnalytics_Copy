@@ -1,4 +1,4 @@
-// Sets the already known values into the settings vields
+// Sets the already known values into the settings fields
 function setProfileItem(id, value, checkbox = false) {
 	if ($(document).find("#settings-wrapper").length <= 0) return
 
@@ -38,7 +38,7 @@ function updateSettings() {
 		type: "POST",
 		data: values,
 		success: function(result) {
-			$("#setting-status")[0].innerHTML = result["message"]
+			//$("#setting-status")[0].innerHTML = result["message"]
 			clearPasswordFields()
 		},
 		error: function(result) {
@@ -60,12 +60,14 @@ function extractSettings() {
 	const items = $(".setting-item")
 	let values = []
 
-	for (let i = 0; i < items.length -3; i++) {
+	for (let i = 0; i < items.length -4; i++) {
 		let input = items[i].children[2]
 		const name = input.name
 		const value = input.value
 		values.push({name, value})
 	}
+
+	// Check if private account setting is checked
 	const name = "privateAccount"
 	const value = items[7].children[1].checked
 	values.push({name, value})
@@ -76,42 +78,32 @@ function extractSettings() {
 // This will give the popup screen for a user to change their settings
 function changeProfilePicture() {
     // If you click the profile picture you can upload the new img
-    $(".user-info-img").click(function () {
+    $("#profilePictureUpdater").click(function () {
         document.querySelector("[type=file]").click()
 
-        // Check if there already is a submit button
-        if ($("#submit").length == 0) {
-            // Add submit button
-            let submit = document.createElement("button")
-            submit.className = "btn"
-            submit.id = "submit"
-            submit.innerHTML = "Submit"
-            $(".user-info-img-wrapper").append(submit)
+		// If button is pressed than upload img
+		$("#submit").click(function () {
+			let form = $("#fileForm")[0]
+			let data = new FormData(form)
 
-            // If button is pressed than upload img
-            $("#submit").click(function () {
-                let form = $("#fileForm")[0]
-                let data = new FormData(form)
-
-                $.ajax({
-                    type: "post",
-                    enctype: "multipart/form-data",
-                    url: "/api/user/updateProfilePicture.php",
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 800000,
-                    success: function (data) {
-                        // Reload the page on success
-                        window.location = window.location.href
-                        console.log(data)
-                    },
-                    error: function (error) {
-                        console.error(error)
-                    },
-                })
-            })
-        }
+			$.ajax({
+				type: "post",
+				enctype: "multipart/form-data",
+				url: "/api/user/updateProfilePicture.php",
+				data: data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				timeout: 800000,
+				success: function (_) {
+					// Reload the page on success
+					window.location = window.location.href
+				},
+				error: function (error) {
+					$("#setting-status")[0].innerHTML = error["responseJSON"]["message"]
+					console.error(error)
+				},
+			})
+		})
     })
 }

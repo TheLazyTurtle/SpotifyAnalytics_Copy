@@ -3,7 +3,7 @@ let userID = null
 
 $(document).ready(async function () {
     await getUserInfo()
-    changeProfilePicture()
+	changeProfilePicture()
     buildGraphs(userID)
 })
 

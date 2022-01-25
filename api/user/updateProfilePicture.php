@@ -12,21 +12,18 @@ include '../system/validate_token.php';
 include '../config/database.php';
 include '../objects/user.php';
 
-if (!$tokenUserId = validateToken()) {
-	die(json_encode(array("message" => "Not a valid token")));
-}
+$tokenUserId = validateToken();
 
 // make db and user object
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
-$username = !empty($_COOKIE["username"]) ? $_COOKIE["username"] : die(json_encode(array("message" => "No user provided")));
 
 // Process the img
 $target_dir = realpath(dirname(getcwd())) . "/../uploads/profile/";
 $fileName = basename($_FILES["file"]["name"]);
 $imageFileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-$fileName = $username . "." . $imageFileType;
+$fileName = $tokenUserId . "." . $imageFileType;
 $target_file = $target_dir . $fileName;
 $uploadOk = 1;
 
@@ -65,7 +62,7 @@ if (
 // If everything is ok then upload
 if ($uploadOk == 1) {
 	$user->img = "/uploads/profile/" . $fileName;
-	$user->id = $_SESSION["userID"];
+	$user->id = $tokenUserId;
 
 	// If the file already exists then remove it
 	if (file_exists($target_file)) {
@@ -74,12 +71,18 @@ if ($uploadOk == 1) {
 	}
 
 	// Move the new file into the directory
-	if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file) && $user->updateProfilePicture()) {
-		http_response_code(200);
-		echo json_encode(array("message" => "The file has been uploaded"));
+	if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+		if ($user->updateProfilePicture()) {
+			http_response_code(200);
+			echo json_encode(array("message" => "The file has been uploaded"));
+		} else {
+			http_response_code(503);
+
+			echo json_encode(array("message" => "Failed to update db"));
+		}
 	} else {
 		http_response_code(503);
 
-		echo json_encode(array("message" => "There was an error uploading the file"));
+		echo json_encode(array("message" => "There was an error uploading the file. It probably was to big."));
 	}
 }

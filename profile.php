@@ -14,9 +14,6 @@ require "src/header.php";
 <div class="container">
 	<div class="user-info">
 		<div class="user-info-img-wrapper">
-			<form id="fileForm" class="user-info-img-uploader">
-				<input type="file" name="file" />
-			</form>
 			<img class="user-info-img"></img>
 		</div>
 		<div class="user-info-text-wrapper">
@@ -81,8 +78,14 @@ require "src/header.php";
 				<input id="setting-private" name="privateAccount" type="checkbox"/>
 			</div>
 			<div class="setting-item">
+				<button class="btn" name="upload image" id="profilePictureUpdater">Change profile picture</button>
+				<form id="fileForm" class="user-info-img-uploader">
+					<input type="file" name="file" />
+				</form>
+			</div>
+			<div class="setting-item">
 				<input class="btn" name="cancel" type="submit" value="Cancel"/>
-				<input class="btn" name="submitChanges" type="submit" value="Submit"/>
+				<input id="submit" class="btn" name="submitChanges" type="submit" value="Submit"/>
 			</div>	
 			<div class="setting-item">
 				<label id="setting-status"></label>
