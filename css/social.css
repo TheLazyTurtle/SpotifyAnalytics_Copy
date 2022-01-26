@@ -116,7 +116,6 @@ th {
 
 .album-wrapper {
 	margin: 0 20vw 2vw 20vw;
-	/*background-color: rgb(45, 45, 45);*/
 	background-color: var(--gray);
 	border-radius: 8px;
 }
@@ -124,17 +123,18 @@ th {
 .album-info-img-wrapper {
 	width: 150px;
 	display: inline-block;
-	vertical-align: middle;
-	margin: 0 1vw;
+	margin: 1vw;
 }
 
 .album-info-img {
 	width: 150px;
+	height: 150px;
 }
 
 .album-info-text-wrapper {
 	display: inline-block;
 	margin: 0 1vw;
+	width: 70%;
 }
 
 .album-info-title {

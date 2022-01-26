@@ -4,7 +4,7 @@ require "src/header.php";
 
 <link rel="stylesheet" type="text/css" href="/css/social.css">
 <script src="/js/artist.js"></script>
-<script src="/js/albumBuilder.js"></script>
+<script src="/js/album.js"></script>
 
 <div class="container">
 	<div class="artist-info">
