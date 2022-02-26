@@ -29,7 +29,7 @@ class User():
             except KeyboardInterrupt:
                 exit()
             except Exception as e:
-                printc("Failed to get songs for:", "red", self.username, "white", e.stacktrace, "white")
+                printc("Failed to get songs for:", "red", self.username, "white", e, "white")
                 continue
 
             sleep(3600)

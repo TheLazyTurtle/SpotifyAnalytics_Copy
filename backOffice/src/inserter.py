@@ -152,8 +152,8 @@ class Inserter():
 
                     # This is a performance thingy where we will only send the data that is needed to be send
                     if (len(self.lastInserted) >= 50):
-                        printc("empting list", "green", self.username, "white")
-                        self.lastInserted.deque()
+                        # printc("empting list", "green", self.username, "white")
+                        self.lastInserted.pop()
                     self.lastInserted.append(song["playedAt"]) 
 
 
