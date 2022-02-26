@@ -5,13 +5,29 @@ import colorama
 colorama.init()
 
 def printc(*args):
-    string = colored(datetime.now().strftime("%H:%M:%S") + " -", "white")
+    sectionLength = 30
+    
+    time = datetime.now().strftime("%H:%M:%S")
+
+    string = dividers(-1)
+    string += colored(time, "white")
 
     for x in range(0, len(args), 2):
+        string += dividers(0) 
+        
         try:
-            string += " " + colored(args[x], args[x + 1])
+            string += colored(args[x].ljust(sectionLength)[:sectionLength], args[x + 1])
         except Exception:
-            string += " " + colored(args[x], "white")
+            string += colored(args[x].ljust(sectionLength)[:sectionLength], "white")
 
-
+    string += dividers(1) 
     print(string)
+
+def dividers(place):
+    # -1 is start, 0 is normal, 1 is end
+    if (place == -1):
+        return colored("| ", "red")
+    elif (place == 0):
+        return colored(" | ", "red")
+    else:
+        return colored(" |", "red")
