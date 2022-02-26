@@ -27,12 +27,12 @@ class Fetcher():
 
                 return spotipy.Spotify(auth=token)
             else:
-                printc("Failed to get cache file for user:",
+                printc("Failed to get cache file for user",
                        "red", self.username, "white")
                 return False
 
         except Exception as e:
-            printc("Failed to get token for user:", "red",
+            printc("Failed to get token for user", "red",
                    self.username, "white", e, "white")
             return False
 
@@ -44,9 +44,8 @@ class Fetcher():
                 result = self.token.current_user_recently_played(limit=amount)
             else:
                 self.cacher.makeFile()
-                printc("Failed to get results for user:",
+                printc("Failed to get results for user",
                        "red", self.username, "white")
-
             if result:
                 return result
         except AttributeError as ae:

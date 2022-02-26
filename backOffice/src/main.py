@@ -18,13 +18,13 @@ def getUsers(token):
             if usr['userID'] not in users and not usr["username"] == "system":
                 addUser(usr)
     except Exception as e:
-        printc('Failed to get users because:', 'red', e, 'white')
+        printc('Failed to get users because', 'red', e, 'white')
 
 
 def addUser(usr):
     newUser = user.User(usr['userID'], usr["username"])
 
-    printc('Stared fetching for:', 'green', usr['username'], 'white')
+    printc('Stared fetching for', 'green', usr['username'], 'white')
 
     x = threading.Thread(target=newUser.run)
     users[usr['userID']] = x

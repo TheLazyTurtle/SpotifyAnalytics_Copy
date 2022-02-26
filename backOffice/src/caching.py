@@ -51,7 +51,7 @@ class Caching():
 
             return result[0]
         except Exception as e:
-            printc("Failed to get auth tokens for user:",
+            printc("Failed to get auth tokens for user",
                    "red", self.userID, "white", e, "white")
             return False
 
@@ -62,7 +62,7 @@ class Caching():
                 fileData = file.read()
 
         except Exception as e:
-            printc("Failed to edit cache file for:",
+            printc("Failed to edit cache file for",
                    "red", self.userID, "white", e, "white")
             return False
 

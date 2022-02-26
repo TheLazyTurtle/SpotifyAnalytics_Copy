@@ -29,11 +29,11 @@ class Inserter():
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added song:", "green", song["name"], "white")
+            printc("Added song", "green", song["name"], "white")
         elif httpResponse == 503:
             pass
         else:
-            printc("Failed to add song:", "red",
+            printc("Failed to add song", "red",
                    song["name"], "white", httpResponse, "white")
 
     def insertArtist(self, song):
@@ -50,11 +50,11 @@ class Inserter():
             httpResponse = r.status_code
 
             if httpResponse == 201:
-                printc("Added artist:", "green", artist["name"])
+                printc("Added artist", "green", artist["name"])
             elif httpResponse == 503:
                 pass
             else:
-                printc("Failed to add artist:", "red",
+                printc("Failed to add artist", "red",
                        artist["name"], "white", httpResponse)
 
     def markAsPlayed(self, song):
@@ -70,12 +70,12 @@ class Inserter():
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added song as played:", "green", song["name"], "white", "-", "white", self.username, "white")
+            printc("Added song as played", "green", song["name"], "white", self.username, "white")
             return True
         elif httpResponse == 503:
             pass
         else:
-            printc("Failed to add song as played:", "red",
+            printc("Failed to add song as played", "red",
                    song["name"], "white", self.username, "white")
 
     def linkArtistToSong(self, song):
@@ -90,7 +90,7 @@ class Inserter():
             httpResponse = r.status_code
 
             if httpResponse == 201:
-                printc("Linked artist to song:", "green",
+                printc("Linked artist to song", "green",
                        artist["name"] + " - " + song["name"], "white")
             elif httpResponse == 503:
                 pass
@@ -115,7 +115,7 @@ class Inserter():
         httpResponse = r.status_code
 
         if httpResponse == 201:
-            printc("Added album:", "green",
+            printc("Added album", "green",
                    album["name"], "white")
 
             songs = fetcher.Fetcher(
@@ -124,7 +124,7 @@ class Inserter():
         elif httpResponse == 503:
             pass
         else:
-            printc("Failed to add album:", "red",
+            printc("Failed to add album", "red",
                    album["name"], "white")
 
     def runAlbumSongs(self, songs):
@@ -138,7 +138,7 @@ class Inserter():
     def run(self, songs):
         # If songs is an boolean than it didn't get an result and print an error
         if isinstance(songs, bool):
-            printc("Failed to run inserters:", "red", self.username, "white")
+            printc("Failed to run inserters", "red", self.username, "white")
         else:
             self.songs = songs
 
