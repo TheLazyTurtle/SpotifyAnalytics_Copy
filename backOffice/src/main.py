@@ -34,10 +34,13 @@ def addUser(usr):
 #TODO: Add some error checking
 def getAuthTokens():
     data = {'username': 'system', 'password': 'test'}
-    r = req.post(creds.apiUrl + 'system/login.php', data)
+    try:
+        r = req.post(creds.apiUrl + 'system/login.php', data)
 
-    jsonObject = json.loads(r.text)
-    return jsonObject[0]["jwt"]
+        jsonObject = json.loads(r.text)
+        return jsonObject[0]["jwt"]
+    except Exception:
+        printc("Failed to get auth tokens for", "red", "system", "white")
 
 
 # This holds all the active users

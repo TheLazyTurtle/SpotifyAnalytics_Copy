@@ -109,6 +109,33 @@ class Album
 		return $stmt->execute();
 	}
 
+    function createSpecial($albumID, $name, $url, $releaseDate, $primaryArtistID, $img, $type) {
+		$query = "INSERT INTO album (albumID, name, releaseDate, url, primaryArtistID, img, type) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $this->conn->prepare($query);
+
+		$this->id = htmlspecialchars(strip_tags($albumID));
+		$this->name = htmlspecialchars(strip_tags($name));
+		$this->url = htmlspecialchars(strip_tags($url));
+		$this->releaseDate = htmlspecialchars(strip_tags($releaseDate));
+		$this->primaryArtistID = htmlspecialchars(strip_tags($primaryArtistID));
+		$this->img = htmlspecialchars(strip_tags($img));
+		$this->type = htmlspecialchars(strip_tags($type));
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $this->name);
+		$stmt->bindParam(3, $this->releaseDate);
+		$stmt->bindParam(4, $this->url);
+		$stmt->bindParam(5, $this->primaryArtistID);
+		$stmt->bindParam(6, $this->img);
+		$stmt->bindParam(7, $this->type);
+
+        try {
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
 	// Update the album
 	function update()
 	{

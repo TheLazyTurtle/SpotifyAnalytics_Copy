@@ -11,7 +11,12 @@ include_once '../system/validate_token.php';
 include_once '../config/database.php';
 include_once '../objects/artists.php';
 
-if(!($userID = validateToken()) || $userID != "system") {
+// Get posted data
+$artists = file_get_contents("php://input");
+$artists = json_decode($artists, true);
+$results = array();
+
+if(!($userID = validateToken($artists["jwt"])) || $userID != "system") {
 	die(json_encode(array("message" => "Not a valid token")));
 }
 
@@ -20,32 +25,28 @@ $database = new Database();
 $db = $database->getConnection();
 $artist = new Artist($db);
 
-// Get posted data
-$data = $_POST;
-
 // Check if data is not empty
-if (
-	!empty($data["artistID"]) &&
-	!empty($data["name"]) &&
-	!empty($data["url"]) &&
-	!empty($data["img"])
-) {
-	$artist->id = $data["artistID"];
-	$artist->name = $data["name"];
-	$artist->url = $data["url"];
-	$artist->img = $data["img"];
+foreach ($artists as $data) {
+    if (
+        !empty($data["artistID"]) &&
+        !empty($data["name"]) &&
+        !empty($data["url"]) &&
+        !empty($data["img"])
+    ) {
+        $artist->id = $data["artistID"];
+        $artist->name = $data["name"];
+        $artist->url = $data["url"];
+        $artist->img = $data["img"];
 
-	if ($artist->create()) {
-		http_response_code(201);
-
-		echo json_encode(array("message" => "artist added"));
-	} else {
-		http_response_code(503);
-		echo json_encode(array("message" => "unable to add artist"));
-	}
-} else {
-	// bad request
-	http_response_code(400);
-
-	echo json_encode(array("message" => "Data incomplete"));
+        if ($artist->create()) {
+            array_push($result, array("Succesfully added artist", $data["name"]));
+        } else {
+            array_push($result, array("Failed to add artist", $data["name"]));
+        }
+    } else {
+        array_push($result, array("Data incomplete for artist", $data["name"]));
+    }
 }
+
+http_response_code(200);
+echo json_encode($result);

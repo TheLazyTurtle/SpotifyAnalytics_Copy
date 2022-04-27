@@ -59,7 +59,7 @@ class Song
 	// Add a song to the db
 	function createOne()
 	{
-		$query = "INSERT INTO song (songID, name, length, url, img, preview, albumID, explicit, trackNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		$query = "INSERT IGNORE INTO song (songID, name, length, url, img, preview, albumID, explicit, trackNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$stmt = $this->conn->prepare($query);
 
 		// Clean data from specialchars
@@ -91,6 +91,48 @@ class Song
 
 		return $stmt->execute();
 	}
+
+    function createSpecial($songID, $name, $length, $url, $img, $albumID, $trackNumber, $explicit, $preview = "") {
+		$query = "INSERT INTO song (songID, name, length, url, img, preview, albumID, explicit, trackNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean data from specialchars
+		$this->id = htmlspecialchars(strip_tags($songID));
+		$this->name = htmlspecialchars(strip_tags($name));
+		$this->length = htmlspecialchars(strip_tags($length));
+		$this->url = htmlspecialchars(strip_tags($url));
+		$this->img = htmlspecialchars(strip_tags($img));
+        if (isset($preview)) {
+            $this->preview = htmlspecialchars(strip_tags($preview));
+        } else {
+            $this->preview = "";
+        }
+		$this->albumID = htmlspecialchars(strip_tags($albumID));
+		$this->explicit = htmlspecialchars(strip_tags($explicit));
+		$this->trackNumber = htmlspecialchars(strip_tags($trackNumber));
+
+		if ($this->explicit == "False") {
+			$this->explicit = 0;
+		} else {
+			$this->explicit = 1;
+		}
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $this->name);
+		$stmt->bindParam(3, $this->length);
+		$stmt->bindParam(4, $this->url);
+		$stmt->bindParam(5, $this->img);
+		$stmt->bindParam(6, $this->preview);
+		$stmt->bindParam(7, $this->albumID);
+		$stmt->bindParam(8, $this->explicit, PDO::PARAM_BOOL);
+		$stmt->bindParam(9, $this->trackNumber);
+
+        try {
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 
 	// Update the song
 	function update()
@@ -154,7 +196,11 @@ class Song
 		$stmt->bindParam(1, $songID);
 		$stmt->bindParam(2, $artistID);
 
-		return $stmt->execute();
+        try {
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
 	}
 
 	// This will search for a song by keyword

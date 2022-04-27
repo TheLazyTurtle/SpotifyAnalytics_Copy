@@ -93,6 +93,28 @@ class Artist
 		return $stmt->execute();
 	}
 
+    function createSpecial($artistID, $name, $url, $img) {
+		$query = "INSERT INTO artist (artistID, name, url, img) VALUES (?, ?, ?, ?)";
+		$stmt = $this->conn->prepare($query);
+
+		// Clean data of specialchars
+		$this->id = htmlspecialchars(strip_tags($artistID));
+		$this->name = htmlspecialchars(strip_tags($name));
+		$this->url = htmlspecialchars(strip_tags($url));
+		$this->img = htmlspecialchars(strip_tags($img));
+
+		$stmt->bindParam(1, $this->id);
+		$stmt->bindParam(2, $this->name);
+		$stmt->bindParam(3, $this->url);
+		$stmt->bindParam(4, $this->img);
+
+        try {
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
 	// This will search all artists using a songID
 	function searchBySongID($songID)
 	{

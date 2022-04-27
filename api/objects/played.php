@@ -50,6 +50,27 @@ class Played
 		return $stmt->execute();
 	}
 
+    function createSpecial($songID, $datePlayed, $playedBy, $songName) {
+		$query = "INSERT INTO played (songID, datePlayed, playedBy, songName) VALUES (?, ?, ?, ?)";
+		$stmt = $this->conn->prepare($query);
+
+		$this->songID = htmlspecialchars(strip_tags($songID));
+		$this->datePlayed = htmlspecialchars(strip_tags($datePlayed));
+		$this->playedBy = htmlspecialchars(strip_tags($playedBy));
+		$this->songName = htmlspecialchars(strip_tags($songName));
+
+		$stmt->bindParam(1, $this->songID);
+		$stmt->bindParam(2, $this->datePlayed, PDO::PARAM_STR);
+		$stmt->bindParam(3, $this->playedBy, PDO::PARAM_STR);
+		$stmt->bindParam(4, $this->songName);
+
+        try {
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
 	// This will get all songs played by a user
 	function allSongsPlayed($userID, $minPlayed, $maxPlayed, $minDate, $maxDate, $relative)
 	{

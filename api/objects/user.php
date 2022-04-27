@@ -294,7 +294,7 @@ class User
 	// Get all users
 	function getAllUsers()
 	{
-		$query = "SELECT * from user";
+		$query = "SELECT * from user where active = 1";
 		$stmt = $this->conn->prepare($query);
 
 		$stmt->execute();

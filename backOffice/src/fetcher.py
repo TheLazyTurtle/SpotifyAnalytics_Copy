@@ -50,13 +50,14 @@ class Fetcher():
                 return result
         except AttributeError as ae:
             if ae == "current_user_recently_played":
-                getResult()
+                self.getResult()
         except Exception as e:
             return False
 
     # Extract the usefull info from the returned data
     def createSongObject(self, data):
-        songs = []
+        songs = {}
+        counter = 0
         try:
             for song in data["items"]:
                 songData = self.extractSong(song)
@@ -86,8 +87,8 @@ class Fetcher():
                     "artists": artists
                 }
 
-                songs.append(song)
-
+                songs.update({counter: song})
+                counter += 1
             return songs
         except Exception as e:
             print(e)
@@ -205,7 +206,8 @@ class Fetcher():
     def getAlbumSongs(self, albumID, albumImg):
         self.token = self.getToken()
         albumRaw = self.token.album_tracks(albumID, limit=50)
-        songs = []
+        counter = 0
+        songs = {}
 
         for song in albumRaw["items"]:
             artists = []
@@ -224,7 +226,8 @@ class Fetcher():
                 "trackNumber": song["track_number"],
                 "artists": artists
             }
-            songs.append(songObject)
+            songs.update({counter: songObject})
+            counter += 1
         return songs
 
     def run(self, amount):

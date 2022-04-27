@@ -16,9 +16,9 @@ def printc(*args):
         string += dividers(0) 
         
         try:
-            string += colored(args[x].ljust(sectionLength)[:sectionLength], args[x + 1])
+            string += colored(str(args[x]).ljust(sectionLength)[:sectionLength], args[x + 1])
         except Exception:
-            string += colored(args[x].ljust(sectionLength)[:sectionLength], "white")
+            string += colored(str(args[x]).ljust(sectionLength)[:sectionLength], "white")
 
     string += dividers(1) 
     print(string)

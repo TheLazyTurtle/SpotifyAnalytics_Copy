@@ -11,55 +11,54 @@ require '../system/validate_token.php';
 require '../config/database.php';
 require '../objects/songs.php';
 
-if (!($userID = validateToken()) || $userID != "system") {
+// Get posted data
+$songs = file_get_contents("php://input");
+$songs = json_decode($songs, true);
+$result = array();
+
+if (!($userID = validateToken($songs["jwt"])) || $userID != "system") {
 	die(json_encode(array("message" => "Not a valid token")));
 }
+
+unset($songs["jwt"]);
 
 // Make db connection and make new song object
 $database = new Database();
 $db = $database->getConnection();
 $song = new Song($db);
 
-// Get posted data
-$data = $_POST;
-
 // Check if data is not empty
-if (
-	!empty($data["songID"]) &&
-	!empty($data["name"]) &&
-	!empty($data["length"]) &&
-	!empty($data["url"]) &&
-	!empty($data["img"]) &&
-	!empty($data["preview"]) &&
-	!empty($data["albumID"]) &&
-	!empty($data["trackNumber"]) &&
-	!empty($data["explicit"])
-) {
-	$song->id = $data["songID"];
-	$song->name = $data["name"];
-	$song->length = $data["length"];
-	$song->url = $data["url"];
-	$song->img = $data["img"];
-	$song->preview = $data["preview"];
-	$song->albumID = $data["albumID"];
-	$song->trackNumber = $data["trackNumber"];
-	$song->explicit = $data["explicit"];
+foreach ($songs as $data) {
+    if (
+        !empty($data["songID"]) &&
+        !empty($data["name"]) &&
+        !empty($data["length"]) &&
+        !empty($data["url"]) &&
+        !empty($data["img"]) &&
+        !empty($data["preview"]) &&
+        !empty($data["albumID"]) &&
+        !empty($data["trackNumber"]) &&
+        isset($data["explicit"])
+    ) {
+        $song->id = $data["songID"];
+        $song->name = $data["name"];
+        $song->length = $data["length"];
+        $song->url = $data["url"];
+        $song->img = $data["img"];
+        $song->preview = $data["preview"];
+        $song->albumID = $data["albumID"];
+        $song->trackNumber = $data["trackNumber"];
+        $song->explicit = $data["explicit"];
 
-	if ($stmt = $song->createOne()) {
-		// Set response code created
-		http_response_code(201);
-
-		// Tell the user
-		echo json_encode(array("message" => "song added"));
-	} else {
-		// Set response code service unavailable
-		http_response_code(503);
-
-		echo json_encode(array("message" => "Unable to add song"));
-	}
-} else {
-	// set response code bad request
-	http_response_code(400);
-
-	echo json_encode(array("message" => "Data incomplete"));
+        if ($stmt = $song->createOne()) {
+            array_push($result, array("Succesfully added song", $data["name"]));
+        } else {
+            array_push($result, array("Failed to add song", $data["name"]));
+        }
+    } else {
+        array_push($result, array("Data incomplete for song", $data["name"]));
+    }
 }
+
+http_response_code(200);
+echo json_encode($result);

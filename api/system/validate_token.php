@@ -18,19 +18,23 @@ use \Firebase\JWT\JWT;
 // Get posted data
 $data = null;
 
-function validateToken() {
+function validateToken($jwt = "") {
 	global $key;
 	$data = "";
 
 	// Get the token
 	if (!empty($_GET["jwt"])) {
 		$data = $_GET["jwt"];
-	} else if (!empty($_POST["jwt"])) {
+    } 
+    else if (!empty($_POST["jwt"])) {
 		$data = $_POST["jwt"];
 	}
    	else if (!empty($_COOKIE["jwt"])) {
 		$data = $_COOKIE["jwt"];
-	}
+    } 
+    else if (!empty($jwt)) {
+        $data = $jwt;
+    }
 	
 	try {
 		$decoded = JWT::decode($data, $key, array('HS512'));
