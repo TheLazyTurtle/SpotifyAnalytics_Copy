@@ -73,7 +73,7 @@ class Fetcher():
                 playedAt = playedAt.replace("Z", "")
                 playedAt = playedAt[:-4]
 
-                song = {
+                songObject = {
                     "songID": songData["songID"],
                     "url": songData["url"],
                     "name": songData["name"],
@@ -87,7 +87,7 @@ class Fetcher():
                     "artists": artists
                 }
 
-                songs.update({counter: song})
+                songs.update({counter: songObject})
                 counter += 1
             return songs
         except Exception as e:

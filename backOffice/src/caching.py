@@ -47,7 +47,6 @@ class Caching():
 
             r = requests.get(creds.apiUrl + "user/getAuthTokens.php", data)
             result = json.loads(r.text)
-            print(result)
 
             return result[0]
         except Exception as e:
