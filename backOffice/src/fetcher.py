@@ -51,7 +51,7 @@ class Fetcher():
         except AttributeError as ae:
             if ae == "current_user_recently_played":
                 self.getResult()
-        except Exception as e:
+        except Exception:
             return False
 
     # Extract the usefull info from the returned data
@@ -67,7 +67,7 @@ class Fetcher():
                 for artist in song["track"]["artists"]:
                     artists.append(self.extractArtist(artist))
 
-                # Remove the letters from the date so that the site won't kill itself
+                # Remove the letters from the date so that the db won't die
                 playedAt = songData["playedAt"]
                 playedAt = playedAt.replace("T", " ")
                 playedAt = playedAt.replace("Z", "")
@@ -111,7 +111,7 @@ class Fetcher():
 
         # Try to get song preview url
         # Needs to be in try catch because not every song has a preview
-        if not songInfo["preview_url"] == None:
+        if not songInfo["preview_url"] is None:
             preview = songInfo["preview_url"]
         else:
             preview = "NULL"
@@ -139,7 +139,8 @@ class Fetcher():
         img = album["images"][0]["url"]
         albumType = album['album_type']
 
-        # Primary artist is only needed when albumType = album, because when it's a single all artist are primary
+        # Primary artist is only needed when albumType = album,
+        # because when it's a single all artist are primary
         if albumType == 'album':
             primaryArtist = song["track"]["album"]["artists"][0]["id"]
         else:
@@ -177,8 +178,6 @@ class Fetcher():
 
         return object
 
-    # Checks if the artists already has an image. If the artist already have an image than don't add the artist because we already have it in the database
-    # TODO: If the artist exists but doesn't yet have an image than try to update the img
     def artistHasImg(self, artistID):
         data = {
             "artistID": artistID
@@ -192,7 +191,8 @@ class Fetcher():
         else:
             return False
 
-    # This will get the image for an artist. If it can't find and image return a default image
+    # This will get the image for an artist.
+    # If it can't find and image return a default image
     def getArtistImg(self, name):
         result = self.token.search(q="artist: " + name, type="artist")
         item = result["artists"]["items"]
@@ -200,7 +200,7 @@ class Fetcher():
         try:
             artist = item[0]
             return artist["images"][0]["url"]
-        except Exception as e:
+        except Exception:
             return "http://www.techspot.com/images2/downloads/topdownload/2016/12/spotify-icon-18.png"
 
     def getAlbumSongs(self, albumID, albumImg):
