@@ -1,6 +1,4 @@
 <?php
-require_once "../config/check_cookie.php";
-
 class User
 {
 	// Database connection
@@ -300,6 +298,28 @@ class User
 		$stmt->execute();
 		return $stmt;
 	}
+
+    function getAllActiveUsersIncludingTokens() {
+        $query = "SELECT * FROM user u INNER JOIN spotifydata spd ON u.userID = spd.userID WHERE u.active = 1";
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+        return $stmt;
+    }
+
+    function updateAuthTokens($userID, $accessToken, $refreshToken) {
+        $query = "UPDATE spotifydata SET accessToken = ?, refreshToken = ? WHERE userID = ?";
+        $stmt = $this->conn->prepare($query);
+
+        // Clean input
+        $userID = htmlspecialchars(strip_tags($userID));
+        $accessToken = htmlspecialchars(strip_tags($accessToken));
+        $refreshToken = htmlspecialchars(strip_tags($refreshToken));
+
+        $stmt->bindParam(1, $accessToken);
+        $stmt->bindParam(2, $refreshToken);
+        $stmt->bindParam(3, $userID);
+    }
 
 	function getAuthTokens($userID)
 	{

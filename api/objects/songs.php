@@ -1,6 +1,4 @@
 <?php
-require_once '../config/check_cookie.php';
-
 class Song
 {
 	// Db connection and table
@@ -130,7 +128,12 @@ class Song
         try {
             return $stmt->execute();
         } catch (Exception $e) {
-            return false;
+            $code = $stmt->errorCode();
+            if ($code == "23000") {
+                return $code;
+            } else {
+                return $e;
+            }
         }
     }
 
@@ -199,7 +202,12 @@ class Song
         try {
             return $stmt->execute();
         } catch (Exception $e) {
-            return false;
+            $code = $stmt->errorCode();
+            if ($code == "23000") {
+                return $code;
+            } else {
+                return $e;
+            }
         }
 	}
 
