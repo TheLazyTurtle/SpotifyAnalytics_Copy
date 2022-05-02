@@ -1,4 +1,11 @@
 <?php
+// Require hearders
+header("Access-Control-Allow-Origin: *");
+//header("Content-Type: application/json; charset-UTF-8");
+//header("Access-Control-Allow_Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 require '../vendor/autoload.php';
 require '../api/config/database.php';
 require '../api/objects/user.php';
@@ -12,9 +19,10 @@ try {
     $session = new SpotifyWebAPI\Session(
         "***REMOVED***",
         "***REMOVED***",
+        "https://spa.jcg-ict.nl/callback.php"
     );
-} catch (Exception) {
-    die("Can't make spotify session");
+} catch (Exception $e) {
+    print_r($e);
 }
 
 $database = new Database();
@@ -52,16 +60,20 @@ $loggerObject->create(3, "Total fetch time: $totalTime sec", "Fetching");
 
 function refreshAccessToken($session, $refreshToken, $userID) {
     global $userObject, $loggerObject;
-    $session->refreshAccessToken($refreshToken);
+    try {
+        $session->refreshAccessToken($refreshToken);
 
-    $tokens = array();
-    $tokens["accessToken"] = $session->getAccessToken();
-    $tokens["refreshToken"] = $session->getRefreshToken();
+        $tokens = array();
+        $tokens["accessToken"] = $session->getAccessToken();
+        $tokens["refreshToken"] = $session->getRefreshToken();
 
-    $userObject->updateAuthTokens($userID, $tokens["accessToken"], $tokens["refreshToken"]);
-    $loggerObject->create(3, "Updated spotify tokens for user $userID", "Refreshing tokens");
+        $userObject->updateAuthTokens($userID, $tokens["accessToken"], $tokens["refreshToken"]);
+        $loggerObject->create(3, "Updated spotify tokens for user $userID", "Refreshing tokens");
 
-    return $tokens;
+        return $tokens;
+    } catch (Exception $e) {
+        $loggerObject->create(1, json_encode($e), "Failed to updated accessToken $userID");
+    }
 }
 
 function parseTracks($tracks, $userID) {
@@ -75,8 +87,10 @@ function parseTracks($tracks, $userID) {
 function insertSong($song, $userID) {
     global $songObject, $playedObject, $loggerObject;
     $playedAt = $song["played_at"];
+    $playedAt = str_replace("T", " ", $playedAt);
+    $playedAt = str_replace("Z", "", $playedAt);
+    $playedAt = substr($playedAt, 0, -4);
 
-    // si == SongInfo
     $songInfo = $song["track"];
     $songID = $songInfo["id"];
     $url = $songInfo["external_urls"]["spotify"];
@@ -85,7 +99,7 @@ function insertSong($song, $userID) {
     $length = $songInfo["duration_ms"];
     $trackNumber = $songInfo["track_number"];
 
-    if ($songInfo["explicit"]) {
+    if ($songInfo["explicit"] == "1") {
         $explicit = "true";
     } else {
         $explicit = "false";
@@ -106,7 +120,7 @@ function insertSong($song, $userID) {
         $loggerObject->create(2, $output, "Failed adding song");
     }
 
-    if ($playedRes != "1" && $playedRes != "23000") {
+    if ($playedRes != "1" && !isset($playedRes)) {
         $output = json_encode($playedRes);
         $loggerObject->create(2, $output, "Failed adding played");
     }
@@ -133,7 +147,7 @@ function insertAlbum($album) {
     $res = $albumObject->createSpecial($albumID, $name, $url, $releaseDate, $primaryArtist, $img, $albumType);
     if ($res == "1") {
         getAlbumSongs($albumID, $img);
-    } else if ($res != "23000") {
+    } else if ($res != "1" && !isset($res)) {
         $output = json_encode($res);
         $loggerObject->create(2, $output, "Failed adding album");
     }
@@ -147,25 +161,25 @@ function insertArtists($artists, $songID) {
         $name = $artist["name"];
         $url = $artist["external_urls"]["spotify"];
 
-        if($img = $artistObject->getImage($artistID)) {
+        $artistRes = $artistObject->createSpecial($artistID, $name, $url, "");
+        $linkRes = $songObject->linkArtistToSong($songID, $artistID);
+
+        if ($artistRes != "1" && !isset($artistRes)) {
+            $output = json_encode($artistRes);
+            $loggerObject->create(2, $output, "Failed adding artist");
+        } elseif ($artistRes == "1") {
             $result = $api->search($name, "artist");
             $result = json_decode(json_encode($result), true);
+            $loggerObject->create(2, "Getting artist image", "Fetching artist img");
             if (array_key_exists("images", $result)) {
                 $img = $result["artists"]["items"][0]["images"][0]["url"];
             } else {
                 $img = "http://www.techspot.com/images2/downloads/topdownload/2016/12/spotify-icon-18.png";
             }
+            $artistObject->addImage($artistID, $img);
         }
 
-        $artistRes = $artistObject->createSpecial($artistID, $name, $url, $img);
-        $linkRes = $songObject->linkArtistToSong($songID, $artistID);
-
-        if ($artistRes != "1" && $artistRes != "23000") {
-            $output = json_encode($artistRes);
-            $loggerObject->create(2, $output, "Failed adding artist");
-        }
-
-        if ($linkRes != "1" && $linkRes != "23000") {
+        if ($linkRes != "1" && !isset($linkRes)) {
             $output = json_encode($linkRes);
             $loggerObject->create(2, $output, "Failed linking artist to song");
         }
@@ -174,6 +188,7 @@ function insertArtists($artists, $songID) {
 
 function getAlbumSongs($albumID, $albumImg) {
     global $api, $songObject, $loggerObject;
+    $loggerObject->create(2, "Getting album songs for: $albumID", "Fetching album songs");
 
     $results = $api->getAlbumTracks($albumID);
     $results = json_decode(json_encode($results), true);
@@ -195,7 +210,7 @@ function getAlbumSongs($albumID, $albumImg) {
         insertArtists($song["artists"], $songID);
         $songRes = $songObject->createSpecial($songID, $name, $length, $url, $albumImg, $albumID, $trackNumber, $explicit, $preview);
 
-        if ($songRes != "1" && $songRes != "23000") {
+        if ($songRes != "1" && !isset($songRes)) {
             $output = json_encode($songRes);
             $loggerObject->create(2, $output, "Failed adding album song");
         }

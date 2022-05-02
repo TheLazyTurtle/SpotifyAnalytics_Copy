@@ -245,6 +245,19 @@ class Artist
 		return $stmt;
 	}
 
+    function addImage($artistID, $image) {
+        $query = "UPDATE artist SET img = ? WHERE artistID = ?";
+        $stmt = $this->conn->prepare($query);
+
+        // Clean input
+        $artistID = htmlspecialchars(strip_tags($artistID));
+        $image = htmlspecialchars(strip_tags($image));
+
+        $stmt->bindParam(1, $image);
+        $stmt->bindParam(2, $artistID);
+        return $stmt->execute();
+    }
+
 	// This will get the img of an artist
 	function getImage($artistID)
 	{

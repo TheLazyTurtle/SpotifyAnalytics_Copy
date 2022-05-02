@@ -300,15 +300,19 @@ class User
 	}
 
     function getAllActiveUsersIncludingTokens() {
-        $query = "SELECT * FROM user u INNER JOIN spotifydata spd ON u.userID = spd.userID WHERE u.active = 1";
+        $query = "SELECT * FROM user u INNER JOIN spotifyData spd ON u.userID = spd.userID WHERE u.active = 1";
         $stmt = $this->conn->prepare($query);
-
         $stmt->execute();
-        return $stmt;
+
+        $output = array();
+        while ($row = $stmt->FETCH(PDO::FETCH_ASSOC)) {
+            array_push($output, $row);
+        }
+        return $output;
     }
 
     function updateAuthTokens($userID, $accessToken, $refreshToken) {
-        $query = "UPDATE spotifydata SET accessToken = ?, refreshToken = ? WHERE userID = ?";
+        $query = "UPDATE spotifyData SET accessToken = ?, refreshToken = ? WHERE userID = ?";
         $stmt = $this->conn->prepare($query);
 
         // Clean input
