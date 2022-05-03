@@ -1,8 +1,6 @@
 <?php
 // Require hearders
 header("Access-Control-Allow-Origin: *");
-//header("Content-Type: application/json; charset-UTF-8");
-//header("Access-Control-Allow_Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Heades: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -56,7 +54,6 @@ foreach ($users as $user) {
 }
 $totalTime = time() - $startTotalTime;
 $loggerObject->create(3, "Total fetch time: $totalTime sec", "Fetching");
-
 
 function refreshAccessToken($session, $refreshToken, $userID) {
     global $userObject, $loggerObject;

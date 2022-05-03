@@ -258,6 +258,25 @@ class Artist
         return $stmt->execute();
     }
 
+    function getArtistWithoutImage($artistID) {
+        if (isset($artistID)) {
+            $query = "SELECT artistID FROM artist WHERE artistID = ?";
+            $stmt = $this->conn->prepare($query);
+
+            $artistID = htmlspecialchars(strip_tags($artistID));
+
+            $stmt->bindParam(1, $artistID);
+        } else {
+            $query = "SELECT artistID FROM artist WHERE img LIKE ?";
+            $stmt = $this->conn->prepare($query);
+
+            $url = "%techspot%";
+            $stmt->bindparam(1, $url);
+        }
+        $stmt->execute();
+        return $stmt;
+    }
+
 	// This will get the img of an artist
 	function getImage($artistID)
 	{
