@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import AlbumList from "./AlbumList";
 import { Album } from "./Album";
 import { AlbumAPI } from "./AlbumAPI";
 
-interface AlbumsPageProps {
-    artistID: string;
-}
-
-function AlbumsPage({ artistID }: AlbumsPageProps) {
+function AlbumsPage() {
     const [albums, setAlbums] = useState<Album[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | undefined>(undefined);
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleOpenClick = () => {
-        setIsOpen((isOpen) => !isOpen);
-    }
+    const params = useParams();
+    const artistID = params.artistID === undefined ? "" : params.artistID;
 
     useEffect(() => {
         async function loadProjects() {

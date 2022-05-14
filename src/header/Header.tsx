@@ -1,19 +1,25 @@
-import { Button, Container, Form, FormControl, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
+import { Container, Form, FormControl, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
+import {BrowserRouter as Router, Routes, Route, NavLink} from "react-router-dom";
+import HomePage from "../home/HomePage";
+import AlbumsPage from "../album/AlbumsPage";
 
 interface HeaderProps {
     loggedIn: boolean;
-    isMobile: boolean;
     userProfileImg?: string;
 }
 
 function Header(props: HeaderProps) {
     let desktopSize = "md";
-
     return (
-        <>
+        <Router>
+        <header className="App-header">
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/album/:artistID" element={<AlbumsPage />} />
+            </Routes>
             <Navbar fixed="top" bg="dark" variant="dark" expand={desktopSize} className="mb-3 d-none d-md-block">
                 <Container fluid>
-                    <Navbar.Brand href="#">Spotify Analytics</Navbar.Brand>
+                    <Navbar.Brand href="/">Spotify Analytics</Navbar.Brand>
                     {/* <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${desktopSize}`} /> */}
                     <Navbar.Offcanvas id={`offcanvasNavbar-expand-${desktopSize}`} aria-labelledby={`offcanvasNavbarLabel-expand-${desktopSize}`} placement="end">
                         <Offcanvas.Header closeButton>
@@ -21,8 +27,8 @@ function Header(props: HeaderProps) {
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3">
-                                <Nav.Link href="#action1">Home</Nav.Link>
-                                <Nav.Link href="#action2">Link</Nav.Link>
+                                <Nav.Link href="/">Home</Nav.Link>
+                                <Nav.Link href="/Link">Link</Nav.Link>
                                 <NavDropdown title="Dropdown" id={`offcanvasNavbarDropdown-expand-${desktopSize}`} >
                                     <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
                                     <NavDropdown.Item href="#action4"> Another action </NavDropdown.Item>
@@ -37,7 +43,8 @@ function Header(props: HeaderProps) {
                     </Navbar.Offcanvas>
                 </Container>
             </Navbar>
-        </>
+        </header>
+        </Router>
     );
 }
 

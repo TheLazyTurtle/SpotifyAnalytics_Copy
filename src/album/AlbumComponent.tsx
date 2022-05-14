@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Album } from "./Album";
 import SongComponent from "../song/SongComponent";
 import "./album.css";
+import "../index.css";
 
 interface AlbumProps {
     album: Album;
