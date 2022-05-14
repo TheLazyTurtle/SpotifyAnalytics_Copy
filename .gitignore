@@ -1,18 +1,5 @@
-.cache-11182819693
-.cache-icq6mdabqpzvx0wpc1w4hhxmp
 .gitignore
-*.json
-todo.md
 .nvimlog
-__pycache__/
-example.html
-vendor/
-/api/config/core.php
-/api/config/database.php
-/backOffice/src/creds.py
 /uploads/*
-.vim
-creds.py
-__tests__
-todo.md
+node_modules/
 
