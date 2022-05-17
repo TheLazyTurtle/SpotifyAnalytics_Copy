@@ -1,5 +1,5 @@
 import { Container, Form, FormControl, Nav, Navbar, NavDropdown, Offcanvas } from "react-bootstrap";
-import {BrowserRouter as Router, Routes, Route, NavLink} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../home/HomePage";
 import AlbumsPage from "../album/AlbumsPage";
 
@@ -8,6 +8,7 @@ interface HeaderProps {
     userProfileImg?: string;
 }
 
+// NOTE: We could probably do something with useContext() to check if the user is logged in
 function Header(props: HeaderProps) {
     let desktopSize = "md";
     return (
