@@ -35,7 +35,7 @@ function parseJSON(response: Response) {
 }
 
 const GraphAPI = {
-    async allSongsPlayed(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: number = 0, maxPlayed: number = 9999) {
+    async allSongsPlayed(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: string | undefined = "0", maxPlayed: string | undefined = "9999") {
         try {
             const response = await fetch(`${playedUrl}/allSongsPlayed.php?userID=${id}&minPlayed=${minPlayed}&maxPlayed=${maxPlayed}&minDate=${minDate}&maxDate=${maxDate}`);
             const response_1 = await checkStatus(response);
@@ -45,7 +45,7 @@ const GraphAPI = {
             throw new Error("There was an error getting the data from graph All Songs Played");
         }
     },
-    async topSongs(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", artistName: string = "", amount: number = 10) {
+    async topSongs(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", artistName: string | undefined = "", amount: string | undefined = "10") {
         try {
             const response = await fetch(`${playedUrl}/topSongs.php?userID=${id}&minDate=${minDate}&maxDate=${maxDate}&artist=${artistName}&amount=${amount}`);
             const response_1 = await checkStatus(response);
@@ -55,7 +55,7 @@ const GraphAPI = {
             throw new Error("There was an error getting the data from graph Top Songs");
         }
     },
-    async topArtist(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: number = 10) {
+    async topArtist(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string | undefined = "10") {
         try {
             const response = await fetch(`${artistUrl}/topArtist.php?userID=${id}&minDate=${minDate}&maxDate=${maxDate}&amount=${amount}`);
             const response_1 = await checkStatus(response);
@@ -65,7 +65,7 @@ const GraphAPI = {
             throw new Error("There was an error getting the data from graph Top Artist");
         }
     },
-    async playedPerDay(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", songName: string = "", artistName: string = "") {
+    async playedPerDay(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", songName: string | undefined = "", artistName: string | undefined = "") {
         try {
             const response = await fetch(`${playedUrl}/playedPerDay.php?userID=${id}&minDate=${minDate}&maxDate=${maxDate}&song=${songName}&artist=${artistName}`);
             const response_1 = await checkStatus(response);

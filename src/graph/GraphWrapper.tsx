@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Bar from "./BarGraph";
 import Line from "./LineGraph";
-import { GraphAPI } from "./GraphAPI";
 import ButtonWrapper from "../button/ButtonWrapper";
+import InputFieldWrapper from "../inputField/InputFieldWrapper";
+import { GraphAPI } from "./GraphAPI";
 import { TimeFrame, convertTime} from "../dates";
+import { InputFieldModel } from "../inputField/InputFieldModel";
 
 export enum GraphType {
     Line,
@@ -22,9 +24,9 @@ interface GraphWrapperProps {
     value: GraphValue;
 };
 
-// TODO: Figure out if we should put buttons here or somewhere else
-// TODO: Figure out if we want to do filter settings here or somewhere else
+// TODO: Make this component more useable. It is kinda big
 function GraphWrapper(props: GraphWrapperProps) {
+    const [filterSettings, setFilterSettings] = useState<{[id: string]: string | undefined}>({});
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
     const [dataPoints, setDataPoints] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]); const [error, setError] = useState<string | undefined>(undefined);
@@ -46,36 +48,55 @@ function GraphWrapper(props: GraphWrapperProps) {
         setTimeFrame(value);
     }
 
-    useEffect(() => {
-        async function loadGraphData() {
-            setLoading(true);
-            try {
-                let data = getFromCache(props.value, timeFrame);
+    const handleInputFieldChange = (event: any) => {
+        const {name, value}: {name: string, value: string} = event.target;
 
-                if (data === null) {
-                    data = await chooseEndPoint(props.value, timeFrame);
+        setFilterSettings((settings) => {
+            const update = {...settings, [name]: value}
+            writeFilterSettingsToCache(props.value, update)
+            return update 
+        });
+    }
 
-                    if (data !== null) {
-                        writeToCache(data, props.value, timeFrame);
-                    } else {
-                        data = JSON.parse("{}");
-                    }
+    async function loadGraphData(force: boolean = false) {
+        setLoading(true);
+        try {
+            let data = getFromCache(props.value, timeFrame);
+
+            if (data === null || force) {
+                data = await chooseEndPoint(props.value, timeFrame, filterSettings);
+
+                if (data !== null) {
+                    writeToCache(data, props.value, timeFrame);
+                } else {
+                    data = JSON.parse("{}");
                 }
-
-                setError("");
-                processIncomingData(data);
-            } catch (e) {
-                if (e instanceof Error) {
-                    setError(e.message);
-                }
-            } finally {
-                setLoading(false);
             }
-        }
 
+            setError("");
+            processIncomingData(data);
+        } catch (e) {
+            if (e instanceof Error) {
+                setError(e.message);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
         loadGraphData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value, timeFrame])
+
+    useEffect(() => {
+        loadGraphData(true);
+        //TODO: Reset filtersettings
+        const filterSettings = getFilterSettingsFromCache(props.value);
+        // setFilterSettings(filterSettings);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterSettings])
 
     function writeToCache(data: any, value: GraphValue, timeFrame: TimeFrame) {
         const existingData = localStorage.getItem(value);
@@ -90,6 +111,18 @@ function GraphWrapper(props: GraphWrapperProps) {
         const json = JSON.parse(existingData);
         json[timeFrame] = { dateAdded: new Date().getTime(), data };
         localStorage.setItem(value, JSON.stringify(json));
+    }
+
+    function writeFilterSettingsToCache(value: GraphValue, filterSettings: {[id: string]: string | undefined}) {
+        const name = `setting-${value}`;
+
+        localStorage.setItem(name, JSON.stringify(filterSettings))
+    }
+
+    function getFilterSettingsFromCache(value: GraphValue) {
+        const name = `setting-${value}`;
+
+        return JSON.parse(localStorage.getItem(name) || "{}");
     }
 
     function getFromCache(value: GraphValue, timeFrame: TimeFrame): JSON | null {
@@ -118,18 +151,18 @@ function GraphWrapper(props: GraphWrapperProps) {
         return json[timeFrame]["data"];
     }
 
-    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame) {
+    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: {[id: string]: string | undefined}) {
         const {minDate, maxDate} = convertTime(timeFrame);
 
         switch (valueType) {
             case GraphValue.allSongsPlayed:
-                return GraphAPI.allSongsPlayed("11182819693", minDate, maxDate, 400)
+                return GraphAPI.allSongsPlayed("11182819693", minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"])
             case GraphValue.topSongs:
-                return GraphAPI.topSongs("11182819693", minDate, maxDate);
+                return GraphAPI.topSongs("11182819693", minDate, maxDate, filterSettings["artistName"]);
             case GraphValue.topArtist:
-                return GraphAPI.topArtist("11182819693", minDate, maxDate);
+                return GraphAPI.topArtist("11182819693", minDate, maxDate, filterSettings["amount"]);
             case GraphValue.playedPerDay:
-                return GraphAPI.playedPerDay("11182819693", minDate, maxDate);
+                return GraphAPI.playedPerDay("11182819693", minDate, maxDate, filterSettings["songName"], filterSettings["artistName"]);
         }
     }
 
@@ -152,6 +185,17 @@ function GraphWrapper(props: GraphWrapperProps) {
         setDataPoints(dataPoints);
         setLabels(labels);
     }
+    let test = new InputFieldModel();
+    test.placeholder = "Artist";
+    test.name = "artist";
+    test.value = "Alan walker";
+    test.type = "text";
+
+    let test2 = new InputFieldModel();
+    test2.placeholder = "Amount";
+    test2.name = "amount";
+    test2.value = "10";
+    test2.type = "number";
 
     return (
         <>
@@ -167,6 +211,7 @@ function GraphWrapper(props: GraphWrapperProps) {
             {!loading && !error &&
                 <section>
                     <ButtonWrapper onClick={handleTimeFrameClick} />
+                    <InputFieldWrapper inputFields={[test, test2]} onChange={handleInputFieldChange}/>
                     {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={options} /> : <Bar dataPoints={dataPoints} labels={labels} options={options} />}
                 </section>
             }
