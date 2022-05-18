@@ -29,7 +29,7 @@ function AlbumsPage() {
             }
         }
         loadProjects();
-    }, []);
+    }, [artistID]);
 
     return (
         <>

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Bar from "./BarGraph";
 import Line from "./LineGraph";
 import { GraphAPI } from "./GraphAPI";
+import ButtonWrapper from "../button/ButtonWrapper";
+import { TimeFrame, convertTime} from "../dates";
 
 export enum GraphType {
     Line,
@@ -13,19 +15,19 @@ export enum GraphValue {
     topSongs = "topSongs",
     topArtist = "topArtist",
     playedPerDay = "playedPerDay",
-}
+};
 
 interface GraphWrapperProps {
     type: GraphType;
     value: GraphValue;
-}
+};
 
 // TODO: Figure out if we should put buttons here or somewhere else
 // TODO: Figure out if we want to do filter settings here or somewhere else
 function GraphWrapper(props: GraphWrapperProps) {
+    const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
     const [dataPoints, setDataPoints] = useState<number[]>([]);
-    const [labels, setLabels] = useState<string[]>([]);
-    const [error, setError] = useState<string | undefined>(undefined);
+    const [labels, setLabels] = useState<string[]>([]); const [error, setError] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState(false);
 
     const options = {
@@ -40,15 +42,24 @@ function GraphWrapper(props: GraphWrapperProps) {
         },
     }
 
+    const handleTimeFrameClick = (value: TimeFrame) => {
+        setTimeFrame(value);
+    }
+
     useEffect(() => {
         async function loadGraphData() {
             setLoading(true);
             try {
-                let data = getFromCache(props.value);
+                let data = getFromCache(props.value, timeFrame);
 
                 if (data === null) {
-                    data = await chooseEndPoint(props.value);
-                    writeToCache(data, props.value);
+                    data = await chooseEndPoint(props.value, timeFrame);
+
+                    if (data !== null) {
+                        writeToCache(data, props.value, timeFrame);
+                    } else {
+                        data = JSON.parse("{}");
+                    }
                 }
 
                 setError("");
@@ -63,14 +74,25 @@ function GraphWrapper(props: GraphWrapperProps) {
         }
 
         loadGraphData();
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.value, timeFrame])
 
-    function writeToCache(data: any, value: GraphValue) {
-        data.unshift({dateAdded: new Date().getTime()})
-        localStorage.setItem(value, JSON.stringify(data));
+    function writeToCache(data: any, value: GraphValue, timeFrame: TimeFrame) {
+        const existingData = localStorage.getItem(value);
+        const wrapper: any = {}
+        wrapper[timeFrame] = { dateAdded: new Date().getTime(), data };
+
+        if (existingData === null) {
+            localStorage.setItem(value, JSON.stringify(wrapper));
+            return;
+        }
+
+        const json = JSON.parse(existingData);
+        json[timeFrame] = { dateAdded: new Date().getTime(), data };
+        localStorage.setItem(value, JSON.stringify(json));
     }
 
-    function getFromCache(value: GraphValue): JSON | null{
+    function getFromCache(value: GraphValue, timeFrame: TimeFrame): JSON | null {
         // If the hour has just changed update because your data has also just updated
         var minutes = new Date().getMinutes();
         if (minutes >= 0 && minutes <= 3) {
@@ -85,25 +107,29 @@ function GraphWrapper(props: GraphWrapperProps) {
 
         const json = JSON.parse(data);
 
-        console.log(new Date(json[0].dateAdded).getTime() + 1, new Date().getTime())
-        if (new Date(json[0].dateAdded).getTime() + 1 >= new Date().getTime()) {
-            console.log("update");
+        if (json[timeFrame] === undefined) {
             return null;
         }
 
-        return json;
+        if (new Date(json[timeFrame].dateAdded).getTime() + 3600000 <= new Date().getTime()) {
+            return null;
+        }
+
+        return json[timeFrame]["data"];
     }
 
-    async function chooseEndPoint(valueType: GraphValue) {
+    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame) {
+        const {minDate, maxDate} = convertTime(timeFrame);
+
         switch (valueType) {
             case GraphValue.allSongsPlayed:
-                return GraphAPI.allSongsPlayed("11182819693", 400)
+                return GraphAPI.allSongsPlayed("11182819693", minDate, maxDate, 400)
             case GraphValue.topSongs:
-                return GraphAPI.topSongs("11182819693");
+                return GraphAPI.topSongs("11182819693", minDate, maxDate);
             case GraphValue.topArtist:
-                return GraphAPI.topArtist("11182819693");
+                return GraphAPI.topArtist("11182819693", minDate, maxDate);
             case GraphValue.playedPerDay:
-                return GraphAPI.playedPerDay("11182819693");
+                return GraphAPI.playedPerDay("11182819693", minDate, maxDate);
         }
     }
 
@@ -111,17 +137,16 @@ function GraphWrapper(props: GraphWrapperProps) {
         const dataPoints: number[] = []
         const labels: string[] = [];
 
-        if (props.type === GraphType.Bar) {
-            data.map((played: any) => {
-                dataPoints.push(played.y);
-                labels.push(played.label);
-            });
-        } else {
-            data.map((played: any) => {
+        for (let i = 0; i < data.length; i++) {
+            const played = data[i];
+
+            dataPoints.push(played.y);
+            if (props.type === GraphType.Line) {
                 const date = new Date(played.x).toLocaleDateString();
-                dataPoints.push(played.y);
                 labels.push(date);
-            });
+                continue;
+            }
+            labels.push(played.label);
         }
 
         setDataPoints(dataPoints);
@@ -140,7 +165,10 @@ function GraphWrapper(props: GraphWrapperProps) {
                 </div>
             )}
             {!loading && !error &&
-                props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={options} /> : <Bar dataPoints={dataPoints} labels={labels} options={options}/>
+                <section>
+                    <ButtonWrapper onClick={handleTimeFrameClick} />
+                    {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={options} /> : <Bar dataPoints={dataPoints} labels={labels} options={options} />}
+                </section>
             }
             {loading && (
                 <div className="center-page">

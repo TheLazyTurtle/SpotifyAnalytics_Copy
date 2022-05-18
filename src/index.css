@@ -32,6 +32,6 @@ a {
 }
 
 .btn-primary {
-    background-color: var(--custom-green);
-    border-color: var(--custom-green);
+    background-color: var(--custom-green) !important;
+    border-color: var(--custom-green) !important;
 }

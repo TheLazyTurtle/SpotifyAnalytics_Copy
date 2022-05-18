@@ -35,7 +35,7 @@ function parseJSON(response: Response) {
 }
 
 const GraphAPI = {
-    async allSongsPlayed(id: string, minPlayed: number = 0, maxPlayed: number = 9999, minDate: string = "2020-01-01", maxDate: string = "2099-01-01") {
+    async allSongsPlayed(id: string, minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: number = 0, maxPlayed: number = 9999) {
         try {
             const response = await fetch(`${playedUrl}/allSongsPlayed.php?userID=${id}&minPlayed=${minPlayed}&maxPlayed=${maxPlayed}&minDate=${minDate}&maxDate=${maxDate}`);
             const response_1 = await checkStatus(response);
