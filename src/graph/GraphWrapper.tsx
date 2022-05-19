@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import Bar from "./BarGraph";
 import Line from "./LineGraph";
 import ButtonWrapper from "../button/ButtonWrapper";
-import InputFieldWrapper from "../inputField/InputFieldWrapper";
+import InputFieldWrapper, { inputField } from "../inputField/InputFieldWrapper";
 import { GraphAPI } from "./GraphAPI";
 import { TimeFrame, convertTime} from "../dates";
-import { InputFieldModel } from "../inputField/InputFieldModel";
 
 export enum GraphType {
     Line,
@@ -20,17 +19,18 @@ export enum GraphValue {
 };
 
 interface GraphWrapperProps {
+    name: string;
     type: GraphType;
     value: GraphValue;
+    inputFields: inputField[];
 };
 
 // TODO: Make this component more useable. It is kinda big
 function GraphWrapper(props: GraphWrapperProps) {
-    const [filterSettings, setFilterSettings] = useState<{[id: string]: string | undefined}>({});
+    const [filterSettings, setFilterSetting] = useState<{[id: string]: string}>({});
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
     const [dataPoints, setDataPoints] = useState<number[]>([]);
     const [labels, setLabels] = useState<string[]>([]); const [error, setError] = useState<string | undefined>(undefined);
-    const [loading, setLoading] = useState(false);
 
     const options = {
         responsive: true,
@@ -48,23 +48,12 @@ function GraphWrapper(props: GraphWrapperProps) {
         setTimeFrame(value);
     }
 
-    const handleInputFieldChange = (event: any) => {
-        const {name, value}: {name: string, value: string} = event.target;
-
-        setFilterSettings((settings) => {
-            const update = {...settings, [name]: value}
-            writeFilterSettingsToCache(props.value, update)
-            return update 
-        });
-    }
-
     async function loadGraphData(force: boolean = false) {
-        setLoading(true);
         try {
             let data = getFromCache(props.value, timeFrame);
 
             if (data === null || force) {
-                data = await chooseEndPoint(props.value, timeFrame, filterSettings);
+                data = await chooseEndPoint(props.value, timeFrame);
 
                 if (data !== null) {
                     writeToCache(data, props.value, timeFrame);
@@ -79,8 +68,6 @@ function GraphWrapper(props: GraphWrapperProps) {
             if (e instanceof Error) {
                 setError(e.message);
             }
-        } finally {
-            setLoading(false);
         }
     }
 
@@ -88,15 +75,6 @@ function GraphWrapper(props: GraphWrapperProps) {
         loadGraphData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value, timeFrame])
-
-    useEffect(() => {
-        loadGraphData(true);
-        //TODO: Reset filtersettings
-        const filterSettings = getFilterSettingsFromCache(props.value);
-        // setFilterSettings(filterSettings);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterSettings])
 
     function writeToCache(data: any, value: GraphValue, timeFrame: TimeFrame) {
         const existingData = localStorage.getItem(value);
@@ -111,18 +89,6 @@ function GraphWrapper(props: GraphWrapperProps) {
         const json = JSON.parse(existingData);
         json[timeFrame] = { dateAdded: new Date().getTime(), data };
         localStorage.setItem(value, JSON.stringify(json));
-    }
-
-    function writeFilterSettingsToCache(value: GraphValue, filterSettings: {[id: string]: string | undefined}) {
-        const name = `setting-${value}`;
-
-        localStorage.setItem(name, JSON.stringify(filterSettings))
-    }
-
-    function getFilterSettingsFromCache(value: GraphValue) {
-        const name = `setting-${value}`;
-
-        return JSON.parse(localStorage.getItem(name) || "{}");
     }
 
     function getFromCache(value: GraphValue, timeFrame: TimeFrame): JSON | null {
@@ -151,7 +117,7 @@ function GraphWrapper(props: GraphWrapperProps) {
         return json[timeFrame]["data"];
     }
 
-    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: {[id: string]: string | undefined}) {
+    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame) {
         const {minDate, maxDate} = convertTime(timeFrame);
 
         switch (valueType) {
@@ -185,17 +151,11 @@ function GraphWrapper(props: GraphWrapperProps) {
         setDataPoints(dataPoints);
         setLabels(labels);
     }
-    let test = new InputFieldModel();
-    test.placeholder = "Artist";
-    test.name = "artist";
-    test.value = "Alan walker";
-    test.type = "text";
 
-    let test2 = new InputFieldModel();
-    test2.placeholder = "Amount";
-    test2.name = "amount";
-    test2.value = "10";
-    test2.type = "number";
+    function handleUpdate(filterSettings: {[id: string]: string}) {
+        loadGraphData(true);
+        setFilterSetting(filterSettings);
+    }
 
     return (
         <>
@@ -208,19 +168,9 @@ function GraphWrapper(props: GraphWrapperProps) {
                     </div>
                 </div>
             )}
-            {!loading && !error &&
-                <section>
-                    <ButtonWrapper onClick={handleTimeFrameClick} />
-                    <InputFieldWrapper inputFields={[test, test2]} onChange={handleInputFieldChange}/>
-                    {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={options} /> : <Bar dataPoints={dataPoints} labels={labels} options={options} />}
-                </section>
-            }
-            {loading && (
-                <div className="center-page">
-                    <span className="spinner primary"></span>
-                    <p>Loading...</p>
-                </div>
-            )}
+            <ButtonWrapper onClick={handleTimeFrameClick} />
+            <InputFieldWrapper update={handleUpdate} inputFields={props.inputFields} graphName={props.name}/>
+            {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={options} /> : <Bar dataPoints={dataPoints} labels={labels} options={options} />}
         </>
     );
 }

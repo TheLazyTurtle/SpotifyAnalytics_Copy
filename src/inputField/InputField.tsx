@@ -1,24 +1,24 @@
 import { useState } from "react";
-import { InputFieldModel } from "./InputFieldModel";
+import { inputField } from "./InputFieldWrapper";
 
 interface InputFieldProps {
-    inputField: InputFieldModel;
+    inputField: inputField;
     onChange(event: any): void;
-}
+};
 
-function InputField({ inputField, onChange }: InputFieldProps) {
-    const {name, type, placeholder, min, value} = inputField;
-    // const [value, setValue] = useState<string>(startValue);
+function InputField({inputField, onChange}: InputFieldProps) {
+    const {name, type, placeholder, startValue} = inputField;
+    const [value, setValue] = useState<string | number>(startValue);
 
     const handleOnChange = (event: any) => {
-        // const {value} = event.target;
-        // setValue(value);
+        const {value} = event.target;
+        setValue(value);
 
         onChange(event)
     }
 
     return (
-        min === undefined ? <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange} /> : <input className="form-control" name={value} type={type} placeholder={placeholder} value={value} min={min} onChange={handleOnChange} />
+        <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange}/>
     );
 }
 
