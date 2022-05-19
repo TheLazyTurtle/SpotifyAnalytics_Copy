@@ -9,7 +9,7 @@ interface ButtonProps {
 
 function Button(props: ButtonProps) {
     return (
-        <button className="btn btn-primary" value={props.value} onClick={() => {props.onClick(props.value)}}>{props.name}</button>
+        <button className="btn btn-sm btn-primary mx-1 my-1" value={props.value} onClick={() => {props.onClick(props.value)}}>{props.name}</button>
     );
 }
 

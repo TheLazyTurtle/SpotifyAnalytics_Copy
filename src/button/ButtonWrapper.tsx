@@ -7,13 +7,13 @@ interface ButtonWrapperProps {
 
 function ButtonWrapper({onClick}: ButtonWrapperProps) {
     return (
-        <>
+        <div className="button-wrapper">
         {
             (Object.keys(TimeFrame) as Array<keyof typeof TimeFrame>).map((timeFrame) => (
                 <Button key={timeFrame} name={TimeFrame[timeFrame]} value={TimeFrame[timeFrame]} onClick={onClick}/>
             ))
         }
-        </>
+        </div>
     );
 }
 

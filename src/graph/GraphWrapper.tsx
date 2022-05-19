@@ -5,6 +5,7 @@ import ButtonWrapper from "../button/ButtonWrapper";
 import InputFieldWrapper, { inputField } from "../inputField/InputFieldWrapper";
 import { GraphAPI } from "./GraphAPI";
 import { TimeFrame, convertTime} from "../dates";
+import "./Graph.css";
 
 export enum GraphType {
     Line,
@@ -34,6 +35,7 @@ function GraphWrapper(props: GraphWrapperProps) {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false,
@@ -48,12 +50,13 @@ function GraphWrapper(props: GraphWrapperProps) {
         setTimeFrame(value);
     }
 
-    async function loadGraphData(force: boolean = false) {
+    async function loadGraphData(filterSettings: {[id: string]: string}, force: boolean = false) {
         try {
+            // TODO: Change this so it will only get the cache when it is not a force
             let data = getFromCache(props.value, timeFrame);
 
             if (data === null || force) {
-                data = await chooseEndPoint(props.value, timeFrame);
+                data = await chooseEndPoint(props.value, timeFrame, filterSettings);
 
                 if (data !== null) {
                     writeToCache(data, props.value, timeFrame);
@@ -72,7 +75,7 @@ function GraphWrapper(props: GraphWrapperProps) {
     }
 
     useEffect(() => {
-        loadGraphData();
+        loadGraphData(filterSettings);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value, timeFrame])
 
@@ -117,7 +120,7 @@ function GraphWrapper(props: GraphWrapperProps) {
         return json[timeFrame]["data"];
     }
 
-    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame) {
+    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: {[id: string]: string}) {
         const {minDate, maxDate} = convertTime(timeFrame);
 
         switch (valueType) {
@@ -145,7 +148,7 @@ function GraphWrapper(props: GraphWrapperProps) {
                 labels.push(date);
                 continue;
             }
-            labels.push(played.label);
+            labels.push(played.label.substring(0, 20));
         }
 
         setDataPoints(dataPoints);
@@ -153,8 +156,8 @@ function GraphWrapper(props: GraphWrapperProps) {
     }
 
     function handleUpdate(filterSettings: {[id: string]: string}) {
-        loadGraphData(true);
         setFilterSetting(filterSettings);
+        loadGraphData(filterSettings, true);
     }
 
     return (

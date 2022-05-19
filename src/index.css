@@ -35,3 +35,10 @@ a {
     background-color: var(--custom-green) !important;
     border-color: var(--custom-green) !important;
 }
+
+
+@media (max-width: 768px) {
+    .btn-sm {
+        width: 31%;
+    }
+}

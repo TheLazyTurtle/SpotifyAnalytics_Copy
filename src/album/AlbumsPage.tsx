@@ -8,7 +8,7 @@ function AlbumsPage() {
     const [albums, setAlbums] = useState<Album[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | undefined>(undefined);
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
 
     const params = useParams();
     const artistID = params.artistID === undefined ? "" : params.artistID;

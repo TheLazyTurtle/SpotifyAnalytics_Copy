@@ -36,6 +36,7 @@ function BarGraph({ dataPoints, labels, options }: BarGraphProps) {
             },
         ],
     };
+
     return <Bar options={options} data={data} />;
 }
 

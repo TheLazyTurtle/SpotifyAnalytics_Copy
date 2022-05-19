@@ -6,6 +6,7 @@ export type inputField = {
     type: string;
     placeholder: string;
     startValue: string;
+    autocompleteUrl: string;
 };
 
 interface InputFieldWrapperProps {
@@ -19,8 +20,7 @@ function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperPr
     const [fields, setFields] = useState<inputField[]>(inputFields);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const onChange = (event: any) => {
-        const {name, value}: {name: string, value: string} = event.target;
+    const onChange = (name: string, value: string) => {
         const updatedSettings = {...filterSettings, [name]: value};
 
         writeFilterSettingsToCache(graphName, updatedSettings);
@@ -29,7 +29,6 @@ function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperPr
         update(updatedSettings);
     }
 
-    // This only runs onload
     useEffect(() => {
         const cachedFilterSettings = getFilterSettingsFromCache(graphName);
         setFilterSettings(cachedFilterSettings);
@@ -62,11 +61,15 @@ function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperPr
     }
 
     return (
-        <>
-            {!isLoading && fields.map((inputField: inputField) => (
-                <InputField key={inputField.name} inputField={inputField} onChange={onChange}/>
-            ))}
-        </>
+        <div className="inputfield-wrapper">
+            <div className="row">
+                {!isLoading && fields.map((inputField: inputField, index: number) => (
+                    <div className="col-sm" key={index}>
+                        <InputField key={inputField.name} inputField={inputField} onChange={onChange} />
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
 

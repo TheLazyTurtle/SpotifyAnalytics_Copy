@@ -18,12 +18,14 @@ const graphs: Graph[] = [
                 type: "number",
                 placeholder: "Min Played",
                 startValue: "",
+                autocompleteUrl: ""
             },
             {
                 name: "maxPlayed",
                 type: "number",
                 placeholder: "Max Played",
                 startValue: "",
+                autocompleteUrl: ""
             }
         ],
         graphValue: GraphValue.allSongsPlayed
@@ -37,6 +39,7 @@ const graphs: Graph[] = [
                 type: "text",
                 placeholder: "Artist name",
                 startValue: "",
+                autocompleteUrl: "/artist/topArtistSearch.php"
             },
         ],
         graphValue: GraphValue.topSongs
@@ -50,6 +53,7 @@ const graphs: Graph[] = [
                 type: "number",
                 placeholder: "Amount",
                 startValue: "",
+                autocompleteUrl: ""
             },
         ],
         graphValue: GraphValue.topArtist
@@ -63,12 +67,14 @@ const graphs: Graph[] = [
                 type: "text",
                 placeholder: "Song Name",
                 startValue: "",
+                autocompleteUrl: "/played/topSongsSearch.php"
             },
             {
                 name: "artistName",
                 type: "text",
                 placeholder: "Artist Name",
                 startValue: "",
+                autocompleteUrl: "/artist/topArtistSearch.php"
             },
         ],
         graphValue: GraphValue.playedPerDay

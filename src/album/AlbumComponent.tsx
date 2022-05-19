@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Album } from "./Album";
 import SongComponent from "../song/SongComponent";
 import "./album.css";
@@ -9,7 +9,7 @@ interface AlbumProps {
 }
 
 function AlbumComponent({ album }: AlbumProps) {
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
     album.songs = album.songs.sort((a, b) => (a.trackNumber > b.trackNumber) ? 1 : -1);
 
     // TODO: collapse and expanding

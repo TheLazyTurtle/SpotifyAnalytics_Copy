@@ -41,11 +41,11 @@ function Header(props: HeaderProps) {
                         </Navbar.Offcanvas>
                     </Container>
                 </Navbar>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/album/:artistID" element={<AlbumsPage />} />
-                </Routes>
             </header>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/album/:artistID" element={<AlbumsPage />} />
+            </Routes>
         </Router>
     );
 }
