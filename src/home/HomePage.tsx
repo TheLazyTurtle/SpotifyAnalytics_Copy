@@ -1,16 +1,20 @@
 import Wrapper from "../graph/GraphWrapper";
-import {graphs, Graph} from "../graph/Graphs";
+import { graphs, Graph } from "../graph/Graphs";
+import Slider from "../slider/Slider";
 
 function HomePage() {
 
     return (
-        <section className="w-100 mt-5">
-            {graphs.map((graph: Graph) => (
-                <div key={graph.name} className="graph pt-3" id={graph.name}>
-                    <Wrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields}/>
-                </div>
-            ))}
-        </section>
+        <>
+            <Slider />
+            <section className="w-100 mt-5">
+                {graphs.map((graph: Graph) => (
+                    <div key={graph.name} className="graph pt-3" id={graph.name}>
+                        <Wrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} />
+                    </div>
+                ))}
+            </section>
+        </>
     );
 }
 

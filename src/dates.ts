@@ -91,24 +91,20 @@ function startYear(startOfDay = true) {
     return formatDate(0, 0, startOfDay, new Date(year))
 }
 
-// function msToTime(s: string) {
-//     let t = parseInt(s)
-//
-//     let ms = t % 1000
-//     t = (t - ms) / 1000
-//     let secs = t % 60
-//     t = (t - secs) / 60
-//     let mins = t % 60
-//     let hrs = (t - mins) / 60
-//
-//     if (mins <= 9) {
-//         mins = "0" + mins
-//     }
-//     if (secs <= 9) {
-//         secs = "0" + secs
-//     }
-//
-//     return hrs + ":" + mins + ":" + secs
-// }
+function msToTime(s: string) {
+    let t = parseInt(s)
 
-export { convertTime };
+    let ms = t % 1000
+    t = (t - ms) / 1000
+    let secs = t % 60
+    t = (t - secs) / 60
+    let mins = t % 60
+    let hrs = (t - mins) / 60
+
+    let minsOut = mins <= 9 ? "0" + mins : mins;
+    let secsOut = secs <= 9 ? "0" + secs : secs;
+
+    return hrs + ":" + minsOut + ":" + secsOut
+}
+
+export { convertTime, msToTime };
