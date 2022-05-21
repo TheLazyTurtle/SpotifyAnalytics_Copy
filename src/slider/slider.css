@@ -215,8 +215,7 @@
 
 	/* Controls */
 	.gallery-controls {
-		margin-top: 5px;
-		margin-bottom: 40px;
+		margin-bottom: 80px;
 	}
 
 	/* timeFrame buttons */
@@ -234,7 +233,6 @@
 	}
 
 	.gallery {
-		margin-top: -10%;
 		width: 100%;
 	}
 }

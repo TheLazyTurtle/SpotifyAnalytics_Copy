@@ -92,7 +92,7 @@ function Slider() {
 
     return (
         <>
-            <div className="gallery mt-5">
+            <div className="gallery mt-md-5">
                 <div className="gallery-container">
                     {sliderItems.map((sliderItem: SliderItem) => {
                         const position = SliderPositions[sliderItem.index];
@@ -115,6 +115,8 @@ function Slider() {
             </div>
             <div className="gallery-time-buttons">
                 <ButtonWrapper onClick={handleTimeFrameChange} />
+            </div>
+            <div className="border-bottom border-white mt-5">
             </div>
         </>
     );

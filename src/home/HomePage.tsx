@@ -6,7 +6,7 @@ function HomePage() {
     return (
         <>
             <Slider />
-            <section className="w-100 mt-5">
+            <section className="w-100 mt-3">
                 {graphs.map((graph: Graph) => (
                     <div key={graph.name} className="graph pt-3" id={graph.name}>
                         <Wrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} />
