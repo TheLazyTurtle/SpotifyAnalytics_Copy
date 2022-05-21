@@ -1,9 +1,8 @@
+import Slider from "../slider/Slider";
 import Wrapper from "../graph/GraphWrapper";
 import { graphs, Graph } from "../graph/Graphs";
-import Slider from "../slider/Slider";
 
 function HomePage() {
-
     return (
         <>
             <Slider />

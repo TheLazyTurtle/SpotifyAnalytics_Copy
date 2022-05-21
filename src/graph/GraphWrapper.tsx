@@ -6,6 +6,7 @@ import InputFieldWrapper, { inputField } from "../inputField/InputFieldWrapper";
 import { GraphAPI } from "./GraphAPI";
 import { TimeFrame, convertTime} from "../dates";
 import "./Graph.css";
+import { Cacher } from "../cacher";
 
 export enum GraphType {
     Line,
@@ -31,7 +32,8 @@ function GraphWrapper(props: GraphWrapperProps) {
     const [filterSettings, setFilterSetting] = useState<{[id: string]: string}>({});
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
     const [dataPoints, setDataPoints] = useState<number[]>([]);
-    const [labels, setLabels] = useState<string[]>([]); const [error, setError] = useState<string | undefined>(undefined);
+    const [labels, setLabels] = useState<string[]>([]); 
+    const [error, setError] = useState<string | undefined>(undefined);
 
     const options = {
         responsive: true,
@@ -53,13 +55,13 @@ function GraphWrapper(props: GraphWrapperProps) {
     async function loadGraphData(filterSettings: {[id: string]: string}, force: boolean = false) {
         try {
             // TODO: Change this so it will only get the cache when it is not a force
-            let data = getFromCache(props.value, timeFrame);
+            let data = Cacher.getItem(props.value, true, timeFrame);
 
-            if (data === null || force) {
+            if (Object.keys(data).length <= 0 || force) {
                 data = await chooseEndPoint(props.value, timeFrame, filterSettings);
 
                 if (data !== null) {
-                    writeToCache(data, props.value, timeFrame);
+                    Cacher.setItem(props.value, data, timeFrame);
                 } else {
                     data = JSON.parse("{}");
                 }
@@ -69,6 +71,7 @@ function GraphWrapper(props: GraphWrapperProps) {
             processIncomingData(data);
         } catch (e) {
             if (e instanceof Error) {
+                console.log(e);
                 setError(e.message);
             }
         }
@@ -78,47 +81,6 @@ function GraphWrapper(props: GraphWrapperProps) {
         loadGraphData(filterSettings);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value, timeFrame])
-
-    function writeToCache(data: any, value: GraphValue, timeFrame: TimeFrame) {
-        const existingData = localStorage.getItem(value);
-        const wrapper: any = {}
-        wrapper[timeFrame] = { dateAdded: new Date().getTime(), data };
-
-        if (existingData === null) {
-            localStorage.setItem(value, JSON.stringify(wrapper));
-            return;
-        }
-
-        const json = JSON.parse(existingData);
-        json[timeFrame] = { dateAdded: new Date().getTime(), data };
-        localStorage.setItem(value, JSON.stringify(json));
-    }
-
-    function getFromCache(value: GraphValue, timeFrame: TimeFrame): JSON | null {
-        // If the hour has just changed update because your data has also just updated
-        var minutes = new Date().getMinutes();
-        if (minutes >= 0 && minutes <= 3) {
-            return null;
-        }
-
-        const data = localStorage.getItem(value);
-
-        if (data === null) {
-            return null;
-        }
-
-        const json = JSON.parse(data);
-
-        if (json[timeFrame] === undefined) {
-            return null;
-        }
-
-        if (new Date(json[timeFrame].dateAdded).getTime() + 3600000 <= new Date().getTime()) {
-            return null;
-        }
-
-        return json[timeFrame]["data"];
-    }
 
     async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: {[id: string]: string}) {
         const {minDate, maxDate} = convertTime(timeFrame);

@@ -1,13 +1,18 @@
-import { SliderItem, SliderPositions, SliderItems } from "./SliderItem";
+import { SliderItem, SliderPositions, SliderItems, SliderItemData } from "./SliderItem";
 import "./slider.css";
 import { useEffect, useState } from "react";
 import { convertTime, msToTime, TimeFrame } from "../dates";
 import ButtonWrapper from "../button/ButtonWrapper";
 import { SliderAPI } from "./SliderAPI";
+import { Cacher } from "../cacher";
 
 function Slider() {
     const [sliderItems, setSliderItems] = useState<SliderItem[]>(SliderItems);
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.today);
+
+    useEffect(() => {
+        handleTimeFrameChange(timeFrame)
+    }, []);
 
     const prevItem = () => {
         const updated = sliderItems.map((sliderItem: SliderItem) => {
@@ -27,27 +32,62 @@ function Slider() {
         setSliderItems(updated);
     }
 
-    const handleTimeFrameChange = async (value: TimeFrame) => {
-        setTimeFrame(value);
+    const handleTimeFrameChange = async (timeFrame: TimeFrame) => {
+        setTimeFrame(timeFrame);
+        const cached = getCache(timeFrame);
 
-        const {minDate, maxDate} = convertTime(value);
+        if (cached === false) {
+            const updated = await getData(sliderItems, timeFrame);
 
-        const updated = await Promise.all(sliderItems.map(async (sliderItem: SliderItem) => {
+            setCache(updated, timeFrame);
+            setSliderItems(updated);
+            return;
+        }
+
+        setSliderItems(cached);
+    }
+
+    const setCache = (data: SliderItem[], timeFrame: TimeFrame) => {
+        let purged: any = {};
+
+        for (let i = 0; i < data.length; i++) {
+            const sliderItem = data[i];
+            purged[sliderItem.name] = sliderItem.sliderItemData;
+        }
+
+        Cacher.setItem("sliderItems", purged, timeFrame);
+    }
+
+    const getCache = (timeFrame: TimeFrame) => {
+        const cached = Cacher.getItem("sliderItems", true, timeFrame);
+
+        if (Object.keys(cached).length <= 0) {
+            return false;
+        }
+
+        const updated = sliderItems.map((sliderItem: SliderItem) => {
+            return { ...sliderItem, sliderItemData: cached[sliderItem.name] }
+        });
+
+        return updated;
+    }
+
+    const getData = async (sliderItems: SliderItem[], timeFrame: TimeFrame) => {
+        const { minDate, maxDate } = convertTime(timeFrame);
+        return await Promise.all(sliderItems.map(async (sliderItem: SliderItem) => {
             try {
                 const res = await SliderAPI.getData(sliderItem.apiUrl, "11182819693", minDate, maxDate);
                 const countValue = sliderItem.name === "timeListened" ? msToTime(res[0].y) : res[0].y;
-                const sliderItemData = {...sliderItem.sliderItemData, nameValue: res[0].label, countValue: countValue, imgUrl: res[0].img};
+                const sliderItemData = { ...sliderItem.sliderItemData, nameValue: res[0].label, countValue: countValue, imgUrl: res[0].img };
 
-                return {...sliderItem, sliderItemData: sliderItemData};
+                return { ...sliderItem, sliderItemData: sliderItemData };
             } catch (Error) {
                 const countValue = sliderItem.name === "timeListened" ? "00:00:00" : "0";
-                const sliderItemData = {...sliderItem.sliderItemData, nameValue: "", countValue: countValue, imgUrl: sliderItem.defaultImgUrl};
+                const sliderItemData = { ...sliderItem.sliderItemData, nameValue: "", countValue: countValue, imgUrl: sliderItem.defaultImgUrl };
 
-                return {...sliderItem, sliderItemData: sliderItemData};
+                return { ...sliderItem, sliderItemData: sliderItemData };
             }
         }));
-
-        setSliderItems(updated);
     }
 
     return (
@@ -74,7 +114,7 @@ function Slider() {
                 </div>
             </div>
             <div className="gallery-time-buttons">
-                <ButtonWrapper onClick={handleTimeFrameChange}/>
+                <ButtonWrapper onClick={handleTimeFrameChange} />
             </div>
         </>
     );

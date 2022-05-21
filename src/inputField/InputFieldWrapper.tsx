@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Cacher } from "../cacher";
+import { FilterSetting } from "./FilterSetting";
 import InputField from "./InputField";
 
 export type inputField = {
@@ -11,30 +13,33 @@ export type inputField = {
 
 interface InputFieldWrapperProps {
     graphName: string;
-    update(filterSettings: {[id: string]: string}): void;
+    update(filterSettings: FilterSetting): void;
     inputFields: inputField[];
 };
 
 function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperProps) {
-    const [filterSettings, setFilterSettings] = useState<{[id: string]: string}>({});
+    const [filterSettings, setFilterSettings] = useState<FilterSetting>({});
     const [fields, setFields] = useState<inputField[]>(inputFields);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const onChange = (name: string, value: string) => {
         const updatedSettings = {...filterSettings, [name]: value};
 
-        writeFilterSettingsToCache(graphName, updatedSettings);
+        // TODO: See if we want to directly link a filtersetting to a timeFrame of a graph
+        Cacher.setItem(`${graphName}-settings`, updatedSettings);
         setFilterSettings(updatedSettings);
 
         update(updatedSettings);
     }
 
     useEffect(() => {
-        const cachedFilterSettings = getFilterSettingsFromCache(graphName);
+        const cachedFilterSettings = Cacher.getItem(`${graphName}-settings`) as FilterSetting;
         setFilterSettings(cachedFilterSettings);
 
         const res = inputFields.map((inputField: inputField) => {
-            inputField.startValue = cachedFilterSettings[inputField.name];
+            if (Object.keys(cachedFilterSettings).length > 0) {
+                inputField.startValue = cachedFilterSettings[inputField.name];
+            }
             return inputField;
         });
 
@@ -47,18 +52,6 @@ function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperPr
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [graphName, inputFields])
-
-    function writeFilterSettingsToCache(graphName: string, filterSettings: {[id: string]: string | undefined}) {
-        const name = `${graphName}-settings`
-
-        localStorage.setItem(name, JSON.stringify(filterSettings))
-    }
-
-    function getFilterSettingsFromCache(graphName: string) {
-        const name = `${graphName}-settings`;
-
-        return JSON.parse(localStorage.getItem(name) || "{}");
-    }
 
     return (
         <div className="inputfield-wrapper">

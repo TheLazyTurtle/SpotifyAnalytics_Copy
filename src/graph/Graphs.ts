@@ -79,6 +79,6 @@ const graphs: Graph[] = [
         ],
         graphValue: GraphValue.playedPerDay
     },
-]
+];
 
 export { graphs }
