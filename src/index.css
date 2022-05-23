@@ -1,6 +1,7 @@
 :root {
     --custom-green: #1DB954;
     --custom-gray: rgb(56, 60, 63);
+    --custom-secondary-gray: #eaeaea;
 }
 
 body {
@@ -10,11 +11,11 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    background-color: #282c34 !important;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -37,6 +38,9 @@ a {
     color: var(--bs-dark) !important;
 }
 
+.rounded-8 {
+    border-radius: 8px;
+}
 
 @media (max-width: 768px) {
     .btn-sm {

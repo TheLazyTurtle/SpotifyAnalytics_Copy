@@ -2,6 +2,8 @@ import { Container, Form, FormControl, Nav, Navbar, NavDropdown, Offcanvas } fro
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../home/HomePage";
 import AlbumsPage from "../album/AlbumsPage";
+import LoginPage from "../login/LoginPage";
+import NotFound from "../notFound/NotFound";
 
 interface HeaderProps {
     loggedIn: boolean;
@@ -14,7 +16,7 @@ function Header(props: HeaderProps) {
     let desktopSize = "md";
     return (
         <Router>
-            <header className="App-header">
+            <header className="App-header mb-md-5">
                 <Navbar fixed="top" bg="dark" variant="dark" expand={desktopSize} className="mb-3 d-none d-md-block">
                     <Container fluid>
                         <Navbar.Brand href="/">Spotify Analytics</Navbar.Brand>
@@ -44,7 +46,9 @@ function Header(props: HeaderProps) {
             </header>
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="/album/:artistID" element={<AlbumsPage />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
     );
