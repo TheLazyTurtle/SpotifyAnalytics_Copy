@@ -92,6 +92,10 @@ function startYear(startOfDay = true) {
 }
 
 function msToTime(s: string) {
+    if (s === null) {
+        return "00:00:00"
+    }
+
     let t = parseInt(s)
 
     let ms = t % 1000

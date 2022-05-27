@@ -2,4 +2,5 @@
 .nvimlog
 /uploads/*
 node_modules/
+.htaccess
 

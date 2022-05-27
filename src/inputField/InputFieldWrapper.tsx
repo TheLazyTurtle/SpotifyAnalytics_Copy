@@ -8,7 +8,7 @@ export type inputField = {
     type: string;
     placeholder: string;
     startValue: string;
-    autocompleteUrl: string;
+    autocompleteFunction?(name: string, limit: string | number): any;
 };
 
 interface InputFieldWrapperProps {

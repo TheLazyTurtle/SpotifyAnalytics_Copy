@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AutocompleteAPI } from "./AutocompleteAPI";
 import { inputField } from "./InputFieldWrapper";
 
 interface InputFieldProps {
@@ -17,14 +16,20 @@ function InputField({ inputField, onChange }: InputFieldProps) {
 
         setValue(value);
 
-        if (inputField.autocompleteUrl !== "") {
+        if (inputField.autocompleteFunction !== undefined) {
             // Update the graph and cache when input field is empty
             if (value.length === 0) {
                 onChange(inputField.name, value)
             }
 
-            const res = await AutocompleteAPI.autocomplete(inputField.autocompleteUrl, "11182819693", value, 10);
-            setData(res);
+            const res = await inputField.autocompleteFunction(value, 10);
+            if (res.success) {
+                // Item is either a artist or a song
+                const names = res.data.map((item: any) => item.name)
+                setData(names);
+            } else {
+                setData([]);
+            }
         } else {
             onChange(inputField.name, value)
         }
@@ -38,7 +43,8 @@ function InputField({ inputField, onChange }: InputFieldProps) {
         onChange(inputField.name, innerHTML)
     };
 
-    return inputField.autocompleteUrl === "" ? normal(name, type, placeholder, value, handleOnChange) : autoComplete(name, type, placeholder, value, data, handleOnChange, clickHandler);
+    const inputFieldData = value === undefined ? "" : value;
+    return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, handleOnChange, clickHandler);
 }
 
 function normal(name: string, type: string, placeholder: string, value: string, handleOnChange: (event: any) => void) {

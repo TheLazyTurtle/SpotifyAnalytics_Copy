@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AlbumList from "./AlbumList";
 import { Album } from "./Album";
-import { AlbumAPI } from "./AlbumAPI";
+import { AlbumAPI } from "../api/AlbumAPI";
 
 function AlbumsPage() {
     const [albums, setAlbums] = useState<Album[]>([]);

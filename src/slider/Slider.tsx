@@ -3,7 +3,6 @@ import "./slider.css";
 import { useEffect, useState } from "react";
 import { convertTime, msToTime, TimeFrame } from "../dates";
 import ButtonWrapper from "../button/ButtonWrapper";
-import { SliderAPI } from "./SliderAPI";
 import { Cacher } from "../cacher";
 
 function Slider() {
@@ -76,12 +75,13 @@ function Slider() {
         const { minDate, maxDate } = convertTime(timeFrame);
         return await Promise.all(sliderItems.map(async (sliderItem: SliderItem) => {
             try {
-                const res = await SliderAPI.getData(sliderItem.apiUrl, "11182819693", minDate, maxDate);
-                const countValue = sliderItem.name === "timeListened" ? msToTime(res[0].y) : res[0].y;
-                const sliderItemData = { ...sliderItem.sliderItemData, nameValue: res[0].label, countValue: countValue, imgUrl: res[0].img };
+                const res = await sliderItem.apiFunction(minDate, maxDate);
+                const countValue = sliderItem.name === "timeListened" ? msToTime(res.data[0].y) : res.data[0].y;
+                const imgUrl = res.data[0].img_url === null ? sliderItem.defaultImgUrl : res.data[0].img_url;
+                const sliderItemData = { ...sliderItem.sliderItemData, nameValue: res.data[0].label, countValue: countValue, imgUrl: imgUrl };
 
                 return { ...sliderItem, sliderItemData: sliderItemData };
-            } catch (Error) {
+            } catch (e) {
                 const countValue = sliderItem.name === "timeListened" ? "00:00:00" : "0";
                 const sliderItemData = { ...sliderItem.sliderItemData, nameValue: "", countValue: countValue, imgUrl: sliderItem.defaultImgUrl };
 

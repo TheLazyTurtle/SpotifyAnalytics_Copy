@@ -3,10 +3,10 @@ import Bar from "./BarGraph";
 import Line from "./LineGraph";
 import ButtonWrapper from "../button/ButtonWrapper";
 import InputFieldWrapper, { inputField } from "../inputField/InputFieldWrapper";
-import { GraphAPI } from "./GraphAPI";
 import { TimeFrame, convertTime} from "../dates";
-import "./Graph.css";
 import { Cacher } from "../cacher";
+import "./Graph.css";
+import { PlayedAPI } from "../api/PlayedAPI";
 
 export enum GraphType {
     Line,
@@ -60,8 +60,9 @@ function GraphWrapper(props: GraphWrapperProps) {
             if (Object.keys(data).length <= 0 || force) {
                 data = await chooseEndPoint(props.value, timeFrame, filterSettings);
 
-                if (data !== null) {
-                    Cacher.setItem(props.value, data, timeFrame);
+                if (data.success === true) {
+                    Cacher.setItem(props.value, data.data, timeFrame);
+                    data = data.data
                 } else {
                     data = JSON.parse("{}");
                 }
@@ -87,13 +88,13 @@ function GraphWrapper(props: GraphWrapperProps) {
 
         switch (valueType) {
             case GraphValue.allSongsPlayed:
-                return GraphAPI.allSongsPlayed("11182819693", minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"])
+                return PlayedAPI.allSongsPlayed(minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"])
             case GraphValue.topSongs:
-                return GraphAPI.topSongs("11182819693", minDate, maxDate, filterSettings["artistName"]);
+                return PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"]);
             case GraphValue.topArtist:
-                return GraphAPI.topArtist("11182819693", minDate, maxDate, filterSettings["amount"]);
+                return PlayedAPI.topArtist(minDate, maxDate, filterSettings["amount"]);
             case GraphValue.playedPerDay:
-                return GraphAPI.playedPerDay("11182819693", minDate, maxDate, filterSettings["songName"], filterSettings["artistName"]);
+                return PlayedAPI.playedPerDay(minDate, maxDate, filterSettings["songName"], filterSettings["artistName"]);
         }
     }
 
@@ -106,7 +107,7 @@ function GraphWrapper(props: GraphWrapperProps) {
 
             dataPoints.push(played.y);
             if (props.type === GraphType.Line) {
-                const date = new Date(played.x).toLocaleDateString();
+                const date = new Date(played.label).toLocaleDateString();
                 labels.push(date);
                 continue;
             }
