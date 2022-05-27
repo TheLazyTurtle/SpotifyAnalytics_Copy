@@ -25,7 +25,6 @@ function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperPr
     const onChange = (name: string, value: string) => {
         const updatedSettings = {...filterSettings, [name]: value};
 
-        // TODO: See if we want to directly link a filtersetting to a timeFrame of a graph
         Cacher.setItem(`${graphName}-settings`, updatedSettings);
         setFilterSettings(updatedSettings);
 
@@ -55,7 +54,7 @@ function InputFieldWrapper({update, inputFields, graphName}: InputFieldWrapperPr
 
     return (
         <div className="inputfield-wrapper">
-            <div className="row">
+            <div className="row small-row">
                 {!isLoading && fields.map((inputField: inputField, index: number) => (
                     <div className="col-sm" key={index}>
                         <InputField key={inputField.name} inputField={inputField} onChange={onChange} />

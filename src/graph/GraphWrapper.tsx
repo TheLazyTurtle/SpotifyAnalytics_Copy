@@ -3,10 +3,11 @@ import Bar from "./BarGraph";
 import Line from "./LineGraph";
 import ButtonWrapper from "../button/ButtonWrapper";
 import InputFieldWrapper, { inputField } from "../inputField/InputFieldWrapper";
-import { TimeFrame, convertTime} from "../dates";
+import { TimeFrame, convertTime } from "../dates";
 import { Cacher } from "../cacher";
-import "./Graph.css";
 import { PlayedAPI } from "../api/PlayedAPI";
+import "./Graph.css";
+import { FilterSetting } from "../inputField/FilterSetting";
 
 export enum GraphType {
     Line,
@@ -29,13 +30,13 @@ interface GraphWrapperProps {
 
 // TODO: Make this component more useable. It is kinda big
 function GraphWrapper(props: GraphWrapperProps) {
-    const [filterSettings, setFilterSetting] = useState<{[id: string]: string}>({});
+    const [filterSettings, setFilterSettings] = useState<FilterSetting>({});
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
     const [dataPoints, setDataPoints] = useState<number[]>([]);
-    const [labels, setLabels] = useState<string[]>([]); 
+    const [labels, setLabels] = useState<string[]>([]);
     const [error, setError] = useState<string | undefined>(undefined);
 
-    const options = {
+    const graphOptions = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -48,20 +49,37 @@ function GraphWrapper(props: GraphWrapperProps) {
         },
     }
 
+    useEffect(() => {
+        const cachedFilterSettings = Cacher.getItem(`${props.name}-settings`) as FilterSetting;
+        setFilterSettings(cachedFilterSettings);
+        loadGraphData(cachedFilterSettings);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.value, timeFrame]);
+
     const handleTimeFrameClick = (value: TimeFrame) => {
         setTimeFrame(value);
     }
 
-    async function loadGraphData(filterSettings: {[id: string]: string}, force: boolean = false) {
+    function handleUpdate(filterSettings: FilterSetting) {
+        setFilterSettings(filterSettings);
+        loadGraphData(filterSettings, true);
+    }
+
+    async function loadGraphData(filterSettings: FilterSetting, force: boolean = false) {
         try {
             // TODO: Change this so it will only get the cache when it is not a force
             let data = Cacher.getItem(props.value, true, timeFrame);
+
+            if (data.filterSettings !== filterSettings) {
+                force = true;
+            }
 
             if (Object.keys(data).length <= 0 || force) {
                 data = await chooseEndPoint(props.value, timeFrame, filterSettings);
 
                 if (data.success === true) {
-                    Cacher.setItem(props.value, data.data, timeFrame);
+                    Cacher.setItem(props.value, data.data, timeFrame, filterSettings);
                     data = data.data
                 } else {
                     data = JSON.parse("{}");
@@ -78,13 +96,8 @@ function GraphWrapper(props: GraphWrapperProps) {
         }
     }
 
-    useEffect(() => {
-        loadGraphData(filterSettings);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.value, timeFrame])
-
-    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: {[id: string]: string}) {
-        const {minDate, maxDate} = convertTime(timeFrame);
+    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: { [id: string]: string }) {
+        const { minDate, maxDate } = convertTime(timeFrame);
 
         switch (valueType) {
             case GraphValue.allSongsPlayed:
@@ -118,11 +131,6 @@ function GraphWrapper(props: GraphWrapperProps) {
         setLabels(labels);
     }
 
-    function handleUpdate(filterSettings: {[id: string]: string}) {
-        setFilterSetting(filterSettings);
-        loadGraphData(filterSettings, true);
-    }
-
     return (
         <>
             {error && (
@@ -135,8 +143,8 @@ function GraphWrapper(props: GraphWrapperProps) {
                 </div>
             )}
             <ButtonWrapper onClick={handleTimeFrameClick} />
-            <InputFieldWrapper update={handleUpdate} inputFields={props.inputFields} graphName={props.name}/>
-            {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={options} /> : <Bar dataPoints={dataPoints} labels={labels} options={options} />}
+            <InputFieldWrapper update={handleUpdate} inputFields={props.inputFields} graphName={props.name} />
+            {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={graphOptions} /> : <Bar dataPoints={dataPoints} labels={labels} options={graphOptions} />}
         </>
     );
 }

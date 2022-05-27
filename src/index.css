@@ -42,6 +42,10 @@ a {
     border-radius: 8px;
 }
 
+.small-row {
+    margin-right: 0 !important;
+}
+
 @media (max-width: 768px) {
     .btn-sm {
         width: 31%;

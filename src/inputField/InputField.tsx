@@ -3,7 +3,7 @@ import { inputField } from "./InputFieldWrapper";
 
 interface InputFieldProps {
     inputField: inputField;
-    onChange(name: string, value: string): void;
+    onChange(name: string, value: string | undefined): void;
 };
 
 function InputField({ inputField, onChange }: InputFieldProps) {
@@ -19,7 +19,7 @@ function InputField({ inputField, onChange }: InputFieldProps) {
         if (inputField.autocompleteFunction !== undefined) {
             // Update the graph and cache when input field is empty
             if (value.length === 0) {
-                onChange(inputField.name, value)
+                onChange(inputField.name, undefined)
             }
 
             const res = await inputField.autocompleteFunction(value, 10);
@@ -31,7 +31,11 @@ function InputField({ inputField, onChange }: InputFieldProps) {
                 setData([]);
             }
         } else {
-            onChange(inputField.name, value)
+            if (value.length === 0) {
+                onChange(inputField.name, undefined)
+            } else {
+                onChange(inputField.name, value)
+            }
         }
     };
 

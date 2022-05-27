@@ -1,23 +1,36 @@
 import { TimeFrame } from "./dates";
+import { FilterSetting } from "./inputField/FilterSetting";
 
 export class Cacher {
-    static setItem(key: string, value: any, timeFrame: TimeFrame | null = null) {
+    static setItem(key: string, value: any, timeFrame: TimeFrame | null = null, filterSettings: FilterSetting | null = null) {
         const existingData = Cacher.getItem(key, false);
 
-        if (timeFrame !== null) {
-            if (Object.keys(existingData).length <= 0) {
-                const wrapper: any = {};
-                wrapper[timeFrame] = { dateAdded: new Date().getTime(), value };
-                localStorage.setItem(key, JSON.stringify(wrapper));
-                return;
-            }
-
-            existingData[timeFrame] = { dateAdded: new Date().getTime(), value };
-            localStorage.setItem(key, JSON.stringify(existingData));
+        // If there is no time frame than just save it
+        if (timeFrame === null) {
+            localStorage.setItem(key, JSON.stringify(value));
             return;
         }
 
-        localStorage.setItem(key, JSON.stringify(value));
+        if (Object.keys(existingData).length <= 0) {
+            const wrapper: any = {};
+
+            if (filterSettings === null) {
+                wrapper[timeFrame] = { dateAdded: new Date().getTime(), value };
+            } else {
+                wrapper[timeFrame] = { dateAdded: new Date().getTime(), value, filterSettings };
+            }
+
+            localStorage.setItem(key, JSON.stringify(wrapper));
+            return;
+        }
+
+        if (filterSettings === null) {
+            existingData[timeFrame] = { dateAdded: new Date().getTime(), value };
+        } else {
+            existingData[timeFrame] = { dateAdded: new Date().getTime(), value, filterSettings };
+        }
+
+        localStorage.setItem(key, JSON.stringify(existingData));
         return;
     };
 
