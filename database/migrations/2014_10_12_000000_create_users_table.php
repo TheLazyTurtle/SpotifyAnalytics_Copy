@@ -14,11 +14,18 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->increments('id');
+            $table->string('spotify_id', '100')->unique();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('img_url')->default("/assets/no_img.png");
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('is_active')->default(true);
+            $table->boolean('private')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });
