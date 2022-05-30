@@ -4,10 +4,10 @@ import HomePage from "../home/HomePage";
 import AlbumsPage from "../album/AlbumsPage";
 import LoginPage from "../login/LoginPage";
 import NotFound from "../notFound/NotFound";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import React from "react";
 import { User } from "../user/User";
-import { SystemAPI } from "../api/SystemAPI";
+import ArtistPage from "../artist/ArtistPage";
 
 interface IUserContext {
     user: User;
@@ -87,6 +87,7 @@ function Header() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/album/:artistID" element={<AlbumsPage />} />
+                        <Route path="/artist/:artistID" element={<ArtistPage />} />
                         <Route path="*" element={<NotFound />} />
                         <Route path="/api" element="../../api/system/login.php" />
                     </Routes>

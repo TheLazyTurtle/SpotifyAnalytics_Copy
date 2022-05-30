@@ -9,10 +9,10 @@ function SongComponent({ song }: SongProps) {
     return (
         <section id={song.name} className="mt-3 mx-sm-3 mx-md-5">
             <div className="d-sm-none d-md-inline-block">
-                <p className="text-white text-center">{song.trackNumber}.</p>
+                <p className="text-white text-center">{song.track_number}.</p>
             </div>
             <div className="col-xl-1 col-lg-2 d-inline-block align-middle mx-3">
-                <img src={song.img} alt={song.name} width="80"/>
+                <img src={song.img_url} alt={song.name} width="80"/>
             </div>
             <div className="col-xl-6 col-lg-3 d-inline-block align-middle">
                 <a href={song.url} className="text-decoration-none">
@@ -23,7 +23,7 @@ function SongComponent({ song }: SongProps) {
                 ))}
             </div>
             <div className="col-2 d-xl-inline-block d-none align-middle">
-                <audio src={song.preview} controls/>
+                <audio src={song.preview_url} controls/>
             </div>
         </section>
     );

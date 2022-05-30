@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AlbumList from "./AlbumList";
 import { Album } from "./Album";
-import { AlbumAPI } from "../api/AlbumAPI";
+import { ArtistAPI } from "../api/ArtistAPI";
 
 function AlbumsPage() {
     const [albums, setAlbums] = useState<Album[]>([]);
@@ -17,9 +17,14 @@ function AlbumsPage() {
         async function loadProjects() {
             setLoading(true);
             try {
-                const data = await AlbumAPI.search(artistID);
-                setError("");
-                setAlbums(data);
+                const data = await ArtistAPI.albums(artistID);
+                if (data.success) {
+                    setError("");
+                    setAlbums(data.data);
+                } else {
+                    setError("We pepsi max boi");
+                    setAlbums([]);
+                }
             } catch (e) {
                 if (e instanceof Error) {
                     setError(e.message);
@@ -33,7 +38,6 @@ function AlbumsPage() {
 
     return (
         <>
-            <h1>Projects</h1>
             {error && (
                 <div className="row">
                     <div className="card large error">
@@ -45,7 +49,7 @@ function AlbumsPage() {
             )}
             <AlbumList albums={albums}/>
             {!loading && !error && (
-                <div className="row">
+                <div className="row small-row">
                     <div className="col-sm-12">
                         <div className="button-group fluid">
                             <button className="button default">More...</button>
