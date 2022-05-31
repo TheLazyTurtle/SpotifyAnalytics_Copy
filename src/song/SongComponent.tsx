@@ -8,7 +8,7 @@ interface SongProps {
 function SongComponent({ song }: SongProps) {
     return (
         <section id={song.name} className="mt-3 mx-sm-3 mx-md-5">
-            <div className="d-sm-none d-md-inline-block">
+            <div className="d-none d-md-inline-block">
                 <p className="text-white text-center">{song.track_number}.</p>
             </div>
             <div className="col-xl-1 col-lg-2 d-inline-block align-middle mx-3">

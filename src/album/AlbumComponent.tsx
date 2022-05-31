@@ -17,12 +17,11 @@ function AlbumComponent({ album }: AlbumProps) {
         setIsOpen(!isOpen);
     }
 
-    // TODO: collapse and expanding
     return (
         <div className="col-lg-6 col-md-8 mx-md-auto mx-xs-0 mb-5 pb-2 album-wrapper" id={album.name}>
             <div className="album-header">
                 <img src={album.img_url} alt={album.name} className="mx-md-5 my-md-3 album-md-img album-sm-img" />
-                <section className="d-sm-block d-md-inline-block col-xs-2 mx-sm-3 my-sm-2">
+                <section className="d-sm-block d-md-inline-block col-xs-2 mx-sm-3 my-sm-2 px-3 py-2 py-md-0 px-md-0">
                     <a href={album.url} className="text-decoration-none">
                         <h5 className="strong text-white">
                             <strong>{album.name}</strong>

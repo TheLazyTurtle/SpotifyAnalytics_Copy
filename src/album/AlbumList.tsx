@@ -7,7 +7,7 @@ interface AlbumListProps {
 
 function AlbumList({ albums }: AlbumListProps) {
     return (
-        <div className="row small-row">
+        <div>
             {albums.map((album) => (
                 <div key={album.name} className="cols-sm">
                     <AlbumComponent album={album}/>

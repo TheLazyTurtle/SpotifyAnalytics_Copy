@@ -35,16 +35,16 @@ function ArtistTopSongs({ artistID }: ArtistTopSongsProps) {
             <h2 className="text-center text-white">Top Songs</h2>
             <div className="mt-5">
                 <div key="row-header" className="row small-row">
-                    <div className="col-4">
+                    <div className="col-md-4 d-none d-md-block">
                         <p className="text-white text-center">Preview</p>
                     </div>
-                    <div className="col-2">
+                    <div className="col-4 col-md-2">
                         <p className="text-white text-center">Image</p>
                     </div>
-                    <div className="col-5">
+                    <div className="col-4 col-md-5">
                         <p className="text-white text-center">Title</p>
                     </div>
-                    <div className="col-1">
+                    <div className="col-4 col-md-1">
                         <p className="text-white text-center">You / Total</p>
                     </div>
                 </div>
@@ -52,16 +52,16 @@ function ArtistTopSongs({ artistID }: ArtistTopSongsProps) {
                     return (
                         <div key={index} className={index >= 4 ? "d-none" : "d-block"}>
                             <div className="row small-row py-1">
-                                <div className="col-4 text-center">
+                                <div className="col-md-4 text-center d-none d-md-block">
                                     <audio src={data.preview_url} controls />
                                 </div>
-                                <div className="col-2 text-center">
+                                <div className="col-4 col-md-2 text-center">
                                     <img src={data.img_url} className="w-50" />
                                 </div>
-                                <div className="col-5">
+                                <div className="col-4 col-md-5">
                                     <p className="text-white text-center"><a href={data.url} className="text-decoration-none">{data.name}</a></p>
                                 </div>
-                                <div className="col-1 text-center">
+                                <div className="col-4 col-md-1 text-center">
                                     <p className="text-white">{data.user_count}/{data.count}</p>
                                 </div>
                             </div>

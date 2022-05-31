@@ -8,7 +8,7 @@ import AlbumsPage from "../album/AlbumsPage";
 import ArtistTopSongs from "./ArtistTopSongs";
 
 function ArtistPage() {
-    const [artist, setArtist] = useState<Artist>({artist_id: "", name: "", url: "", img_url: ""});
+    const [artist, setArtist] = useState<Artist>({ artist_id: "", name: "", url: "", img_url: "" });
 
     const params = useParams();
     const artistID = params.artistID === undefined ? "" : params.artistID;
@@ -36,14 +36,14 @@ function ArtistPage() {
         } else {
             console.log("We messed up. Very sad indeed");
         }
-    } 
+    }
 
     return (
         <>
             <ArtistHeader artist={artist} />
             <div className="border-bottom border-white mt-5"></div>
             <div className="mt-3">
-                <ArtistTopSongs artistID={artistID}/>
+                <ArtistTopSongs artistID={artistID} />
             </div>
             <div className="border-bottom border-white mt-5"></div>
             <div className="mt-5">
