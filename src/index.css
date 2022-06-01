@@ -38,12 +38,21 @@ a {
     color: var(--bs-dark) !important;
 }
 
+.btn-skinny {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
 .rounded-8 {
     border-radius: 8px;
 }
 
 .small-row {
     margin-right: 0 !important;
+}
+
+.w-10 {
+    width: 10% !important;
 }
 
 @media (max-width: 768px) {

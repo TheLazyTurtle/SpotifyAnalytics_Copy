@@ -1,11 +1,9 @@
 import "./Login.css";
 import "../index.css";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SystemAPI } from "../api/SystemAPI";
-import { UserContext } from "../header/Header";
 
 function LoginPage() {
-    const { user, changeUser } = useContext(UserContext);
     const [error, setError] = useState<string>();
     const usernameElement = useRef<HTMLInputElement | null>(null);
     const passwordElement = useRef<HTMLInputElement | null>(null);
@@ -27,11 +25,8 @@ function LoginPage() {
             return;
         }
 
-        if (changeUser !== undefined) {
-            changeUser(user);
-            document.cookie = `token=${result.token}`;
-            window.location.href = "/";
-        }
+        document.cookie = `token=${result.token}`;
+        window.location.href = "/";
     }
 
     return (

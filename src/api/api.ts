@@ -46,19 +46,30 @@ export class Api {
         return null;
     }
 
-    protected static makeHeader(type: string) {
+    protected static makeHeader(type: string, options: {} = {}) {
         const token = Api.getToken();
 
         if (token === null) {
             // window.location.href="/login";
         }
 
-        return {
-            method: type,
-            headers: {
-                'Content-Type': 'application/json;',
-                Authorization: `Bearer ${token}`,
-            },
+        if (type === "GET") {
+            return {
+                method: type,
+                headers: {
+                    'Content-Type': 'application/json;',
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        } else if (type === "POST") {
+            return {
+                method: type,
+                headers: {
+                    'Content-Type': 'application/json;',
+                    Authorization: `Bearer ${token}`,
+                },
+                options: options
+            }
         }
     }
 }

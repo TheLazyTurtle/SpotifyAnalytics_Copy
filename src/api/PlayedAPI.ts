@@ -1,7 +1,7 @@
 import { Api } from "./api";
 
 export class PlayedAPI extends Api {
-    protected static url = `${this.baseUrl}/played`
+    protected static url = `${this.baseUrl}/played`;
 
     static async allSongsPlayed(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: string | undefined = "0", maxPlayed: string | undefined = "9999") {
         try {

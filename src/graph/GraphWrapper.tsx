@@ -124,6 +124,9 @@ function GraphWrapper(props: GraphWrapperProps) {
                 labels.push(date);
                 continue;
             }
+            // TODO: Do the label length thing on the graph and not here because otherwise it can be scuffed
+            //      Ex. The name will be cut at the bottom of the screen (which is what we want)
+            //      but then when you hover to see the full name we still get the cut off name (which sucks)
             labels.push(played.label.substring(0, 20));
         }
 
