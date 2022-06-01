@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PassportAuthController;
 use App\Http\Controllers\PlayedController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,9 @@ use App\Http\Controllers\SongController;
 
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
-Route::resource('songs', SongController::class);
+Route::resource('song', SongController::class);
+Route::get('artist/albums', [ArtistController::class, 'albums']);
+// Route::resource('artist', ArtistController::class);
 
 Route::middleware('auth:api')->group(function() {
     Route::get('/played/allSongsPlayed', [PlayedController::class, 'allSongsPlayed']);
@@ -32,4 +34,11 @@ Route::middleware('auth:api')->group(function() {
     Route::get('/played/timeListend', [PlayedController::class, 'timeListend']);
     Route::get('/played/amountSongs', [PlayedController::class, 'amountSongs']);
     Route::get('/played/amountNewSongs', [PlayedController::class, 'amountNewSongs']);
+
+    Route::get('artist/topSongs', [ArtistController::class, 'topSongs']);
+    Route::get('artist/{id}', [ArtistController::class, 'show']);
+
+    Route::get('user/', [UserController::class, 'getCurrentUser']);
+    Route::get('user/{id}', [UserController::class, 'show']);
+    Route::post('user/follow', [UserController::class, 'follow']);
 });

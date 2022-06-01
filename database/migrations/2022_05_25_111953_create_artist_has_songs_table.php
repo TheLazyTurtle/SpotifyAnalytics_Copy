@@ -15,12 +15,14 @@ class CreateArtistHasSongsTable extends Migration
     {
         Schema::create('artist_has_song', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('song_id', 23)->unique();
-            $table->string('artist_id', 23)->unique();
+            $table->string('song_id', 23);
+            $table->string('artist_id', 23);
             $table->timestamps();
 
             $table->index('song_id');
             $table->index('artist_id');
+
+            $table->unique(['song_id', 'artist_id']);
         });
     }
 
