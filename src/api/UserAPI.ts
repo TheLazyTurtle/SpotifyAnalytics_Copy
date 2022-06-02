@@ -16,11 +16,12 @@ export class UserAPI extends Api {
         }
     }
 
-    static async get() {
+    static async get(username?: string) {
         try {
             const header = super.makeHeader("GET");
+            const usernameExtenstion = username !== undefined ? `${username}` : "";
 
-            const response = await fetch(`${UserAPI.url}/`, header);
+            const response = await fetch(`${UserAPI.url}/${usernameExtenstion}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
@@ -32,7 +33,7 @@ export class UserAPI extends Api {
     static async follow(userID: string) {
         try {
             const options = {
-                body: JSON.stringify({ following_user_id: userID}),
+                body: JSON.stringify({ following_user_id: userID }),
             }
             let header = super.makeHeader("POST", options);
 

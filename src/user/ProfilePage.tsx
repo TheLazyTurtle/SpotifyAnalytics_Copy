@@ -11,8 +11,8 @@ export enum PageType {
     External,
 };
 
-// TODO: When a person goes to their own page using the external way then send them to their own page
-// TODO: Make it that a non logged-in user can still view profile pages but will respect the private or public ness
+// TODO: When a person goes to their own page using the external way then send them to their own page (this requires the global thingy or something to check if the user is logged in etc)
+// TODO: Make it that a non logged-in user can still view profile pages but will respect the private or public ness (this should be done on the server)
 function ProfilePage() {
     const [pageType, setPageType] = useState<PageType>(PageType.Personal);
     const [user, setUser] = useState<User>({} as User);
@@ -23,27 +23,16 @@ function ProfilePage() {
 
         if (username !== undefined) {
             setPageType(PageType.External);
-            getExternalUser(username)
-        } else {
-            getUser();
         }
+
+        getUser(username);
     }, []);
 
-    async function getUser() {
-        const user = await UserAPI.get();
+    async function getUser(username?: string) {
+        const user = await UserAPI.get(username);
 
         if (user.success) {
-            user.data.is_own_account = 1;
             setUser(user.data)
-        }
-    }
-
-    async function getExternalUser(username: string) {
-        const user = await UserAPI.getExternal(username);
-
-        if (user.success) {
-            user.data.is_own_account = 0;
-            setUser(user.data);
         }
     }
 
@@ -53,9 +42,9 @@ function ProfilePage() {
             <div className="border-bottom border-white mt-5"></div>
             <section className="w-100">
                 {/* Replace true with is admin check */}
-                {(user.following || true) && graphs.map((graph: Graph) => (
+                {((user.following || true) && user.user_id !== undefined || pageType == PageType.Personal) && graphs.map((graph: Graph) => (
                     <div key={graph.name} className="graph pt-3" id={graph.name}>
-                        <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} />
+                        <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
                     </div>
                 ))}
             </section>

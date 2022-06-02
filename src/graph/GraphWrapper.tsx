@@ -26,6 +26,7 @@ interface GraphWrapperProps {
     type: GraphType;
     value: GraphValue;
     inputFields: inputField[];
+    userID?: string;
 };
 
 // TODO: Make this component more useable. It is kinda big
@@ -49,10 +50,16 @@ function GraphWrapper(props: GraphWrapperProps) {
         },
     }
 
+    // Get filtersettings
     useEffect(() => {
-        const cachedFilterSettings = Cacher.getItem(`${props.name}-settings`) as FilterSetting;
-        setFilterSettings(cachedFilterSettings);
-        loadGraphData(cachedFilterSettings);
+        if (props.userID === undefined) {
+            const cachedFilterSettings = Cacher.getItem(`${props.name}-settings`) as FilterSetting;
+            setFilterSettings(cachedFilterSettings);
+            loadGraphData(cachedFilterSettings);
+            return;
+        }
+
+        loadExternalGraphData({});
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.value, timeFrame]);
@@ -61,14 +68,32 @@ function GraphWrapper(props: GraphWrapperProps) {
         setTimeFrame(value);
     }
 
-    function handleUpdate(filterSettings: FilterSetting) {
+    function handleInputFieldUpdate(filterSettings: FilterSetting) {
         setFilterSettings(filterSettings);
-        loadGraphData(filterSettings, true);
+
+        if (props.userID == undefined) {
+            loadGraphData(filterSettings, true);
+            return
+        }
+        loadExternalGraphData(filterSettings);
+    }
+
+    async function loadExternalGraphData(filterSettings: FilterSetting) {
+        let data = await chooseEndPoint(props.value, timeFrame, filterSettings, props.userID);
+
+        if (data.success === true) {
+            data = data.data;
+            setError("");
+        } else {
+            data = JSON.parse("{}");
+            setError("Failed to get for user");
+        }
+
+        processIncomingData(data);
     }
 
     async function loadGraphData(filterSettings: FilterSetting, force: boolean = false) {
         try {
-            // TODO: Change this so it will only get the cache when it is not a force
             let data = Cacher.getItem(props.value, true, timeFrame);
 
             if (data.filterSettings !== filterSettings) {
@@ -96,18 +121,18 @@ function GraphWrapper(props: GraphWrapperProps) {
         }
     }
 
-    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: { [id: string]: string }) {
+    async function chooseEndPoint(valueType: GraphValue, timeFrame: TimeFrame, filterSettings: FilterSetting, userID?: string) {
         const { minDate, maxDate } = convertTime(timeFrame);
 
         switch (valueType) {
             case GraphValue.allSongsPlayed:
-                return PlayedAPI.allSongsPlayed(minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"])
+                return PlayedAPI.allSongsPlayed(minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"], userID)
             case GraphValue.topSongs:
-                return PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"]);
+                return PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"], "10", userID);
             case GraphValue.topArtist:
-                return PlayedAPI.topArtist(minDate, maxDate, filterSettings["amount"]);
+                return PlayedAPI.topArtist(minDate, maxDate, filterSettings["amount"], userID);
             case GraphValue.playedPerDay:
-                return PlayedAPI.playedPerDay(minDate, maxDate, filterSettings["songName"], filterSettings["artistName"]);
+                return PlayedAPI.playedPerDay(minDate, maxDate, filterSettings["songName"], filterSettings["artistName"], userID);
         }
     }
 
@@ -146,7 +171,7 @@ function GraphWrapper(props: GraphWrapperProps) {
                 </div>
             )}
             <ButtonWrapper onClick={handleTimeFrameClick} />
-            <InputFieldWrapper update={handleUpdate} inputFields={props.inputFields} graphName={props.name} />
+            <InputFieldWrapper update={handleInputFieldUpdate} inputFields={props.inputFields} graphName={props.name} userID={props.userID} />
             {props.type === GraphType.Line ? <Line dataPoints={dataPoints} labels={labels} options={graphOptions} /> : <Bar dataPoints={dataPoints} labels={labels} options={graphOptions} />}
         </>
     );

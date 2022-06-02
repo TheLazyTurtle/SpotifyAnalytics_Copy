@@ -3,11 +3,12 @@ import { Api } from "./api";
 export class PlayedAPI extends Api {
     protected static url = `${this.baseUrl}/played`;
 
-    static async allSongsPlayed(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: string | undefined = "0", maxPlayed: string | undefined = "9999") {
+    static async allSongsPlayed(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: string = "0", maxPlayed: string = "9999", userID?: string) {
         try {
             const header = super.makeHeader("GET");
+            const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/allSongsPlayed?min_date=${minDate}&max_date=${maxDate}&min_played=${minPlayed}&max_played=${maxPlayed}`, header);
+            const response = await fetch(`${PlayedAPI.url}/allSongsPlayed?min_date=${minDate}&max_date=${maxDate}&min_played=${minPlayed}&max_played=${maxPlayed}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
@@ -16,11 +17,12 @@ export class PlayedAPI extends Api {
         }
     }
 
-    static async topSongs(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", artistName: string | undefined = "%", amount: string | undefined = "10") {
+    static async topSongs(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", artistName: string = "%", amount: string = "10", userID?: string) {
         try {
             const header = super.makeHeader("GET");
+            const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/topSongs?min_date=${minDate}&max_date=${maxDate}&artist_name=${artistName}&amount=${amount}`, header);
+            const response = await fetch(`${PlayedAPI.url}/topSongs?min_date=${minDate}&max_date=${maxDate}&artist_name=${artistName}&amount=${amount}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
@@ -29,11 +31,12 @@ export class PlayedAPI extends Api {
         }
     }
 
-    static async topArtist(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string | undefined = "10") {
+    static async topArtist(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string = "10", userID?: string) {
         try {
             const header = super.makeHeader("GET");
+            const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/topArtists?min_date=${minDate}&max_date=${maxDate}&amount=${amount}`, header);
+            const response = await fetch(`${PlayedAPI.url}/topArtists?min_date=${minDate}&max_date=${maxDate}&amount=${amount}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
@@ -42,11 +45,12 @@ export class PlayedAPI extends Api {
         }
     }
 
-    static async playedPerDay(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", songName: string | undefined = "%", artistName: string | undefined = "%") {
+    static async playedPerDay(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", songName: string = "%", artistName: string = "%", userID?: string) {
         try {
             const header = super.makeHeader("GET");
+            const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/playedPerDay?min_date=${minDate}&max_date=${maxDate}&song_name=${songName}&artist_name=${artistName}`, header);
+            const response = await fetch(`${PlayedAPI.url}/playedPerDay?min_date=${minDate}&max_date=${maxDate}&song_name=${songName}&artist_name=${artistName}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
@@ -55,11 +59,12 @@ export class PlayedAPI extends Api {
         }
     }
 
-    static async topArtistSearch(artistName: string, limit: string | number) {
+    static async topArtistSearch(artistName: string, limit: string, userID?: string) {
         try {
             const header = super.makeHeader("GET");
+            const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/topArtistSearch?artist_name=${artistName}&limit=${limit}`, header);
+            const response = await fetch(`${PlayedAPI.url}/topArtistSearch?artist_name=${artistName}&limit=${limit}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {

@@ -31,14 +31,18 @@ function Buttons(props: ProfilePageHeaderProps) {
     return (
         <div className="row">
             {props.pageType === PageType.Personal &&
-                <div className="col">
-                    <a className="btn btn-primary btn-skinny d-inline-block w-10" onClick={openSettings}>Settings</a>
-                    <a className="btn btn-primary btn-skinny d-inline-block w-10 mx-2" onClick={handleLogout}>Logout</a>
-                </div>
+                <>
+                    <div className="col-4 col-md-2 mx-md-0">
+                        <a className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={openSettings}>Settings</a>
+                    </div>
+                    <div className="col-3 col-md-2 mx-2 mx-md-2">
+                        <a className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleLogout}>Logout</a>
+                    </div>
+                </>
             }
             {props.pageType === PageType.External &&
-                <div className="col">
-                    <button className="btn btn-primary btn-skinny d-inline-block w-10" onClick={handleFollowage}>{props.user.following ? "Unfollow" : "Follow"}</button>
+                <div className="col-12">
+                    <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleFollowage}>{props.user.following ? "Unfollow" : "Follow"}</button>
                 </div>
             }
         </div>
@@ -55,13 +59,13 @@ function ProfilePageHeader(props: ProfilePageHeaderProps) {
                     <div key="img-wrapper" className="col-md-3 p-0 mt-md-5">
                         <img className="user-img" src={props.user.img_url} />
                     </div>
-                    <div key="text-wrapper" className="col-md-9 mt-3 mt-md-5">
-                        <h1 className="text-white px-2 px-md-0">{props.user.username}</h1>
+                    <div key="text-wrapper" className="col-12 col-md-9 mt-3 mt-md-5">
+                        <h1 className="text-white px-2">{props.user.username}</h1>
                         <div className="row">
-                            <div className="col-2">
+                            <div className="col-4 col-md-2 mx-2">
                                 <p className="text-white"><strong>{props.user.followers_count}</strong> Followers</p>
                             </div>
-                            <div className="col-2">
+                            <div className="col-4 col-md-2">
                                 <p className="text-white"><strong>{props.user.following_count}</strong> Following</p>
                             </div>
                         </div>
