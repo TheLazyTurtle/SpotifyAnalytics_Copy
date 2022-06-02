@@ -41,8 +41,8 @@ function ProfilePage() {
             <ProfilePageHeader user={user} pageType={pageType} />
             <div className="border-bottom border-white mt-5"></div>
             <section className="w-100">
-                {/* Replace true with is admin check */}
-                {((user.following || true) && user.user_id !== undefined || pageType == PageType.Personal) && graphs.map((graph: Graph) => (
+                {/* Add admin check */}
+                {((user.following && user.user_id !== undefined) || pageType == PageType.Personal) && new graphs().graphs.map((graph: Graph) => (
                     <div key={graph.name} className="graph pt-3" id={graph.name}>
                         <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
                     </div>

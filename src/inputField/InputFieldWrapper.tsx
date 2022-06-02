@@ -23,19 +23,6 @@ function InputFieldWrapper({ update, inputFields, graphName, userID }: InputFiel
     const [fields, setFields] = useState<inputField[]>(inputFields);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const onChange = (name: string, value: string) => {
-        if (userID !== undefined) {
-            return;
-        }
-
-        const updatedSettings = { ...filterSettings, [name]: value };
-
-        Cacher.setItem(`${graphName}-settings`, updatedSettings);
-        setFilterSettings(updatedSettings);
-
-        update(updatedSettings);
-    }
-
     useEffect(() => {
         if (userID === undefined) {
             const cachedFilterSettings = Cacher.getItem(`${graphName}-settings`) as FilterSetting;
@@ -58,6 +45,20 @@ function InputFieldWrapper({ update, inputFields, graphName, userID }: InputFiel
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [graphName, inputFields])
+
+    const onChange = (name: string, value: string) => {
+        if (userID !== undefined) {
+            return;
+        }
+
+        const updatedSettings = { ...filterSettings, [name]: value };
+
+        Cacher.setItem(`${graphName}-settings`, updatedSettings);
+        setFilterSettings(updatedSettings);
+
+        update(updatedSettings);
+    }
+
 
     return (
         <div className="inputfield-wrapper">
