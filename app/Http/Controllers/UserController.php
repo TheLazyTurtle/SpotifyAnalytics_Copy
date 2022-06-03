@@ -54,20 +54,23 @@ class UserController extends Controller
         }
 
         if ($user->private) {
-            $following = Followers::where('follower_user_id', $authUser->id)->first();
-            // TODO: Check if you are following
-            if (!$authUser->is_admin || !$following) {
+            $following = Followers::where('follower_user_id', $authUser->id)
+                ->where('following_user_id', $user->user_id)
+                ->first();
+
+            if ($authUser->is_admin == false && !$following) {
+                // TODO: IF YOU ARE NOT FOLLOWING WE STILL WANT A NAME AND AN IMG
                 return response()->json([
                     'success' => false,
                     'data' => 'You are not following this user'
                 ], 400);
             }
 
-            if (!$authUser->is_admin) {
+            if ($following) {
                 $user->following = true;
+            } else {
+                $user->following = false;
             }
-            // TODO: We should add some magic here to still show some info about a user when their account is private
-            //      To note: Most of that should probably be done on the client side
         }
 
         $user->following_count = Followers::where('follower_user_id', $user->user_id)
@@ -76,6 +79,43 @@ class UserController extends Controller
         $user->followers_count = Followers::where('following_user_id', $user->user_id)
             ->select(DB::raw('COUNT(*) as count'))
             ->first()->count;
+
+        return response()->json([
+            'success' => true,
+            'data' => $user
+        ], 200);
+    }
+
+    public function showGuest($username)
+    {
+        // TODO: Validate data
+        $user = User::where('username', $username)
+            ->select('id as user_id', 'username', 'img_url', 'private')
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'data' => 'User not found'
+            ], 400);
+        }
+
+        // Get the following / follower count of the user
+        $user->following_count = Followers::where('follower_user_id', $user->user_id)
+            ->select(DB::raw('COUNT(*) as count'))
+            ->first()->count;
+        $user->followers_count = Followers::where('following_user_id', $user->user_id)
+            ->select(DB::raw('COUNT(*) as count'))
+            ->first()->count;
+
+        if ($user->private) {
+            $user->following = false;
+
+            return response()->json([
+                'success' => true,
+                'data' => $user
+            ], 200);
+        }
 
         return response()->json([
             'success' => true,

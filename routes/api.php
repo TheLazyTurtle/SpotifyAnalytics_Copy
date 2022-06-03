@@ -23,8 +23,9 @@ Route::post('login', [PassportAuthController::class, 'login']);
 Route::resource('song', SongController::class);
 Route::get('artist/albums', [ArtistController::class, 'albums']);
 // Route::resource('artist', ArtistController::class);
+Route::get('user/guest/{id}', [UserController::class, 'showGuest']);
 
-Route::middleware('auth:api')->group(function() {
+Route::middleware('auth:api')->group(function () {
     Route::get('/played/allSongsPlayed', [PlayedController::class, 'allSongsPlayed']);
     Route::get('/played/topSongs', [PlayedController::class, 'topSongs']);
     Route::get('/played/topArtists', [PlayedController::class, 'topArtists']);

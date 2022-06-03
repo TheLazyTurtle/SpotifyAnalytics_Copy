@@ -61,7 +61,11 @@ class PlayedController extends Controller
     // All songs played of user
     public function allSongsPlayed(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = Auth()->user()->id;
+        }
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -85,7 +89,11 @@ class PlayedController extends Controller
     // Top song of user
     public function topSongs(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = Auth()->user()->id;
+        }
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -113,7 +121,11 @@ class PlayedController extends Controller
     // Top artist of user
     public function topArtists(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = Auth()->user()->id;
+        }
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -138,7 +150,11 @@ class PlayedController extends Controller
     // Played per day for a user
     public function playedPerDay(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = Auth()->user()->id;
+        }
 
         // TODO: input validation and default values;
         // TODO: Authentication
