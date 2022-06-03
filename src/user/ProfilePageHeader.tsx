@@ -41,6 +41,7 @@ function Buttons(props: ProfilePageHeaderProps) {
                 </>
             }
             {props.pageType === PageType.External &&
+                // TODO: Add a check to see if a person is logged in. If they are not logged in than remove this button or give the user a login screen to log in
                 <div className="col-12">
                     <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleFollowage}>{props.user.following ? "Unfollow" : "Follow"}</button>
                 </div>
