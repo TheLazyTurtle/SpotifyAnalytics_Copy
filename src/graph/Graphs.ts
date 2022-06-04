@@ -41,6 +41,12 @@ class graphs {
                     startValue: "",
                     autocompleteFunction: PlayedAPI.topArtistSearch
                 },
+                {
+                    name: "amount",
+                    type: "number",
+                    placeholder: "Amount",
+                    startValue: "",
+                },
             ],
             graphValue: GraphValue.topSongs
         },

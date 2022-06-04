@@ -8,5 +8,5 @@ export type User = {
     following?: boolean;
     followers_count?: string;
     following_count?: string;
-    private: boolean; 
+    private: boolean;
 }

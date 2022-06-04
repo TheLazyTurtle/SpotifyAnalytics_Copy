@@ -35,11 +35,11 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
 
     return (
         <>
-            { toShow() && new graphs().graphs.map((graph: Graph) => (
-                    < div key={graph.name} className="graph pt-3" id={graph.name} >
-                        <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
-                    </div>
-                )) }
+            {toShow() && new graphs().graphs.map((graph: Graph) => (
+                < div key={graph.name} className="graph pt-3" id={graph.name} >
+                    <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
+                </div>
+            ))}
         </>
     )
 }

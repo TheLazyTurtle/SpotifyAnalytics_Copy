@@ -22,7 +22,7 @@ export class PlayedAPI extends Api {
             const header = super.makeHeader("GET");
             const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/topSongs?min_date=${minDate}&max_date=${maxDate}&artist_name=${artistName}&amount=${amount}${userIDExtensinon}`, header);
+            const response = await fetch(`${PlayedAPI.url}/topSongs?min_date=${minDate}&max_date=${maxDate}&artist_name=${artistName}&limit=${amount}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
@@ -36,7 +36,7 @@ export class PlayedAPI extends Api {
             const header = super.makeHeader("GET");
             const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
 
-            const response = await fetch(`${PlayedAPI.url}/topArtists?min_date=${minDate}&max_date=${maxDate}&amount=${amount}${userIDExtensinon}`, header);
+            const response = await fetch(`${PlayedAPI.url}/topArtists?min_date=${minDate}&max_date=${maxDate}&limit=${amount}${userIDExtensinon}`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {
