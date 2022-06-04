@@ -58,13 +58,12 @@ function normal(name: string, type: string, placeholder: string, value: string, 
 }
 
 function autoComplete(name: string, type: string, placeholder: string, value: string, data: string[], handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
-    // TODO: The css needs to make the autocomplete thing hover above the graph instead of pushing everything down
     return (
         <section className="autocomplete-input-field">
             <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange} autoComplete="off" />
-            <div className="input-field-result-data">
+            <div className="input-field-result-data border w-25 position-absolute background-base">
                 {value.length > 0 && data.map((d: string, index: number) => (
-                    <p key={index} onClick={clickHandler}>{d}</p>
+                    <p key={index} className="text-white px-3" onClick={clickHandler}>{d}</p>
                 ))}
             </div>
         </section>

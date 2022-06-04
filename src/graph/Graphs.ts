@@ -74,13 +74,13 @@ class graphs {
                     startValue: "",
                     autocompleteFunction: PlayedAPI.topSongsSearch
                 },
-                {
-                    name: "artistName",
-                    type: "text",
-                    placeholder: "Artist Name",
-                    startValue: "",
-                    autocompleteFunction: PlayedAPI.topArtistSearch
-                },
+                // {
+                //     name: "artistName",
+                //     type: "text",
+                //     placeholder: "Artist Name",
+                //     startValue: "",
+                //     autocompleteFunction: PlayedAPI.topArtistSearch
+                // },
             ],
             graphValue: GraphValue.playedPerDay
         },

@@ -23,6 +23,10 @@ a {
     color: var(--custom-green) !important;
 }
 
+.background-base {
+    background-color: #282c34 !important;
+}
+
 .btn {
     padding: 5px;
     padding-left: 20px;
