@@ -9,4 +9,5 @@ export type User = {
     followers_count?: string;
     following_count?: string;
     private: boolean;
+    guest: boolean;
 }

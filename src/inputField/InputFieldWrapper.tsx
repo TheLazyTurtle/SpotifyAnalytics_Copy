@@ -46,26 +46,24 @@ function InputFieldWrapper({ update, inputFields, graphName, userID }: InputFiel
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [graphName, inputFields])
 
-    const onChange = (name: string, value: string) => {
+    const handleInputChange = (name: string, value: string) => {
+        const updatedSettings = { ...filterSettings, [name]: value };
+        setFilterSettings(updatedSettings);
+        update(updatedSettings);
+
         if (userID !== undefined) {
             return;
         }
 
-        const updatedSettings = { ...filterSettings, [name]: value };
-
         Cacher.setItem(`${graphName}-settings`, updatedSettings);
-        setFilterSettings(updatedSettings);
-
-        update(updatedSettings);
     }
-
 
     return (
         <div className="inputfield-wrapper">
             <div className="row small-row">
                 {!isLoading && fields.map((inputField: inputField, index: number) => (
                     <div className="col-sm" key={index}>
-                        <InputField key={inputField.name} inputField={inputField} onChange={onChange} />
+                        <InputField key={inputField.name} inputField={inputField} onChange={handleInputChange} />
                     </div>
                 ))}
             </div>

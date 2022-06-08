@@ -1,7 +1,7 @@
 import { Api } from "./api";
 
 export class SystemAPI extends Api {
-    protected static url = `${this.baseUrl}/system`
+    protected static url = `${this.baseUrl}`
 
     static async login(email: string, password: string) {
         try {
@@ -30,13 +30,13 @@ export class SystemAPI extends Api {
         try {
             const header = super.makeHeader("POST");
 
-            const response = await fetch(`${this.url}/validate_login.php`, header);
+            const response = await fetch(`${this.url}/validateToken`, header);
             const res = await super.checkStatus(response);
             return super.parseJSON(res);
         } catch (error) {
             console.log("log client error " + error);
-            throw new Error("There was an error logging you in");
+            // throw new Error("There was an error logging you in");
+            return new Error("There was an error logging you in");
         }
     }
 }
-

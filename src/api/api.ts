@@ -33,12 +33,12 @@ export class Api {
         return response.json();
     }
 
-    protected static getToken() {
+    public static getToken() {
         const cookies = document.cookie.split('; ');
 
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].split("=")
-            if (cookie[0] === "token") {
+            if (cookie[0] === "laravel_token") {
                 return cookie[1];
             }
         }

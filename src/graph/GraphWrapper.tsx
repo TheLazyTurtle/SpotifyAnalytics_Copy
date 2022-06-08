@@ -30,6 +30,8 @@ interface GraphWrapperProps {
 };
 
 // TODO: Make this component more useable. It is kinda big
+// TODO: Seems like caching is broken
+//      It will always fetch and save in cache (WAIT... IT does it for the data on an EXTERNAL USER PAGE that means that it writes data to a cache that it shouldn't)
 function GraphWrapper(props: GraphWrapperProps) {
     const [filterSettings, setFilterSettings] = useState<FilterSetting>({});
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
@@ -69,12 +71,14 @@ function GraphWrapper(props: GraphWrapperProps) {
     }
 
     function handleInputFieldUpdate(filterSettings: FilterSetting) {
+        console.log("hey")
         setFilterSettings(filterSettings);
 
-        if (props.userID == undefined) {
+        if (props.userID === undefined) {
             loadGraphData(filterSettings, true);
             return
         }
+
         loadExternalGraphData(filterSettings);
     }
 

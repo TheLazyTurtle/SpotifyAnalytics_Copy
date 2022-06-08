@@ -25,8 +25,31 @@ function LoginPage() {
             return;
         }
 
-        document.cookie = `token=${result.token}`;
-        window.location.href = "/";
+        document.cookie = `laravel_token=${result.token}`;
+
+        window.location.href = getRedirectUrl();
+    }
+
+    function getRedirectUrl() {
+        const searchParameters = window.location.search.replace("?", "");
+        const parameters = searchParameters.split("&");
+
+        // If there is no redirect then just send to home
+        if (parameters.length === 0) {
+            return "/";
+        }
+
+        // Else get redirect url
+        for (let i = 0; i < parameters.length; i++) {
+            const parameter = parameters[i].split("=");
+
+            if (parameter[0] === "redirect") {
+                return `/${parameter[1]}`;
+            }
+        }
+
+        // If there is no redirect url parameter then just send to home again
+        return "/";
     }
 
     return (

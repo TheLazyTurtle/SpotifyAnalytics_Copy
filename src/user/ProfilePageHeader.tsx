@@ -51,7 +51,6 @@ function Buttons(props: ProfilePageHeaderProps) {
 }
 
 function ProfilePageHeader(props: ProfilePageHeaderProps) {
-
     // TODO: Extract elements into their own function (those functions don't even need to be exported)
     return (
         <div className="container p-0 px-md-5">
