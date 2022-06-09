@@ -37,7 +37,7 @@ function App() {
 
             redirectUrls.map((url: string) => {
                 if (url === window.location.pathname) {
-                    return window.location.href = makeRedirectUrl();
+                    window.location.href = makeRedirectUrl();
                 }
             })
 
@@ -56,9 +56,9 @@ function App() {
 
     return (
         <div className="App">
-            <Header />
             {!loading &&
                 <LoggedInUserContext.Provider value={loggedInUser}>
+                    <Header />
                     <Router>
                         <Routes>
                             <Route path="/" element={<HomePage />} />

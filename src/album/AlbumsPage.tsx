@@ -47,17 +47,7 @@ function AlbumsPage() {
                     </div>
                 </div>
             )}
-            <AlbumList albums={albums}/>
-            {!loading && !error && (
-                <div className="row small-row">
-                    <div className="col-sm-12">
-                        <div className="button-group fluid">
-                            <button className="button default">More...</button>
-                            {/* <button className="button default" onClick={handleMoreClick}>More...</button> */}
-                        </div>
-                    </div>
-                </div>
-            )}
+            <AlbumList albums={albums} />
             {loading && (
                 <div className="center-page">
                     <span className="spinner primary"></span>

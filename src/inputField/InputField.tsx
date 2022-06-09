@@ -9,7 +9,7 @@ interface InputFieldProps {
 function InputField({ inputField, onChange }: InputFieldProps) {
     const { name, type, placeholder, startValue } = inputField;
     const [value, setValue] = useState<string>(startValue);
-    const [data, setData] = useState<string[]>([]);
+    const [data, setData] = useState<{}[]>([]);
 
     const handleOnChange = async (event: any) => {
         const { value } = event.target;
@@ -25,7 +25,14 @@ function InputField({ inputField, onChange }: InputFieldProps) {
             const res = await inputField.autocompleteFunction(value, 10);
             if (res.success) {
                 // Item is either a artist or a song
-                const names = res.data.map((item: any) => item.name)
+                const names = res.data.map((item: any) => {
+                    return {
+                        name: item.name,
+                        img: item?.img_url,
+                        type: item?.type,
+                        id: item?.artist_id
+                    }
+                });
                 setData(names);
             } else {
                 setData([]);
@@ -57,16 +64,32 @@ function normal(name: string, type: string, placeholder: string, value: string, 
     );
 }
 
-function autoComplete(name: string, type: string, placeholder: string, value: string, data: string[], handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
+function autoComplete(name: string, type: string, placeholder: string, value: string, data: {}[], handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
     return (
         <section className="autocomplete-input-field">
             <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange} autoComplete="off" />
-            <div className="input-field-result-data border w-25 position-absolute background-base">
-                {value.length > 0 && data.map((d: string, index: number) => (
-                    <p key={index} className="text-white px-3" onClick={clickHandler}>{d}</p>
-                ))}
-            </div>
+            {data.length > 0 &&
+                <div className="input-field-result-data border w-25 position-absolute background-base">
+                    {value.length > 0 && data.map((item: {}, index: number) => autoCompleteRow(index, item, clickHandler))}
+                </div>
+            }
         </section>
+    );
+}
+
+function autoCompleteRow(index: number, item: any, clickHandler: (event: any) => void) {
+    if (item.type) {
+        const href = item.id !== undefined ? `/artist/${item.id}` : `/${item.name}`;
+        return (
+            <div key={index}>
+                <img alt={item.name} src={item.img} className="w-10 d-inline-block" />
+                <p key={index} className="text-white px-3 d-inline-block" onClick={clickHandler}><a href={href}>{item.name}</a></p>
+            </div>
+        );
+    }
+
+    return (
+        <p key={index} className="text-white px-3" onClick={clickHandler}>{item.name}</p>
     );
 }
 

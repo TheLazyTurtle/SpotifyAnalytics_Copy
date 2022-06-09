@@ -124,4 +124,17 @@ export class PlayedAPI extends Api {
             throw new Error("There was an error getting the data from graph Played Per Day");
         }
     }
+
+    static async search(name: string) {
+        try {
+            const header = super.makeHeader("GET");
+
+            const response = await fetch(`${Api.baseUrl}/search?name=${name}`, header);
+            const response_1 = await super.checkStatus(response);
+            return super.parseJSON(response_1);
+        } catch (error) {
+            console.log("log client error " + error);
+            throw new Error("There was an error getting the data from graph Played Per Day");
+        }
+    }
 }

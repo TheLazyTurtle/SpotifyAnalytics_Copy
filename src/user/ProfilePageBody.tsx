@@ -36,7 +36,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
 
     function toLogin() {
         const currentPage = window.location.pathname.replace("/", "");
-        window.location.href = `/login?redirect=${currentPage}`;
+        return `/login?redirect=${currentPage}`;
     }
 
     return (
@@ -47,8 +47,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
                 </div>
             ))}
             <div className="w-50 mx-auto">
-                {/* TODO: Make this nice */}
-                <h3 className="text-white">This profile is private. Please <a onClick={toLogin}>login</a></h3>
+                <h3 className="text-white">This profile is private. Please <a href={toLogin()}>login</a></h3>
             </div>
         </>
     )

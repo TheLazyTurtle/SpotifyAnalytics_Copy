@@ -9,8 +9,8 @@ function AlbumList({ albums }: AlbumListProps) {
     return (
         <div>
             {albums.map((album) => (
-                <div key={album.name} className="cols-sm">
-                    <AlbumComponent album={album}/>
+                <div key={album.id} className="cols-sm">
+                    <AlbumComponent album={album} />
                 </div>
             ))}
         </div>
