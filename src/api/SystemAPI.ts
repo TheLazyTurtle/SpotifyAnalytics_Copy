@@ -5,10 +5,6 @@ export class SystemAPI extends Api {
 
     static async login(email: string, password: string) {
         try {
-            const header = super.makeHeader("POST");
-
-            // request options
-            // TODO: Fix this
             const options = {
                 method: "POST",
                 body: JSON.stringify({ email, password }),

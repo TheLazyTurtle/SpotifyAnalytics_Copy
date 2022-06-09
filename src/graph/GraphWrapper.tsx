@@ -30,8 +30,6 @@ interface GraphWrapperProps {
 };
 
 // TODO: Make this component more useable. It is kinda big
-// TODO: Seems like caching is broken
-//      It will always fetch and save in cache (WAIT... IT does it for the data on an EXTERNAL USER PAGE that means that it writes data to a cache that it shouldn't)
 function GraphWrapper(props: GraphWrapperProps) {
     const [filterSettings, setFilterSettings] = useState<FilterSetting>({});
     const [timeFrame, setTimeFrame] = useState<TimeFrame>(TimeFrame.year);
@@ -71,7 +69,6 @@ function GraphWrapper(props: GraphWrapperProps) {
     }
 
     function handleInputFieldUpdate(filterSettings: FilterSetting) {
-        console.log("hey")
         setFilterSettings(filterSettings);
 
         if (props.userID === undefined) {
@@ -153,10 +150,8 @@ function GraphWrapper(props: GraphWrapperProps) {
                 labels.push(date);
                 continue;
             }
-            // TODO: Do the label length thing on the graph and not here because otherwise it can be scuffed
-            //      Ex. The name will be cut at the bottom of the screen (which is what we want)
-            //      but then when you hover to see the full name we still get the cut off name (which sucks)
-            labels.push(played.label.substring(0, 20));
+
+            labels.push(played.label.substring(0, 50));
         }
 
         setDataPoints(dataPoints);

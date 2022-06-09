@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { LoggedInUserContext } from "../App";
 import { Graph, graphs } from "../graph/Graphs";
 import GraphWrapper from "../graph/GraphWrapper";
 import { PageType } from "./ProfilePage";
@@ -9,8 +11,7 @@ interface ProfilePageBodyProps {
 };
 
 function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
-    // TODO: THIS IS BIG BAD FIX WITH USER CHECKS ETC
-    const admin = true;
+    const loggedInUser = useContext(LoggedInUserContext);
 
     const toShow = function() {
         if (pageType === PageType.Personal) {
@@ -24,13 +25,18 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         }
 
         if (!user.following) {
-            if (!admin) {
+            if (!loggedInUser.is_admin) {
                 return false;
             }
             return true;
         }
 
         return true;
+    }
+
+    function toLogin() {
+        const currentPage = window.location.pathname.replace("/", "");
+        window.location.href = `/login?redirect=${currentPage}`;
     }
 
     return (
@@ -40,6 +46,10 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
                     <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
                 </div>
             ))}
+            <div className="w-50 mx-auto">
+                {/* TODO: Make this nice */}
+                <h3 className="text-white">This profile is private. Please <a onClick={toLogin}>login</a></h3>
+            </div>
         </>
     )
 }

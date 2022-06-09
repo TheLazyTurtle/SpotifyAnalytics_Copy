@@ -11,7 +11,6 @@ export enum PageType {
     External,
 };
 
-// TODO: When a person goes to their own page using the external way then send them to their own page (this requires the global thingy or something to check if the user is logged in etc)
 function ProfilePage() {
     const loggedInUser = useContext(LoggedInUserContext);
     const [pageType, setPageType] = useState<PageType>(PageType.External);
@@ -20,6 +19,10 @@ function ProfilePage() {
 
     useEffect(() => {
         const username = params.username;
+
+        if (username === loggedInUser.username) {
+            window.location.href = "/profile";
+        }
 
         if (username === undefined) {
             setPageType(PageType.Personal);

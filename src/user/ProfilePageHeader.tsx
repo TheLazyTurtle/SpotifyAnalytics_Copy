@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { UserAPI } from "../api/UserAPI";
+import { LoggedInUserContext } from "../App";
 import { PageType } from "./ProfilePage";
 import { User } from "./User";
 
@@ -8,13 +10,13 @@ interface ProfilePageHeaderProps {
 };
 
 function Buttons(props: ProfilePageHeaderProps) {
+    const loggedInUser = useContext(LoggedInUserContext);
 
     async function handleFollowage() {
         console.log(props.user)
         const result = await UserAPI.follow(props.user.user_id);
 
         if (result.success) {
-            console.log("Handle follow")
             return window.location.reload();
         }
         console.log("To follow or not to follow");
@@ -40,8 +42,7 @@ function Buttons(props: ProfilePageHeaderProps) {
                     </div>
                 </>
             }
-            {props.pageType === PageType.External &&
-                // TODO: Add a check to see if a person is logged in. If they are not logged in than remove this button or give the user a login screen to log in
+            {(props.pageType === PageType.External && !loggedInUser.guest) &&
                 <div className="col-12">
                     <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleFollowage}>{props.user.following ? "Unfollow" : "Follow"}</button>
                 </div>
@@ -51,7 +52,6 @@ function Buttons(props: ProfilePageHeaderProps) {
 }
 
 function ProfilePageHeader(props: ProfilePageHeaderProps) {
-    // TODO: Extract elements into their own function (those functions don't even need to be exported)
     return (
         <div className="container p-0 px-md-5">
             <div key="info-wrapper" className="w-100 w-md-50 mx-auto">

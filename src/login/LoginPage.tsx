@@ -58,7 +58,8 @@ function LoginPage() {
                 <h3>Login</h3>
                 <input className="mt-1 w-50 bg-custom-gray" type="text" name="username" placeholder="Username" ref={usernameElement} /> <br />
                 <input className="mt-1 w-50 bg-custom-gray" type="password" name="password" placeholder="Password" ref={passwordElement} /> <br />
-                <button className="btn btn-primary py-0 my-2 w-50 rounded-8" onClick={handleOnClick}>Login</button>
+                <input className="btn btn-primary py-0 my-2 w-50 rounded-8" type="button" onClick={handleOnClick} value="Login" />
+
                 {error && <p className="text-danger" role="alert">{error}</p>}
                 <p>Don't have an account? Make one here <a href="/register" className="text-decoration-none">here</a></p>
             </div>

@@ -19,6 +19,8 @@ function App() {
     const [loggedInUser, setLoggedInUser] = useState<User>({ guest: true } as User);
     const [loading, setLoading] = useState(true);
 
+    const redirectUrls = ["/", "/profile"]
+
     async function validateLogin() {
         setLoading(true);
         const validationResult = await SystemAPI.validateToken();
@@ -33,20 +35,25 @@ function App() {
                 return;
             }
 
-            return window.location.href = makeRedirectUrl();
+            redirectUrls.map((url: string) => {
+                if (url === window.location.pathname) {
+                    return window.location.href = makeRedirectUrl();
+                }
+            })
+
+            return;
         }
     }
 
     function makeRedirectUrl() {
-        const currentPage = window.location.pathname.replace("/", "")
-        return `/login?redirect=${currentPage}`
+        const currentPage = window.location.pathname.replace("/", "");
+        return `/login?redirect=${currentPage}`;
     }
 
     useEffect(() => {
         validateLogin();
     }, []);
 
-    // TODO: Validate login here as every page is technically this page
     return (
         <div className="App">
             <Header />

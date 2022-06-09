@@ -49,10 +49,6 @@ export class Api {
     protected static makeHeader(type: string, options: {} = {}) {
         const token = Api.getToken();
 
-        if (token === null) {
-            // window.location.href="/login";
-        }
-
         if (type === "GET") {
             return {
                 method: type,
