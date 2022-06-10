@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
 use App\Models\Played;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -185,7 +187,11 @@ class PlayedController extends Controller
     // Top artist search for a user
     public function topArtistSearch(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = Auth()->user()->id;
+        }
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -211,7 +217,11 @@ class PlayedController extends Controller
     // Top songs search for a user
     public function topSongsSearch(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = Auth()->user()->id;
+        }
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -297,6 +307,23 @@ class PlayedController extends Controller
         return response()->json([
             'success' => true,
             'data' => $newSongs
+        ], 200);
+    }
+
+    // Search artists and users
+    public function search(Request $request)
+    {
+        $user = Auth()->user();
+        // TODO: input validation and default values;
+        // TODO: Authentication
+        // TODO: Make the user_id go using the validation step
+
+        $searchArtist = Artist::where('name', 'like', "%$request->name%")->select('artist_id', 'name', 'img_url', DB::raw('concat("artist") as type'))->limit(10)->get()->toArray();
+        $searchUser = User::where('username', 'like', "%$request->name%")->select('username as name', 'img_url', DB::raw('concat("user") as type'))->limit(10)->get()->toArray();
+
+        return response()->json([
+            'success' => true,
+            'data' => array_merge($searchUser, $searchArtist)
         ], 200);
     }
 }

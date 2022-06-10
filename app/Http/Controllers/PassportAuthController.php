@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Followers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class PassportAuthController extends Controller
 {
@@ -55,5 +57,31 @@ class PassportAuthController extends Controller
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
+    }
+
+    // Validate if the user is logged in
+    public function validateToken()
+    {
+        $authUser = Auth()->user();
+
+        if (!$authUser) {
+            return response()->json([
+                'success' => false,
+                'data' => 'Please login'
+            ], 400);
+        }
+
+        $authUser->following_count = Followers::where('follower_user_id', $authUser->id)
+            ->select(DB::raw('COUNT(*) as count'))
+            ->first()->count;
+        $authUser->followers_count = Followers::where('following_user_id', $authUser->id)
+            ->select(DB::raw('COUNT(*) as count'))
+            ->first()->count;
+        $authUser->following = false;
+
+        return response()->json([
+            'success' => true,
+            'data' => $authUser
+        ], 200);
     }
 }

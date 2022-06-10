@@ -126,7 +126,7 @@ class ArtistController extends Controller
     public function albums(Request $request)
     {
         // TODO: Valiadte input
-        $albums = Album::where('primary_artist_id', $request->artist_id)->get();
+        $albums = Album::where('primary_artist_id', $request->artist_id)->orderBy('release_date', 'desc')->get();
         $res = array();
 
         // Also gonna need album artist (primary album artist)

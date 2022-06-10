@@ -35,6 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/played/timeListend', [PlayedController::class, 'timeListend']);
     Route::get('/played/amountSongs', [PlayedController::class, 'amountSongs']);
     Route::get('/played/amountNewSongs', [PlayedController::class, 'amountNewSongs']);
+    Route::get('/search', [PlayedController::class, 'search']);
 
     Route::get('artist/topSongs', [ArtistController::class, 'topSongs']);
     Route::get('artist/{id}', [ArtistController::class, 'show']);
@@ -42,4 +43,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user/', [UserController::class, 'getCurrentUser']);
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user/follow', [UserController::class, 'follow']);
+
+    Route::post('validateToken', [PassportAuthController::class, 'validateToken']);
 });
