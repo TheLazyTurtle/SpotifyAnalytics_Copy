@@ -97,7 +97,7 @@ function GraphWrapper(props: GraphWrapperProps) {
         try {
             let data = Cacher.getItem(props.value, true, timeFrame);
 
-            if (data.filterSettings !== filterSettings) {
+            if (JSON.stringify(data.filterSettings) !== JSON.stringify(filterSettings)) {
                 force = true;
             }
 
@@ -113,7 +113,7 @@ function GraphWrapper(props: GraphWrapperProps) {
             }
 
             setError("");
-            processIncomingData(data);
+            processIncomingData(data.value);
         } catch (e) {
             if (e instanceof Error) {
                 console.log(e);

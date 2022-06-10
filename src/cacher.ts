@@ -54,7 +54,7 @@ export class Cacher {
             if (new Date(json[timeFrame].dateAdded).getTime() + 3600000 <= new Date().getTime()) {
                 return JSON.parse("{}");
             }
-            return json[timeFrame]["value"];
+            return json[timeFrame];
         }
 
         return json;

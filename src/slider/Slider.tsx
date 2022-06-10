@@ -1,4 +1,4 @@
-import { SliderItem, SliderPositions, SliderItems, SliderItemData } from "./SliderItem";
+import { SliderItem, SliderPositions, SliderItems } from "./SliderItem";
 import "./slider.css";
 import { useEffect, useState } from "react";
 import { convertTime, msToTime, TimeFrame } from "../dates";
@@ -58,7 +58,7 @@ function Slider() {
     }
 
     const getCache = (timeFrame: TimeFrame) => {
-        const cached = Cacher.getItem("sliderItems", true, timeFrame);
+        const cached = Cacher.getItem("sliderItems", true, timeFrame).value;
 
         if (Object.keys(cached).length <= 0) {
             return false;

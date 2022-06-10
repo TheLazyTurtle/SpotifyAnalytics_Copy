@@ -46,9 +46,11 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
                     <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
                 </div>
             ))}
-            <div className="w-50 mx-auto">
-                <h3 className="text-white">This profile is private. Please <a href={toLogin()}>login</a></h3>
-            </div>
+            {!toShow() &&
+                <div className="w-50 mx-auto">
+                    <h3 className="text-white">This profile is private. Please <a href={toLogin()}>login</a></h3>
+                </div>
+            }
         </>
     )
 }

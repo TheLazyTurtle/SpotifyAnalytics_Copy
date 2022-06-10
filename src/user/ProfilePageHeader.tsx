@@ -23,7 +23,16 @@ function Buttons(props: ProfilePageHeaderProps) {
     }
 
     function handleLogout() {
-        console.log("IT'S A TRAP!! YOU CAN NEVER LEAVE AGAIN");
+        const cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i];
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+
+        window.location.href = "/login";
     }
 
     function openSettings() {
@@ -35,10 +44,10 @@ function Buttons(props: ProfilePageHeaderProps) {
             {props.pageType === PageType.Personal &&
                 <>
                     <div className="col-4 col-md-2 mx-md-0">
-                        <a className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={openSettings}>Settings</a>
+                        <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={openSettings}>Settings</button>
                     </div>
                     <div className="col-3 col-md-2 mx-2 mx-md-2">
-                        <a className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleLogout}>Logout</a>
+                        <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleLogout}>Logout</button>
                     </div>
                 </>
             }
@@ -57,7 +66,7 @@ function ProfilePageHeader(props: ProfilePageHeaderProps) {
             <div key="info-wrapper" className="w-100 w-md-50 mx-auto">
                 <div className="row small-row">
                     <div key="img-wrapper" className="col-md-3 p-0 mt-md-5">
-                        <img className="user-img" src={props.user.img_url} />
+                        <img className="user-img" src={props.user.img_url} alt={props.user.username} />
                     </div>
                     <div key="text-wrapper" className="col-12 col-md-9 mt-3 mt-md-5">
                         <h1 className="text-white px-2">{props.user.username}</h1>
