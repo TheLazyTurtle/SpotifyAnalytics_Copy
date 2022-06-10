@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { Album } from "./Album";
 import SongComponent from "../song/SongComponent";
 import "./album.css";
@@ -27,13 +26,13 @@ function AlbumComponent({ album }: AlbumProps) {
                             <strong>{album.name}</strong>
                         </h5>
                     </a>
-                    <a key={album.album_artist.name} href={album.album_artist.url} target="_blank" className="text-decoration-none">{album.album_artist.name}</a>
+                    <a key={album.album_artist.name} href={album.album_artist.url} target="_blank" className="text-decoration-none" rel="noreferrer">{album.album_artist.name}</a>
                 </section>
             </div>
             <div className={isOpen ? "d-block" : "d-none"}>
                 <div className="album-body mt-3">
                     <section id="songs">
-                        {album.songs.map((song) => (
+                        {isOpen && album.songs.map((song) => (
                             <SongComponent key={song.name} song={song} />
                         ))}
                     </section>

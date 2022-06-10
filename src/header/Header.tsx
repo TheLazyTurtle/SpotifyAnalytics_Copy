@@ -58,36 +58,3 @@ function Header() {
 }
 
 export default Header;
-
-    // return (
-    //     <>
-    //         <header className="App-header mb-md-5">
-    //             <Navbar fixed="top" bg="dark" variant="dark" expand="md" className="mb-3 d-none d-md-block">
-    //                 <Container fluid>
-    //                     <Navbar.Brand href="/">Spotify Analytics</Navbar.Brand>
-    //                     <Navbar.Offcanvas id={"offcanvasNavbar-expand-md"} aria-labelledby={"offcanvasNavbarLabel-expand-md"} placement="end">
-    //                         <Offcanvas.Header closeButton>
-    //                             <Offcanvas.Title id={"offcanvasNavbarLabel-expand-md"}> Offcanvas </Offcanvas.Title>
-    //                         </Offcanvas.Header>
-    //                         <Form className="d-flex">
-    //                             <InputField onChange={handleOnSearchChange} inputField={inputField} />
-    //                         </Form>
-    //                         <Offcanvas.Body>
-    //                             <Nav className="justify-content-end flex-grow-1 pe-3">
-    //                                 <Nav.Link href="/">Home</Nav.Link>
-    //                                 <Nav.Link href="/Link">Link</Nav.Link>
-    //                                 <Nav.Link href="../../api/system/login.php">API</Nav.Link>
-    //                                 <NavDropdown title="Dropdown" id={"offcanvasNavbarDropdown-expand-md"} >
-    //                                     <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-    //                                     <NavDropdown.Item href="#action4"> Another action </NavDropdown.Item>
-    //                                     <NavDropdown.Divider />
-    //                                     <NavDropdown.Item href="#action5"> Something else here </NavDropdown.Item>
-    //                                 </NavDropdown>
-    //                             </Nav>
-    //                         </Offcanvas.Body>
-    //                     </Navbar.Offcanvas>
-    //                 </Container>
-    //             </Navbar>
-    //         </header>
-    //     </>
-    // );
