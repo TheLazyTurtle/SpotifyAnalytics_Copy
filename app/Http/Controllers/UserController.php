@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Followers;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +44,7 @@ class UserController extends Controller
 
         // TODO: Validate data
         $user = User::where('username', $username)
-            ->select('id as user_id', 'username', 'img_url', 'private')
+            ->select('id', 'username', 'img_url', 'private')
             ->first();
 
         if (!$user) {
@@ -53,32 +54,20 @@ class UserController extends Controller
             ], 400);
         }
 
-        if ($user->private) {
-            $following = Followers::where('follower_user_id', $authUser->id)
-                ->where('following_user_id', $user->user_id)
-                ->first();
+        $user->hasFollowingRequest = Notification::hasFollowingRequestOpen($authUser->id, $user->id);
+        $user->following = Followers::isFollowing($authUser->id, $user->id);
+        $user->following_count = Followers::followingCount($user->id);
+        $user->followers_count = Followers::followerCount($user->id);
 
-            if ($authUser->is_admin == false && !$following) {
-                // TODO: IF YOU ARE NOT FOLLOWING WE STILL WANT A NAME AND AN IMG
-                return response()->json([
-                    'success' => false,
-                    'data' => 'You are not following this user'
-                ], 400);
-            }
-
-            if ($following) {
-                $user->following = true;
-            } else {
-                $user->following = false;
-            }
+        // if ($user->private) {
+        if ($authUser->is_admin == false && !$user->following) {
+            // TODO: IF YOU ARE NOT FOLLOWING WE STILL WANT A NAME AND AN IMG
+            return response()->json([
+                'success' => false,
+                'data' => 'You are not following this user'
+            ], 400);
         }
-
-        $user->following_count = Followers::where('follower_user_id', $user->user_id)
-            ->select(DB::raw('COUNT(*) as count'))
-            ->first()->count;
-        $user->followers_count = Followers::where('following_user_id', $user->user_id)
-            ->select(DB::raw('COUNT(*) as count'))
-            ->first()->count;
+        // }
 
         return response()->json([
             'success' => true,
@@ -90,7 +79,7 @@ class UserController extends Controller
     {
         // TODO: Validate data
         $user = User::where('username', $username)
-            ->select('id as user_id', 'username', 'img_url', 'private')
+            ->select('id', 'username', 'img_url', 'private')
             ->first();
 
         if (!$user) {
@@ -217,15 +206,12 @@ class UserController extends Controller
         $authUser = Auth()->user();
 
         // TODO: Validate input
-        $follow = Followers::where('follower_user_id', $authUser->id)
-            ->where('following_user_id', $request->following_user_id);
+        $following = Followers::isFollowing($authUser->id, $request->following_user_id);
 
-        if (!$follow->first()) {
-            $newFollow = new Followers();
-            $newFollow->follower_user_id = $authUser->id;
-            $newFollow->following_user_id = $request->following_user_id;
+        if (!$following) {
+            $follow_entry = Followers::follow($request->following_user_id, $authUser->id);
 
-            if ($newFollow->save()) {
+            if ($follow_entry) {
                 return response()->json([
                     'success' => true,
                     'data' => 'You now follow this user'
@@ -238,7 +224,7 @@ class UserController extends Controller
             ], 500);
         }
 
-        if ($follow->delete()) {
+        if (Followers::unFollow($request->following_user_id, $authUser->id)) {
             return response()->json([
                 'success' => true,
                 'data' => 'Successfully unfollowed user'
