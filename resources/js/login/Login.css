@@ -1,0 +1,9 @@
+.login-wrapper {
+    /* height: 100vh; */
+    margin-top: 5% !important;
+}
+
+.bg-custom-gray {
+    background-color: var(--custom-secondary-gray);
+}
+
