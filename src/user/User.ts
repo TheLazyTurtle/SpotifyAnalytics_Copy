@@ -1,5 +1,5 @@
 export type User = {
-    user_id: string;
+    id: string;
     username: string;
     is_admin: boolean;
     img_url: string;
@@ -10,4 +10,5 @@ export type User = {
     following_count?: string;
     private: boolean;
     guest: boolean;
+    hasFollowingRequest?: boolean;
 }

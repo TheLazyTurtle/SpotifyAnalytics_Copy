@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PlayedAPI } from "../api/PlayedAPI";
 import { LoggedInUserContext } from "../App";
 import InputField from "../inputField/InputField";
 import { inputField } from "../inputField/InputFieldWrapper";
+import NotificationsPopup from "../notificatons/NotificationsPopup";
 
 function Header() {
     const loggedInUser = useContext(LoggedInUserContext);
+    const [showNotificationPopup, setNotificationPopup] = useState<boolean>(true);
 
     const inputField: inputField = {
         name: "search",
@@ -15,8 +17,8 @@ function Header() {
         autocompleteFunction: PlayedAPI.search
     }
 
-    function toggleNotificationScreen() {
-
+    function toggleNotificationPopup() {
+        setNotificationPopup(!showNotificationPopup);
     }
 
     function handleLogout() {
@@ -46,7 +48,8 @@ function Header() {
                             <InputField onChange={() => { }} inputField={inputField} />
                         </div>
                         <div className="col-4 d-inline-block text-center text-custom-green">
-                            <i onClick={toggleNotificationScreen} className="fas fa-envelope px-2"></i>
+                            <i onClick={toggleNotificationPopup} className="fas fa-envelope px-2"></i>
+                            {showNotificationPopup && <NotificationsPopup />}
                             <i onClick={() => { window.location.href = "/profile" }} className="fas fa-user-alt px-2"></i>
                             <i onClick={handleLogout} className="fas fa-arrow-right px-2"></i>
                         </div>

@@ -47,10 +47,8 @@ export class UserAPI extends Api {
 
     static async follow(userID: string) {
         try {
-            const options = {
-                body: JSON.stringify({ following_user_id: userID }),
-            }
-            let header = super.makeHeader("POST", options);
+            const body = { following_user_id: userID }
+            let header = super.makeHeader("POST", body);
 
             const response = await fetch(`${UserAPI.url}/follow?following_user_id=${userID}`, header);
             const response_1 = await super.checkStatus(response);

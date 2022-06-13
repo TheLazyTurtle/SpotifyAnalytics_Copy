@@ -67,6 +67,11 @@ a {
     z-index: 100;
 }
 
+.floating-window {
+    z-index: 100;
+    position: absolute;
+}
+
 @media (max-width: 768px) {
     .btn-sm {
         width: 31%;

@@ -46,7 +46,7 @@ export class Api {
         return null;
     }
 
-    protected static makeHeader(type: string, options: {} = {}) {
+    protected static makeHeader(type: string, body: {} = {}) {
         const token = Api.getToken();
 
         if (type === "GET") {
@@ -64,7 +64,7 @@ export class Api {
                     'Content-Type': 'application/json;',
                     Authorization: `Bearer ${token}`,
                 },
-                options: options
+                body: JSON.stringify(body),
             }
         }
     }

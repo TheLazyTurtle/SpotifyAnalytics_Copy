@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { NotificationAPI } from "../api/NotificationAPI";
 import { UserAPI } from "../api/UserAPI";
 import { LoggedInUserContext } from "../App";
 import { PageType } from "./ProfilePage";
@@ -11,16 +12,7 @@ interface ProfilePageHeaderProps {
 
 function Buttons(props: ProfilePageHeaderProps) {
     const loggedInUser = useContext(LoggedInUserContext);
-
-    async function handleFollowage() {
-        console.log(props.user)
-        const result = await UserAPI.follow(props.user.user_id);
-
-        if (result.success) {
-            return window.location.reload();
-        }
-        console.log("To follow or not to follow");
-    }
+    const user = props.user;
 
     function handleLogout() {
         const cookies = document.cookie.split(";");
@@ -52,12 +44,50 @@ function Buttons(props: ProfilePageHeaderProps) {
                 </>
             }
             {(props.pageType === PageType.External && !loggedInUser.guest) &&
-                <div className="col-12">
-                    <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleFollowage}>{props.user.following ? "Unfollow" : "Follow"}</button>
-                </div>
+                followButton(user)
             }
         </div>
     );
+}
+
+function followButton(user: User) {
+    async function handleFollowage() {
+        let result = null;
+
+        if (user.following) {
+            result = await UserAPI.follow(user.id);
+        } else if (user.hasFollowingRequest) {
+            result = await NotificationAPI.removeRequest(user.id);
+        } else if (user.private) {
+            result = await NotificationAPI.makeRequest(0, user.id);
+        } else {
+            result = await UserAPI.follow(user.id);
+            await NotificationAPI.makeRequest(1, user.id);
+        }
+
+        if (result.success) {
+            return window.location.reload();
+        }
+    }
+
+    function makeButtonText() {
+        if (user.following) {
+            return "Unfollow";
+        }
+
+        if (user.hasFollowingRequest) {
+            return "Request pending";
+        }
+
+        return "Follow";
+    }
+
+    return (
+        <div className="col-12">
+            <button className="btn btn-primary btn-skinny d-inline-block mx-2" onClick={handleFollowage}>{makeButtonText()}</button>
+        </div>
+    );
+
 }
 
 function ProfilePageHeader(props: ProfilePageHeaderProps) {

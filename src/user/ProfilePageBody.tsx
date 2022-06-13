@@ -17,7 +17,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         if (pageType === PageType.Personal) {
             return true;
         }
-        if (user.user_id === undefined) {
+        if (user.id === undefined) {
             return false;
         }
         if (!user.private) {
@@ -43,7 +43,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         <>
             {toShow() && new graphs().graphs.map((graph: Graph) => (
                 < div key={graph.name} className="graph pt-3" id={graph.name} >
-                    <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.user_id} />
+                    <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.id} />
                 </div>
             ))}
             {!toShow() &&
