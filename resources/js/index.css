@@ -1,0 +1,79 @@
+:root {
+    --custom-green: #1DB954;
+    --custom-gray: rgb(56, 60, 63);
+    --custom-secondary-gray: #eaeaea;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #282c34 !important;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+    color: var(--custom-green) !important;
+}
+
+.text-custom-green {
+    color: var(--custom-green) !important;
+}
+
+.background-base {
+    background-color: #282c34 !important;
+}
+
+.btn {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-decoration: none;
+    border: 1px;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: var(--custom-green) !important;
+    border-color: var(--custom-green) !important;
+    color: var(--bs-dark) !important;
+}
+
+.btn-skinny {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.rounded-8 {
+    border-radius: 8px;
+}
+
+.small-row {
+    margin-right: 0 !important;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.input-field-result-data {
+    z-index: 100;
+}
+
+.floating-window {
+    z-index: 100;
+    position: absolute;
+}
+
+@media (max-width: 768px) {
+    .btn-sm {
+        width: 31%;
+    }
+}
