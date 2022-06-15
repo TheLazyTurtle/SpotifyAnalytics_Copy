@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const path = require('path');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,17 +14,10 @@ mix.webpackConfig({
     resolve: {
         alias: {
             //adding react and react-dom may not be necessary for you but it did fix some issues in my setup.
-            'react': path.resolve('node_modules/react'),
-            'react-dom': path.resolve('node_modules/react-dom'),
+            'react': path.resolve('./node_modules/react'),
+            'react-dom': path.resolve('./node_modules/react-dom'),
         },
     },
 });
-
-mix.react('resources/js/app.js', 'public/js')
-    .extract(['react', 'react-dom']);
-mix.postCss('resources/css/app.css', 'public/css', [])
-mix.postCss('resources/css/app.css', 'public/css', [])
-// mix.js('resources/js/app.js', 'public/js')
-//     .postCss('resources/css/app.css', 'public/css', [
-//         //
-    // ]);
+mix.ts('resources/js/src/App.tsx', 'public/js/app.js').react()
+// mix.postCss('resources/js/src/App.css', 'public/css/app.css', [])
