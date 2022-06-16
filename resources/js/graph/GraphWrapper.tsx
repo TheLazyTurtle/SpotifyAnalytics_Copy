@@ -95,25 +95,24 @@ function GraphWrapper(props: GraphWrapperProps) {
 
     async function loadGraphData(filterSettings: FilterSetting, force: boolean = false) {
         try {
-            let data = Cacher.getItem(props.value, true, timeFrame);
+            let items = Cacher.getItem(props.value, true, timeFrame);
 
-            if (JSON.stringify(data.filterSettings) !== JSON.stringify(filterSettings)) {
+            if (JSON.stringify(items.filterSettings) !== JSON.stringify(filterSettings)) {
                 force = true;
             }
 
-            if (Object.keys(data).length <= 0 || force) {
-                data = await chooseEndPoint(props.value, timeFrame, filterSettings);
+            if (Object.keys(items).length <= 0 || force) {
+                items = await chooseEndPoint(props.value, timeFrame, filterSettings);
 
-                if (data.success === true) {
-                    Cacher.setItem(props.value, data.data, timeFrame, filterSettings);
-                    data = data.data
+                if (items.success === true) {
+                    Cacher.setItem(props.value, items.data, timeFrame, filterSettings);
                 } else {
-                    data = JSON.parse("{}");
+                    items = JSON.parse("{}");
                 }
             }
 
             setError("");
-            processIncomingData(data.value);
+            processIncomingData(items.data);
         } catch (e) {
             if (e instanceof Error) {
                 console.log(e);

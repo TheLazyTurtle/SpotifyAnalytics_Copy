@@ -188,7 +188,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/App.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/App.tsx";
 
 
 
@@ -423,7 +423,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/album/AlbumComponent.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/album/AlbumComponent.tsx";
 
 
 
@@ -602,7 +602,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/album/AlbumList.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/album/AlbumList.tsx";
 
 
 function AlbumList(_a) {
@@ -813,7 +813,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/album/AlbumsPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/album/AlbumsPage.tsx";
 
 
 
@@ -3107,7 +3107,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/artist/ArtistHeader.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/artist/ArtistHeader.tsx";
 ;
 
 function ArtistHeader(_a) {
@@ -3362,7 +3362,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/artist/ArtistPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/artist/ArtistPage.tsx";
 
 
 
@@ -3653,7 +3653,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/artist/ArtistTopSongs.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/artist/ArtistTopSongs.tsx";
 
 
 
@@ -3946,7 +3946,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/button/Button.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/button/Button.tsx";
 
 
 function Button(props) {
@@ -3999,7 +3999,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/button/ButtonWrapper.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/button/ButtonWrapper.tsx";
 
 
 
@@ -4047,7 +4047,7 @@ var Cacher =
 function () {
   function Cacher() {}
 
-  Cacher.setItem = function (key, value, timeFrame, filterSettings) {
+  Cacher.setItem = function (key, data, timeFrame, filterSettings) {
     if (timeFrame === void 0) {
       timeFrame = null;
     }
@@ -4059,7 +4059,7 @@ function () {
     var existingData = Cacher.getItem(key, false); // If there is no time frame than just save it
 
     if (timeFrame === null) {
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(key, JSON.stringify(data));
       return;
     }
 
@@ -4069,12 +4069,12 @@ function () {
       if (filterSettings === null) {
         wrapper[timeFrame] = {
           dateAdded: new Date().getTime(),
-          value: value
+          data: data
         };
       } else {
         wrapper[timeFrame] = {
           dateAdded: new Date().getTime(),
-          value: value,
+          data: data,
           filterSettings: filterSettings
         };
       }
@@ -4086,12 +4086,12 @@ function () {
     if (filterSettings === null) {
       existingData[timeFrame] = {
         dateAdded: new Date().getTime(),
-        value: value
+        data: data
       };
     } else {
       existingData[timeFrame] = {
         dateAdded: new Date().getTime(),
-        value: value,
+        data: data,
         filterSettings: filterSettings
       };
     }
@@ -4312,7 +4312,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/graph/BarGraph.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/graph/BarGraph.tsx";
 
 
 chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.BarElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip);
@@ -4527,7 +4527,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/graph/GraphWrapper.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/graph/GraphWrapper.tsx";
 
 
 
@@ -4653,19 +4653,19 @@ function GraphWrapper(props) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var data, e_1;
+      var items, e_1;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
             _a.trys.push([0, 3,, 4]);
 
-            data = _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.getItem(props.value, true, timeFrame);
+            items = _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.getItem(props.value, true, timeFrame);
 
-            if (JSON.stringify(data.filterSettings) !== JSON.stringify(filterSettings)) {
+            if (JSON.stringify(items.filterSettings) !== JSON.stringify(filterSettings)) {
               force = true;
             }
 
-            if (!(Object.keys(data).length <= 0 || force)) return [3
+            if (!(Object.keys(items).length <= 0 || force)) return [3
             /*break*/
             , 2];
             return [4
@@ -4673,20 +4673,19 @@ function GraphWrapper(props) {
             , chooseEndPoint(props.value, timeFrame, filterSettings)];
 
           case 1:
-            data = _a.sent();
+            items = _a.sent();
 
-            if (data.success === true) {
-              _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.setItem(props.value, data.data, timeFrame, filterSettings);
-              data = data.data;
+            if (items.success === true) {
+              _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.setItem(props.value, items.data, timeFrame, filterSettings);
             } else {
-              data = JSON.parse("{}");
+              items = JSON.parse("{}");
             }
 
             _a.label = 2;
 
           case 2:
             setError("");
-            processIncomingData(data.value);
+            processIncomingData(items.data);
             return [3
             /*break*/
             , 4];
@@ -4782,33 +4781,33 @@ function GraphWrapper(props) {
               className: "icon-alert inverse "
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 167,
+              lineNumber: 166,
               columnNumber: 33
             }, this), " ", error, " "]
           }, void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 167,
+            lineNumber: 166,
             columnNumber: 29
           }, this)
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 166,
+          lineNumber: 165,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 165,
+        lineNumber: 164,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 163,
+      lineNumber: 162,
       columnNumber: 24
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
       onClick: handleTimeFrameClick
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 172,
+      lineNumber: 171,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputFieldWrapper__WEBPACK_IMPORTED_MODULE_5__["default"], {
       update: handleInputFieldUpdate,
@@ -4817,7 +4816,7 @@ function GraphWrapper(props) {
       userID: props.userID
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 173,
+      lineNumber: 172,
       columnNumber: 13
     }, this), props.type === GraphType.Line ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_LineGraph__WEBPACK_IMPORTED_MODULE_3__["default"], {
       dataPoints: dataPoints,
@@ -4825,7 +4824,7 @@ function GraphWrapper(props) {
       options: graphOptions
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 174,
+      lineNumber: 173,
       columnNumber: 45
     }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], {
       dataPoints: dataPoints,
@@ -4833,12 +4832,12 @@ function GraphWrapper(props) {
       options: graphOptions
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 174,
+      lineNumber: 173,
       columnNumber: 119
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 161,
+    lineNumber: 160,
     columnNumber: 13
   }, this);
 }
@@ -4950,7 +4949,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/graph/LineGraph.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/graph/LineGraph.tsx";
 
 
 chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_1__.Legend);
@@ -5015,7 +5014,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/header/Header.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/header/Header.tsx";
 
 
 
@@ -5185,7 +5184,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/header/MobileHeader.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/header/MobileHeader.tsx";
 
 
 function MobileHeaderItem(_a) {
@@ -5301,7 +5300,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/home/HomePage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/home/HomePage.tsx";
 
 
 
@@ -5369,7 +5368,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reportWebVitals__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./reportWebVitals */ "./resources/js/reportWebVitals.ts");
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./App */ "./resources/js/App.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/index.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/index.tsx";
 
 
 
@@ -5566,7 +5565,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/inputField/InputField.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/inputField/InputField.tsx";
 
 ;
 
@@ -5791,7 +5790,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/inputField/InputFieldWrapper.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/inputField/InputFieldWrapper.tsx";
 
 
 
@@ -6067,7 +6066,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/login/LoginPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/login/LoginPage.tsx";
 
 
 
@@ -6247,7 +6246,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notFound/NotFound.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notFound/NotFound.tsx";
 
 function NotFound() {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h1", {
@@ -6435,7 +6434,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationMessage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationMessage.tsx";
 
 ;
 
@@ -6724,7 +6723,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
 
 
 
@@ -7013,7 +7012,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/slider/Slider.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/slider/Slider.tsx";
 
 
 
@@ -7102,6 +7101,10 @@ function Slider() {
 
   var getCache = function getCache(timeFrame) {
     var cached = _cacher__WEBPACK_IMPORTED_MODULE_6__.Cacher.getItem("sliderItems", true, timeFrame).value;
+
+    if (cached === undefined) {
+      return false;
+    }
 
     if (Object.keys(cached).length <= 0) {
       return false;
@@ -7208,7 +7211,7 @@ function Slider() {
               children: sliderText
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 105,
+              lineNumber: 109,
               columnNumber: 33
             }, _this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
               id: sliderItem.sliderItemData.imgName,
@@ -7217,18 +7220,18 @@ function Slider() {
               alt: sliderItem.sliderItemData.imgName
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 106,
+              lineNumber: 110,
               columnNumber: 33
             }, _this)]
           }), sliderItem.name, true, {
             fileName: _jsxFileName,
-            lineNumber: 103,
+            lineNumber: 107,
             columnNumber: 33
           }, _this);
         })
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 96,
+        lineNumber: 100,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "gallery-controls"
@@ -7240,7 +7243,7 @@ function Slider() {
           children: "Previous"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 112,
+          lineNumber: 116,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("button", __assign({
           className: "gallery-controls-next btn btn-primary",
@@ -7249,17 +7252,17 @@ function Slider() {
           children: "Next"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 113,
+          lineNumber: 117,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 111,
+        lineNumber: 115,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 95,
+      lineNumber: 99,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "gallery-time-buttons"
@@ -7268,23 +7271,23 @@ function Slider() {
         onClick: handleTimeFrameChange
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 117,
+        lineNumber: 121,
         columnNumber: 17
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 116,
+      lineNumber: 120,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       className: "border-bottom border-white mt-5"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 119,
+      lineNumber: 123,
       columnNumber: 13
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 93,
+    lineNumber: 97,
     columnNumber: 13
   }, this);
 }
@@ -7403,7 +7406,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/song/SongComponent.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/song/SongComponent.tsx";
 
 function SongComponent(_a) {
   var _this = this;
@@ -7686,7 +7689,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/user/ProfilePage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePage.tsx";
 
 
 
@@ -7843,7 +7846,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageBody.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageBody.tsx";
 
 
 
@@ -8121,7 +8124,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
 
 
 
@@ -22749,7 +22752,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* gallery images */\r\n.gallery-img {\r\n    width: 300px;\r\n    height: 300px;\r\n    transition: all 0.3s ease-in-out;\r\n}\r\n\r\n.gallery-item-left .gallery-img,\r\n.gallery-item-right .gallery-img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.gallery-item-nextLeft .gallery-img,\r\n.gallery-item-nextRight .gallery-img {\r\n    width: 150px;\r\n    height: 150px;\r\n}\r\n\r\n.gallery {\r\n    width: 100%;\r\n}\r\n\r\n.gallery-container {\r\n    max-width: 1000px;\r\n    height: 400px;\r\n\r\n    margin: 0 auto;\r\n    align-items: center;\r\n\r\n    display: flex;\r\n    position: relative;\r\n\r\n}\r\n\r\n.gallery-item {\r\n    width: 150px;\r\n    height: 150px;\r\n\r\n    opacity: .4;\r\n    transition: all 0.3s ease-in-out;\r\n\r\n    position: absolute;\r\n    z-index: 0;\r\n}\r\n\r\n.gallery-item.gallery-item-selected {\r\n    height: 300px;\r\n    width: 300px;\r\n\r\n    opacity: 1;\r\n    transform: translateX(-50%) translateY(-10%);\r\n\r\n    left: 50%;\r\n    z-index: 3;\r\n}\r\n\r\n.gallery-item.gallery-item-left,\r\n.gallery-item.gallery-item-right{\r\n    height: 200px;\r\n    width: 200px;\r\n\r\n    opacity: .9;\r\n\r\n    z-index: 2;\r\n}\r\n\r\n/* item-left/right */\r\n.gallery-item.gallery-item-left {\r\n    transform: translateX(-50%) translateY(-10%);\r\n\r\n    left: 30%;\r\n}\r\n\r\n.gallery-item.gallery-item-right {\r\n    transform: translateX(-50%) translateY(-10%);\r\n\r\n    left: 70%;\r\n}\r\n\r\n/* item-nextLeft/right */\r\n.gallery-item.gallery-item-nextLeft {\r\n    transform: translateX(-50%) translateY(-10%);\r\n    left: 15%;\r\n}\r\n\r\n.gallery-item.gallery-item-nextRight {\r\n    transform: translateX(-50%) translateY(-10%);\r\n    left: 85%;\r\n}\r\n\r\n/* Controls */\r\n.gallery-controls {\r\n    justify-content: center;\r\n\tmargin: -30px 0;\r\n\r\n    display: flex;\r\n}\r\n\r\n.gallery-controls button {\r\n    border: 0;\r\n\r\n    font-size: 16px;\r\n    margin: 0 20px;\r\n    padding: 0 12px;\r\n    text-transform: capitalize;\r\n\r\n    cursor: pointer;\r\n}\r\n\r\n.gallery-controls button:focus {\r\n    outline: none;\r\n}\r\n\r\n.gallery-controls-previous::before {\r\n    width: 4px;\r\n    height: 4px;\r\n    border: solid #000;\r\n    border-width: 0 2px 2px 0;\r\n    /* content: ''; */\r\n\r\n    padding: 2px;\r\n    /* transform: rotate(135deg) translateY(-50%); */\r\n    /* transition: left 0.15s ease-in-out; */\r\n\r\n    display: inline-block;\r\n    left: -10px;\r\n    position: absolute;\r\n    top: 0;\r\n}\r\n\r\n.gallery-controls-next::before {\r\n    height: 4px;\r\n    width: 4px;\r\n    border: solid #000;\r\n    border-width: 0 2px 2px 0;\r\n    /* content: ''; */\r\n\r\n    padding: 2px;\r\n    /* transform: rotate(-45deg) translateY(-50%); */\r\n    /* transition: right 0.15s ease-in-out; */\r\n\r\n    display: inline-block;\r\n    position: absolute;\r\n    right: -10px;\r\n    top: 50%;\r\n}\r\n\r\n.gallery-controls-previous:hover::before {\r\n    left: -18px;\r\n}\r\n\r\n.gallery-controls-next:hover::before {\r\n    right: -18px;\r\n}\r\n\r\n.gallery-controls-previous {\r\n    transform: translateY(200%);\r\n\r\n    position: relative;\r\n}\r\n\r\n.gallery-controls-next {\r\n    transform: translateY(200%);\r\n    position: relative;\r\n}\r\n\r\n.gallery-controls-next:active, .gallery-controls-previous:active{\r\n    transform: translateY(200%);\r\n}\r\n\r\n/* timeFrame buttons */\r\n.gallery-time-buttons {\r\n    margin-top: 4.5%;\r\n    text-align: center;\r\n}\r\n\r\n.time-btn {\r\n    padding: 5px;\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\n\r\n/* gallery-header */\r\n.gallery-header {\r\n    color: white;\r\n    width: 300px;\r\n    transition: right 0.15s ease-in-out;\r\n}\r\n\r\n.gallery-item-left .gallery-header,\r\n.gallery-item-right .gallery-header {\r\n    opacity: .1;\r\n    width: 200px;\r\n}\r\n\r\n.gallery-item-nextLeft .gallery-header,\r\n.gallery-item-nextRight .gallery-header {\r\n    opacity: .0;\r\n    width: 150px;\r\n}\r\n\r\n/* custom css */\r\n.divider {\r\n    margin-top: 1%;\r\n    margin-bottom: 1%;\r\n}\r\n\r\n/* Mobile css */\r\n/* Everything under 370 pixels will have these settings */\r\n@media only screen and (max-width: 460px) {\r\n\t.gallery-container {\r\n\t\ttransform: scale(0.9);\r\n\t}\r\n\r\n\t/* Controls */\r\n\t.gallery-controls {\r\n\t\tmargin-bottom: 80px;\r\n\t}\r\n\r\n\t/* timeFrame buttons */\r\n\t.gallery-time-buttons {\r\n\t\tmargin-top: 5.0%;\r\n\t\ttext-align: center;\r\n\t}\r\n\r\n\t.time-btn {\r\n\t\twidth: 25%;\r\n\t}\r\n\r\n\t.divider {\r\n\t\tmargin: 5% 0;\r\n\t}\r\n\r\n\t.gallery {\r\n\t\twidth: 100%;\r\n\t}\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* gallery images */\n.gallery-img {\n    width: 300px;\n    height: 300px;\n    transition: all 0.3s ease-in-out;\n}\n\n.gallery-item-left .gallery-img,\n.gallery-item-right .gallery-img {\n    width: 200px;\n    height: 200px;\n}\n\n.gallery-item-nextLeft .gallery-img,\n.gallery-item-nextRight .gallery-img {\n    width: 150px;\n    height: 150px;\n}\n\n.gallery {\n    width: 100%;\n}\n\n.gallery-container {\n    max-width: 1000px;\n    height: 400px;\n\n    margin: 0 auto;\n    align-items: center;\n\n    display: flex;\n    position: relative;\n\n}\n\n.gallery-item {\n    width: 150px;\n    height: 150px;\n\n    opacity: .4;\n    transition: all 0.3s ease-in-out;\n\n    position: absolute;\n    z-index: 0;\n}\n\n.gallery-item.gallery-item-selected {\n    height: 300px;\n    width: 300px;\n\n    opacity: 1;\n    transform: translateX(-50%) translateY(-10%);\n\n    left: 50%;\n    z-index: 3;\n}\n\n.gallery-item.gallery-item-left,\n.gallery-item.gallery-item-right{\n    height: 200px;\n    width: 200px;\n\n    opacity: .9;\n\n    z-index: 2;\n}\n\n/* item-left/right */\n.gallery-item.gallery-item-left {\n    transform: translateX(-50%) translateY(-10%);\n\n    left: 30%;\n}\n\n.gallery-item.gallery-item-right {\n    transform: translateX(-50%) translateY(-10%);\n\n    left: 70%;\n}\n\n/* item-nextLeft/right */\n.gallery-item.gallery-item-nextLeft {\n    transform: translateX(-50%) translateY(-10%);\n    left: 15%;\n}\n\n.gallery-item.gallery-item-nextRight {\n    transform: translateX(-50%) translateY(-10%);\n    left: 85%;\n}\n\n/* Controls */\n.gallery-controls {\n    justify-content: center;\n\tmargin: -30px 0;\n\n    display: flex;\n}\n\n.gallery-controls button {\n    border: 0;\n\n    font-size: 16px;\n    margin: 0 20px;\n    padding: 0 12px;\n    text-transform: capitalize;\n\n    cursor: pointer;\n}\n\n.gallery-controls button:focus {\n    outline: none;\n}\n\n.gallery-controls-previous::before {\n    width: 4px;\n    height: 4px;\n    border: solid #000;\n    border-width: 0 2px 2px 0;\n    /* content: ''; */\n\n    padding: 2px;\n    /* transform: rotate(135deg) translateY(-50%); */\n    /* transition: left 0.15s ease-in-out; */\n\n    display: inline-block;\n    left: -10px;\n    position: absolute;\n    top: 0;\n}\n\n.gallery-controls-next::before {\n    height: 4px;\n    width: 4px;\n    border: solid #000;\n    border-width: 0 2px 2px 0;\n    /* content: ''; */\n\n    padding: 2px;\n    /* transform: rotate(-45deg) translateY(-50%); */\n    /* transition: right 0.15s ease-in-out; */\n\n    display: inline-block;\n    position: absolute;\n    right: -10px;\n    top: 50%;\n}\n\n.gallery-controls-previous:hover::before {\n    left: -18px;\n}\n\n.gallery-controls-next:hover::before {\n    right: -18px;\n}\n\n.gallery-controls-previous {\n    transform: translateY(200%);\n\n    position: relative;\n}\n\n.gallery-controls-next {\n    transform: translateY(200%);\n    position: relative;\n}\n\n.gallery-controls-next:active, .gallery-controls-previous:active{\n    transform: translateY(200%);\n}\n\n/* timeFrame buttons */\n.gallery-time-buttons {\n    margin-top: 4.5%;\n    text-align: center;\n}\n\n.time-btn {\n    padding: 5px;\n    margin-left: 5px;\n    margin-right: 5px;\n}\n\n/* gallery-header */\n.gallery-header {\n    color: white;\n    width: 300px;\n    transition: right 0.15s ease-in-out;\n}\n\n.gallery-item-left .gallery-header,\n.gallery-item-right .gallery-header {\n    opacity: .1;\n    width: 200px;\n}\n\n.gallery-item-nextLeft .gallery-header,\n.gallery-item-nextRight .gallery-header {\n    opacity: .0;\n    width: 150px;\n}\n\n/* custom css */\n.divider {\n    margin-top: 1%;\n    margin-bottom: 1%;\n}\n\n/* Mobile css */\n/* Everything under 370 pixels will have these settings */\n@media only screen and (max-width: 460px) {\n\t.gallery-container {\n\t\ttransform: scale(0.9);\n\t}\n\n\t/* Controls */\n\t.gallery-controls {\n\t\tmargin-bottom: 80px;\n\t}\n\n\t/* timeFrame buttons */\n\t.gallery-time-buttons {\n\t\tmargin-top: 5.0%;\n\t\ttext-align: center;\n\t}\n\n\t.time-btn {\n\t\twidth: 25%;\n\t}\n\n\t.divider {\n\t\tmargin: 5% 0;\n\t}\n\n\t.gallery {\n\t\twidth: 100%;\n\t}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

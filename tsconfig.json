@@ -20,7 +20,7 @@
         "noEmit": false,
         "jsx": "react-jsxdev",
         "sourceMap": false,
-        "baseUrl": "resources/js"
+        "baseUrl": "./"
     },
     "include": [
         "resources/js"

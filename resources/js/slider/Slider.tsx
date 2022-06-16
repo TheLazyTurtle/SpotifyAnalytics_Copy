@@ -60,6 +60,10 @@ function Slider() {
     const getCache = (timeFrame: TimeFrame) => {
         const cached = Cacher.getItem("sliderItems", true, timeFrame).value;
 
+        if (cached === undefined) {
+            return false;
+        }
+
         if (Object.keys(cached).length <= 0) {
             return false;
         }
