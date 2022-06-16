@@ -17,3 +17,7 @@ Route::get('/', function () {
     return view('index');
     // return view('welcome');
 });
+
+Route::view('/{path?}', 'index')
+    ->where('path', '.*')
+    ->name('react');
