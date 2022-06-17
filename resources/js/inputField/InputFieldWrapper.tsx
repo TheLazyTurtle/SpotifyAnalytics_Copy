@@ -63,7 +63,7 @@ function InputFieldWrapper({ update, inputFields, graphName, userID }: InputFiel
             <div className="row small-row">
                 {!isLoading && fields.map((inputField: inputField, index: number) => (
                     <div className="col-sm" key={index}>
-                        <InputField key={inputField.name} inputField={inputField} onChange={handleInputChange} />
+                        <InputField key={inputField.name} inputField={inputField} onChange={handleInputChange} isComponent={true} />
                     </div>
                 ))}
             </div>

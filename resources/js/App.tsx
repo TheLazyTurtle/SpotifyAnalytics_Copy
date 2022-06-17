@@ -9,6 +9,7 @@ import NotFound from "./notFound/NotFound";
 import ArtistPage from "./artist/ArtistPage";
 import MobileHeader from './header/MobileHeader';
 import ProfilePage from './user/ProfilePage';
+import SearchPage from './search/SearchPage';
 import { useState, createContext, useEffect } from 'react';
 import { User } from './user/User';
 import { SystemAPI } from './api/SystemAPI';
@@ -66,6 +67,7 @@ function App() {
                             <Route path="/album/:artistID" element={<AlbumsPage />} />
                             <Route path="/artist/:artistID" element={<ArtistPage />} />
                             <Route path="/profile" element={<ProfilePage />} />
+                            <Route path="/search" element={<SearchPage />} />
                             <Route path="/:username" element={<ProfilePage />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>

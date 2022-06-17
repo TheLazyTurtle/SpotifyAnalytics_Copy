@@ -3,10 +3,11 @@ import { inputField } from "./InputFieldWrapper";
 
 interface InputFieldProps {
     inputField: inputField;
+    isComponent: boolean;
     onChange(name: string, value: string | undefined): void;
 };
 
-function InputField({ inputField, onChange }: InputFieldProps) {
+function InputField({ inputField, isComponent, onChange }: InputFieldProps) {
     const { name, type, placeholder, startValue } = inputField;
     const [value, setValue] = useState<string>(startValue);
     const [data, setData] = useState<{}[]>([]);
@@ -55,7 +56,7 @@ function InputField({ inputField, onChange }: InputFieldProps) {
     };
 
     const inputFieldData = value === undefined ? "" : value;
-    return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, handleOnChange, clickHandler);
+    return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, isComponent, handleOnChange, clickHandler);
 }
 
 function normal(name: string, type: string, placeholder: string, value: string, handleOnChange: (event: any) => void) {
@@ -64,12 +65,17 @@ function normal(name: string, type: string, placeholder: string, value: string, 
     );
 }
 
-function autoComplete(name: string, type: string, placeholder: string, value: string, data: {}[], handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
+function autoComplete(name: string, type: string, placeholder: string, value: string, data: {}[], isComponent: boolean, handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
     return (
         <section className="autocomplete-input-field">
             <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange} autoComplete="off" />
-            {data.length > 0 &&
-                <div className="input-field-result-data border w-25 position-absolute background-base">
+            {(data.length > 0 && isComponent) &&
+                <div className="input-field-result-data w-25 border position-absolute background-base">
+                    {value.length > 0 && data.map((item: {}, index: number) => autoCompleteRow(index, item, clickHandler))}
+                </div>
+            }
+            {(data.length > 0 && !isComponent) &&
+                <div className="input-field-result-data border position-absolute background-base">
                     {value.length > 0 && data.map((item: {}, index: number) => autoCompleteRow(index, item, clickHandler))}
                 </div>
             }

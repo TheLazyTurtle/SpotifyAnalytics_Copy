@@ -17,8 +17,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.css */ "./resources/js/App.css");
 /* harmony import */ var _header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header/Header */ "./resources/js/header/Header.tsx");
 /* harmony import */ var bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.css */ "./node_modules/bootstrap/dist/css/bootstrap.css");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _home_HomePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home/HomePage */ "./resources/js/home/HomePage.tsx");
 /* harmony import */ var _album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./album/AlbumsPage */ "./resources/js/album/AlbumsPage.tsx");
 /* harmony import */ var _login_LoginPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/LoginPage */ "./resources/js/login/LoginPage.tsx");
@@ -26,8 +26,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./artist/ArtistPage */ "./resources/js/artist/ArtistPage.tsx");
 /* harmony import */ var _header_MobileHeader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./header/MobileHeader */ "./resources/js/header/MobileHeader.tsx");
 /* harmony import */ var _user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user/ProfilePage */ "./resources/js/user/ProfilePage.tsx");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _api_SystemAPI__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./api/SystemAPI */ "./resources/js/api/SystemAPI.ts");
+/* harmony import */ var _search_SearchPage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./search/SearchPage */ "./resources/js/search/SearchPage.tsx");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _api_SystemAPI__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./api/SystemAPI */ "./resources/js/api/SystemAPI.ts");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -202,18 +203,19 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
-var LoggedInUserContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_11__.createContext)({
+
+var LoggedInUserContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_12__.createContext)({
   guest: true
 });
 
 function App() {
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_11__.useState)({
+  var _a = (0,react__WEBPACK_IMPORTED_MODULE_12__.useState)({
     guest: true
   }),
       loggedInUser = _a[0],
       setLoggedInUser = _a[1];
 
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_11__.useState)(true),
+  var _b = (0,react__WEBPACK_IMPORTED_MODULE_12__.useState)(true),
       loading = _b[0],
       setLoading = _b[1];
 
@@ -228,7 +230,7 @@ function App() {
             setLoading(true);
             return [4
             /*yield*/
-            , _api_SystemAPI__WEBPACK_IMPORTED_MODULE_12__.SystemAPI.validateToken()];
+            , _api_SystemAPI__WEBPACK_IMPORTED_MODULE_13__.SystemAPI.validateToken()];
 
           case 1:
             validationResult = _a.sent();
@@ -268,7 +270,7 @@ function App() {
     return "/login?redirect=".concat(currentPage);
   }
 
-  (0,react__WEBPACK_IMPORTED_MODULE_11__.useEffect)(function () {
+  (0,react__WEBPACK_IMPORTED_MODULE_12__.useEffect)(function () {
     validateLogin();
   }, []);
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -279,110 +281,121 @@ function App() {
     }, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 61,
+        lineNumber: 62,
         columnNumber: 21
-      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.BrowserRouter, {
-        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Routes, {
-          children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
+        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, {
+          children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
             path: "/",
             element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_home_HomePage__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 64,
-              columnNumber: 54
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 64,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/login",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
               lineNumber: 65,
-              columnNumber: 59
+              columnNumber: 54
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 65,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/album/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/login",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 66,
-              columnNumber: 69
+              columnNumber: 59
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 66,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/artist/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/album/:artistID",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 67,
-              columnNumber: 70
+              columnNumber: 69
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 67,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/profile",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/artist/:artistID",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 68,
-              columnNumber: 61
+              columnNumber: 70
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 68,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "/:username",
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/profile",
             element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 69,
-              columnNumber: 63
+              columnNumber: 61
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 69,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
-            path: "*",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/search",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 70,
-              columnNumber: 54
+              columnNumber: 60
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 70,
             columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/:username",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 71,
+              columnNumber: 63
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 71,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "*",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 72,
+              columnNumber: 54
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 72,
+            columnNumber: 29
           }, this)]
         }, void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 63,
+          lineNumber: 64,
           columnNumber: 25
         }, this)
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 62,
+        lineNumber: 63,
         columnNumber: 21
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 59,
+      lineNumber: 60,
       columnNumber: 25
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_MobileHeader__WEBPACK_IMPORTED_MODULE_9__["default"], {}, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 75,
+      lineNumber: 77,
       columnNumber: 13
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 57,
+    lineNumber: 58,
     columnNumber: 13
   }, this);
 }
@@ -5088,7 +5101,8 @@ function Header() {
         }, {
           children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onChange: function onChange() {},
-            inputField: inputField
+            inputField: inputField,
+            isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 48,
@@ -5573,6 +5587,7 @@ function InputField(_a) {
   var _this = this;
 
   var inputField = _a.inputField,
+      isComponent = _a.isComponent,
       onChange = _a.onChange;
   var name = inputField.name,
       type = inputField.type,
@@ -5654,7 +5669,7 @@ function InputField(_a) {
   };
 
   var inputFieldData = value === undefined ? "" : value;
-  return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, handleOnChange, clickHandler);
+  return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, isComponent, handleOnChange, clickHandler);
 }
 
 function normal(name, type, placeholder, value, handleOnChange) {
@@ -5667,12 +5682,12 @@ function normal(name, type, placeholder, value, handleOnChange) {
     onChange: handleOnChange
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 62,
+    lineNumber: 63,
     columnNumber: 13
   }, this);
 }
 
-function autoComplete(name, type, placeholder, value, data, handleOnChange, clickHandler) {
+function autoComplete(name, type, placeholder, value, data, isComponent, handleOnChange, clickHandler) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
     className: "autocomplete-input-field"
   }, {
@@ -5686,22 +5701,32 @@ function autoComplete(name, type, placeholder, value, data, handleOnChange, clic
       autoComplete: "off"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 70,
+      lineNumber: 71,
       columnNumber: 13
-    }, this), data.length > 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-      className: "input-field-result-data border w-25 position-absolute background-base"
+    }, this), data.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+      className: "input-field-result-data w-25 border position-absolute background-base"
     }, {
       children: value.length > 0 && data.map(function (item, index) {
         return autoCompleteRow(index, item, clickHandler);
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 71,
-      columnNumber: 32
+      lineNumber: 72,
+      columnNumber: 49
+    }, this), data.length > 0 && !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+      className: "input-field-result-data border position-absolute background-base"
+    }, {
+      children: value.length > 0 && data.map(function (item, index) {
+        return autoCompleteRow(index, item, clickHandler);
+      })
+    }), void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 77,
+      columnNumber: 50
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 68,
+    lineNumber: 69,
     columnNumber: 13
   }, this);
 }
@@ -5716,7 +5741,7 @@ function autoCompleteRow(index, item, clickHandler) {
         className: "w-10 d-inline-block"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 85,
+        lineNumber: 91,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-white px-3 d-inline-block",
@@ -5728,17 +5753,17 @@ function autoCompleteRow(index, item, clickHandler) {
           children: item.name
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 86,
+          lineNumber: 92,
           columnNumber: 98
         }, this)
       }), index, false, {
         fileName: _jsxFileName,
-        lineNumber: 86,
+        lineNumber: 92,
         columnNumber: 17
       }, this)]
     }, index, true, {
       fileName: _jsxFileName,
-      lineNumber: 83,
+      lineNumber: 89,
       columnNumber: 17
     }, this);
   }
@@ -5750,7 +5775,7 @@ function autoCompleteRow(index, item, clickHandler) {
     children: item.name
   }), index, false, {
     fileName: _jsxFileName,
-    lineNumber: 91,
+    lineNumber: 97,
     columnNumber: 13
   }, this);
 }
@@ -5863,7 +5888,8 @@ function InputFieldWrapper(_a) {
         }, {
           children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_InputField__WEBPACK_IMPORTED_MODULE_3__["default"], {
             inputField: inputField,
-            onChange: handleInputChange
+            onChange: handleInputChange,
+            isComponent: true
           }, inputField.name, false, {
             fileName: _jsxFileName,
             lineNumber: 66,
@@ -6832,6 +6858,47 @@ var reportWebVitals = function reportWebVitals(onPerfEntry) {
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (reportWebVitals);
+
+/***/ }),
+
+/***/ "./resources/js/search/SearchPage.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/search/SearchPage.tsx ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
+/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
+/* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
+
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/search/SearchPage.tsx";
+
+
+
+function SearchPage() {
+  var inputField = {
+    name: "search",
+    type: "text",
+    placeholder: "Search",
+    startValue: "",
+    autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_1__.PlayedAPI.search
+  };
+  return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onChange: function onChange() {},
+    inputField: inputField,
+    isComponent: false
+  }, void 0, false, {
+    fileName: _jsxFileName,
+    lineNumber: 14,
+    columnNumber: 13
+  }, this);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SearchPage);
 
 /***/ }),
 
