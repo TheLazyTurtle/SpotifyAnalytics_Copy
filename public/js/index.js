@@ -17,8 +17,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.css */ "./resources/js/App.css");
 /* harmony import */ var _header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header/Header */ "./resources/js/header/Header.tsx");
 /* harmony import */ var bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.css */ "./node_modules/bootstrap/dist/css/bootstrap.css");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _home_HomePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home/HomePage */ "./resources/js/home/HomePage.tsx");
 /* harmony import */ var _album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./album/AlbumsPage */ "./resources/js/album/AlbumsPage.tsx");
 /* harmony import */ var _login_LoginPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/LoginPage */ "./resources/js/login/LoginPage.tsx");
@@ -29,6 +29,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _search_SearchPage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./search/SearchPage */ "./resources/js/search/SearchPage.tsx");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _api_SystemAPI__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./api/SystemAPI */ "./resources/js/api/SystemAPI.ts");
+/* harmony import */ var _notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./notificatons/NotificationsPage */ "./resources/js/notificatons/NotificationsPage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -204,6 +205,7 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
+
 var LoggedInUserContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_12__.createContext)({
   guest: true
 });
@@ -281,121 +283,132 @@ function App() {
     }, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 62,
+        lineNumber: 63,
         columnNumber: 21
-      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
-        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, {
-          children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.BrowserRouter, {
+        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Routes, {
+          children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
             path: "/",
             element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_home_HomePage__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 65,
-              columnNumber: 54
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 65,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/login",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
               lineNumber: 66,
-              columnNumber: 59
+              columnNumber: 54
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 66,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/album/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/login",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 67,
-              columnNumber: 69
+              columnNumber: 59
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 67,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/artist/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/album/:artistID",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 68,
-              columnNumber: 70
+              columnNumber: 69
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 68,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/profile",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/artist/:artistID",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 69,
-              columnNumber: 61
+              columnNumber: 70
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 69,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/search",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/profile",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 70,
-              columnNumber: 60
+              columnNumber: 61
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 70,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/:username",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/search",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 71,
-              columnNumber: 63
+              columnNumber: 60
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 71,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "*",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/notifications",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_14__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 72,
-              columnNumber: 54
+              columnNumber: 67
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 72,
             columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "/:username",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 73,
+              columnNumber: 63
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 73,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_16__.Route, {
+            path: "*",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 74,
+              columnNumber: 54
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 74,
+            columnNumber: 29
           }, this)]
         }, void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 64,
+          lineNumber: 65,
           columnNumber: 25
         }, this)
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 63,
+        lineNumber: 64,
         columnNumber: 21
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 60,
+      lineNumber: 61,
       columnNumber: 25
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_MobileHeader__WEBPACK_IMPORTED_MODULE_9__["default"], {}, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 77,
+      lineNumber: 79,
       columnNumber: 13
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 58,
+    lineNumber: 59,
     columnNumber: 13
   }, this);
 }
@@ -5122,7 +5135,9 @@ function Header() {
             fileName: _jsxFileName,
             lineNumber: 51,
             columnNumber: 29
-          }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
+          }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            isComponent: true
+          }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 52,
             columnNumber: 54
@@ -6466,6 +6481,7 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 function NotificationMessage(_a) {
   var notification = _a.notification,
+      isComponent = _a.isComponent,
       updateList = _a.updateList;
 
   function handleAccept() {
@@ -6511,10 +6527,26 @@ function NotificationMessage(_a) {
   }
 
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-    className: "row"
+    className: "row py-2"
   }, {
     children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-      className: "col-8"
+      className: "col-3 d-md-none"
+    }, {
+      children: !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
+        className: "w-100 mh-50",
+        src: notification.img_url,
+        alt: "Profile img"
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 24,
+        columnNumber: 33
+      }, this)
+    }), void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 23,
+      columnNumber: 13
+    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+      className: "col-6 col-md-9"
     }, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
         href: "/".concat(notification.username)
@@ -6522,38 +6554,16 @@ function NotificationMessage(_a) {
         children: notification.username
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 23,
+        lineNumber: 29,
         columnNumber: 17
       }, this), notification.notification_type_id === 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("span", {
         children: " wants to follow you"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 24,
+        lineNumber: 30,
         columnNumber: 60
       }, this), notification.notification_type_id === 1 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("span", {
         children: " is now following you"
-      }, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 27,
-        columnNumber: 60
-      }, this)]
-    }), void 0, true, {
-      fileName: _jsxFileName,
-      lineNumber: 22,
-      columnNumber: 13
-    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-      className: "col-4"
-    }, {
-      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
-        className: "fas fa-check",
-        onClick: handleAccept
-      }, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 32,
-        columnNumber: 17
-      }, this), notification.notification_type_id === 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
-        className: "fas fa-ban p-2",
-        onClick: handleDeny
       }, void 0, false, {
         fileName: _jsxFileName,
         lineNumber: 33,
@@ -6561,17 +6571,69 @@ function NotificationMessage(_a) {
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 31,
+      lineNumber: 28,
+      columnNumber: 13
+    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+      className: "col-3"
+    }, {
+      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
+        className: "fas fa-check",
+        onClick: handleAccept
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 38,
+        columnNumber: 17
+      }, this), notification.notification_type_id === 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
+        className: "fas fa-ban p-2",
+        onClick: handleDeny
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 39,
+        columnNumber: 60
+      }, this)]
+    }), void 0, true, {
+      fileName: _jsxFileName,
+      lineNumber: 37,
       columnNumber: 13
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 20,
+    lineNumber: 21,
     columnNumber: 13
   }, this);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotificationMessage);
+
+/***/ }),
+
+/***/ "./resources/js/notificatons/NotificationsPage.tsx":
+/*!*********************************************************!*\
+  !*** ./resources/js/notificatons/NotificationsPage.tsx ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
+/* harmony import */ var _NotificationsPopup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
+
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPage.tsx";
+
+
+function NotificationsPage() {
+  return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_NotificationsPopup__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    isComponent: false
+  }, void 0, false, {
+    fileName: _jsxFileName,
+    lineNumber: 4,
+    columnNumber: 13
+  }, this);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotificationsPage);
 
 /***/ }),
 
@@ -6753,17 +6815,20 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
+;
 
-function NotificationsPopup() {
+function NotificationsPopup(_a) {
   var _this = this;
 
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      loading = _a[0],
-      setLoading = _a[1];
+  var isComponent = _a.isComponent;
 
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      notifications = _b[0],
-      setNotifications = _b[1];
+  var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      loading = _b[0],
+      setLoading = _b[1];
+
+  var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+      notifications = _c[0],
+      setNotifications = _c[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     getNotifications();
@@ -6806,22 +6871,45 @@ function NotificationsPopup() {
     setLoading(false);
   }
 
+  if (isComponent) {
+    return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+      className: "w-10 bg-white floating-window"
+    }, {
+      children: !loading && notifications.map(function (notification, index) {
+        return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_NotificationMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          notification: notification,
+          updateList: updateNotificationList,
+          isComponent: isComponent
+        }, index, false, {
+          fileName: _jsxFileName,
+          lineNumber: 41,
+          columnNumber: 96
+        }, _this);
+      })
+    }), void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 39,
+      columnNumber: 17
+    }, this);
+  }
+
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-    className: "w-10 bg-white floating-window"
+    className: "mx-2 text-custom-green"
   }, {
     children: !loading && notifications.map(function (notification, index) {
       return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_NotificationMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         notification: notification,
-        updateList: updateNotificationList
+        updateList: updateNotificationList,
+        isComponent: isComponent
       }, index, false, {
         fileName: _jsxFileName,
-        lineNumber: 36,
+        lineNumber: 50,
         columnNumber: 92
       }, _this);
     })
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 34,
+    lineNumber: 48,
     columnNumber: 13
   }, this);
 }

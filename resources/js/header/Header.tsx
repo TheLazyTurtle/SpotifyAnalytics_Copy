@@ -49,7 +49,7 @@ function Header() {
                         </div>
                         <div className="col-4 d-inline-block text-center text-custom-green">
                             <i onClick={toggleNotificationPopup} className="fas fa-envelope px-2"></i>
-                            {showNotificationPopup && <NotificationsPopup />}
+                            {showNotificationPopup && <NotificationsPopup isComponent={true} />}
                             <i onClick={() => { window.location.href = "/profile" }} className="fas fa-user-alt px-2"></i>
                             <i onClick={handleLogout} className="fas fa-arrow-right px-2"></i>
                         </div>

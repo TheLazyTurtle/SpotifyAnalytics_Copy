@@ -13,6 +13,7 @@ import SearchPage from './search/SearchPage';
 import { useState, createContext, useEffect } from 'react';
 import { User } from './user/User';
 import { SystemAPI } from './api/SystemAPI';
+import NotificationsPage from './notificatons/NotificationsPage';
 
 export const LoggedInUserContext = createContext<User>({ guest: true } as User);
 
@@ -68,6 +69,7 @@ function App() {
                             <Route path="/artist/:artistID" element={<ArtistPage />} />
                             <Route path="/profile" element={<ProfilePage />} />
                             <Route path="/search" element={<SearchPage />} />
+                            <Route path="/notifications" element={<NotificationsPage />} />
                             <Route path="/:username" element={<ProfilePage />} />
                             <Route path="*" element={<NotFound />} />
                         </Routes>

@@ -3,7 +3,11 @@ import { NotificationAPI } from "../api/NotificationAPI";
 import { Notification } from "./Notification";
 import NotificationMessage from "./NotificationMessage";
 
-function NotificationsPopup() {
+interface NotificationsPopupProps {
+    isComponent: boolean;
+};
+
+function NotificationsPopup({ isComponent }: NotificationsPopupProps) {
     const [loading, setLoading] = useState<boolean>(true);
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
@@ -31,10 +35,20 @@ function NotificationsPopup() {
         setLoading(false);
     }
 
+    if (isComponent) {
+        return (
+            <div className="w-10 bg-white floating-window">
+                {!loading && notifications.map((notification: Notification, index: number) => (
+                    <NotificationMessage key={index} notification={notification} updateList={updateNotificationList} isComponent={isComponent} />
+                ))}
+            </div>
+        );
+    }
+
     return (
-        <div className="w-10 bg-white floating-window">
+        <div className="mx-2 text-custom-green">
             {!loading && notifications.map((notification: Notification, index: number) => (
-                <NotificationMessage key={index} notification={notification} updateList={updateNotificationList} />
+                <NotificationMessage key={index} notification={notification} updateList={updateNotificationList} isComponent={isComponent} />
             ))}
         </div>
     );
