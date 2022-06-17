@@ -40,6 +40,8 @@ class NotificationController extends Controller
             'receiver_user_id',
         ]);
 
+        // Check if notification already exists
+        // TODO: Should this check not be a function of it self
         $notification = Notification::where('receiver_user_id', $request->receiver_user_id)->where('sender_user_id', $authUser->id)->first();
 
         if ($notification) {

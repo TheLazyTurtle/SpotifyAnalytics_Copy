@@ -2944,8 +2944,13 @@ function (_super) {
 
           case 3:
             error_3 = _b.sent();
-            console.log("log client error " + error_3);
-            throw new Error("There was an error getting the data for the user");
+            console.log("log client error " + error_3); // throw new Error("There was an error getting the data for the user");
+
+            return [2
+            /*return*/
+            , {
+              success: false
+            }];
 
           case 4:
             return [2
@@ -5050,7 +5055,7 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 function Header() {
   var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_3__.LoggedInUserContext);
 
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+  var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
       showNotificationPopup = _a[0],
       setNotificationPopup = _a[1];
 
@@ -5097,17 +5102,17 @@ function Header() {
               children: "Spotify Analytics"
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 44,
+              lineNumber: 45,
               columnNumber: 33
             }, this)
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 43,
+            lineNumber: 44,
             columnNumber: 29
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 42,
+          lineNumber: 43,
           columnNumber: 25
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block"
@@ -5118,12 +5123,12 @@ function Header() {
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 48,
+            lineNumber: 49,
             columnNumber: 29
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 47,
+          lineNumber: 48,
           columnNumber: 25
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block text-center text-custom-green"
@@ -5133,13 +5138,13 @@ function Header() {
             className: "fas fa-envelope px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 51,
+            lineNumber: 52,
             columnNumber: 29
           }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__["default"], {
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 52,
+            lineNumber: 53,
             columnNumber: 54
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: function onClick() {
@@ -5148,34 +5153,34 @@ function Header() {
             className: "fas fa-user-alt px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 53,
+            lineNumber: 54,
             columnNumber: 29
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: handleLogout,
             className: "fas fa-arrow-right px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 54,
+            lineNumber: 55,
             columnNumber: 29
           }, this)]
         }), void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 50,
+          lineNumber: 51,
           columnNumber: 25
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 41,
+        lineNumber: 42,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 39,
+      lineNumber: 40,
       columnNumber: 36
     }, this)
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 37,
+    lineNumber: 38,
     columnNumber: 13
   }, this);
 }
@@ -7917,8 +7922,14 @@ function ProfilePage() {
 
             if (user.success) {
               setUser(user.data);
+              return [2
+              /*return*/
+              ];
             }
 
+            setUser({
+              guest: true
+            });
             return [2
             /*return*/
             ];
@@ -7928,38 +7939,58 @@ function ProfilePage() {
   }
 
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageHeader__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      user: user,
-      pageType: pageType
+    children: [user.guest && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
+      children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h2", __assign({
+        className: "text-custom-green"
+      }, {
+        children: "User does no exists"
+      }), void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 60,
+        columnNumber: 17
+      }, this)
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 53,
-      columnNumber: 13
-    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
-      className: "border-bottom border-white mt-5"
-    }, void 0, false, {
-      fileName: _jsxFileName,
-      lineNumber: 54,
-      columnNumber: 13
-    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
-      className: "w-100"
-    }, {
-      children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageBody__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      lineNumber: 59,
+      columnNumber: 27
+    }, this), !user.guest && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageHeader__WEBPACK_IMPORTED_MODULE_5__["default"], {
         user: user,
         pageType: pageType
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 56,
-        columnNumber: 17
-      }, this)
-    }), void 0, false, {
+        lineNumber: 65,
+        columnNumber: 21
+      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
+        className: "border-bottom border-white mt-5"
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 66,
+        columnNumber: 21
+      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
+        className: "w-100"
+      }, {
+        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageBody__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          user: user,
+          pageType: pageType
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 68,
+          columnNumber: 25
+        }, this)
+      }), void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 67,
+        columnNumber: 21
+      }, this)]
+    }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 55,
-      columnNumber: 13
+      lineNumber: 63,
+      columnNumber: 28
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 51,
+    lineNumber: 57,
     columnNumber: 13
   }, this);
 }
@@ -8073,14 +8104,20 @@ function ProfilePageBody(_a) {
       children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h3", __assign({
         className: "text-white"
       }, {
-        children: ["This profile is private. Please ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
+        children: ["This profile is private. Please ", loggedInUser.guest ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
           href: toLogin()
         }, {
           children: "login"
         }), void 0, false, {
           fileName: _jsxFileName,
           lineNumber: 51,
-          columnNumber: 80
+          columnNumber: 101
+        }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", {
+          children: "follow"
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 51,
+          columnNumber: 133
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
@@ -8357,7 +8394,8 @@ function Buttons(props) {
     lineNumber: 34,
     columnNumber: 13
   }, this);
-}
+} // TODO: This should use button component
+
 
 function followButton(user) {
   function handleFollowage() {
@@ -8369,62 +8407,72 @@ function followButton(user) {
             result = null;
             if (!user.following) return [3
             /*break*/
-            , 2];
+            , 3];
             return [4
             /*yield*/
             , _api_UserAPI__WEBPACK_IMPORTED_MODULE_3__.UserAPI.follow(user.id)];
 
           case 1:
+            // Unfollow a user
             result = _a.sent();
-            return [3
-            /*break*/
-            , 9];
-
-          case 2:
-            if (!user.hasFollowingRequest) return [3
-            /*break*/
-            , 4];
             return [4
             /*yield*/
             , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.removeRequest(user.id)];
 
-          case 3:
+          case 2:
             result = _a.sent();
             return [3
             /*break*/
-            , 9];
+            , 10];
+
+          case 3:
+            if (!user.hasFollowingRequest) return [3
+            /*break*/
+            , 5];
+            return [4
+            /*yield*/
+            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.removeRequest(user.id)];
 
           case 4:
+            // Remove request
+            result = _a.sent();
+            return [3
+            /*break*/
+            , 10];
+
+          case 5:
             if (!user["private"]) return [3
             /*break*/
-            , 6];
+            , 7];
             return [4
             /*yield*/
             , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.makeRequest(0, user.id)];
 
-          case 5:
+          case 6:
+            // Make request
             result = _a.sent();
             return [3
             /*break*/
-            , 9];
+            , 10];
 
-          case 6:
+          case 7:
             return [4
             /*yield*/
             , _api_UserAPI__WEBPACK_IMPORTED_MODULE_3__.UserAPI.follow(user.id)];
 
-          case 7:
+          case 8:
+            // Follow user and make a notification that you want to follow
             result = _a.sent();
             return [4
             /*yield*/
             , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.makeRequest(1, user.id)];
 
-          case 8:
+          case 9:
             _a.sent();
 
-            _a.label = 9;
+            _a.label = 10;
 
-          case 9:
+          case 10:
             if (result.success) {
               return [2
               /*return*/
@@ -8461,12 +8509,12 @@ function followButton(user) {
       children: makeButtonText()
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 87,
+      lineNumber: 93,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 85,
+    lineNumber: 91,
     columnNumber: 13
   }, this);
 }
@@ -8490,12 +8538,12 @@ function ProfilePageHeader(props) {
             alt: props.user.username
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 99,
+            lineNumber: 105,
             columnNumber: 25
           }, this)
         }), "img-wrapper", false, {
           fileName: _jsxFileName,
-          lineNumber: 98,
+          lineNumber: 104,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-12 col-md-9 mt-3 mt-md-5"
@@ -8506,7 +8554,7 @@ function ProfilePageHeader(props) {
             children: props.user.username
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 102,
+            lineNumber: 108,
             columnNumber: 25
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
             className: "row"
@@ -8521,17 +8569,17 @@ function ProfilePageHeader(props) {
                   children: props.user.followers_count
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 105,
+                  lineNumber: 111,
                   columnNumber: 59
                 }, this), " Followers"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 105,
+                lineNumber: 111,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 104,
+              lineNumber: 110,
               columnNumber: 29
             }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
               className: "col-4 col-md-2"
@@ -8543,49 +8591,49 @@ function ProfilePageHeader(props) {
                   children: props.user.following_count
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 108,
+                  lineNumber: 114,
                   columnNumber: 59
                 }, this), " Following"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 108,
+                lineNumber: 114,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 107,
+              lineNumber: 113,
               columnNumber: 29
             }, this)]
           }), void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 103,
+            lineNumber: 109,
             columnNumber: 25
           }, this), props.user.username !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(Buttons, {
             user: props.user,
             pageType: props.pageType
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 111,
+            lineNumber: 117,
             columnNumber: 64
           }, this)]
         }), "text-wrapper", true, {
           fileName: _jsxFileName,
-          lineNumber: 101,
+          lineNumber: 107,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 97,
+        lineNumber: 103,
         columnNumber: 17
       }, this)
     }), "info-wrapper", false, {
       fileName: _jsxFileName,
-      lineNumber: 96,
+      lineNumber: 102,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 94,
+    lineNumber: 100,
     columnNumber: 13
   }, this);
 }

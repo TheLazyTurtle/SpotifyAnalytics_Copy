@@ -50,17 +50,23 @@ function Buttons(props: ProfilePageHeaderProps) {
     );
 }
 
+// TODO: This should use button component
 function followButton(user: User) {
     async function handleFollowage() {
         let result = null;
 
         if (user.following) {
+            // Unfollow a user
             result = await UserAPI.follow(user.id);
+            result = await NotificationAPI.removeRequest(user.id);
         } else if (user.hasFollowingRequest) {
+            // Remove request
             result = await NotificationAPI.removeRequest(user.id);
         } else if (user.private) {
+            // Make request
             result = await NotificationAPI.makeRequest(0, user.id);
         } else {
+            // Follow user and make a notification that you want to follow
             result = await UserAPI.follow(user.id);
             await NotificationAPI.makeRequest(1, user.id);
         }

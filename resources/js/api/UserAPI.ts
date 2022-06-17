@@ -41,7 +41,8 @@ export class UserAPI extends Api {
             return super.parseJSON(response_1);
         } catch (error) {
             console.log("log client error " + error);
-            throw new Error("There was an error getting the data for the user");
+            // throw new Error("There was an error getting the data for the user");
+            return { success: false };
         }
     }
 

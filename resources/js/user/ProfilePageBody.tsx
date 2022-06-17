@@ -48,7 +48,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
             ))}
             {!toShow() &&
                 <div className="w-50 mx-auto">
-                    <h3 className="text-white">This profile is private. Please <a href={toLogin()}>login</a></h3>
+                    <h3 className="text-white">This profile is private. Please {loggedInUser.guest ? <a href={toLogin()}>login</a> : <a>follow</a>}</h3>
                 </div>
             }
         </>

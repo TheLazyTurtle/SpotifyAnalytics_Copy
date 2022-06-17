@@ -59,14 +59,12 @@ class UserController extends Controller
         $user->following_count = Followers::followingCount($user->id);
         $user->followers_count = Followers::followerCount($user->id);
 
-        // if ($user->private) {
-        if ($authUser->is_admin == false && !$user->following) {
-            // TODO: IF YOU ARE NOT FOLLOWING WE STILL WANT A NAME AND AN IMG
-            return response()->json([
-                'success' => false,
-                'data' => 'You are not following this user'
-            ], 400);
-        }
+        // if ($authUser->is_admin == false && !$user->following) {
+        //     // TODO: IF YOU ARE NOT FOLLOWING WE STILL WANT A NAME AND AN IMG
+        //     return response()->json([
+        //         'success' => false,
+        //         'data' => 'You are not following this user'
+        //     ], 400);
         // }
 
         return response()->json([
@@ -200,7 +198,6 @@ class UserController extends Controller
     }
 
     // (un)Follow a user
-    // TODO: If a account is private add accepting thingy
     public function follow(Request $request)
     {
         $authUser = Auth()->user();
