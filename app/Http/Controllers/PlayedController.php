@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\DataWrapperResource;
 use App\Http\Resources\PlayedResource;
 use App\Models\Artist;
 use App\Models\Played;
@@ -69,17 +70,14 @@ class PlayedController extends Controller
 
         $played = Played::where('played_by', $user_id)
             ->distinct()
-            ->select(DB::raw('COUNT(*) as y'), 'played.song_name as label')
+            ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x')
             ->whereBetween('date_played', [$request->min_date, $request->max_date])
             ->groupBy('played.song_id')
             ->havingBetween('y', [$request->min_played, $request->max_played])
             ->orderBy('played.song_name')
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $played
-        ], 200);
+        return DataWrapperResource::collection($played);
     }
 
     // Top song of user

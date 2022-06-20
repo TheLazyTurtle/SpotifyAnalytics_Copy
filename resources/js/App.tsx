@@ -12,10 +12,14 @@ import ProfilePage from './user/ProfilePage';
 import SearchPage from './search/SearchPage';
 import { useState, createContext, useEffect } from 'react';
 import { User } from './user/User';
-import { SystemAPI } from './api/SystemAPI';
 import NotificationsPage from './notificatons/NotificationsPage';
 
 export const LoggedInUserContext = createContext<User>({ guest: true } as User);
+export interface Response<T> {
+    data: {
+        [K in keyof T]: T[K]
+    }
+}
 
 function App() {
     const [loggedInUser, setLoggedInUser] = useState<User>({ guest: true } as User);
@@ -25,7 +29,16 @@ function App() {
 
     async function validateLogin() {
         setLoading(true);
-        const validationResult = await SystemAPI.validateToken();
+        // const validationResult = await SystemAPI.validateToken();
+        const validationResult = {
+            success: true,
+            data: {
+                id: "1",
+                username: "The Lazy Turtle",
+                is_admin: true,
+                img_url: "",
+            } as User
+        };
 
         if (validationResult.success) {
             setLoggedInUser(validationResult.data)

@@ -2,13 +2,12 @@ import { Artist } from "../artist/Artist";
 import { Song } from "../song/Song";
 
 export type Album = {
-    id: string | undefined;
+    id: string;
     name: string;
     releaseDate: string;
-    img_url: string;
-    album_artist: Artist;
+    albumArtist: Artist;
     url: string;
+    imgUrl: string;
     type: string;
     songs: Song[];
-    primaryArtist_id: string;
 }

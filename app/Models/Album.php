@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ArtistResource;
+use App\Http\Resources\SongResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,14 +22,17 @@ class Album extends Model
     ];
 
     // Album has many songs
-    public function songs()
+    public function songs($album_id)
     {
-        return $this->hasMany(Song::class, 'album_id', 'album_id');
+        $songs = Song::where('album_id', $album_id)->get();
+        return SongResource::collection($songs);
     }
 
     // Album has one primary artist
-    public function artist()
+    public function artist($artist_id)
     {
-        return $this->belongsTo(Artist::class, 'primary_artist_id', 'artist_id');
+        $artist = Artist::where('artist_id', $artist_id)->first();
+
+        return new ArtistResource($artist);
     }
 }

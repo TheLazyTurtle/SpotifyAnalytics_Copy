@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Resources\ArtistResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,9 +29,15 @@ class Song extends Model
     }
 
     // Song has many artists
-    public function artists()
+    static function artists($song_id)
     {
-        return $this->hasManyThrough(Artist::class, ArtistHasSong::class, 'artist_id', 'artist_id');
+        $artists = Song::where('songs.song_id', $song_id)
+            ->join('artist_has_song', 'artist_has_song.song_id', 'songs.song_id')
+            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
+            ->select('artists.*')
+            ->get();
+
+        return ArtistResource::collection($artists);
     }
 
     // Song has one album

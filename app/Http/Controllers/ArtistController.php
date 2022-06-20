@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AlbumResource;
 use App\Http\Resources\ArtistResource;
+use App\Http\Resources\DataWrapperResource;
+use App\Http\Resources\SongResource;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Models\ArtistHasSong;
@@ -108,42 +111,28 @@ class ArtistController extends Controller
     public function albums(Request $request)
     {
         // TODO: Valiadte input
-        $albums = Album::where('primary_artist_id', $request->artist_id)->orderBy('release_date', 'desc')->get();
-        $res = array();
-
-        // Also gonna need album artist (primary album artist)
-        foreach ($albums as $album) {
-            $album_songs = Song::where('album_id', $album->album_id)->get();
-            $album_artist = Artist::where('artist_id', $album->primary_artist_id)->first();
-
-            foreach ($album_songs as $song) {
-                $song_artists = ArtistHasSong::where('song_id', $song->song_id)
-                    ->join('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-                    ->get('artists.*');
-                $song->artists = $song_artists;
-            }
-
-            $album->album_artist = $album_artist;
-            $album->songs = $album_songs;
-            array_push($res, $album);
-        }
+        $albums = Album::where('primary_artist_id', $request->artist_id)
+            ->orderBy('release_date', 'desc')
+            ->get();
 
         if (!$albums) {
             return response()->json([
-                'success' => false,
                 'data' => 'Albums not found'
             ], 400);
         }
 
-        return response()->json([
-            'success' => true,
-            // 'data' => $albums
-            'data' => $res
-        ], 200);
+        foreach ($albums as $album) {
+            $album->album_songs = $album->songs($album->album_id);
+            $album->album_artist = $album->artist($album->primary_artist_id);
+
+            // array_push($res, $album);
+        }
+
+        return AlbumResource::collection($albums);
     }
 
     // Get the top songs of an artist
-    // TODO: resource
+    // NOTE: This is a scuffed AF query. We first do a huge query to get the total and than do another big query to get the users
     public function topSongs(Request $request)
     {
         $user_id = Auth()->user()->id;
@@ -153,24 +142,24 @@ class ArtistController extends Controller
             ->join('artists', 'artists.artist_id', 'artist_has_song.artist_id')
             ->where('artists.artist_id', $request->artist_id)
             ->where('artist_has_song.artist_id', $request->artist_id)
-            ->select(DB::raw('COUNT(*) as count'), 'songs.*')
+            ->select(DB::raw('COUNT(*) as y'), 'songs.song_id')
             ->groupBy('played.song_id')
-            ->orderBy('count', 'desc')
+            ->orderBy('y', 'desc')
             ->limit(10)
             ->get();
 
         foreach ($songs as $song) {
             $user_count = Played::where('played_by', $user_id)
                 ->where('song_id', $song->song_id)
-                ->select(DB::raw('COUNT(*) as user_count'))
+                ->select(DB::raw('COUNT(*) as x'))
                 ->first();
 
-            $song->user_count = $user_count->user_count;
+            $songObject = Song::where('song_id', $song->song_id)->first();
+
+            $song->x = $user_count->x;
+            $song->object = new SongResource($songObject);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $songs
-        ], 200);
+        return DataWrapperResource::collection($songs);
     }
 }

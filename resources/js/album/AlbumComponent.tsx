@@ -10,7 +10,6 @@ interface AlbumProps {
 
 function AlbumComponent({ album }: AlbumProps) {
     const [isOpen, setIsOpen] = useState(false);
-    album.songs = album.songs.sort((a, b) => (a.track_number > b.track_number) ? 1 : -1);
 
     function handleOnExpand() {
         setIsOpen(!isOpen);
@@ -19,14 +18,14 @@ function AlbumComponent({ album }: AlbumProps) {
     return (
         <div className="col-lg-6 col-md-8 mx-md-auto mx-xs-0 mb-5 pb-2 album-wrapper" id={album.name}>
             <div className="album-header">
-                <img src={album.img_url} alt={album.name} className="mx-md-5 my-md-3 album-md-img album-sm-img" />
+                <img src={album.imgUrl} alt={album.name} className="mx-md-5 my-md-3 album-md-img album-sm-img" />
                 <section className="d-sm-block d-md-inline-block col-xs-2 mx-sm-3 my-sm-2 px-3 py-2 py-md-0 px-md-0">
                     <a href={album.url} className="text-decoration-none">
                         <h5 className="strong text-white">
                             <strong>{album.name}</strong>
                         </h5>
                     </a>
-                    <a key={album.album_artist.name} href={album.album_artist.url} target="_blank" className="text-decoration-none" rel="noreferrer">{album.album_artist.name}</a>
+                    <a key={album.albumArtist.name} href={album.albumArtist.url} target="_blank" rel="noreferrer" className="text-decoration-none">{album.albumArtist.name}</a>
                 </section>
             </div>
             <div className={isOpen ? "d-block" : "d-none"}>
@@ -40,7 +39,7 @@ function AlbumComponent({ album }: AlbumProps) {
                 <div className="border-bottom border-white mt-5"></div>
             </div>
             <div key="album-folder">
-                <p className="text-white text-center pt-2" onClick={handleOnExpand}>{isOpen ? "Open" : "Close"}</p>
+                <p className="text-white text-center pt-2" onClick={handleOnExpand}>{isOpen ? "Close" : "Open"}</p>
             </div>
         </div>
     );

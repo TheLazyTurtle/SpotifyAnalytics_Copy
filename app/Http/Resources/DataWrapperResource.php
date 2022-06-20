@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AlbumResource extends JsonResource
+class DataWrapperResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,16 +14,16 @@ class AlbumResource extends JsonResource
      */
     public function toArray($request)
     {
-        // TODO: Add releation
+        if (isset($this->object)) {
+            return [
+                'x' => $this->x,
+                'y' => $this->y,
+                'object' => $this->object,
+            ];
+        };
         return [
-            'id' => $this->album_id,
-            'name' => $this->name,
-            'releaseDate' => $this->release_date,
-            'albumArtist' => $this->album_artist,
-            'url' => $this->url,
-            'imgUrl' => $this->img_url,
-            'type' => $this->type,
-            'songs' => $this->album_songs,
+            'x' => $this->x,
+            'y' => $this->y,
         ];
         // return parent::toArray($request);
     }

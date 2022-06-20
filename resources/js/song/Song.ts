@@ -5,9 +5,9 @@ export type Song = {
     name: string;
     length: number;
     url: string;
-    img_url: string;
-    preview_url: string;
-    track_number: number;
+    imgUrl: string;
+    previewUrl: string;
+    trackNumber: number;
     explicit: boolean;
-    artists: Artist[];
+    artists?: Artist[];
 }

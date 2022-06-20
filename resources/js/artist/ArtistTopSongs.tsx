@@ -1,33 +1,25 @@
-import { useEffect, useState } from "react";
-import { ArtistAPI } from "../api/ArtistAPI";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { Response } from "../App";
+import { DataWrapper } from "../graph/DataWrapper";
+import { Song } from "../song/Song";
 
 interface ArtistTopSongsProps {
     artistID: string
 }
 
 function ArtistTopSongs({ artistID }: ArtistTopSongsProps) {
-    const [data, setData] = useState([]);
-    const [open, setOpen] = useState<boolean>(false);
-
-    useEffect(() => {
-        getTopSongs(artistID);
-    }, []);
-
-    async function getTopSongs(artistID: string) {
-        const artistResult = await ArtistAPI.topSongs(artistID);
-
-        if (artistResult.success) {
-            const data = artistResult.data;
-            setData(data);
-        } else {
-            setData([]);
-            console.log("We messed up. Very sad indeed");
+    const params = {
+        params: {
+            artist_id: artistID,
         }
     }
+    const { isLoading, data, error } = useQuery("artistTopSongs", () => axios.get<Response<DataWrapper<Song>[]>>(`/api/artist/topSongs`, params).then((response) => response.data));
+    const [open, setOpen] = useState<boolean>(false);
 
     function handleShowMore() {
-        const change = !open;
-        setOpen(change);
+        setOpen(!open);
     }
 
     return (
@@ -48,21 +40,21 @@ function ArtistTopSongs({ artistID }: ArtistTopSongsProps) {
                         <p className="text-white text-center">You / Total</p>
                     </div>
                 </div>
-                {data.map((data: any, index: number) => {
+                {!isLoading && data?.data.map((dataWrapper, index: number) => {
                     return (
-                        <div key={index} className={index >= 4 ? "d-none" : "d-block"}>
+                        <div key={index} className={(!open && index >= 5) ? "d-none" : "d-block"}>
                             <div className="row small-row py-1">
                                 <div className="col-md-4 text-center d-none d-md-block">
-                                    <audio src={data.preview_url} controls />
+                                    <audio src={dataWrapper.object?.previewUrl} controls />
                                 </div>
                                 <div className="col-4 col-md-2 text-center">
-                                    <img src={data.img_url} className="w-50" />
+                                    <img src={dataWrapper.object?.imgUrl} className="w-50" alt="song cover" />
                                 </div>
                                 <div className="col-4 col-md-5">
-                                    <p className="text-white text-center"><a href={data.url} className="text-decoration-none">{data.name}</a></p>
+                                    <p className="text-white text-center"><a href={dataWrapper.object?.url} className="text-decoration-none">{dataWrapper.object?.name}</a></p>
                                 </div>
                                 <div className="col-4 col-md-1 text-center">
-                                    <p className="text-white">{data.user_count}/{data.count}</p>
+                                    <p className="text-white">{dataWrapper.x}/{dataWrapper.y}</p>
                                 </div>
                             </div>
                         </div>

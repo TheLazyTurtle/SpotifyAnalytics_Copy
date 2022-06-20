@@ -1,6 +1,6 @@
 export type Artist = {
-    artist_id: string
+    artistId: string
     name: string
     url: string
-    img_url: string
+    imgUrl: string
 }
