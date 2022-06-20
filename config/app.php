@@ -165,8 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-        Laravel\Passport\PassportServiceProvider::class,
-
+        App\Providers\FortifyServiceProvider::class,
         /*
          * Application Service Providers...
          */

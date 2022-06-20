@@ -3,7 +3,6 @@ import { PlayedAPI } from "../api/PlayedAPI";
 import { LoggedInUserContext } from "../App";
 import InputField from "../inputField/InputField";
 import { inputField } from "../inputField/InputFieldWrapper";
-import NotificationCountWidget from "../notificatons/NotificationCountWidget";
 import NotificationsPopup from "../notificatons/NotificationsPopup";
 
 function Header() {

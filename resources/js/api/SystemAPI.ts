@@ -3,17 +3,12 @@ import { Api } from "./api";
 export class SystemAPI extends Api {
     protected static url = `${this.baseUrl}`
 
-    static async login(email: string, password: string) {
+    static async login(username: string, password: string) {
         try {
-            const options = {
-                method: "POST",
-                body: JSON.stringify({ email, password }),
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-            }
+            const body = { username, password };
+            const header = super.makeHeader("POST", body);
 
-            const response = await fetch(`${this.url}/login`, options);
+            const response = await fetch(`http://localhost:8000/test`, header);
             const response_1 = await super.checkStatus(response);
             return super.parseJSON(response_1);
         } catch (error) {

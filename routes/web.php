@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\authController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,7 @@ Route::get('/', function () {
     return view('index');
     // return view('welcome');
 });
+Route::post('/test', [authController::class, 'login']);
 
 Route::view('/{path?}', 'index')
     ->where('path', '.*')

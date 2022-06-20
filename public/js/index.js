@@ -2538,27 +2538,22 @@ function (_super) {
     return _super !== null && _super.apply(this, arguments) || this;
   }
 
-  SystemAPI.login = function (email, password) {
+  SystemAPI.login = function (username, password) {
     return __awaiter(this, void 0, void 0, function () {
-      var options, response, response_1, error_1;
+      var body, header, response, response_1, error_1;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
             _b.trys.push([0, 3,, 4]);
 
-            options = {
-              method: "POST",
-              body: JSON.stringify({
-                email: email,
-                password: password
-              }),
-              headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-              }
+            body = {
+              username: username,
+              password: password
             };
+            header = _super.makeHeader.call(this, "POST", body);
             return [4
             /*yield*/
-            , fetch("".concat(this.url, "/login"), options)];
+            , fetch("http://localhost:8000/test", header)];
 
           case 1:
             response = _b.sent();
@@ -3067,7 +3062,7 @@ function () {
     for (var i = 0; i < cookies.length; i++) {
       var cookie = cookies[i].split("=");
 
-      if (cookie[0] === "laravel_token") {
+      if (cookie[0] === "XSRF-TOKEN") {
         return cookie[1];
       }
     }
@@ -3080,14 +3075,15 @@ function () {
       body = {};
     }
 
-    var token = Api.getToken();
+    var xsrfToken = this.getToken();
 
     if (type === "GET") {
       return {
         method: type,
         headers: {
           'Content-Type': 'application/json;',
-          Authorization: "Bearer ".concat(token)
+          Credential: 'include',
+          'X-XSRF-TOKEN': xsrfToken
         }
       };
     } else if (type === "POST") {
@@ -3095,7 +3091,7 @@ function () {
         method: type,
         headers: {
           'Content-Type': 'application/json;',
-          Authorization: "Bearer ".concat(token)
+          Credential: 'include'
         },
         body: JSON.stringify(body)
       };
@@ -5102,17 +5098,17 @@ function Header() {
               children: "Spotify Analytics"
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 45,
+              lineNumber: 44,
               columnNumber: 33
             }, this)
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 44,
+            lineNumber: 43,
             columnNumber: 29
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 43,
+          lineNumber: 42,
           columnNumber: 25
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block"
@@ -5123,12 +5119,12 @@ function Header() {
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 49,
+            lineNumber: 48,
             columnNumber: 29
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 48,
+          lineNumber: 47,
           columnNumber: 25
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block text-center text-custom-green"
@@ -5138,13 +5134,13 @@ function Header() {
             className: "fas fa-envelope px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 52,
+            lineNumber: 51,
             columnNumber: 29
           }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__["default"], {
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 53,
+            lineNumber: 52,
             columnNumber: 54
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: function onClick() {
@@ -5153,34 +5149,34 @@ function Header() {
             className: "fas fa-user-alt px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 54,
+            lineNumber: 53,
             columnNumber: 29
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: handleLogout,
             className: "fas fa-arrow-right px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 55,
+            lineNumber: 54,
             columnNumber: 29
           }, this)]
         }), void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 51,
+          lineNumber: 50,
           columnNumber: 25
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 42,
+        lineNumber: 41,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 40,
+      lineNumber: 39,
       columnNumber: 36
     }, this)
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 38,
+    lineNumber: 37,
     columnNumber: 13
   }, this);
 }
@@ -5952,6 +5948,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../index.css */ "./resources/js/index.css");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _api_SystemAPI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../api/SystemAPI */ "./resources/js/api/SystemAPI.ts");
+/* harmony import */ var _api_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../api/api */ "./resources/js/api/api.ts");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -6118,6 +6115,7 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
+
 function LoginPage() {
   var _a = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(),
       error = _a[0],
@@ -6130,7 +6128,10 @@ function LoginPage() {
     var _a, _b;
 
     return __awaiter(this, void 0, void 0, function () {
-      var username, password, result;
+      var username, password, header;
+
+      var _this = this;
+
       return __generator(this, function (_c) {
         switch (_c.label) {
           case 0:
@@ -6145,22 +6146,40 @@ function LoginPage() {
               ];
             }
 
+            header = _api_api__WEBPACK_IMPORTED_MODULE_5__.Api.makeHeader("GET");
             return [4
             /*yield*/
-            , _api_SystemAPI__WEBPACK_IMPORTED_MODULE_4__.SystemAPI.login(username, password)];
+            , fetch("".concat(_api_api__WEBPACK_IMPORTED_MODULE_5__.Api.baseUrl, "/sanctum/csrf-cookie"), header).then(function () {
+              return __awaiter(_this, void 0, void 0, function () {
+                var result;
+                return __generator(this, function (_a) {
+                  switch (_a.label) {
+                    case 0:
+                      return [4
+                      /*yield*/
+                      , _api_SystemAPI__WEBPACK_IMPORTED_MODULE_4__.SystemAPI.login(username, password)];
+
+                    case 1:
+                      result = _a.sent();
+
+                      if (result instanceof Error) {
+                        setError("Invalid login details");
+                        return [2
+                        /*return*/
+                        ];
+                      }
+
+                      return [2
+                      /*return*/
+                      ];
+                  }
+                });
+              });
+            })];
 
           case 1:
-            result = _c.sent();
+            _c.sent();
 
-            if (result instanceof Error) {
-              setError("Invalid login details");
-              return [2
-              /*return*/
-              ];
-            }
-
-            document.cookie = "laravel_token=".concat(result.token);
-            window.location.href = getRedirectUrl();
             return [2
             /*return*/
             ];
@@ -6200,44 +6219,50 @@ function LoginPage() {
         children: "Login"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 58,
-        columnNumber: 17
-      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
-        className: "mt-1 w-50 bg-custom-gray",
-        type: "text",
-        name: "username",
-        placeholder: "Username",
-        ref: usernameElement
-      }, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 59,
-        columnNumber: 17
-      }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 59,
-        columnNumber: 137
-      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
-        className: "mt-1 w-50 bg-custom-gray",
-        type: "password",
-        name: "password",
-        placeholder: "Password",
-        ref: passwordElement
-      }, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 60,
-        columnNumber: 17
-      }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 60,
-        columnNumber: 141
-      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
-        className: "btn btn-primary py-0 my-2 w-50 rounded-8",
-        type: "button",
-        onClick: handleOnClick,
-        value: "Login"
-      }, void 0, false, {
-        fileName: _jsxFileName,
         lineNumber: 61,
+        columnNumber: 17
+      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("form", {
+        children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
+          className: "mt-1 w-50 bg-custom-gray",
+          type: "text",
+          name: "username",
+          placeholder: "Username",
+          ref: usernameElement
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 63,
+          columnNumber: 21
+        }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 63,
+          columnNumber: 141
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
+          className: "mt-1 w-50 bg-custom-gray",
+          type: "password",
+          name: "password",
+          placeholder: "Password",
+          ref: passwordElement
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 64,
+          columnNumber: 21
+        }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 64,
+          columnNumber: 145
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
+          className: "btn btn-primary py-0 my-2 w-50 rounded-8",
+          type: "button",
+          onClick: handleOnClick,
+          value: "Login"
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 65,
+          columnNumber: 21
+        }, this)]
+      }, void 0, true, {
+        fileName: _jsxFileName,
+        lineNumber: 62,
         columnNumber: 17
       }, this), error && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-danger",
@@ -6246,7 +6271,7 @@ function LoginPage() {
         children: error
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 63,
+        lineNumber: 68,
         columnNumber: 26
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
         children: ["Don't have an account? Make one here ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
@@ -6256,22 +6281,22 @@ function LoginPage() {
           children: "here"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 64,
+          lineNumber: 69,
           columnNumber: 57
         }, this)]
       }, void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 64,
+        lineNumber: 69,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 57,
+      lineNumber: 60,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 55,
+    lineNumber: 58,
     columnNumber: 13
   }, this);
 }

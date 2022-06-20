@@ -1,5 +1,5 @@
 export class Api {
-    protected static baseUrl = "http://localhost:8000/api";
+    static baseUrl = "http://localhost:8000/api";
 
     protected static translateStatusToErrorMessage(status: number) {
         switch (status) {
@@ -38,7 +38,7 @@ export class Api {
 
         for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].split("=")
-            if (cookie[0] === "laravel_token") {
+            if (cookie[0] === "XSRF-TOKEN") {
                 return cookie[1];
             }
         }
@@ -46,15 +46,16 @@ export class Api {
         return null;
     }
 
-    protected static makeHeader(type: string, body: {} = {}) {
-        const token = Api.getToken();
+    static makeHeader(type: string, body: {} = {}) {
+        const xsrfToken = this.getToken();
 
         if (type === "GET") {
             return {
                 method: type,
                 headers: {
                     'Content-Type': 'application/json;',
-                    Authorization: `Bearer ${token}`,
+                    Credential: 'include',
+                    'X-XSRF-TOKEN': xsrfToken
                 },
             }
         } else if (type === "POST") {
@@ -62,7 +63,7 @@ export class Api {
                 method: type,
                 headers: {
                     'Content-Type': 'application/json;',
-                    Authorization: `Bearer ${token}`,
+                    Credential: 'include',
                 },
                 body: JSON.stringify(body),
             }

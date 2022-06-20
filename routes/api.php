@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PassportAuthController;
 use App\Http\Controllers\PlayedController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\ArtistController;
@@ -19,8 +18,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::post('register', [PassportAuthController::class, 'register']);
-Route::post('login', [PassportAuthController::class, 'login']);
 Route::resource('song', SongController::class);
 Route::get('artist/albums', [ArtistController::class, 'albums']);
 // Route::resource('artist', ArtistController::class);
@@ -44,8 +41,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user/', [UserController::class, 'getCurrentUser']);
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user/follow', [UserController::class, 'follow']);
-
-    Route::post('validateToken', [PassportAuthController::class, 'validateToken']);
 
     Route::post('/notification/create', [NotificationController::class, 'store']);
     Route::post('/notification/delete', [NotificationController::class, 'destroy']);
