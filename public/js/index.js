@@ -6700,6 +6700,7 @@ function GraphWrapper(props) {
   }; // Get filtersettings
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    // User is logged in
     if (props.userID === undefined) {
       var cachedFilterSettings = _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.getItem("".concat(props.name, "-settings"));
       setFilterSettings(cachedFilterSettings);
@@ -6889,33 +6890,33 @@ function GraphWrapper(props) {
               className: "icon-alert inverse "
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 166,
+              lineNumber: 167,
               columnNumber: 33
             }, this), " ", error, " "]
           }, void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 166,
+            lineNumber: 167,
             columnNumber: 29
           }, this)
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 165,
+          lineNumber: 166,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 164,
+        lineNumber: 165,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 162,
+      lineNumber: 163,
       columnNumber: 24
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
       onClick: handleTimeFrameClick
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 171,
+      lineNumber: 172,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputFieldWrapper__WEBPACK_IMPORTED_MODULE_5__["default"], {
       update: handleInputFieldUpdate,
@@ -6924,7 +6925,7 @@ function GraphWrapper(props) {
       userID: props.userID
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 172,
+      lineNumber: 173,
       columnNumber: 13
     }, this), props.type === GraphType.Line ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_LineGraph__WEBPACK_IMPORTED_MODULE_3__["default"], {
       dataPoints: dataPoints,
@@ -6932,7 +6933,7 @@ function GraphWrapper(props) {
       options: graphOptions
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 173,
+      lineNumber: 174,
       columnNumber: 45
     }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], {
       dataPoints: dataPoints,
@@ -6940,12 +6941,12 @@ function GraphWrapper(props) {
       options: graphOptions
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 173,
+      lineNumber: 174,
       columnNumber: 119
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 160,
+    lineNumber: 161,
     columnNumber: 13
   }, this);
 }
@@ -8304,7 +8305,7 @@ function LoginPage() {
         children: "Login"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 64,
+        lineNumber: 63,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("form", {
         children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
@@ -8315,11 +8316,11 @@ function LoginPage() {
           ref: usernameElement
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 66,
+          lineNumber: 65,
           columnNumber: 21
         }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 66,
+          lineNumber: 65,
           columnNumber: 141
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
           className: "mt-1 w-50 bg-custom-gray",
@@ -8329,11 +8330,11 @@ function LoginPage() {
           ref: passwordElement
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 67,
+          lineNumber: 66,
           columnNumber: 21
         }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 67,
+          lineNumber: 66,
           columnNumber: 145
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
           className: "btn btn-primary py-0 my-2 w-50 rounded-8",
@@ -8342,12 +8343,12 @@ function LoginPage() {
           value: "Login"
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 68,
+          lineNumber: 67,
           columnNumber: 21
         }, this)]
       }, void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 65,
+        lineNumber: 64,
         columnNumber: 17
       }, this), error && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-danger",
@@ -8356,7 +8357,7 @@ function LoginPage() {
         children: error
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 71,
+        lineNumber: 70,
         columnNumber: 26
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
         children: ["Don't have an account? Make one here ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
@@ -8366,22 +8367,22 @@ function LoginPage() {
           children: "here"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 72,
+          lineNumber: 71,
           columnNumber: 57
         }, this)]
       }, void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 72,
+        lineNumber: 71,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 63,
+      lineNumber: 62,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 61,
+    lineNumber: 60,
     columnNumber: 13
   }, this);
 }

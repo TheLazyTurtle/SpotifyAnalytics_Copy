@@ -52,6 +52,7 @@ function GraphWrapper(props: GraphWrapperProps) {
 
     // Get filtersettings
     useEffect(() => {
+        // User is logged in
         if (props.userID === undefined) {
             const cachedFilterSettings = Cacher.getItem(`${props.name}-settings`) as FilterSetting;
             setFilterSettings(cachedFilterSettings);

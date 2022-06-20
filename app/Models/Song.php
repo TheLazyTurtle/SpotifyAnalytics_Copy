@@ -28,8 +28,8 @@ class Song extends Model
     }
 
     // Song has many artists
-    public function artists() {
-        // return $this->belongsToMany(Artist::class, 'artist_has_song', 'song_id', 'artist_id', 'song_id', 'artist_id');
+    public function artists()
+    {
         return $this->hasManyThrough(Artist::class, ArtistHasSong::class, 'artist_id', 'artist_id');
     }
 

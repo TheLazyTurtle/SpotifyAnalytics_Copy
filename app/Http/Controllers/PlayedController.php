@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PlayedResource;
 use App\Models\Artist;
 use App\Models\Played;
 use App\Models\User;
@@ -16,19 +17,15 @@ class PlayedController extends Controller
     {
         $this->validate($request, ['user_id' => 'required']);
 
-        $played = Played::where('played_by', '=', $user_id)->get();
+        $played = Played::where('played_by', $user_id)->get();
 
         if (!$played) {
             return response()->json([
-                'success' => false,
                 'data' => 'No songs found'
             ], 400);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $played
-        ], 200);
+        return PlayedResource::collection($played);
     }
 
     // Add songs as played
@@ -48,19 +45,16 @@ class PlayedController extends Controller
         $played->song_name = $request->song_name;
 
         if ($played->save()) {
-            return response()->json([
-                'success' => true,
-                'data' => $played->toArray()
-            ], 200);
+            return new PlayedResource($played);
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to add song as played'
             ], 500);
         }
     }
 
     // All songs played of user
+    // TODO: Resource
     public function allSongsPlayed(Request $request)
     {
         if ($request->user_id) {
@@ -89,6 +83,7 @@ class PlayedController extends Controller
     }
 
     // Top song of user
+    // TODO: resource
     public function topSongs(Request $request)
     {
         if ($request->user_id) {
@@ -121,6 +116,7 @@ class PlayedController extends Controller
     }
 
     // Top artist of user
+    // TODO: Resource
     public function topArtists(Request $request)
     {
         if ($request->user_id) {
@@ -150,6 +146,7 @@ class PlayedController extends Controller
     }
 
     // Played per day for a user
+    // TODO: resource
     public function playedPerDay(Request $request)
     {
         if ($request->user_id) {
@@ -185,6 +182,7 @@ class PlayedController extends Controller
     }
 
     // Top artist search for a user
+    // TODO: Resource
     public function topArtistSearch(Request $request)
     {
         if ($request->user_id) {
@@ -215,6 +213,7 @@ class PlayedController extends Controller
 
 
     // Top songs search for a user
+    // TODO: Resource
     public function topSongsSearch(Request $request)
     {
         if ($request->user_id) {
@@ -244,6 +243,7 @@ class PlayedController extends Controller
     }
 
     // Get total time listend for a user
+    // TODO: Resource
     public function timeListend(Request $request)
     {
         $user_id = Auth()->user()->id;
@@ -265,6 +265,7 @@ class PlayedController extends Controller
     }
 
     // Amount of songs a user listend to 
+    // TODO: Resource
     public function amountSongs(Request $request)
     {
         $user_id = Auth()->user()->id;
@@ -285,6 +286,7 @@ class PlayedController extends Controller
     }
 
     // Amount of new songs a user listend to 
+    // TODO: Resourc
     public function amountNewSongs(Request $request)
     {
         $user_id = Auth()->user()->id;
@@ -311,6 +313,7 @@ class PlayedController extends Controller
     }
 
     // Search artists and users
+    // TODO: Resource
     public function search(Request $request)
     {
         $user = Auth()->user();

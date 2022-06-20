@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AlbumResource;
 use Illuminate\Http\Request;
 use App\Models\Album;
 
@@ -11,11 +12,7 @@ class AlbumController extends Controller
     public function index()
     {
         $albums = Album::all();
-
-        return response()->json([
-            'success' => true,
-            'data' => $albums
-        ], 200);
+        return AlbumResource::collection($albums);
     }
 
     // Show one
@@ -26,15 +23,10 @@ class AlbumController extends Controller
 
         if (!$album) {
             return response()->json([
-                'success' => false,
                 'data' => 'Album not found'
             ], 400);
         }
-
-        return response()->json([
-            'success' => true,
-            'data' => $album
-        ], 200);
+        return new AlbumResource($album);
     }
 
     // Create
@@ -60,13 +52,9 @@ class AlbumController extends Controller
         $album->type = $request->type;
 
         if ($album->save()) {
-            return response()->json([
-                'success' => true,
-                'data' => $album->toArray()
-            ], 200);
+            return new AlbumResource($album);
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to add album'
             ], 500);
         }
@@ -79,7 +67,6 @@ class AlbumController extends Controller
 
         if (!$album) {
             return response()->json([
-                'success' => false,
                 'data' => 'Album not found'
             ], 400);
         }
@@ -88,12 +75,9 @@ class AlbumController extends Controller
         $updated = $album->fill($request->all())->save();
 
         if ($updated) {
-            return response()->json([
-                'success' => true
-            ], 200);
+            return response();
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to update album'
             ], 500);
         }
@@ -106,18 +90,14 @@ class AlbumController extends Controller
 
         if (!$album) {
             return response()->json([
-                'success' => false,
                 'data' => 'Album not found'
             ], 400);
         }
 
         if ($album->delete()) {
-            return response()->json([
-                'success' => true
-            ], 200);
+            return response();
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Album can not be deleted'
             ], 500);
         }

@@ -2,13 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Song;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SongResource extends JsonResource
+class UserResource extends JsonResource
 {
-    public $colletcs = Song::class;
-
     /**
      * Transform the resource into an array.
      *
@@ -17,15 +14,11 @@ class SongResource extends JsonResource
      */
     public function toArray($request)
     {
+        // TODO: Add following / followers / has_following_request here
         return [
-            'songId' => $this->song_id,
-            'name' => $this->name,
-            'length' => $this->length,
+            'username' => $this->username,
             'imgUrl' => $this->img_url,
-            'previewUrl' => $this->preview_url,
-            'albumId' => $this->album_id,
-            'trackNumber' => $this->track_number,
-            'explicit' => $this->explicit
+            'private' => $this->private
         ];
         // return parent::toArray($request);
     }

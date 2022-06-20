@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SongResource;
 use Illuminate\Http\Request;
 use App\Models\Song;
 
@@ -11,11 +12,7 @@ class SongController extends Controller
     public function index()
     {
         $songs = Song::all();
-
-        return response()->json([
-            'success' => true,
-            'data' => $songs
-        ], 200);
+        return SongResource::collection($songs);
     }
 
     // Show one
@@ -26,15 +23,11 @@ class SongController extends Controller
 
         if (!$song) {
             return response()->json([
-                'success' => false,
                 'data' => 'Song not found'
             ], 400);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $song
-        ], 200);
+        return new SongResource($song);
     }
 
     // Create
@@ -64,13 +57,9 @@ class SongController extends Controller
         $song->explicit = $request->explicit == True ? 1 : 0;
 
         if ($song->save()) {
-            return response()->json([
-                'success' => true,
-                'data' => $song->toArray()
-            ], 200);
+            return new SongResource($song);
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to add song'
             ], 500);
         }
@@ -83,7 +72,6 @@ class SongController extends Controller
 
         if (!$song) {
             return response()->json([
-                'success' => false,
                 'data' => 'Song not found'
             ], 400);
         }
@@ -92,12 +80,9 @@ class SongController extends Controller
         $updated = $song->fill($request->all())->save();
 
         if ($updated) {
-            return response()->json([
-                'success' => true,
-            ], 200);
+            return response();
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to update song'
             ], 500);
         }
@@ -110,18 +95,14 @@ class SongController extends Controller
 
         if (!$song) {
             return response()->json([
-                'success' => false,
                 'data' => 'Song not found'
             ], 400);
         }
 
         if ($song->delete()) {
-            return response()->json([
-                'success' => true
-            ], 200);
+            return response();
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Song can not be deleted'
             ], 500);
         }

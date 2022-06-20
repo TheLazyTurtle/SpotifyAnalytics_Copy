@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ArtistResource;
 use App\Models\Album;
 use App\Models\Artist;
 use App\Models\ArtistHasSong;
@@ -16,11 +17,7 @@ class ArtistController extends Controller
     public function index()
     {
         $artists = Artist::all();
-
-        return response()->json([
-            'success' => true,
-            'data' => $artists
-        ], 200);
+        return ArtistResource::collection($artists);
     }
 
     // Show one
@@ -31,15 +28,11 @@ class ArtistController extends Controller
 
         if (!$artist) {
             return response()->json([
-                'success' => false,
                 'data' => 'Artist not found'
             ], 400);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $artist
-        ], 200);
+        return new ArtistResource($artist);
     }
 
     // Create
@@ -59,13 +52,9 @@ class ArtistController extends Controller
         $artist->img_url = $request->img_url;
 
         if ($artist->save()) {
-            return response()->json([
-                'success' => true,
-                'data' => $artist->toArray()
-            ], 200);
+            return new ArtistResource($artist);
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to add artist'
             ], 500);
         }
@@ -78,7 +67,6 @@ class ArtistController extends Controller
 
         if (!$artist) {
             return response()->json([
-                'success' => false,
                 'data' => 'Artist not found'
             ], 400);
         }
@@ -87,12 +75,9 @@ class ArtistController extends Controller
         $updated = $artist->fill($request->all())->save();
 
         if ($updated) {
-            return response()->json([
-                'success' => true,
-            ], 200);
+            return response();
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Failed to update artist'
             ], 500);
         }
@@ -105,24 +90,21 @@ class ArtistController extends Controller
 
         if (!$artist) {
             return response()->json([
-                'success' => false,
                 'data' => 'Artist not found'
             ], 400);
         }
 
         if ($artist->delete()) {
-            return response()->json([
-                'success' => true
-            ], 200);
+            return response();
         } else {
             return response()->json([
-                'success' => false,
                 'data' => 'Artist can not be delted'
             ], 500);
         }
     }
 
     // Get an artists albums
+    // TODO: Resource thing
     public function albums(Request $request)
     {
         // TODO: Valiadte input
@@ -161,6 +143,7 @@ class ArtistController extends Controller
     }
 
     // Get the top songs of an artist
+    // TODO: resource
     public function topSongs(Request $request)
     {
         $user_id = Auth()->user()->id;
