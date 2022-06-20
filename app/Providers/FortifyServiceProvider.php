@@ -38,10 +38,6 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
-        Fortify::loginView(function () {
-            return redirect("/test");
-        });
-
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('username', $request->username)->first();
 

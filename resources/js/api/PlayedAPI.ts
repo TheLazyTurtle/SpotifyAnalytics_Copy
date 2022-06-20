@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Api } from "./api";
 
 export class PlayedAPI extends Api {
@@ -5,12 +6,26 @@ export class PlayedAPI extends Api {
 
     static async allSongsPlayed(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: string = "0", maxPlayed: string = "9999", userID?: string) {
         try {
-            const header = super.makeHeader("GET");
-            const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
-
-            const response = await fetch(`${PlayedAPI.url}/allSongsPlayed?min_date=${minDate}&max_date=${maxDate}&min_played=${minPlayed}&max_played=${maxPlayed}${userIDExtensinon}`, header);
-            const response_1 = await super.checkStatus(response);
-            return super.parseJSON(response_1);
+            // const header = super.makeHeader("GET");
+            // const userIDExtensinon = userID !== undefined ? `&user_id=${userID}` : "";
+            //
+            // const response = await fetch(`${PlayedAPI.url}/allSongsPlayed?min_date=${minDate}&max_date=${maxDate}&min_played=${minPlayed}&max_played=${maxPlayed}${userIDExtensinon}`, header);
+            // const response_1 = await super.checkStatus(response);
+            // return super.parseJSON(response_1);
+            const params = {
+                params: {
+                    min_date: minDate,
+                    max_date: maxDate,
+                    min_played: minPlayed,
+                    max_played: maxPlayed,
+                    user_id: userID
+                }
+            };
+            const result = await axios.get("/api/played/allSongsPlayed", params);
+            if (result.status === 200) {
+                return result.data;
+            }
+            throw new Error("DIE YOU BEACH");
         } catch (error) {
             console.log("log client error " + error);
             throw new Error("There was an error getting the data from graph All Songs Played");

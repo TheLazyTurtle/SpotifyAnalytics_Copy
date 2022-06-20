@@ -2,7 +2,7 @@ import "./Login.css";
 import "../index.css";
 import { useRef, useState } from "react";
 import { SystemAPI } from "../api/SystemAPI";
-import { Api } from "../api/api";
+import axios from "axios";
 
 function LoginPage() {
     const [error, setError] = useState<string>();
@@ -19,18 +19,21 @@ function LoginPage() {
             return;
         }
 
-        const header = Api.makeHeader("GET");
-        await fetch(`${Api.baseUrl}/sanctum/csrf-cookie`, header).then(async () => {
-            const result = await SystemAPI.login(username, password);
+        axios.get('/sanctum/csrf-cookie').then(response => {
+            test();
+        });
 
-            if (result instanceof Error) {
-                setError("Invalid login details");
-                return;
-            }
+    }
 
-            // window.location.href = getRedirectUrl();
-        })
+    // TODO: Fix this
+    async function test() {
+        const username: any = usernameElement.current?.value
+        const password: any = passwordElement.current?.value
+        const res = await axios.post("/login", { username, password });
 
+        if (res.status === 200) {
+            window.location.href = getRedirectUrl();
+        }
     }
 
     function getRedirectUrl() {

@@ -13,7 +13,7 @@ export class Api {
     }
 
     protected static checkStatus(response: any) {
-        if (response.ok) {
+        if (response.status.ok) {
             return response;
         } else {
             const httpErrorInfo = {
@@ -55,7 +55,6 @@ export class Api {
                 headers: {
                     'Content-Type': 'application/json;',
                     Credential: 'include',
-                    'X-XSRF-TOKEN': xsrfToken
                 },
             }
         } else if (type === "POST") {

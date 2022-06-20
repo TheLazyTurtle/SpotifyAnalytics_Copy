@@ -39,7 +39,7 @@ function App() {
 
             redirectUrls.map((url: string) => {
                 if (url === window.location.pathname) {
-                    window.location.href = makeRedirectUrl();
+                    // window.location.href = makeRedirectUrl();
                 }
             })
 
