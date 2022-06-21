@@ -42,8 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user/follow', [UserController::class, 'follow']);
 
-    Route::post('/notification/create', [NotificationController::class, 'store']);
-    Route::post('/notification/delete', [NotificationController::class, 'destroy']);
-    Route::post('/notification/handle', [NotificationController::class, 'handle']);
-    Route::get('/notification/', [NotificationController::class, 'index']);
+    Route::post('notification/create', [NotificationController::class, 'store']);
+    Route::post('notification/delete', [NotificationController::class, 'destroy']);
+    Route::post('notification/handle', [NotificationController::class, 'handle']);
+    Route::get('notification/', [NotificationController::class, 'index']);
 });

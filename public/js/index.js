@@ -2242,7 +2242,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/App.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/App.tsx";
 
 
 
@@ -2317,11 +2317,6 @@ function App() {
     });
   }
 
-  function makeRedirectUrl() {
-    var currentPage = window.location.pathname.replace("/", "");
-    return "/login?redirect=".concat(currentPage);
-  }
-
   (0,react__WEBPACK_IMPORTED_MODULE_12__.useEffect)(function () {
     validateLogin();
   }, []);
@@ -2333,7 +2328,7 @@ function App() {
     }, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 76,
+        lineNumber: 71,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
         children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, {
@@ -2341,124 +2336,124 @@ function App() {
             path: "/",
             element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_home_HomePage__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 79,
+              lineNumber: 74,
               columnNumber: 54
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 74,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/login",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 75,
+              columnNumber: 59
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 75,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/album/:artistID",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 76,
+              columnNumber: 69
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 76,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/artist/:artistID",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 77,
+              columnNumber: 70
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 77,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/profile",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 78,
+              columnNumber: 61
+            }, this)
+          }, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 78,
+            columnNumber: 29
+          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
+            path: "/search",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
+              fileName: _jsxFileName,
+              lineNumber: 79,
+              columnNumber: 60
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 79,
             columnNumber: 29
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/login",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
+            path: "/notifications",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_13__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 80,
-              columnNumber: 59
+              columnNumber: 67
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 80,
             columnNumber: 29
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/album/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
+            path: "/:username",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 81,
-              columnNumber: 69
+              columnNumber: 63
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 81,
             columnNumber: 29
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/artist/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
+            path: "*",
+            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
               fileName: _jsxFileName,
               lineNumber: 82,
-              columnNumber: 70
+              columnNumber: 54
             }, this)
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 82,
             columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/profile",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 83,
-              columnNumber: 61
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 83,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/search",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 84,
-              columnNumber: 60
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 84,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/notifications",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_13__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 85,
-              columnNumber: 67
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 85,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/:username",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 86,
-              columnNumber: 63
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 86,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "*",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 87,
-              columnNumber: 54
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 87,
-            columnNumber: 29
           }, this)]
         }, void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 78,
+          lineNumber: 73,
           columnNumber: 25
         }, this)
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 77,
+        lineNumber: 72,
         columnNumber: 21
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 74,
+      lineNumber: 69,
       columnNumber: 25
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_MobileHeader__WEBPACK_IMPORTED_MODULE_9__["default"], {}, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 92,
+      lineNumber: 87,
       columnNumber: 13
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 72,
+    lineNumber: 67,
     columnNumber: 13
   }, this);
 }
@@ -2500,7 +2495,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/album/AlbumComponent.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/album/AlbumComponent.tsx";
 
 
 
@@ -2676,7 +2671,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/album/AlbumList.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/album/AlbumList.tsx";
 
 
 function AlbumList(_a) {
@@ -2746,7 +2741,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/album/AlbumsPage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/album/AlbumsPage.tsx";
 
 
 
@@ -3837,38 +3832,25 @@ function (_super) {
 
   PlayedAPI.search = function (name) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_10;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
+            params = {
+              params: {
+                name: name
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(_api__WEBPACK_IMPORTED_MODULE_1__.Api.baseUrl, "/search?name=").concat(name), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search", params).then(function (response) {
+              return response.data;
+            })];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_10 = _b.sent();
-            console.log("log client error " + error_10);
-            throw new Error("There was an error getting the data from graph Played Per Day");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -4387,7 +4369,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/artist/ArtistHeader.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/artist/ArtistHeader.tsx";
 ;
 
 function ArtistHeader(_a) {
@@ -4513,7 +4495,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/artist/ArtistPage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/artist/ArtistPage.tsx";
 
 
 
@@ -4649,7 +4631,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/artist/ArtistTopSongs.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/artist/ArtistTopSongs.tsx";
 
 
 
@@ -4923,7 +4905,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/button/Button.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/button/Button.tsx";
 
 
 function Button(props) {
@@ -4977,7 +4959,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/button/ButtonWrapper.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/button/ButtonWrapper.tsx";
 
 
 
@@ -5293,7 +5275,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/graph/BarGraph.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/BarGraph.tsx";
 
 
 chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.BarElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip);
@@ -5509,7 +5491,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/graph/GraphWrapper.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/GraphWrapper.tsx";
 
 
 
@@ -5934,7 +5916,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/graph/LineGraph.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/LineGraph.tsx";
 
 
 chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_1__.Legend);
@@ -6000,7 +5982,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/header/Header.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/header/Header.tsx";
 
 
 
@@ -6174,7 +6156,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/header/MobileHeader.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/header/MobileHeader.tsx";
 
 
 function MobileHeaderItem(_a) {
@@ -6291,7 +6273,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/home/HomePage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/home/HomePage.tsx";
 
 
 
@@ -6377,7 +6359,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/index.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/index.tsx";
 
 
 
@@ -6391,8 +6373,7 @@ var queryClient = new react_query__WEBPACK_IMPORTED_MODULE_3__.QueryClient({
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       retry: false,
-      // staleTime: 60 * 60 * 1000,
-      staleTime: 0
+      staleTime: 60 * 60 * 1000
     }
   }
 });
@@ -6402,17 +6383,17 @@ react_dom__WEBPACK_IMPORTED_MODULE_2__.render((0,react_jsx_dev_runtime__WEBPACK_
   }, {
     children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_App__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 24,
+      lineNumber: 23,
       columnNumber: 13
     }, undefined)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 23,
+    lineNumber: 22,
     columnNumber: 9
   }, undefined)
 }, void 0, false, {
   fileName: _jsxFileName,
-  lineNumber: 21,
+  lineNumber: 20,
   columnNumber: 17
 }, undefined), document.getElementById('root')); // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
@@ -6595,7 +6576,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/inputField/InputField.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/inputField/InputField.tsx";
 
 ;
 
@@ -6832,7 +6813,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/inputField/InputFieldWrapper.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/inputField/InputFieldWrapper.tsx";
 
 
 
@@ -7111,7 +7092,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/login/LoginPage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/login/LoginPage.tsx";
 
 
 
@@ -7315,7 +7296,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notFound/NotFound.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notFound/NotFound.tsx";
 
 function NotFound() {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h1", {
@@ -7504,7 +7485,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationMessage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notificatons/NotificationMessage.tsx";
 
 ;
 
@@ -7650,7 +7631,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var _NotificationsPopup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notificatons/NotificationsPage.tsx";
 
 
 function NotificationsPage() {
@@ -7842,7 +7823,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
 
 
 
@@ -7996,7 +7977,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
 /* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/search/SearchPage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/search/SearchPage.tsx";
 
 
 
@@ -8201,7 +8182,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/slider/Slider.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/slider/Slider.tsx";
 
 
 
@@ -8597,7 +8578,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/song/SongComponent.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/song/SongComponent.tsx";
 
 function SongComponent(_a) {
   var song = _a.song;
@@ -8868,7 +8849,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/user/ProfilePage.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/user/ProfilePage.tsx";
 
 
 
@@ -9052,7 +9033,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageBody.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/user/ProfilePageBody.tsx";
 
 
 
@@ -9337,7 +9318,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
 
 
 

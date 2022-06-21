@@ -60,11 +60,6 @@ function App() {
         }
     }
 
-    function makeRedirectUrl() {
-        const currentPage = window.location.pathname.replace("/", "");
-        return `/login?redirect=${currentPage}`;
-    }
-
     useEffect(() => {
         validateLogin();
     }, []);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Response } from "../App";
 import { Api } from "./api";
 
 export class PlayedAPI extends Api {
@@ -141,15 +142,11 @@ export class PlayedAPI extends Api {
     }
 
     static async search(name: string) {
-        try {
-            const header = super.makeHeader("GET");
-
-            const response = await fetch(`${Api.baseUrl}/search?name=${name}`, header);
-            const response_1 = await super.checkStatus(response);
-            return super.parseJSON(response_1);
-        } catch (error) {
-            console.log("log client error " + error);
-            throw new Error("There was an error getting the data from graph Played Per Day");
+        const params = {
+            params: {
+                name: name
+            }
         }
+        return await axios.get<Response<any>>(`/api/search`, params).then((response) => response.data)
     }
 }
