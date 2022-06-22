@@ -11,9 +11,9 @@ function Header() {
 
     const inputField: inputField = {
         name: "search",
-        type: "text",
+        allowedInputType: "text",
         placeholder: "Search",
-        startValue: "",
+        filterValue: "",
         autocompleteFunction: PlayedAPI.search
     }
 

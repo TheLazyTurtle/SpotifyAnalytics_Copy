@@ -99,18 +99,15 @@ class PlayedController extends Controller
             ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
             ->join('songs', 'artist_has_song.song_id', 'songs.song_id')
             ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-            ->select(DB::raw('COUNT(*) as y'), 'played.song_name as label', 'songs.img_url')
+            ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x')
             ->whereBetween('date_played', [$request->min_date, $request->max_date])
             ->where('artists.name', 'like', $request->artist_name)
             ->groupBy('played.song_id')
             ->orderBy('y', 'desc')
-            ->limit($request->limit)
+            ->limit($request->amount)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $top_songs
-        ], 200);
+        return DataWrapperResource::collection($top_songs);
     }
 
     // Top artist of user
@@ -130,17 +127,14 @@ class PlayedController extends Controller
         $top_artists = Played::where('played_by', $user_id)
             ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
             ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-            ->select(DB::raw('COUNT(*) as y'), 'artists.name as label', 'artists.img_url')
+            ->select(DB::raw('COUNT(*) as y'), 'artists.name as x')
             ->whereBetween('played.date_played', [$request->min_date, $request->max_date])
             ->groupBy('artists.artist_id')
             ->orderBy('y', 'desc')
-            ->limit($request->limit)
+            ->limit($request->amount)
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $top_artists
-        ], 200);
+        return DataWrapperResource::collection($top_artists);
     }
 
     // Played per day for a user
@@ -158,7 +152,7 @@ class PlayedController extends Controller
         // TODO: Make the user_id go using the validation step
 
         $played_per_day = Played::where('played_by', $user_id)
-            ->select(DB::raw('unix_timestamp(played.date_played) * 1000 as label'), DB::raw('COUNT(*) as y'))
+            ->select(DB::raw('unix_timestamp(played.date_played) * 1000 as x'), DB::raw('COUNT(*) as y'))
             ->join('songs', 'played.song_id', 'songs.song_id')
             ->whereIn('songs.song_id', function ($query) use ($request) {
                 $query->select('songs.song_id')
@@ -170,13 +164,10 @@ class PlayedController extends Controller
             })
             ->whereBetween('played.date_played', [$request->min_date, $request->max_date])
             ->groupBy(DB::raw('MONTH(played.date_played)'), DB::raw('YEAR(played.date_played)'))
-            ->orderBy('label', 'desc')
+            ->orderBy('x', 'desc')
             ->get();
 
-        return response()->json([
-            'success' => true,
-            'data' => $played_per_day,
-        ], 200);
+        return DataWrapperResource::collection($played_per_day);
     }
 
     // Top artist search for a user
@@ -200,11 +191,10 @@ class PlayedController extends Controller
             ->where('artists.name', 'like', $request->artist_name . '%')
             ->groupBy('artists.artist_id')
             ->orderBy(DB::raw('COUNT(*)'), 'desc')
-            ->limit($request->limit)
+            ->limit($request->amount)
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $topArtists
         ], 200);
     }
@@ -231,11 +221,10 @@ class PlayedController extends Controller
             ->where('played.song_name', 'like', $request->song_name . '%')
             ->groupBy('played.song_id')
             ->orderBy(DB::raw('COUNT(*)'), 'desc')
-            ->limit($request->limit)
+            ->limit($request->amount)
             ->get();
 
         return response()->json([
-            'success' => true,
             'data' => $topSongs
         ], 200);
     }
@@ -319,8 +308,14 @@ class PlayedController extends Controller
         // TODO: Authentication
         // TODO: Make the user_id go using the validation step
 
-        $searchArtist = Artist::where('name', 'like', "%$request->name%")->select('artist_id', 'name', 'img_url', DB::raw('concat("artist") as type'))->limit(10)->get()->toArray();
-        $searchUser = User::where('username', 'like', "%$request->name%")->select('username as name', 'img_url', DB::raw('concat("user") as type'))->limit(10)->get()->toArray();
+        $searchArtist = Artist::where('name', 'like', "%$request->name%")
+            ->select('artist_id as id', 'name', 'img_url as imgUrl', DB::raw('concat("artist") as type'))
+            ->limit(10)
+            ->get();
+        $searchUser = User::where('username', 'like', "%$request->name%")
+            ->select('username as name', 'img_url as imgUrl', DB::raw('concat("user") as type'))
+            ->limit(10)
+            ->get();
 
         return response()->json([
             'success' => true,

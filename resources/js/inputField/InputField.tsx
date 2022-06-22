@@ -1,94 +1,131 @@
-import { useState } from "react";
+import debounce from "lodash/debounce";
+import { useCallback, useEffect, useState } from "react";
+import { Cacher } from "../cacher";
+import { GraphName } from "../graph/GraphWrapper";
+import { AutocompleteItem } from "./AutocompleteItem";
 import { inputField } from "./InputFieldWrapper";
 
 interface InputFieldProps {
     inputField: inputField;
     isComponent: boolean;
-    onChange(name: string, value: string | undefined): void;
+    onChange(name: string, value: string): void;
+    parentGraphName?: GraphName;
 };
 
-function InputField({ inputField, isComponent, onChange }: InputFieldProps) {
-    const { name, type, placeholder, startValue } = inputField;
-    const [value, setValue] = useState<string>(startValue);
-    const [data, setData] = useState<{}[]>([]);
+// TODO: Make this component a but more usable
+function InputField({ inputField, isComponent, onChange, parentGraphName }: InputFieldProps) {
+    const { name, allowedInputType, placeholder, filterValue } = inputField;
+    const [filterSetting, setFilterSetting] = useState(filterValue);
+    const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<AutocompleteItem[]>([]);
 
-    const handleOnChange = async (event: any) => {
+    useEffect(() => {
+        onChange(inputField.name, filterValue);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    async function handleOnInputChange(event: any) {
         const { value } = event.target;
+        setFilterSetting(value);
 
-        setValue(value);
-
-        if (inputField.autocompleteFunction !== undefined) {
-            // Update the graph and cache when input field is empty
-            if (value.length === 0) {
-                onChange(inputField.name, undefined)
-            }
-
-            const res = await inputField.autocompleteFunction(value, 10);
-            if (res.success) {
-                // Item is either a artist or a song
-                const names = res.data.map((item: any) => {
-                    return {
-                        name: item.name,
-                        img: item?.img_url,
-                        type: item?.type,
-                        id: item?.artist_id
-                    }
-                });
-                setData(names);
-            } else {
-                setData([]);
-            }
-        } else {
-            if (value.length === 0) {
-                onChange(inputField.name, undefined)
-            } else {
-                onChange(inputField.name, value)
-            }
+        if (inputField.autocompleteFunction !== undefined && value.length > 0) {
+            handleAutocompleteInput(value);
+            return;
         }
+
+        setAutocompleteSuggestions([]);
+        handleUpdateData(value);
     };
 
-    const clickHandler = (event: any) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleAutocompleteInput = useCallback(
+        debounce(async (value) => {
+            if (inputField.autocompleteFunction === undefined) {
+                return;
+            }
+
+            const autoCompleteSuggestionResult = await inputField.autocompleteFunction(value, 10);
+
+            if (autoCompleteSuggestionResult.status !== 200) {
+                setAutocompleteSuggestions([]);
+                return;
+            }
+
+            const names = autoCompleteSuggestionResult.data.data.map((item: AutocompleteItem) => {
+                return {
+                    name: item.name,
+                    img: item?.imgUrl,
+                    type: item?.type,
+                    id: item?.id
+                }
+            });
+            setAutocompleteSuggestions(names);
+        }, 500),
+        []
+    );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const handleUpdateData = useCallback(
+        debounce(async (value) => {
+            if (value === undefined) {
+                return;
+            }
+
+            const filterSettingValue = value.length > 0 ? value : undefined;
+
+            // Set cache
+            if (parentGraphName !== undefined) {
+                const currentCacheValue = Cacher.getItem(`${parentGraphName}-settings`);
+                const updatedCacheValue = { ...currentCacheValue, [name]: filterSettingValue };
+                Cacher.setItem(`${parentGraphName}-settings`, updatedCacheValue);
+            }
+
+            onChange(inputField.name, filterSettingValue);
+        }, 500),
+        []
+    );
+
+    function clickHandler(event: any) {
         const { innerHTML } = event.target;
 
-        setData([])
-        setValue(innerHTML)
-        onChange(inputField.name, innerHTML)
+        setAutocompleteSuggestions([])
+        setFilterSetting(innerHTML)
+        handleUpdateData(innerHTML);
     };
 
-    const inputFieldData = value === undefined ? "" : value;
-    return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, isComponent, handleOnChange, clickHandler);
+    const inputFieldText = filterSetting === undefined ? "" : filterSetting;
+    return inputField.autocompleteFunction === undefined ? normal(name, allowedInputType, placeholder, inputFieldText, handleOnInputChange) : autoComplete(name, allowedInputType, placeholder, inputFieldText, autocompleteSuggestions, isComponent, handleOnInputChange, clickHandler);
 }
 
-function normal(name: string, type: string, placeholder: string, value: string, handleOnChange: (event: any) => void) {
+function normal(name: string, allowedInputType: string, placeholderText: string, value: string, handleOnChange: (event: any) => void) {
     return (
-        <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange} />
+        <input className="form-control" name={name} type={allowedInputType} placeholder={placeholderText} value={value} onChange={handleOnChange} />
     );
 }
 
-function autoComplete(name: string, type: string, placeholder: string, value: string, data: {}[], isComponent: boolean, handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
+function autoComplete(name: string, allowedInputType: string, placeholderText: string, inputFieldText: string, autoCompleteSuggestions: AutocompleteItem[], isComponent: boolean, handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
     return (
         <section className="autocomplete-input-field">
-            <input className="form-control" name={name} type={type} placeholder={placeholder} value={value} onChange={handleOnChange} autoComplete="off" />
-            {(data.length > 0 && isComponent) &&
+            <input className="form-control" name={name} type={allowedInputType} placeholder={placeholderText} value={inputFieldText} onChange={handleOnChange} autoComplete="off" />
+            {(autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent) &&
                 <div className="input-field-result-data w-25 border position-absolute background-base">
-                    {value.length > 0 && data.map((item: {}, index: number) => autoCompleteRow(index, item, clickHandler))}
+                    {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
                 </div>
             }
-            {(data.length > 0 && !isComponent) &&
+            {(autoCompleteSuggestions.length > 0 && !isComponent) &&
                 <div className="input-field-result-data border position-absolute background-base">
-                    {value.length > 0 && data.map((item: {}, index: number) => autoCompleteRow(index, item, clickHandler))}
+                    {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
                 </div>
             }
         </section>
     );
 }
 
-function autoCompleteRow(index: number, item: any, clickHandler: (event: any) => void) {
+function autoCompleteRow(index: number, item: AutocompleteItem, clickHandler: (event: any) => void) {
     if (item.type) {
         const href = item.id !== undefined ? `/artist/${item.id}` : `/${item.name}`;
         return (
             <div key={index}>
-                <img alt={item.name} src={item.img} className="w-10 d-inline-block" />
+                <img alt={item.name} src={item.imgUrl} className="w-10 d-inline-block" />
                 <p key={index} className="text-white px-3 d-inline-block" onClick={clickHandler}><a href={href}>{item.name}</a></p>
             </div>
         );

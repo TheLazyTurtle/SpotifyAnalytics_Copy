@@ -1,13 +1,12 @@
 export type User = {
     id: string;
     username: string;
-    is_admin: boolean;
-    img_url: string;
-    jwt?: string;
-    is_own_account: boolean;
+    isAdmin: boolean;
+    imgUrl: string;
+    isOwnAccount: boolean;
     following?: boolean;
-    followers_count?: string;
-    following_count?: string;
+    followersCount?: string;
+    followingCount?: string;
     private: boolean;
     guest: boolean;
     hasFollowingRequest?: boolean;

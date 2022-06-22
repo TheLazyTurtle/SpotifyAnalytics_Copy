@@ -35,8 +35,8 @@ function App() {
             data: {
                 id: "1",
                 username: "The Lazy Turtle",
-                is_admin: true,
-                img_url: "",
+                isAdmin: true,
+                imgUrl: "",
             } as User
         };
 

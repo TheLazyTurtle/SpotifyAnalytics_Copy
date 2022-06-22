@@ -25,7 +25,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         }
 
         if (!user.following) {
-            if (!loggedInUser.is_admin) {
+            if (!loggedInUser.isAdmin) {
                 return false;
             }
             return true;
@@ -43,7 +43,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         <>
             {toShow() && new graphs().graphs.map((graph: Graph) => (
                 < div key={graph.name} className="graph pt-3" id={graph.name} >
-                    <GraphWrapper key={graph.name} name={graph.name} type={graph.type} value={graph.graphValue} inputFields={graph.inputFields} userID={user.id} />
+                    <GraphWrapper key={graph.name} graph={graph} userId={user.id} />
                 </div>
             ))}
             {!toShow() &&

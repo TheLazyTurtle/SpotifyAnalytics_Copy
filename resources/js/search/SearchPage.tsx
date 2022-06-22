@@ -5,9 +5,9 @@ import { inputField } from "../inputField/InputFieldWrapper";
 function SearchPage() {
     const inputField: inputField = {
         name: "search",
-        type: "text",
+        allowedInputType: "text",
         placeholder: "Search",
-        startValue: "",
+        filterValue: "",
         autocompleteFunction: PlayedAPI.search
     }
 

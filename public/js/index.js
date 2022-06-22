@@ -2284,8 +2284,8 @@ function App() {
           data: {
             id: "1",
             username: "The Lazy Turtle",
-            is_admin: true,
-            img_url: ""
+            isAdmin: true,
+            imgUrl: ""
           }
         };
 
@@ -3426,12 +3426,10 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var params, result, error_1;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 2,, 3]);
-
             params = {
               params: {
                 min_date: minDate,
@@ -3446,25 +3444,9 @@ function (_super) {
             , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/allSongsPlayed", params)];
 
           case 1:
-            result = _b.sent();
-
-            if (result.status === 200) {
-              return [2
-              /*return*/
-              , result.data];
-            }
-
-            throw new Error("DIE YOU BEACH");
-
-          case 2:
-            error_1 = _b.sent();
-            console.log("log client error " + error_1);
-            throw new Error("There was an error getting the data from graph All Songs Played");
-
-          case 3:
             return [2
             /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -3488,39 +3470,27 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var header, userIDExtensinon, response, response_1, error_2;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            userIDExtensinon = userID !== undefined ? "&user_id=".concat(userID) : "";
+            params = {
+              params: {
+                min_date: minDate,
+                max_date: maxDate,
+                artist_name: artistName,
+                amount: amount,
+                user_id: userID
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/topSongs?min_date=").concat(minDate, "&max_date=").concat(maxDate, "&artist_name=").concat(artistName, "&limit=").concat(amount).concat(userIDExtensinon), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topSongs", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_2 = _b.sent();
-            console.log("log client error " + error_2);
-            throw new Error("There was an error getting the data from graph Top Songs");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -3540,39 +3510,26 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var header, userIDExtensinon, response, response_1, error_3;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            userIDExtensinon = userID !== undefined ? "&user_id=".concat(userID) : "";
+            params = {
+              params: {
+                min_date: minDate,
+                max_date: maxDate,
+                amount: amount,
+                user_id: userID
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/topArtists?min_date=").concat(minDate, "&max_date=").concat(maxDate, "&limit=").concat(amount).concat(userIDExtensinon), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topArtists", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_3 = _b.sent();
-            console.log("log client error " + error_3);
-            throw new Error("There was an error getting the data from graph Top Artist");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -3596,118 +3553,79 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var header, userIDExtensinon, response, response_1, error_4;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            userIDExtensinon = userID !== undefined ? "&user_id=".concat(userID) : "";
+            params = {
+              params: {
+                min_date: minDate,
+                max_date: maxDate,
+                song_name: songName,
+                artist_name: artistName,
+                user_id: userID
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/playedPerDay?min_date=").concat(minDate, "&max_date=").concat(maxDate, "&song_name=").concat(songName, "&artist_name=").concat(artistName).concat(userIDExtensinon), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/playedPerDay", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_4 = _b.sent();
-            console.log("log client error " + error_4);
-            throw new Error("There was an error getting the data from graph Played Per Day");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
   };
 
-  PlayedAPI.topArtistSearch = function (artistName, limit, userID) {
+  PlayedAPI.topArtistSearch = function (artistName, amount, userID) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, userIDExtensinon, response, response_1, error_5;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            userIDExtensinon = userID !== undefined ? "&user_id=".concat(userID) : "";
+            params = {
+              params: {
+                artist_name: artistName,
+                amount: amount,
+                user_id: userID
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/topArtistSearch?artist_name=").concat(artistName, "&limit=").concat(limit).concat(userIDExtensinon), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topArtistSearch", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_5 = _b.sent();
-            console.log("log client error " + error_5);
-            throw new Error("There was an error getting the data from graph Played Per Day");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
   };
 
-  PlayedAPI.topSongsSearch = function (songName, limit) {
+  PlayedAPI.topSongsSearch = function (songName, amount, userID) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_6;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
+            params = {
+              params: {
+                song_name: songName,
+                amount: amount,
+                user_id: userID
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/topSongsSearch?song_name=").concat(songName, "&limit=").concat(limit), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topSongsSearch", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_6 = _b.sent();
-            console.log("log client error " + error_6);
-            throw new Error("There was an error getting the data from graph Played Per Day");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -3715,7 +3633,7 @@ function (_super) {
 
   PlayedAPI.timeListend = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_7;
+      var header, response, response_1, error_1;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
@@ -3739,8 +3657,8 @@ function (_super) {
             , _super.parseJSON.call(this, response_1)];
 
           case 3:
-            error_7 = _b.sent();
-            console.log("log client error " + error_7);
+            error_1 = _b.sent();
+            console.log("log client error " + error_1);
             throw new Error("There was an error getting the data from graph Played Per Day");
 
           case 4:
@@ -3754,7 +3672,7 @@ function (_super) {
 
   PlayedAPI.amountSongs = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_8;
+      var header, response, response_1, error_2;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
@@ -3778,8 +3696,8 @@ function (_super) {
             , _super.parseJSON.call(this, response_1)];
 
           case 3:
-            error_8 = _b.sent();
-            console.log("log client error " + error_8);
+            error_2 = _b.sent();
+            console.log("log client error " + error_2);
             throw new Error("There was an error getting the data from graph Played Per Day");
 
           case 4:
@@ -3793,7 +3711,7 @@ function (_super) {
 
   PlayedAPI.amountNewSongs = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_9;
+      var header, response, response_1, error_3;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
@@ -3817,8 +3735,8 @@ function (_super) {
             , _super.parseJSON.call(this, response_1)];
 
           case 3:
-            error_9 = _b.sent();
-            console.log("log client error " + error_9);
+            error_3 = _b.sent();
+            console.log("log client error " + error_3);
             throw new Error("There was an error getting the data from graph Played Per Day");
 
           case 4:
@@ -5260,10 +5178,10 @@ function msToTime(s) {
 
 /***/ }),
 
-/***/ "./resources/js/graph/BarGraph.tsx":
-/*!*****************************************!*\
-  !*** ./resources/js/graph/BarGraph.tsx ***!
-  \*****************************************/
+/***/ "./resources/js/graph/GraphComponent.tsx":
+/*!***********************************************!*\
+  !*** ./resources/js/graph/GraphComponent.tsx ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5273,38 +5191,110 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
-/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
+/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
+/* harmony import */ var _GraphWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GraphWrapper */ "./resources/js/graph/GraphWrapper.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/BarGraph.tsx";
+var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/GraphComponent.tsx";
 
 
-chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.BarElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip);
+
+
+chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.BarElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_1__.Legend);
 ;
+var options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: false
+    },
+    title: {
+      display: false
+    }
+  }
+};
 
-function BarGraph(_a) {
+function GraphComponent(_a) {
   var dataPoints = _a.dataPoints,
-      labels = _a.labels,
-      options = _a.options;
+      graphType = _a.graphType;
+
+  var _b = processDataPoints(graphType, dataPoints),
+      labels = _b.labels,
+      dataPointValues = _b.dataPointValues;
+
   var colors = ["#6D78AD", "#51CDA0", "#DF7970", "#4C9CA0", "#AE7D99", "#C9D45C", "#5592AD", "#DF874D", "#52BCA8", "#8E7AA3", "#E3CB64", "#C77B85", "#C39762", "#8DD17E", "#B57952", "#FCC26C"];
-  var data = {
-    labels: labels,
-    datasets: [{
-      data: dataPoints,
-      borderColor: colors,
-      backgroundColor: colors
-    }]
-  };
-  return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__.Bar, {
-    options: options,
-    data: data
-  }, void 0, false, {
+  var lineColor = "#1DB954";
+
+  function processDataPoints(graphType, dataPoints) {
+    var labels = [];
+    var dataPointValues = [];
+
+    if (dataPoints !== undefined) {
+      if (graphType === _GraphWrapper__WEBPACK_IMPORTED_MODULE_2__.GraphDataType.Bar) {
+        dataPoints === null || dataPoints === void 0 ? void 0 : dataPoints.forEach(function (dataPoint) {
+          labels.push(dataPoint.x);
+          dataPointValues.push(dataPoint.y);
+        });
+      } else {
+        dataPoints === null || dataPoints === void 0 ? void 0 : dataPoints.forEach(function (dataPoint) {
+          labels.push(new Date(dataPoint.x).toLocaleDateString());
+          dataPointValues.push(dataPoint.y);
+        });
+      }
+    }
+
+    return {
+      labels: labels,
+      dataPointValues: dataPointValues
+    };
+  }
+
+  function getDatasetOptionsBar() {
+    return {
+      labels: labels,
+      datasets: [{
+        data: dataPointValues,
+        borderColor: colors,
+        backgroundColor: colors
+      }]
+    };
+  }
+
+  function getDatasetOptionsLine() {
+    return {
+      labels: labels,
+      datasets: [{
+        data: dataPointValues,
+        borderColor: lineColor,
+        backgroundColor: lineColor
+      }]
+    };
+  }
+
+  return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: [graphType === _GraphWrapper__WEBPACK_IMPORTED_MODULE_2__.GraphDataType.Bar && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_3__.Bar, {
+      options: options,
+      data: getDatasetOptionsBar()
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 103,
+      columnNumber: 48
+    }, this), graphType === _GraphWrapper__WEBPACK_IMPORTED_MODULE_2__.GraphDataType.Line && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_3__.Line, {
+      options: options,
+      data: getDatasetOptionsLine()
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 106,
+      columnNumber: 49
+    }, this)]
+  }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 39,
-    columnNumber: 11
+    lineNumber: 101,
+    columnNumber: 13
   }, this);
 }
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BarGraph);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GraphComponent);
 
 /***/ }),
 
@@ -5317,36 +5307,19 @@ function BarGraph(_a) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "GraphType": () => (/* binding */ GraphType),
-/* harmony export */   "GraphValue": () => (/* binding */ GraphValue),
+/* harmony export */   "GraphDataType": () => (/* binding */ GraphDataType),
+/* harmony export */   "GraphName": () => (/* binding */ GraphName),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _BarGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BarGraph */ "./resources/js/graph/BarGraph.tsx");
-/* harmony import */ var _LineGraph__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LineGraph */ "./resources/js/graph/LineGraph.tsx");
-/* harmony import */ var _button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../button/ButtonWrapper */ "./resources/js/button/ButtonWrapper.tsx");
-/* harmony import */ var _inputField_InputFieldWrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../inputField/InputFieldWrapper */ "./resources/js/inputField/InputFieldWrapper.tsx");
-/* harmony import */ var _dates__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../dates */ "./resources/js/dates.ts");
-/* harmony import */ var _cacher__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../cacher */ "./resources/js/cacher.ts");
-/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
-/* harmony import */ var _Graph_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Graph.css */ "./resources/js/graph/Graph.css");
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
+/* harmony import */ var _button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../button/ButtonWrapper */ "./resources/js/button/ButtonWrapper.tsx");
+/* harmony import */ var _inputField_InputFieldWrapper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../inputField/InputFieldWrapper */ "./resources/js/inputField/InputFieldWrapper.tsx");
+/* harmony import */ var _dates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../dates */ "./resources/js/dates.ts");
+/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
+/* harmony import */ var react_query__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
+/* harmony import */ var _Graph_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Graph.css */ "./resources/js/graph/Graph.css");
+/* harmony import */ var _GraphComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./GraphComponent */ "./resources/js/graph/GraphComponent.tsx");
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function (resolve) {
@@ -5499,210 +5472,93 @@ var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/
 
 
 
+ // TODO: Export all these things into a different file
+//      Maybe just make a types file where we put all types, enums, interfaces (that are not component input values)
 
+var GraphDataType;
 
-var GraphType;
-
-(function (GraphType) {
-  GraphType[GraphType["Line"] = 0] = "Line";
-  GraphType[GraphType["Bar"] = 1] = "Bar";
-})(GraphType || (GraphType = {}));
-
-;
-var GraphValue;
-
-(function (GraphValue) {
-  GraphValue["allSongsPlayed"] = "allSongsPlayed";
-  GraphValue["topSongs"] = "topSongs";
-  GraphValue["topArtist"] = "topArtist";
-  GraphValue["playedPerDay"] = "playedPerDay";
-})(GraphValue || (GraphValue = {}));
+(function (GraphDataType) {
+  GraphDataType[GraphDataType["Line"] = 0] = "Line";
+  GraphDataType[GraphDataType["Bar"] = 1] = "Bar";
+})(GraphDataType || (GraphDataType = {}));
 
 ;
-; // TODO: Make this component more useable. It is kinda big
+var GraphName;
 
-function GraphWrapper(props) {
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
-      filterSettings = _a[0],
-      setFilterSettings = _a[1];
+(function (GraphName) {
+  GraphName["allSongsPlayed"] = "allSongsPlayed";
+  GraphName["topSongs"] = "topSongs";
+  GraphName["topArtist"] = "topArtist";
+  GraphName["playedPerDay"] = "playedPerDay";
+})(GraphName || (GraphName = {}));
 
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(_dates__WEBPACK_IMPORTED_MODULE_6__.TimeFrame.year),
+;
+;
+
+function GraphWrapper(_a) {
+  var graph = _a.graph,
+      userId = _a.userId;
+
+  var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(_dates__WEBPACK_IMPORTED_MODULE_4__.TimeFrame.year),
       timeFrame = _b[0],
       setTimeFrame = _b[1];
 
-  var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      dataPoints = _c[0],
-      setDataPoints = _c[1];
+  var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(),
+      filterSettings = _c[0],
+      setFilterSettings = _c[1];
 
-  var _d = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      labels = _d[0],
-      setLabels = _d[1];
-
-  var _e = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(undefined),
-      error = _e[0],
-      setError = _e[1];
-
-  var graphOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false
-      },
-      title: {
-        display: false
-      }
-    }
-  }; // Get filtersettings
+  var _d = (0,react_query__WEBPACK_IMPORTED_MODULE_6__.useQuery)([graph.name, timeFrame], function () {
+    return chooseEndPoint(graph.name, timeFrame, filterSettings, userId);
+  }),
+      data = _d.data,
+      refetch = _d.refetch;
 
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    // User is logged in
-    if (props.userID === undefined) {
-      var cachedFilterSettings = _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.getItem("".concat(props.name, "-settings"));
-      setFilterSettings(cachedFilterSettings);
-      loadGraphData(cachedFilterSettings);
-      return;
-    }
+    refetch();
+  }, [filterSettings, refetch]);
 
-    loadExternalGraphData({}); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value, timeFrame]);
-
-  var handleTimeFrameClick = function handleTimeFrameClick(value) {
-    setTimeFrame(value);
+  var handleTimeFrameClick = function handleTimeFrameClick(timeFrame) {
+    setTimeFrame(timeFrame);
   };
 
   function handleInputFieldUpdate(filterSettings) {
     setFilterSettings(filterSettings);
-
-    if (props.userID === undefined) {
-      loadGraphData(filterSettings, true);
-      return;
-    }
-
-    loadExternalGraphData(filterSettings);
+    refetch();
   }
 
-  function loadExternalGraphData(filterSettings) {
-    return __awaiter(this, void 0, void 0, function () {
-      var data;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , chooseEndPoint(props.value, timeFrame, filterSettings, props.userID)];
-
-          case 1:
-            data = _a.sent();
-
-            if (data.success === true) {
-              data = data.data;
-              setError("");
-            } else {
-              data = JSON.parse("{}");
-              setError("Failed to get for user");
-            }
-
-            processIncomingData(data);
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  }
-
-  function loadGraphData(filterSettings, force) {
-    if (force === void 0) {
-      force = false;
-    }
-
-    return __awaiter(this, void 0, void 0, function () {
-      var items, e_1;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            _a.trys.push([0, 3,, 4]);
-
-            items = _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.getItem(props.value, true, timeFrame);
-
-            if (JSON.stringify(items.filterSettings) !== JSON.stringify(filterSettings)) {
-              force = true;
-            }
-
-            if (!(Object.keys(items).length <= 0 || force)) return [3
-            /*break*/
-            , 2];
-            return [4
-            /*yield*/
-            , chooseEndPoint(props.value, timeFrame, filterSettings)];
-
-          case 1:
-            items = _a.sent();
-
-            if (items.success === true) {
-              _cacher__WEBPACK_IMPORTED_MODULE_7__.Cacher.setItem(props.value, items.data, timeFrame, filterSettings);
-            } else {
-              items = JSON.parse("{}");
-            }
-
-            _a.label = 2;
-
-          case 2:
-            setError("");
-            processIncomingData(items.data);
-            return [3
-            /*break*/
-            , 4];
-
-          case 3:
-            e_1 = _a.sent();
-
-            if (e_1 instanceof Error) {
-              console.log(e_1);
-              setError(e_1.message);
-            }
-
-            return [3
-            /*break*/
-            , 4];
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  }
-
-  function chooseEndPoint(valueType, timeFrame, filterSettings, userID) {
+  function chooseEndPoint(graphValue, timeFrame, filterSettings, userId) {
     return __awaiter(this, void 0, void 0, function () {
       var _a, minDate, maxDate;
 
       return __generator(this, function (_b) {
-        _a = (0,_dates__WEBPACK_IMPORTED_MODULE_6__.convertTime)(timeFrame), minDate = _a.minDate, maxDate = _a.maxDate;
+        if (filterSettings === undefined) {
+          return [2
+          /*return*/
+          ];
+        }
 
-        switch (valueType) {
-          case GraphValue.allSongsPlayed:
+        _a = (0,_dates__WEBPACK_IMPORTED_MODULE_4__.convertTime)(timeFrame), minDate = _a.minDate, maxDate = _a.maxDate;
+
+        switch (graphValue) {
+          case GraphName.allSongsPlayed:
             return [2
             /*return*/
-            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__.PlayedAPI.allSongsPlayed(minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"], userID)];
+            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__.PlayedAPI.allSongsPlayed(minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"], userId)];
 
-          case GraphValue.topSongs:
+          case GraphName.topSongs:
             return [2
             /*return*/
-            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__.PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"], filterSettings["amount"], userID)];
+            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__.PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"], filterSettings["amount"], userId)];
 
-          case GraphValue.topArtist:
+          case GraphName.topArtist:
             return [2
             /*return*/
-            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__.PlayedAPI.topArtist(minDate, maxDate, filterSettings["amount"], userID)];
+            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__.PlayedAPI.topArtist(minDate, maxDate, filterSettings["amount"], userId)];
 
-          case GraphValue.playedPerDay:
+          case GraphName.playedPerDay:
             return [2
             /*return*/
-            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__.PlayedAPI.playedPerDay(minDate, maxDate, filterSettings["songName"], filterSettings["artistName"], userID)];
+            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__.PlayedAPI.playedPerDay(minDate, maxDate, filterSettings["songName"], filterSettings["artistName"], userId)];
         }
 
         return [2
@@ -5712,97 +5568,33 @@ function GraphWrapper(props) {
     });
   }
 
-  function processIncomingData(data) {
-    var dataPoints = [];
-    var labels = [];
-
-    for (var i = 0; i < data.length; i++) {
-      var played = data[i];
-      dataPoints.push(played.y);
-
-      if (props.type === GraphType.Line) {
-        var date = new Date(played.label).toLocaleDateString();
-        labels.push(date);
-        continue;
-      }
-
-      labels.push(played.label.substring(0, 50));
-    }
-
-    setDataPoints(dataPoints);
-    setLabels(labels);
-  }
-
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    children: [error && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-      className: "row"
-    }, {
-      children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-        className: "card large error"
-      }, {
-        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", {
-          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
-            children: [" ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("span", {
-              className: "icon-alert inverse "
-            }, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 167,
-              columnNumber: 33
-            }, this), " ", error, " "]
-          }, void 0, true, {
-            fileName: _jsxFileName,
-            lineNumber: 167,
-            columnNumber: 29
-          }, this)
-        }, void 0, false, {
-          fileName: _jsxFileName,
-          lineNumber: 166,
-          columnNumber: 25
-        }, this)
-      }), void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 165,
-        columnNumber: 21
-      }, this)
-    }), void 0, false, {
-      fileName: _jsxFileName,
-      lineNumber: 163,
-      columnNumber: 24
-    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], {
       onClick: handleTimeFrameClick
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 172,
+      lineNumber: 70,
       columnNumber: 13
-    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputFieldWrapper__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputFieldWrapper__WEBPACK_IMPORTED_MODULE_3__["default"], {
       update: handleInputFieldUpdate,
-      inputFields: props.inputFields,
-      graphName: props.name,
-      userID: props.userID
+      inputFields: graph.inputFields,
+      graphName: graph.name,
+      userId: userId
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 173,
+      lineNumber: 71,
       columnNumber: 13
-    }, this), props.type === GraphType.Line ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_LineGraph__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      dataPoints: dataPoints,
-      labels: labels,
-      options: graphOptions
+    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_GraphComponent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      dataPoints: data === null || data === void 0 ? void 0 : data.data.data,
+      graphType: graph.type
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 174,
-      columnNumber: 45
-    }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_BarGraph__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      dataPoints: dataPoints,
-      labels: labels,
-      options: graphOptions
-    }, void 0, false, {
-      fileName: _jsxFileName,
-      lineNumber: 174,
-      columnNumber: 119
+      lineNumber: 72,
+      columnNumber: 13
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 161,
+    lineNumber: 68,
     columnNumber: 13
   }, this);
 }
@@ -5833,64 +5625,60 @@ var graphs =
 function () {
   function graphs() {
     this.graphs = [{
-      name: "AllSongsPlayed",
-      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphType.Bar,
+      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphDataType.Bar,
       inputFields: [{
         name: "minPlayed",
-        type: "number",
+        allowedInputType: "number",
         placeholder: "Min Played",
-        startValue: ""
+        filterValue: ""
       }, {
         name: "maxPlayed",
-        type: "number",
+        allowedInputType: "number",
         placeholder: "Max Played",
-        startValue: ""
+        filterValue: ""
       }],
-      graphValue: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphValue.allSongsPlayed
+      name: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphName.allSongsPlayed
     }, {
-      name: "TopSongs",
-      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphType.Bar,
+      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphDataType.Bar,
       inputFields: [{
         name: "artistName",
-        type: "text",
+        allowedInputType: "text",
         placeholder: "Artist name",
-        startValue: "",
+        filterValue: "",
         autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.topArtistSearch
       }, {
         name: "amount",
-        type: "number",
+        allowedInputType: "number",
         placeholder: "Amount",
-        startValue: ""
+        filterValue: ""
       }],
-      graphValue: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphValue.topSongs
+      name: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphName.topSongs
     }, {
-      name: "TopArtist",
-      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphType.Bar,
+      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphDataType.Bar,
       inputFields: [{
         name: "amount",
-        type: "number",
+        allowedInputType: "number",
         placeholder: "Amount",
-        startValue: ""
+        filterValue: ""
       }],
-      graphValue: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphValue.topArtist
+      name: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphName.topArtist
     }, {
-      name: "PlayedPerDay",
-      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphType.Line,
+      type: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphDataType.Line,
       inputFields: [{
         name: "songName",
-        type: "text",
+        allowedInputType: "text",
         placeholder: "Song Name",
-        startValue: "",
+        filterValue: "",
         autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.topSongsSearch
       } // {
       //     name: "artistName",
       //     type: "text",
       //     placeholder: "Artist Name",
-      //     startValue: "",
+      //     filterValue: "",
       //     autocompleteFunction: PlayedAPI.topArtistSearch
       // },
       ],
-      graphValue: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphValue.playedPerDay
+      name: _GraphWrapper__WEBPACK_IMPORTED_MODULE_1__.GraphName.playedPerDay
     }];
   }
 
@@ -5898,53 +5686,6 @@ function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "./resources/js/graph/LineGraph.tsx":
-/*!******************************************!*\
-  !*** ./resources/js/graph/LineGraph.tsx ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/chart.esm.js");
-/* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
-
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/LineGraph.tsx";
-
-
-chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_MODULE_1__.CategoryScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.LinearScale, chart_js__WEBPACK_IMPORTED_MODULE_1__.PointElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.LineElement, chart_js__WEBPACK_IMPORTED_MODULE_1__.Title, chart_js__WEBPACK_IMPORTED_MODULE_1__.Tooltip, chart_js__WEBPACK_IMPORTED_MODULE_1__.Legend);
-
-function LineGraph(_a) {
-  var dataPoints = _a.dataPoints,
-      labels = _a.labels,
-      options = _a.options;
-  var lineColor = "#1DB954";
-  var data = {
-    labels: labels,
-    datasets: [{
-      data: dataPoints,
-      borderColor: lineColor,
-      backgroundColor: lineColor
-    }]
-  };
-  return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_chartjs_2__WEBPACK_IMPORTED_MODULE_2__.Line, {
-    options: options,
-    data: data
-  }, void 0, false, {
-    fileName: _jsxFileName,
-    lineNumber: 43,
-    columnNumber: 11
-  }, this);
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LineGraph);
 
 /***/ }),
 
@@ -5998,9 +5739,9 @@ function Header() {
 
   var inputField = {
     name: "search",
-    type: "text",
+    allowedInputType: "text",
     placeholder: "Search",
-    startValue: "",
+    filterValue: "",
     autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_2__.PlayedAPI.search
   };
 
@@ -6295,10 +6036,7 @@ function HomePage() {
           id: graph.name
         }, {
           children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_graph_GraphWrapper__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            name: graph.name,
-            type: graph.type,
-            value: graph.graphValue,
-            inputFields: graph.inputFields
+            graph: graph
           }, graph.name, false, {
             fileName: _jsxFileName,
             lineNumber: 12,
@@ -6415,7 +6153,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/debounce */ "./node_modules/lodash/debounce.js");
+/* harmony import */ var lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_debounce__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _cacher__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../cacher */ "./resources/js/cacher.ts");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -6578,41 +6319,69 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/inputField/InputField.tsx";
 
-;
+
+
+; // TODO: Make this component a but more usable
 
 function InputField(_a) {
   var _this = this;
 
   var inputField = _a.inputField,
       isComponent = _a.isComponent,
-      onChange = _a.onChange;
+      onChange = _a.onChange,
+      parentGraphName = _a.parentGraphName;
   var name = inputField.name,
-      type = inputField.type,
+      allowedInputType = inputField.allowedInputType,
       placeholder = inputField.placeholder,
-      startValue = inputField.startValue;
+      filterValue = inputField.filterValue;
 
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(startValue),
-      value = _b[0],
-      setValue = _b[1];
+  var _b = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(filterValue),
+      filterSetting = _b[0],
+      setFilterSetting = _b[1];
 
-  var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      data = _c[0],
-      setData = _c[1];
+  var _c = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+      autocompleteSuggestions = _c[0],
+      setAutocompleteSuggestions = _c[1];
 
-  var handleOnChange = function handleOnChange(event) {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    onChange(inputField.name, filterValue); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleOnInputChange(event) {
+    return __awaiter(this, void 0, void 0, function () {
+      var value;
+      return __generator(this, function (_a) {
+        value = event.target.value;
+        setFilterSetting(value);
+
+        if (inputField.autocompleteFunction !== undefined && value.length > 0) {
+          handleAutocompleteInput(value);
+          return [2
+          /*return*/
+          ];
+        }
+
+        setAutocompleteSuggestions([]);
+        handleUpdateData(value);
+        return [2
+        /*return*/
+        ];
+      });
+    });
+  }
+
+  ; // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  var handleAutocompleteInput = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (value) {
     return __awaiter(_this, void 0, void 0, function () {
-      var value, res, names;
+      var autoCompleteSuggestionResult, names;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            value = event.target.value;
-            setValue(value);
-            if (!(inputField.autocompleteFunction !== undefined)) return [3
-            /*break*/
-            , 2]; // Update the graph and cache when input field is empty
-
-            if (value.length === 0) {
-              onChange(inputField.name, undefined);
+            if (inputField.autocompleteFunction === undefined) {
+              return [2
+              /*return*/
+              ];
             }
 
             return [4
@@ -6620,110 +6389,128 @@ function InputField(_a) {
             , inputField.autocompleteFunction(value, 10)];
 
           case 1:
-            res = _a.sent();
+            autoCompleteSuggestionResult = _a.sent();
 
-            if (res.success) {
-              names = res.data.map(function (item) {
-                return {
-                  name: item.name,
-                  img: item === null || item === void 0 ? void 0 : item.img_url,
-                  type: item === null || item === void 0 ? void 0 : item.type,
-                  id: item === null || item === void 0 ? void 0 : item.artist_id
-                };
-              });
-              setData(names);
-            } else {
-              setData([]);
+            if (autoCompleteSuggestionResult.status !== 200) {
+              setAutocompleteSuggestions([]);
+              return [2
+              /*return*/
+              ];
             }
 
-            return [3
-            /*break*/
-            , 3];
-
-          case 2:
-            if (value.length === 0) {
-              onChange(inputField.name, undefined);
-            } else {
-              onChange(inputField.name, value);
-            }
-
-            _a.label = 3;
-
-          case 3:
+            names = autoCompleteSuggestionResult.data.data.map(function (item) {
+              return {
+                name: item.name,
+                img: item === null || item === void 0 ? void 0 : item.imgUrl,
+                type: item === null || item === void 0 ? void 0 : item.type,
+                id: item === null || item === void 0 ? void 0 : item.id
+              };
+            });
+            setAutocompleteSuggestions(names);
             return [2
             /*return*/
             ];
         }
       });
     });
-  };
+  }, 500), []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
-  var clickHandler = function clickHandler(event) {
+  var handleUpdateData = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (value) {
+    return __awaiter(_this, void 0, void 0, function () {
+      var filterSettingValue, currentCacheValue, updatedCacheValue;
+
+      var _a;
+
+      return __generator(this, function (_b) {
+        if (value === undefined) {
+          return [2
+          /*return*/
+          ];
+        }
+
+        filterSettingValue = value.length > 0 ? value : undefined; // Set cache
+
+        if (parentGraphName !== undefined) {
+          currentCacheValue = _cacher__WEBPACK_IMPORTED_MODULE_3__.Cacher.getItem("".concat(parentGraphName, "-settings"));
+          updatedCacheValue = __assign(__assign({}, currentCacheValue), (_a = {}, _a[name] = filterSettingValue, _a));
+          _cacher__WEBPACK_IMPORTED_MODULE_3__.Cacher.setItem("".concat(parentGraphName, "-settings"), updatedCacheValue);
+        }
+
+        onChange(inputField.name, filterSettingValue);
+        return [2
+        /*return*/
+        ];
+      });
+    });
+  }, 500), []);
+
+  function clickHandler(event) {
     var innerHTML = event.target.innerHTML;
-    setData([]);
-    setValue(innerHTML);
-    onChange(inputField.name, innerHTML);
-  };
+    setAutocompleteSuggestions([]);
+    setFilterSetting(innerHTML);
+    handleUpdateData(innerHTML);
+  }
 
-  var inputFieldData = value === undefined ? "" : value;
-  return inputField.autocompleteFunction === undefined ? normal(name, type, placeholder, inputFieldData, handleOnChange) : autoComplete(name, type, placeholder, inputFieldData, data, isComponent, handleOnChange, clickHandler);
+  ;
+  var inputFieldText = filterSetting === undefined ? "" : filterSetting;
+  return inputField.autocompleteFunction === undefined ? normal(name, allowedInputType, placeholder, inputFieldText, handleOnInputChange) : autoComplete(name, allowedInputType, placeholder, inputFieldText, autocompleteSuggestions, isComponent, handleOnInputChange, clickHandler);
 }
 
-function normal(name, type, placeholder, value, handleOnChange) {
+function normal(name, allowedInputType, placeholderText, value, handleOnChange) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
     className: "form-control",
     name: name,
-    type: type,
-    placeholder: placeholder,
+    type: allowedInputType,
+    placeholder: placeholderText,
     value: value,
     onChange: handleOnChange
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 63,
+    lineNumber: 100,
     columnNumber: 13
   }, this);
 }
 
-function autoComplete(name, type, placeholder, value, data, isComponent, handleOnChange, clickHandler) {
+function autoComplete(name, allowedInputType, placeholderText, inputFieldText, autoCompleteSuggestions, isComponent, handleOnChange, clickHandler) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
     className: "autocomplete-input-field"
   }, {
     children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
       className: "form-control",
       name: name,
-      type: type,
-      placeholder: placeholder,
-      value: value,
+      type: allowedInputType,
+      placeholder: placeholderText,
+      value: inputFieldText,
       onChange: handleOnChange,
       autoComplete: "off"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 71,
+      lineNumber: 108,
       columnNumber: 13
-    }, this), data.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+    }, this), autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data w-25 border position-absolute background-base"
     }, {
-      children: value.length > 0 && data.map(function (item, index) {
+      children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
         return autoCompleteRow(index, item, clickHandler);
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 72,
-      columnNumber: 49
-    }, this), data.length > 0 && !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+      lineNumber: 109,
+      columnNumber: 97
+    }, this), autoCompleteSuggestions.length > 0 && !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data border position-absolute background-base"
     }, {
-      children: value.length > 0 && data.map(function (item, index) {
+      children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
         return autoCompleteRow(index, item, clickHandler);
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 77,
-      columnNumber: 50
+      lineNumber: 114,
+      columnNumber: 69
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 69,
+    lineNumber: 106,
     columnNumber: 13
   }, this);
 }
@@ -6734,11 +6521,11 @@ function autoCompleteRow(index, item, clickHandler) {
     return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
         alt: item.name,
-        src: item.img,
+        src: item.imgUrl,
         className: "w-10 d-inline-block"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 91,
+        lineNumber: 128,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-white px-3 d-inline-block",
@@ -6750,17 +6537,17 @@ function autoCompleteRow(index, item, clickHandler) {
           children: item.name
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 92,
+          lineNumber: 129,
           columnNumber: 98
         }, this)
       }), index, false, {
         fileName: _jsxFileName,
-        lineNumber: 92,
+        lineNumber: 129,
         columnNumber: 17
       }, this)]
     }, index, true, {
       fileName: _jsxFileName,
-      lineNumber: 89,
+      lineNumber: 126,
       columnNumber: 17
     }, this);
   }
@@ -6772,7 +6559,7 @@ function autoCompleteRow(index, item, clickHandler) {
     children: item.name
   }), index, false, {
     fileName: _jsxFileName,
-    lineNumber: 97,
+    lineNumber: 134,
     columnNumber: 13
   }, this);
 }
@@ -6824,54 +6611,19 @@ function InputFieldWrapper(_a) {
 
   var update = _a.update,
       inputFields = _a.inputFields,
-      graphName = _a.graphName,
-      userID = _a.userID;
+      graphName = _a.graphName;
 
   var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
       filterSettings = _b[0],
       setFilterSettings = _b[1];
 
-  var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(inputFields),
-      fields = _c[0],
-      setFields = _c[1];
-
-  var _d = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      isLoading = _d[0],
-      setIsLoading = _d[1];
-
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    if (userID === undefined) {
-      var cachedFilterSettings_1 = _cacher__WEBPACK_IMPORTED_MODULE_2__.Cacher.getItem("".concat(graphName, "-settings"));
-      setFilterSettings(cachedFilterSettings_1);
-      var res = inputFields.map(function (inputField) {
-        if (Object.keys(cachedFilterSettings_1).length > 0) {
-          inputField.startValue = cachedFilterSettings_1[inputField.name];
-        }
-
-        return inputField;
-      });
-      setFields(res);
-      setIsLoading(false);
-    } else {
-      setFields(inputFields);
-      setIsLoading(false);
-    } // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  }, [graphName, inputFields]);
+  var cachedFilterSettings = _cacher__WEBPACK_IMPORTED_MODULE_2__.Cacher.getItem("".concat(graphName, "-settings"));
 
   var handleInputChange = function handleInputChange(name, value) {
-    var _a;
-
-    var updatedSettings = __assign(__assign({}, filterSettings), (_a = {}, _a[name] = value, _a));
-
-    setFilterSettings(updatedSettings);
-    update(updatedSettings);
-
-    if (userID !== undefined) {
-      return;
-    }
-
-    _cacher__WEBPACK_IMPORTED_MODULE_2__.Cacher.setItem("".concat(graphName, "-settings"), updatedSettings);
+    var temp = filterSettings;
+    temp[name] = value;
+    setFilterSettings(temp);
+    update(temp);
   };
 
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -6880,33 +6632,35 @@ function InputFieldWrapper(_a) {
     children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "row small-row"
     }, {
-      children: !isLoading && fields.map(function (inputField, index) {
+      children: inputFields.map(function (inputField, index) {
+        inputField.filterValue = cachedFilterSettings[inputField.name];
         return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-sm"
         }, {
           children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_InputField__WEBPACK_IMPORTED_MODULE_3__["default"], {
             inputField: inputField,
             onChange: handleInputChange,
-            isComponent: true
+            isComponent: true,
+            parentGraphName: graphName
           }, inputField.name, false, {
             fileName: _jsxFileName,
-            lineNumber: 66,
+            lineNumber: 40,
             columnNumber: 25
           }, _this)
         }), index, false, {
           fileName: _jsxFileName,
-          lineNumber: 64,
-          columnNumber: 87
+          lineNumber: 39,
+          columnNumber: 29
         }, _this);
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 63,
+      lineNumber: 35,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 61,
+    lineNumber: 33,
     columnNumber: 13
   }, this);
 }
@@ -7984,9 +7738,9 @@ var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/
 function SearchPage() {
   var inputField = {
     name: "search",
-    type: "text",
+    allowedInputType: "text",
     placeholder: "Search",
-    startValue: "",
+    filterValue: "",
     autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_1__.PlayedAPI.search
   };
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -9062,7 +8816,7 @@ function ProfilePageBody(_a) {
     }
 
     if (!user.following) {
-      if (!loggedInUser.is_admin) {
+      if (!loggedInUser.isAdmin) {
         return false;
       }
 
@@ -9084,11 +8838,8 @@ function ProfilePageBody(_a) {
         id: graph.name
       }, {
         children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_graph_GraphWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          name: graph.name,
-          type: graph.type,
-          value: graph.graphValue,
-          inputFields: graph.inputFields,
-          userID: user.id
+          graph: graph,
+          userId: user.id
         }, graph.name, false, {
           fileName: _jsxFileName,
           lineNumber: 46,
@@ -9536,7 +9287,7 @@ function ProfilePageHeader(props) {
         }, {
           children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
             className: "user-img",
-            src: props.user.img_url,
+            src: props.user.imgUrl,
             alt: props.user.username
           }, void 0, false, {
             fileName: _jsxFileName,
@@ -9568,7 +9319,7 @@ function ProfilePageHeader(props) {
                 className: "text-white"
               }, {
                 children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("strong", {
-                  children: props.user.followers_count
+                  children: props.user.followersCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
                   lineNumber: 111,
@@ -9590,7 +9341,7 @@ function ProfilePageHeader(props) {
                 className: "text-white"
               }, {
                 children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("strong", {
-                  children: props.user.following_count
+                  children: props.user.followingCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
                   lineNumber: 114,
@@ -24580,6 +24331,666 @@ module.exports = function (list, options) {
     lastIdentifiers = newLastIdentifiers;
   };
 };
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Symbol.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_Symbol.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGetTag.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseGetTag.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ "./node_modules/lodash/_getRawTag.js"),
+    objectToString = __webpack_require__(/*! ./_objectToString */ "./node_modules/lodash/_objectToString.js");
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+module.exports = baseGetTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseTrim.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_baseTrim.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var trimmedEndIndex = __webpack_require__(/*! ./_trimmedEndIndex */ "./node_modules/lodash/_trimmedEndIndex.js");
+
+/** Used to match leading whitespace. */
+var reTrimStart = /^\s+/;
+
+/**
+ * The base implementation of `_.trim`.
+ *
+ * @private
+ * @param {string} string The string to trim.
+ * @returns {string} Returns the trimmed string.
+ */
+function baseTrim(string) {
+  return string
+    ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
+    : string;
+}
+
+module.exports = baseTrim;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_freeGlobal.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_freeGlobal.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+module.exports = freeGlobal;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getRawTag.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_getRawTag.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+module.exports = getRawTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_objectToString.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_objectToString.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+module.exports = objectToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_root.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/_root.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_trimmedEndIndex.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_trimmedEndIndex.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/** Used to match a single whitespace character. */
+var reWhitespace = /\s/;
+
+/**
+ * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+ * character of `string`.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {number} Returns the index of the last non-whitespace character.
+ */
+function trimmedEndIndex(string) {
+  var index = string.length;
+
+  while (index-- && reWhitespace.test(string.charAt(index))) {}
+  return index;
+}
+
+module.exports = trimmedEndIndex;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/debounce.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/debounce.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    now = __webpack_require__(/*! ./now */ "./node_modules/lodash/now.js"),
+    toNumber = __webpack_require__(/*! ./toNumber */ "./node_modules/lodash/toNumber.js");
+
+/** Error message constants. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */
+function debounce(func, wait, options) {
+  var lastArgs,
+      lastThis,
+      maxWait,
+      result,
+      timerId,
+      lastCallTime,
+      lastInvokeTime = 0,
+      leading = false,
+      maxing = false,
+      trailing = true;
+
+  if (typeof func != 'function') {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  wait = toNumber(wait) || 0;
+  if (isObject(options)) {
+    leading = !!options.leading;
+    maxing = 'maxWait' in options;
+    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+    trailing = 'trailing' in options ? !!options.trailing : trailing;
+  }
+
+  function invokeFunc(time) {
+    var args = lastArgs,
+        thisArg = lastThis;
+
+    lastArgs = lastThis = undefined;
+    lastInvokeTime = time;
+    result = func.apply(thisArg, args);
+    return result;
+  }
+
+  function leadingEdge(time) {
+    // Reset any `maxWait` timer.
+    lastInvokeTime = time;
+    // Start the timer for the trailing edge.
+    timerId = setTimeout(timerExpired, wait);
+    // Invoke the leading edge.
+    return leading ? invokeFunc(time) : result;
+  }
+
+  function remainingWait(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime,
+        timeWaiting = wait - timeSinceLastCall;
+
+    return maxing
+      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
+      : timeWaiting;
+  }
+
+  function shouldInvoke(time) {
+    var timeSinceLastCall = time - lastCallTime,
+        timeSinceLastInvoke = time - lastInvokeTime;
+
+    // Either this is the first call, activity has stopped and we're at the
+    // trailing edge, the system time has gone backwards and we're treating
+    // it as the trailing edge, or we've hit the `maxWait` limit.
+    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+  }
+
+  function timerExpired() {
+    var time = now();
+    if (shouldInvoke(time)) {
+      return trailingEdge(time);
+    }
+    // Restart the timer.
+    timerId = setTimeout(timerExpired, remainingWait(time));
+  }
+
+  function trailingEdge(time) {
+    timerId = undefined;
+
+    // Only invoke if we have `lastArgs` which means `func` has been
+    // debounced at least once.
+    if (trailing && lastArgs) {
+      return invokeFunc(time);
+    }
+    lastArgs = lastThis = undefined;
+    return result;
+  }
+
+  function cancel() {
+    if (timerId !== undefined) {
+      clearTimeout(timerId);
+    }
+    lastInvokeTime = 0;
+    lastArgs = lastCallTime = lastThis = timerId = undefined;
+  }
+
+  function flush() {
+    return timerId === undefined ? result : trailingEdge(now());
+  }
+
+  function debounced() {
+    var time = now(),
+        isInvoking = shouldInvoke(time);
+
+    lastArgs = arguments;
+    lastThis = this;
+    lastCallTime = time;
+
+    if (isInvoking) {
+      if (timerId === undefined) {
+        return leadingEdge(lastCallTime);
+      }
+      if (maxing) {
+        // Handle invocations in a tight loop.
+        clearTimeout(timerId);
+        timerId = setTimeout(timerExpired, wait);
+        return invokeFunc(lastCallTime);
+      }
+    }
+    if (timerId === undefined) {
+      timerId = setTimeout(timerExpired, wait);
+    }
+    return result;
+  }
+  debounced.cancel = cancel;
+  debounced.flush = flush;
+  return debounced;
+}
+
+module.exports = debounce;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObject.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isObject.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObjectLike.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/isObjectLike.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSymbol.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isSymbol.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+}
+
+module.exports = isSymbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/now.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/now.js ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */
+var now = function() {
+  return root.Date.now();
+};
+
+module.exports = now;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toNumber.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toNumber.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseTrim = __webpack_require__(/*! ./_baseTrim */ "./node_modules/lodash/_baseTrim.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = baseTrim(value);
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = toNumber;
+
 
 /***/ }),
 
@@ -62203,6 +62614,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			// return url for filenames based on template
 /******/ 			return "" + chunkId + ".css";
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

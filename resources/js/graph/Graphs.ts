@@ -1,88 +1,83 @@
 import { PlayedAPI } from "../api/PlayedAPI";
 import { inputField } from "../inputField/InputFieldWrapper";
-import { GraphType, GraphValue } from "./GraphWrapper";
+import { GraphDataType, GraphName } from "./GraphWrapper";
 
 export interface Graph {
-    name: string;
-    type: GraphType;
+    type: GraphDataType;
     inputFields: inputField[];
-    graphValue: GraphValue;
+    name: GraphName;
 };
 
 class graphs {
     graphs: Graph[] = [
         {
-            name: "AllSongsPlayed",
-            type: GraphType.Bar,
+            type: GraphDataType.Bar,
             inputFields: [
                 {
                     name: "minPlayed",
-                    type: "number",
+                    allowedInputType: "number",
                     placeholder: "Min Played",
-                    startValue: "",
+                    filterValue: "",
                 },
                 {
                     name: "maxPlayed",
-                    type: "number",
+                    allowedInputType: "number",
                     placeholder: "Max Played",
-                    startValue: "",
+                    filterValue: "",
                 }
             ],
-            graphValue: GraphValue.allSongsPlayed
+            name: GraphName.allSongsPlayed
         },
         {
-            name: "TopSongs",
-            type: GraphType.Bar,
+            type: GraphDataType.Bar,
             inputFields: [
                 {
                     name: "artistName",
-                    type: "text",
+                    allowedInputType: "text",
                     placeholder: "Artist name",
-                    startValue: "",
+                    filterValue: "",
                     autocompleteFunction: PlayedAPI.topArtistSearch
                 },
                 {
                     name: "amount",
-                    type: "number",
+                    allowedInputType: "number",
                     placeholder: "Amount",
-                    startValue: "",
+                    filterValue: "",
                 },
             ],
-            graphValue: GraphValue.topSongs
+            name: GraphName.topSongs
         },
         {
-            name: "TopArtist",
-            type: GraphType.Bar,
+            type: GraphDataType.Bar,
             inputFields: [
                 {
                     name: "amount",
-                    type: "number",
+                    allowedInputType: "number",
                     placeholder: "Amount",
-                    startValue: "",
+                    filterValue: "",
                 },
             ],
-            graphValue: GraphValue.topArtist
+            name: GraphName.topArtist
         },
         {
-            name: "PlayedPerDay",
-            type: GraphType.Line,
+            type: GraphDataType.Line,
             inputFields: [
                 {
                     name: "songName",
-                    type: "text",
+                    allowedInputType: "text",
                     placeholder: "Song Name",
-                    startValue: "",
+                    filterValue: "",
                     autocompleteFunction: PlayedAPI.topSongsSearch
                 },
                 // {
                 //     name: "artistName",
                 //     type: "text",
                 //     placeholder: "Artist Name",
-                //     startValue: "",
+                //     filterValue: "",
                 //     autocompleteFunction: PlayedAPI.topArtistSearch
                 // },
             ],
-            graphValue: GraphValue.playedPerDay
+            name: GraphName.playedPerDay
         },
     ];
 

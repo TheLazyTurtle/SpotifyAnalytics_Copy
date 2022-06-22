@@ -102,16 +102,16 @@ function ProfilePageHeader(props: ProfilePageHeaderProps) {
             <div key="info-wrapper" className="w-100 w-md-50 mx-auto">
                 <div className="row small-row">
                     <div key="img-wrapper" className="col-md-3 p-0 mt-md-5">
-                        <img className="user-img" src={props.user.img_url} alt={props.user.username} />
+                        <img className="user-img" src={props.user.imgUrl} alt={props.user.username} />
                     </div>
                     <div key="text-wrapper" className="col-12 col-md-9 mt-3 mt-md-5">
                         <h1 className="text-white px-2">{props.user.username}</h1>
                         <div className="row">
                             <div className="col-4 col-md-2 mx-2">
-                                <p className="text-white"><strong>{props.user.followers_count}</strong> Followers</p>
+                                <p className="text-white"><strong>{props.user.followersCount}</strong> Followers</p>
                             </div>
                             <div className="col-4 col-md-2">
-                                <p className="text-white"><strong>{props.user.following_count}</strong> Following</p>
+                                <p className="text-white"><strong>{props.user.followingCount}</strong> Following</p>
                             </div>
                         </div>
                         {(props.user.username !== undefined) && <Buttons user={props.user} pageType={props.pageType} />}

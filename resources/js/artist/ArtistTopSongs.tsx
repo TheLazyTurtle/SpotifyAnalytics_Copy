@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { Response } from "../App";
-import { DataWrapper } from "../graph/DataWrapper";
 import { Song } from "../song/Song";
+import { Played } from "../graph/Played";
 
 interface ArtistTopSongsProps {
     artistID: string
@@ -15,7 +15,7 @@ function ArtistTopSongs({ artistID }: ArtistTopSongsProps) {
             artist_id: artistID,
         }
     }
-    const { isLoading, data, error } = useQuery("artistTopSongs", () => axios.get<Response<DataWrapper<Song>[]>>(`/api/artist/topSongs`, params).then((response) => response.data));
+    const { isLoading, data, error } = useQuery("artistTopSongs", () => axios.get<Response<Played<Song>[]>>(`/api/artist/topSongs`, params).then((response) => response.data));
     const [open, setOpen] = useState<boolean>(false);
 
     function handleShowMore() {
