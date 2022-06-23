@@ -4,7 +4,8 @@ interface MobileHeaderItemProps {
     href: string;
     icon: string;
 }
-function MobileHeaderItem({href, icon}: MobileHeaderItemProps) {
+
+function MobileHeaderItem({ href, icon }: MobileHeaderItemProps) {
     return (
         <div className="col-3 text-center py-2">
             <a href={href} className="text-black">

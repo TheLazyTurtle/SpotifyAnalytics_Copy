@@ -50,15 +50,7 @@ function InputField({ inputField, isComponent, onChange, parentGraphName }: Inpu
                 return;
             }
 
-            const names = autoCompleteSuggestionResult.data.data.map((item: AutocompleteItem) => {
-                return {
-                    name: item.name,
-                    img: item?.imgUrl,
-                    type: item?.type,
-                    id: item?.id
-                }
-            });
-            setAutocompleteSuggestions(names);
+            setAutocompleteSuggestions(autoCompleteSuggestionResult.data.data);
         }, 500),
         []
     );
@@ -122,7 +114,8 @@ function autoComplete(name: string, allowedInputType: string, placeholderText: s
 
 function autoCompleteRow(index: number, item: AutocompleteItem, clickHandler: (event: any) => void) {
     if (item.type) {
-        const href = item.id !== undefined ? `/artist/${item.id}` : `/${item.name}`;
+        console.log(item)
+        const href = item.artist_id !== undefined ? `/artist/${item.artist_id}` : `/${item.name}`;
         return (
             <div key={index}>
                 <img alt={item.name} src={item.imgUrl} className="w-10 d-inline-block" />

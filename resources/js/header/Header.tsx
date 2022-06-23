@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import { PlayedAPI } from "../api/PlayedAPI";
 import { LoggedInUserContext } from "../App";
@@ -22,16 +23,9 @@ function Header() {
     }
 
     function handleLogout() {
-        const cookies = document.cookie.split(";");
-
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i];
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        }
-
-        window.location.href = "/login";
+        axios.post("/logout").then(() => {
+            window.location.href = "/login";
+        });
     }
 
     return (

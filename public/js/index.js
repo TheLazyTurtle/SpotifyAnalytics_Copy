@@ -2242,7 +2242,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/App.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/App.tsx";
 
 
 
@@ -2495,7 +2495,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/album/AlbumComponent.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/album/AlbumComponent.tsx";
 
 
 
@@ -2671,7 +2671,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/album/AlbumList.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/album/AlbumList.tsx";
 
 
 function AlbumList(_a) {
@@ -2741,7 +2741,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/album/AlbumsPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/album/AlbumsPage.tsx";
 
 
 
@@ -3631,6 +3631,30 @@ function (_super) {
     });
   };
 
+  PlayedAPI.search = function (name) {
+    return __awaiter(this, void 0, void 0, function () {
+      var params;
+      return __generator(this, function (_b) {
+        switch (_b.label) {
+          case 0:
+            params = {
+              params: {
+                name: name
+              }
+            };
+            return [4
+            /*yield*/
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search", params)];
+
+          case 1:
+            return [2
+            /*return*/
+            , _b.sent()];
+        }
+      });
+    });
+  };
+
   PlayedAPI.timeListend = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
       var header, response, response_1, error_1;
@@ -3743,32 +3767,6 @@ function (_super) {
             return [2
             /*return*/
             ];
-        }
-      });
-    });
-  };
-
-  PlayedAPI.search = function (name) {
-    return __awaiter(this, void 0, void 0, function () {
-      var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            params = {
-              params: {
-                name: name
-              }
-            };
-            return [4
-            /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/search", params).then(function (response) {
-              return response.data;
-            })];
-
-          case 1:
-            return [2
-            /*return*/
-            , _b.sent()];
         }
       });
     });
@@ -4287,7 +4285,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/artist/ArtistHeader.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/artist/ArtistHeader.tsx";
 ;
 
 function ArtistHeader(_a) {
@@ -4413,7 +4411,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/artist/ArtistPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/artist/ArtistPage.tsx";
 
 
 
@@ -4549,7 +4547,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/artist/ArtistTopSongs.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/artist/ArtistTopSongs.tsx";
 
 
 
@@ -4823,7 +4821,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/button/Button.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/button/Button.tsx";
 
 
 function Button(props) {
@@ -4877,7 +4875,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/button/ButtonWrapper.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/button/ButtonWrapper.tsx";
 
 
 
@@ -5194,7 +5192,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_chartjs_2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-chartjs-2 */ "./node_modules/react-chartjs-2/dist/index.js");
 /* harmony import */ var _GraphWrapper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GraphWrapper */ "./resources/js/graph/GraphWrapper.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/GraphComponent.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/graph/GraphComponent.tsx";
 
 
 
@@ -5464,7 +5462,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/graph/GraphWrapper.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/graph/GraphWrapper.tsx";
 
 
 
@@ -5701,11 +5699,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
-/* harmony import */ var _notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../notificatons/NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
+/* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
+/* harmony import */ var _notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../notificatons/NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -5723,7 +5723,8 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/header/Header.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/header/Header.tsx";
+
 
 
 
@@ -5731,9 +5732,9 @@ var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/
 
 
 function Header() {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_3__.LoggedInUserContext);
+  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_App__WEBPACK_IMPORTED_MODULE_4__.LoggedInUserContext);
 
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _a = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       showNotificationPopup = _a[0],
       setNotificationPopup = _a[1];
 
@@ -5742,7 +5743,7 @@ function Header() {
     allowedInputType: "text",
     placeholder: "Search",
     filterValue: "",
-    autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_2__.PlayedAPI.search
+    autocompleteFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_3__.PlayedAPI.search
   };
 
   function toggleNotificationPopup() {
@@ -5750,16 +5751,9 @@ function Header() {
   }
 
   function handleLogout() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
-      var name_1 = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-      document.cookie = name_1 + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-
-    window.location.href = "/login";
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post("/logout").then(function () {
+      window.location.href = "/login";
+    });
   }
 
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
@@ -5780,33 +5774,33 @@ function Header() {
               children: "Spotify Analytics"
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 44,
+              lineNumber: 38,
               columnNumber: 33
             }, this)
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 43,
+            lineNumber: 37,
             columnNumber: 29
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 42,
+          lineNumber: 36,
           columnNumber: 25
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block"
         }, {
-          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_5__["default"], {
             onChange: function onChange() {},
             inputField: inputField,
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 48,
+            lineNumber: 42,
             columnNumber: 29
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 47,
+          lineNumber: 41,
           columnNumber: 25
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block text-center text-custom-green"
@@ -5816,13 +5810,13 @@ function Header() {
             className: "fas fa-envelope px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 51,
+            lineNumber: 45,
             columnNumber: 29
-          }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_6__["default"], {
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 52,
+            lineNumber: 46,
             columnNumber: 54
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: function onClick() {
@@ -5831,34 +5825,34 @@ function Header() {
             className: "fas fa-user-alt px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 53,
+            lineNumber: 47,
             columnNumber: 29
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: handleLogout,
             className: "fas fa-arrow-right px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 54,
+            lineNumber: 48,
             columnNumber: 29
           }, this)]
         }), void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 50,
+          lineNumber: 44,
           columnNumber: 25
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 41,
+        lineNumber: 35,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 39,
+      lineNumber: 33,
       columnNumber: 36
     }, this)
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 37,
+    lineNumber: 31,
     columnNumber: 13
   }, this);
 }
@@ -5897,7 +5891,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/header/MobileHeader.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/header/MobileHeader.tsx";
 
 
 function MobileHeaderItem(_a) {
@@ -5915,17 +5909,17 @@ function MobileHeaderItem(_a) {
         "aria-hidden": "true"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 11,
+        lineNumber: 12,
         columnNumber: 17
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 10,
+      lineNumber: 11,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 8,
+    lineNumber: 9,
     columnNumber: 13
   }, this);
 }
@@ -5942,38 +5936,38 @@ function MobileHeader() {
         icon: "fas fa-home"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 21,
+        lineNumber: 22,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(MobileHeaderItem, {
         href: "/search",
         icon: "fas fa-search"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 22,
+        lineNumber: 23,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(MobileHeaderItem, {
         href: "/notifications",
         icon: "far fa-envelope"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 23,
+        lineNumber: 24,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(MobileHeaderItem, {
         href: "/profile",
         icon: "fas fa-user-alt"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 24,
+        lineNumber: 25,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 20,
+      lineNumber: 21,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 18,
+    lineNumber: 19,
     columnNumber: 13
   }, this);
 }
@@ -6014,7 +6008,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/home/HomePage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/home/HomePage.tsx";
 
 
 
@@ -6097,7 +6091,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/index.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/index.tsx";
 
 
 
@@ -6317,7 +6311,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/inputField/InputField.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/inputField/InputField.tsx";
 
 
 
@@ -6374,7 +6368,7 @@ function InputField(_a) {
 
   var handleAutocompleteInput = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(lodash_debounce__WEBPACK_IMPORTED_MODULE_1___default()(function (value) {
     return __awaiter(_this, void 0, void 0, function () {
-      var autoCompleteSuggestionResult, names;
+      var autoCompleteSuggestionResult;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
@@ -6398,15 +6392,7 @@ function InputField(_a) {
               ];
             }
 
-            names = autoCompleteSuggestionResult.data.data.map(function (item) {
-              return {
-                name: item.name,
-                img: item === null || item === void 0 ? void 0 : item.imgUrl,
-                type: item === null || item === void 0 ? void 0 : item.type,
-                id: item === null || item === void 0 ? void 0 : item.id
-              };
-            });
-            setAutocompleteSuggestions(names);
+            setAutocompleteSuggestions(autoCompleteSuggestionResult.data.data);
             return [2
             /*return*/
             ];
@@ -6466,7 +6452,7 @@ function normal(name, allowedInputType, placeholderText, value, handleOnChange) 
     onChange: handleOnChange
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 100,
+    lineNumber: 92,
     columnNumber: 13
   }, this);
 }
@@ -6485,7 +6471,7 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       autoComplete: "off"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 108,
+      lineNumber: 100,
       columnNumber: 13
     }, this), autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data w-25 border position-absolute background-base"
@@ -6495,7 +6481,7 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 109,
+      lineNumber: 101,
       columnNumber: 97
     }, this), autoCompleteSuggestions.length > 0 && !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data border position-absolute background-base"
@@ -6505,19 +6491,20 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 114,
+      lineNumber: 106,
       columnNumber: 69
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 106,
+    lineNumber: 98,
     columnNumber: 13
   }, this);
 }
 
 function autoCompleteRow(index, item, clickHandler) {
   if (item.type) {
-    var href = item.id !== undefined ? "/artist/".concat(item.id) : "/".concat(item.name);
+    console.log(item);
+    var href = item.artist_id !== undefined ? "/artist/".concat(item.artist_id) : "/".concat(item.name);
     return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
         alt: item.name,
@@ -6525,7 +6512,7 @@ function autoCompleteRow(index, item, clickHandler) {
         className: "w-10 d-inline-block"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 128,
+        lineNumber: 121,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-white px-3 d-inline-block",
@@ -6537,17 +6524,17 @@ function autoCompleteRow(index, item, clickHandler) {
           children: item.name
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 129,
+          lineNumber: 122,
           columnNumber: 98
         }, this)
       }), index, false, {
         fileName: _jsxFileName,
-        lineNumber: 129,
+        lineNumber: 122,
         columnNumber: 17
       }, this)]
     }, index, true, {
       fileName: _jsxFileName,
-      lineNumber: 126,
+      lineNumber: 119,
       columnNumber: 17
     }, this);
   }
@@ -6559,7 +6546,7 @@ function autoCompleteRow(index, item, clickHandler) {
     children: item.name
   }), index, false, {
     fileName: _jsxFileName,
-    lineNumber: 134,
+    lineNumber: 127,
     columnNumber: 13
   }, this);
 }
@@ -6600,7 +6587,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/inputField/InputFieldWrapper.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/inputField/InputFieldWrapper.tsx";
 
 
 
@@ -6846,7 +6833,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/login/LoginPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/login/LoginPage.tsx";
 
 
 
@@ -7050,7 +7037,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notFound/NotFound.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notFound/NotFound.tsx";
 
 function NotFound() {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h1", {
@@ -7239,7 +7226,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notificatons/NotificationMessage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationMessage.tsx";
 
 ;
 
@@ -7385,7 +7372,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var _NotificationsPopup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notificatons/NotificationsPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPage.tsx";
 
 
 function NotificationsPage() {
@@ -7577,7 +7564,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
 
 
 
@@ -7731,7 +7718,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
 /* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/search/SearchPage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/search/SearchPage.tsx";
 
 
 
@@ -7936,7 +7923,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/slider/Slider.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/slider/Slider.tsx";
 
 
 
@@ -8332,7 +8319,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/song/SongComponent.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/song/SongComponent.tsx";
 
 function SongComponent(_a) {
   var song = _a.song;
@@ -8603,7 +8590,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/user/ProfilePage.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePage.tsx";
 
 
 
@@ -8787,7 +8774,7 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/user/ProfilePageBody.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageBody.tsx";
 
 
 
@@ -8904,11 +8891,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/NotificationAPI */ "./resources/js/api/NotificationAPI.ts");
-/* harmony import */ var _api_UserAPI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../api/UserAPI */ "./resources/js/api/UserAPI.ts");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../api/NotificationAPI */ "./resources/js/api/NotificationAPI.ts");
+/* harmony import */ var _api_UserAPI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../api/UserAPI */ "./resources/js/api/UserAPI.ts");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
+/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -9069,7 +9058,8 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 };
 
 
-var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
+
 
 
 
@@ -9078,20 +9068,13 @@ var _jsxFileName = "/home/thelazyturtle/projects/Spotify_analytics/resources/js/
 ;
 
 function Buttons(props) {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_4__.LoggedInUserContext);
+  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_App__WEBPACK_IMPORTED_MODULE_5__.LoggedInUserContext);
   var user = props.user;
 
   function handleLogout() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
-      var name_1 = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-      document.cookie = name_1 + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-
-    window.location.href = "/login";
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post("/logout").then(function () {
+      window.location.href = "/login";
+    });
   }
 
   function openSettings() {
@@ -9101,7 +9084,7 @@ function Buttons(props) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
     className: "row"
   }, {
-    children: [props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_5__.PageType.Personal && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: [props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_6__.PageType.Personal && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-4 col-md-2 mx-md-0"
       }, {
@@ -9112,12 +9095,12 @@ function Buttons(props) {
           children: "Settings"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 39,
+          lineNumber: 33,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 38,
+        lineNumber: 32,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-3 col-md-2 mx-2 mx-md-2"
@@ -9129,22 +9112,22 @@ function Buttons(props) {
           children: "Logout"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 42,
+          lineNumber: 36,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 41,
+        lineNumber: 35,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 36,
+      lineNumber: 30,
       columnNumber: 53
-    }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_5__.PageType.External && !loggedInUser.guest && followButton(user)]
+    }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_6__.PageType.External && !loggedInUser.guest && followButton(user)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 34,
+    lineNumber: 28,
     columnNumber: 13
   }, this);
 } // TODO: This should use button component
@@ -9163,14 +9146,14 @@ function followButton(user) {
             , 3];
             return [4
             /*yield*/
-            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_3__.UserAPI.follow(user.id)];
+            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_4__.UserAPI.follow(user.id)];
 
           case 1:
             // Unfollow a user
             result = _a.sent();
             return [4
             /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.removeRequest(user.id)];
+            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.removeRequest(user.id)];
 
           case 2:
             result = _a.sent();
@@ -9184,7 +9167,7 @@ function followButton(user) {
             , 5];
             return [4
             /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.removeRequest(user.id)];
+            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.removeRequest(user.id)];
 
           case 4:
             // Remove request
@@ -9199,7 +9182,7 @@ function followButton(user) {
             , 7];
             return [4
             /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.makeRequest(0, user.id)];
+            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.makeRequest(0, user.id)];
 
           case 6:
             // Make request
@@ -9211,14 +9194,14 @@ function followButton(user) {
           case 7:
             return [4
             /*yield*/
-            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_3__.UserAPI.follow(user.id)];
+            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_4__.UserAPI.follow(user.id)];
 
           case 8:
             // Follow user and make a notification that you want to follow
             result = _a.sent();
             return [4
             /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.makeRequest(1, user.id)];
+            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.makeRequest(1, user.id)];
 
           case 9:
             _a.sent();
@@ -9262,12 +9245,12 @@ function followButton(user) {
       children: makeButtonText()
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 93,
+      lineNumber: 87,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 91,
+    lineNumber: 85,
     columnNumber: 13
   }, this);
 }
@@ -9291,12 +9274,12 @@ function ProfilePageHeader(props) {
             alt: props.user.username
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 105,
+            lineNumber: 99,
             columnNumber: 25
           }, this)
         }), "img-wrapper", false, {
           fileName: _jsxFileName,
-          lineNumber: 104,
+          lineNumber: 98,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-12 col-md-9 mt-3 mt-md-5"
@@ -9307,7 +9290,7 @@ function ProfilePageHeader(props) {
             children: props.user.username
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 108,
+            lineNumber: 102,
             columnNumber: 25
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
             className: "row"
@@ -9322,17 +9305,17 @@ function ProfilePageHeader(props) {
                   children: props.user.followersCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 111,
+                  lineNumber: 105,
                   columnNumber: 59
                 }, this), " Followers"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 111,
+                lineNumber: 105,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 110,
+              lineNumber: 104,
               columnNumber: 29
             }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
               className: "col-4 col-md-2"
@@ -9344,49 +9327,49 @@ function ProfilePageHeader(props) {
                   children: props.user.followingCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 114,
+                  lineNumber: 108,
                   columnNumber: 59
                 }, this), " Following"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 114,
+                lineNumber: 108,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 113,
+              lineNumber: 107,
               columnNumber: 29
             }, this)]
           }), void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 109,
+            lineNumber: 103,
             columnNumber: 25
           }, this), props.user.username !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(Buttons, {
             user: props.user,
             pageType: props.pageType
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 117,
+            lineNumber: 111,
             columnNumber: 64
           }, this)]
         }), "text-wrapper", true, {
           fileName: _jsxFileName,
-          lineNumber: 107,
+          lineNumber: 101,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 103,
+        lineNumber: 97,
         columnNumber: 17
       }, this)
     }), "info-wrapper", false, {
       fileName: _jsxFileName,
-      lineNumber: 102,
+      lineNumber: 96,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 100,
+    lineNumber: 94,
     columnNumber: 13
   }, this);
 }
@@ -23719,7 +23702,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* gallery images */\r\n.gallery-img {\r\n    width: 300px;\r\n    height: 300px;\r\n    transition: all 0.3s ease-in-out;\r\n}\r\n\r\n.gallery-item-left .gallery-img,\r\n.gallery-item-right .gallery-img {\r\n    width: 200px;\r\n    height: 200px;\r\n}\r\n\r\n.gallery-item-nextLeft .gallery-img,\r\n.gallery-item-nextRight .gallery-img {\r\n    width: 150px;\r\n    height: 150px;\r\n}\r\n\r\n.gallery {\r\n    width: 100%;\r\n}\r\n\r\n.gallery-container {\r\n    max-width: 1000px;\r\n    height: 400px;\r\n\r\n    margin: 0 auto;\r\n    align-items: center;\r\n\r\n    display: flex;\r\n    position: relative;\r\n\r\n}\r\n\r\n.gallery-item {\r\n    width: 150px;\r\n    height: 150px;\r\n\r\n    opacity: .4;\r\n    transition: all 0.3s ease-in-out;\r\n\r\n    position: absolute;\r\n    z-index: 0;\r\n}\r\n\r\n.gallery-item.gallery-item-selected {\r\n    height: 300px;\r\n    width: 300px;\r\n\r\n    opacity: 1;\r\n    transform: translateX(-50%) translateY(-10%);\r\n\r\n    left: 50%;\r\n    z-index: 3;\r\n}\r\n\r\n.gallery-item.gallery-item-left,\r\n.gallery-item.gallery-item-right{\r\n    height: 200px;\r\n    width: 200px;\r\n\r\n    opacity: .9;\r\n\r\n    z-index: 2;\r\n}\r\n\r\n/* item-left/right */\r\n.gallery-item.gallery-item-left {\r\n    transform: translateX(-50%) translateY(-10%);\r\n\r\n    left: 30%;\r\n}\r\n\r\n.gallery-item.gallery-item-right {\r\n    transform: translateX(-50%) translateY(-10%);\r\n\r\n    left: 70%;\r\n}\r\n\r\n/* item-nextLeft/right */\r\n.gallery-item.gallery-item-nextLeft {\r\n    transform: translateX(-50%) translateY(-10%);\r\n    left: 15%;\r\n}\r\n\r\n.gallery-item.gallery-item-nextRight {\r\n    transform: translateX(-50%) translateY(-10%);\r\n    left: 85%;\r\n}\r\n\r\n/* Controls */\r\n.gallery-controls {\r\n    justify-content: center;\r\n\tmargin: -30px 0;\r\n\r\n    display: flex;\r\n}\r\n\r\n.gallery-controls button {\r\n    border: 0;\r\n\r\n    font-size: 16px;\r\n    margin: 0 20px;\r\n    padding: 0 12px;\r\n    text-transform: capitalize;\r\n\r\n    cursor: pointer;\r\n}\r\n\r\n.gallery-controls button:focus {\r\n    outline: none;\r\n}\r\n\r\n.gallery-controls-previous::before {\r\n    width: 4px;\r\n    height: 4px;\r\n    border: solid #000;\r\n    border-width: 0 2px 2px 0;\r\n    /* content: ''; */\r\n\r\n    padding: 2px;\r\n    /* transform: rotate(135deg) translateY(-50%); */\r\n    /* transition: left 0.15s ease-in-out; */\r\n\r\n    display: inline-block;\r\n    left: -10px;\r\n    position: absolute;\r\n    top: 0;\r\n}\r\n\r\n.gallery-controls-next::before {\r\n    height: 4px;\r\n    width: 4px;\r\n    border: solid #000;\r\n    border-width: 0 2px 2px 0;\r\n    /* content: ''; */\r\n\r\n    padding: 2px;\r\n    /* transform: rotate(-45deg) translateY(-50%); */\r\n    /* transition: right 0.15s ease-in-out; */\r\n\r\n    display: inline-block;\r\n    position: absolute;\r\n    right: -10px;\r\n    top: 50%;\r\n}\r\n\r\n.gallery-controls-previous:hover::before {\r\n    left: -18px;\r\n}\r\n\r\n.gallery-controls-next:hover::before {\r\n    right: -18px;\r\n}\r\n\r\n.gallery-controls-previous {\r\n    transform: translateY(200%);\r\n\r\n    position: relative;\r\n}\r\n\r\n.gallery-controls-next {\r\n    transform: translateY(200%);\r\n    position: relative;\r\n}\r\n\r\n.gallery-controls-next:active, .gallery-controls-previous:active{\r\n    transform: translateY(200%);\r\n}\r\n\r\n/* timeFrame buttons */\r\n.gallery-time-buttons {\r\n    margin-top: 4.5%;\r\n    text-align: center;\r\n}\r\n\r\n.time-btn {\r\n    padding: 5px;\r\n    margin-left: 5px;\r\n    margin-right: 5px;\r\n}\r\n\r\n/* gallery-header */\r\n.gallery-header {\r\n    color: white;\r\n    width: 300px;\r\n    transition: right 0.15s ease-in-out;\r\n}\r\n\r\n.gallery-item-left .gallery-header,\r\n.gallery-item-right .gallery-header {\r\n    opacity: .1;\r\n    width: 200px;\r\n}\r\n\r\n.gallery-item-nextLeft .gallery-header,\r\n.gallery-item-nextRight .gallery-header {\r\n    opacity: .0;\r\n    width: 150px;\r\n}\r\n\r\n/* custom css */\r\n.divider {\r\n    margin-top: 1%;\r\n    margin-bottom: 1%;\r\n}\r\n\r\n/* Mobile css */\r\n/* Everything under 370 pixels will have these settings */\r\n@media only screen and (max-width: 460px) {\r\n\t.gallery-container {\r\n\t\ttransform: scale(0.9);\r\n\t}\r\n\r\n\t/* Controls */\r\n\t.gallery-controls {\r\n\t\tmargin-bottom: 80px;\r\n\t}\r\n\r\n\t/* timeFrame buttons */\r\n\t.gallery-time-buttons {\r\n\t\tmargin-top: 5.0%;\r\n\t\ttext-align: center;\r\n\t}\r\n\r\n\t.time-btn {\r\n\t\twidth: 25%;\r\n\t}\r\n\r\n\t.divider {\r\n\t\tmargin: 5% 0;\r\n\t}\r\n\r\n\t.gallery {\r\n\t\twidth: 100%;\r\n\t}\r\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* gallery images */\n.gallery-img {\n    width: 300px;\n    height: 300px;\n    transition: all 0.3s ease-in-out;\n}\n\n.gallery-item-left .gallery-img,\n.gallery-item-right .gallery-img {\n    width: 200px;\n    height: 200px;\n}\n\n.gallery-item-nextLeft .gallery-img,\n.gallery-item-nextRight .gallery-img {\n    width: 150px;\n    height: 150px;\n}\n\n.gallery {\n    width: 100%;\n}\n\n.gallery-container {\n    max-width: 1000px;\n    height: 400px;\n\n    margin: 0 auto;\n    align-items: center;\n\n    display: flex;\n    position: relative;\n\n}\n\n.gallery-item {\n    width: 150px;\n    height: 150px;\n\n    opacity: .4;\n    transition: all 0.3s ease-in-out;\n\n    position: absolute;\n    z-index: 0;\n}\n\n.gallery-item.gallery-item-selected {\n    height: 300px;\n    width: 300px;\n\n    opacity: 1;\n    transform: translateX(-50%) translateY(-10%);\n\n    left: 50%;\n    z-index: 3;\n}\n\n.gallery-item.gallery-item-left,\n.gallery-item.gallery-item-right{\n    height: 200px;\n    width: 200px;\n\n    opacity: .9;\n\n    z-index: 2;\n}\n\n/* item-left/right */\n.gallery-item.gallery-item-left {\n    transform: translateX(-50%) translateY(-10%);\n\n    left: 30%;\n}\n\n.gallery-item.gallery-item-right {\n    transform: translateX(-50%) translateY(-10%);\n\n    left: 70%;\n}\n\n/* item-nextLeft/right */\n.gallery-item.gallery-item-nextLeft {\n    transform: translateX(-50%) translateY(-10%);\n    left: 15%;\n}\n\n.gallery-item.gallery-item-nextRight {\n    transform: translateX(-50%) translateY(-10%);\n    left: 85%;\n}\n\n/* Controls */\n.gallery-controls {\n    justify-content: center;\n\tmargin: -30px 0;\n\n    display: flex;\n}\n\n.gallery-controls button {\n    border: 0;\n\n    font-size: 16px;\n    margin: 0 20px;\n    padding: 0 12px;\n    text-transform: capitalize;\n\n    cursor: pointer;\n}\n\n.gallery-controls button:focus {\n    outline: none;\n}\n\n.gallery-controls-previous::before {\n    width: 4px;\n    height: 4px;\n    border: solid #000;\n    border-width: 0 2px 2px 0;\n    /* content: ''; */\n\n    padding: 2px;\n    /* transform: rotate(135deg) translateY(-50%); */\n    /* transition: left 0.15s ease-in-out; */\n\n    display: inline-block;\n    left: -10px;\n    position: absolute;\n    top: 0;\n}\n\n.gallery-controls-next::before {\n    height: 4px;\n    width: 4px;\n    border: solid #000;\n    border-width: 0 2px 2px 0;\n    /* content: ''; */\n\n    padding: 2px;\n    /* transform: rotate(-45deg) translateY(-50%); */\n    /* transition: right 0.15s ease-in-out; */\n\n    display: inline-block;\n    position: absolute;\n    right: -10px;\n    top: 50%;\n}\n\n.gallery-controls-previous:hover::before {\n    left: -18px;\n}\n\n.gallery-controls-next:hover::before {\n    right: -18px;\n}\n\n.gallery-controls-previous {\n    transform: translateY(200%);\n\n    position: relative;\n}\n\n.gallery-controls-next {\n    transform: translateY(200%);\n    position: relative;\n}\n\n.gallery-controls-next:active, .gallery-controls-previous:active{\n    transform: translateY(200%);\n}\n\n/* timeFrame buttons */\n.gallery-time-buttons {\n    margin-top: 4.5%;\n    text-align: center;\n}\n\n.time-btn {\n    padding: 5px;\n    margin-left: 5px;\n    margin-right: 5px;\n}\n\n/* gallery-header */\n.gallery-header {\n    color: white;\n    width: 300px;\n    transition: right 0.15s ease-in-out;\n}\n\n.gallery-item-left .gallery-header,\n.gallery-item-right .gallery-header {\n    opacity: .1;\n    width: 200px;\n}\n\n.gallery-item-nextLeft .gallery-header,\n.gallery-item-nextRight .gallery-header {\n    opacity: .0;\n    width: 150px;\n}\n\n/* custom css */\n.divider {\n    margin-top: 1%;\n    margin-bottom: 1%;\n}\n\n/* Mobile css */\n/* Everything under 370 pixels will have these settings */\n@media only screen and (max-width: 460px) {\n\t.gallery-container {\n\t\ttransform: scale(0.9);\n\t}\n\n\t/* Controls */\n\t.gallery-controls {\n\t\tmargin-bottom: 80px;\n\t}\n\n\t/* timeFrame buttons */\n\t.gallery-time-buttons {\n\t\tmargin-top: 5.0%;\n\t\ttext-align: center;\n\t}\n\n\t.time-btn {\n\t\twidth: 25%;\n\t}\n\n\t.divider {\n\t\tmargin: 5% 0;\n\t}\n\n\t.gallery {\n\t\twidth: 100%;\n\t}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

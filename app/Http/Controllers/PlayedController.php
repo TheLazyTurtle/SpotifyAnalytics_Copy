@@ -273,7 +273,7 @@ class PlayedController extends Controller
     }
 
     // Amount of new songs a user listend to 
-    // TODO: Resourc
+    // TODO: Resource
     public function amountNewSongs(Request $request)
     {
         $user_id = Auth()->user()->id;
@@ -309,16 +309,17 @@ class PlayedController extends Controller
         // TODO: Make the user_id go using the validation step
 
         $searchArtist = Artist::where('name', 'like', "%$request->name%")
-            ->select('artist_id as id', 'name', 'img_url as imgUrl', DB::raw('concat("artist") as type'))
+            ->select('artist_id', 'name', 'img_url as imgUrl', DB::raw('concat("artist") as type'))
             ->limit(10)
-            ->get();
+            ->get()
+            ->toArray();
         $searchUser = User::where('username', 'like', "%$request->name%")
             ->select('username as name', 'img_url as imgUrl', DB::raw('concat("user") as type'))
             ->limit(10)
-            ->get();
+            ->get()
+            ->toArray();
 
         return response()->json([
-            'success' => true,
             'data' => array_merge($searchUser, $searchArtist)
         ], 200);
     }

@@ -80,6 +80,15 @@ export class PlayedAPI extends Api {
         return await axios.get<Response<AutocompleteItem[]>>("/api/played/topSongsSearch", params);
     }
 
+    static async search(name: string) {
+        const params = {
+            params: {
+                name: name
+            }
+        }
+        return await axios.get<Response<AutocompleteItem[]>>(`/api/search`, params)
+    }
+
     static async timeListend(minDate: string, maxDate: string) {
         try {
             const header = super.makeHeader("GET");
@@ -117,14 +126,5 @@ export class PlayedAPI extends Api {
             console.log("log client error " + error);
             throw new Error("There was an error getting the data from graph Played Per Day");
         }
-    }
-
-    static async search(name: string) {
-        const params = {
-            params: {
-                name: name
-            }
-        }
-        return await axios.get<Response<any>>(`/api/search`, params).then((response) => response.data)
     }
 }
