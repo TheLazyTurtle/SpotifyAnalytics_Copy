@@ -3224,7 +3224,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
+/* harmony import */ var _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../slider/SliderItems */ "./resources/js/slider/SliderItems.ts");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -3399,6 +3400,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 
+
 var PlayedAPI =
 /** @class */
 function (_super) {
@@ -3452,7 +3454,7 @@ function (_super) {
     });
   };
 
-  PlayedAPI.topSongs = function (minDate, maxDate, artistName, amount, userID) {
+  PlayedAPI.topSongs = function (minDate, maxDate, amount, artistName, userID) {
     if (minDate === void 0) {
       minDate = "2020-01-01";
     }
@@ -3461,12 +3463,12 @@ function (_super) {
       maxDate = "2099-01-01";
     }
 
-    if (artistName === void 0) {
-      artistName = "%";
-    }
-
     if (amount === void 0) {
       amount = "10";
+    }
+
+    if (artistName === void 0) {
+      artistName = "%";
     }
 
     return __awaiter(this, void 0, void 0, function () {
@@ -3655,40 +3657,26 @@ function (_super) {
     });
   };
 
-  PlayedAPI.timeListend = function (minDate, maxDate) {
+  PlayedAPI.timeListened = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_1;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
+            params = {
+              params: {
+                min_date: minDate,
+                max_date: maxDate
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/timeListend?min_date=").concat(minDate, "&max_date=").concat(maxDate), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/timeListened", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_1 = _b.sent();
-            console.log("log client error " + error_1);
-            throw new Error("There was an error getting the data from graph Played Per Day");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -3696,38 +3684,24 @@ function (_super) {
 
   PlayedAPI.amountSongs = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_2;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
+            params = {
+              params: {
+                min_date: minDate,
+                max_date: maxDate
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/amountSongs?min_date=").concat(minDate, "&max_date=").concat(maxDate), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/amountSongs", params)];
 
           case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
             return [2
             /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_2 = _b.sent();
-            console.log("log client error " + error_2);
-            throw new Error("There was an error getting the data from graph Played Per Day");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
+            , _b.sent()];
         }
       });
     });
@@ -3735,38 +3709,86 @@ function (_super) {
 
   PlayedAPI.amountNewSongs = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_3;
+      var params;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
+            params = {
+              params: {
+                min_date: minDate,
+                max_date: maxDate
+              }
+            };
             return [4
             /*yield*/
-            , fetch("".concat(PlayedAPI.url, "/amountNewSongs?min_date=").concat(minDate, "&max_date=").concat(maxDate), header)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/amountNewSongs", params)];
 
           case 1:
-            response = _b.sent();
+            return [2
+            /*return*/
+            , _b.sent()];
+        }
+      });
+    });
+  };
+
+  PlayedAPI.sliderItemData = function (minDate, maxDate) {
+    return __awaiter(this, void 0, void 0, function () {
+      var _b, _c, _d, _e, _f;
+
+      var _g;
+
+      return __generator(this, function (_h) {
+        switch (_h.label) {
+          case 0:
+            _g = {};
+            _b = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.topSongs;
             return [4
             /*yield*/
-            , _super.checkStatus.call(this, response)];
+            , this.topSongs(minDate, maxDate, "1").then(function (data) {
+              return data.data.data[0];
+            })];
+
+          case 1:
+            _g[_b] = _h.sent();
+            _c = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.topArtists;
+            return [4
+            /*yield*/
+            , this.topArtist(minDate, maxDate, "1").then(function (data) {
+              return data.data.data[0];
+            })];
 
           case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
+            _g[_c] = _h.sent();
+            _d = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.timeListened;
+            return [4
+            /*yield*/
+            , this.timeListened(minDate, maxDate).then(function (data) {
+              return data.data.data;
+            })];
 
           case 3:
-            error_3 = _b.sent();
-            console.log("log client error " + error_3);
-            throw new Error("There was an error getting the data from graph Played Per Day");
+            _g[_d] = _h.sent();
+            _e = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.amountSongs;
+            return [4
+            /*yield*/
+            , this.amountSongs(minDate, maxDate).then(function (data) {
+              return data.data.data;
+            })];
 
           case 4:
+            _g[_e] = _h.sent();
+            _f = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.amountNewSongs;
+            return [4
+            /*yield*/
+            , this.amountNewSongs(minDate, maxDate).then(function (data) {
+              return data.data.data;
+            })];
+
+          case 5:
             return [2
             /*return*/
-            ];
+            , (_g[_f] = _h.sent(), _g)];
         }
       });
     });
@@ -3777,7 +3799,7 @@ function (_super) {
   _a = PlayedAPI;
   PlayedAPI.url = "".concat(_a.baseUrl, "/played");
   return PlayedAPI;
-}(_api__WEBPACK_IMPORTED_MODULE_1__.Api);
+}(_api__WEBPACK_IMPORTED_MODULE_2__.Api);
 
 
 
@@ -5546,7 +5568,7 @@ function GraphWrapper(_a) {
           case GraphName.topSongs:
             return [2
             /*return*/
-            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__.PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"], filterSettings["amount"], userId)];
+            , _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_5__.PlayedAPI.topSongs(minDate, maxDate, filterSettings["amount"], filterSettings["artistName"], userId)];
 
           case GraphName.topArtist:
             return [2
@@ -7757,12 +7779,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var _SliderItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SliderItem */ "./resources/js/slider/SliderItem.tsx");
+/* harmony import */ var _SliderItems__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SliderItems */ "./resources/js/slider/SliderItems.ts");
 /* harmony import */ var _slider_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./slider.css */ "./resources/js/slider/slider.css");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _dates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../dates */ "./resources/js/dates.ts");
 /* harmony import */ var _button_ButtonWrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../button/ButtonWrapper */ "./resources/js/button/ButtonWrapper.tsx");
-/* harmony import */ var _cacher__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../cacher */ "./resources/js/cacher.ts");
+/* harmony import */ var _SliderItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SliderItem */ "./resources/js/slider/SliderItem.tsx");
+/* harmony import */ var react_query__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
+/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -7931,171 +7955,76 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
+
+
 function Slider() {
   var _this = this;
 
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(_SliderItem__WEBPACK_IMPORTED_MODULE_1__.SliderItems),
-      sliderItems = _a[0],
-      setSliderItems = _a[1];
+  var _a = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(_SliderItems__WEBPACK_IMPORTED_MODULE_1__.sliderItems),
+      sliderItemList = _a[0],
+      setSliderItemList = _a[1];
 
   var _b = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(_dates__WEBPACK_IMPORTED_MODULE_4__.TimeFrame.today),
       timeFrame = _b[0],
       setTimeFrame = _b[1];
 
+  var _c = (0,_dates__WEBPACK_IMPORTED_MODULE_4__.convertTime)(timeFrame),
+      minDate = _c.minDate,
+      maxDate = _c.maxDate;
+
+  var data = (0,react_query__WEBPACK_IMPORTED_MODULE_7__.useQuery)(["sliderItemData", timeFrame], function () {
+    return _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_8__.PlayedAPI.sliderItemData(minDate, maxDate);
+  }).data;
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(function () {
-    handleTimeFrameChange(timeFrame);
-  }, []);
+    if (data === undefined) {
+      return;
+    }
+
+    var updatedList = sliderItemList.map(function (sliderItem) {
+      var _a, _b, _c, _d, _e, _f;
+
+      var newData = data[sliderItem.name];
+
+      if (sliderItem.name === _SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.timeListened) {
+        sliderItem.sliderItemData.countValue = (0,_dates__WEBPACK_IMPORTED_MODULE_4__.msToTime)((_b = (_a = newData === null || newData === void 0 ? void 0 : newData.y) === null || _a === void 0 ? void 0 : _a.toString()) !== null && _b !== void 0 ? _b : "0");
+      } else {
+        sliderItem.sliderItemData.countValue = (_d = (_c = newData === null || newData === void 0 ? void 0 : newData.y) === null || _c === void 0 ? void 0 : _c.toString()) !== null && _d !== void 0 ? _d : "0";
+      }
+
+      sliderItem.sliderItemData.imgUrl = (_e = newData === null || newData === void 0 ? void 0 : newData.imgUrl) !== null && _e !== void 0 ? _e : sliderItem.defaultImgUrl;
+      sliderItem.sliderItemData.nameValue = (_f = newData === null || newData === void 0 ? void 0 : newData.x) !== null && _f !== void 0 ? _f : "";
+      return sliderItem;
+    });
+    setSliderItemList(updatedList); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   var prevItem = function prevItem() {
-    var updated = sliderItems.map(function (sliderItem) {
+    var updated = sliderItemList.map(function (sliderItem) {
       var index = sliderItem.index === 4 ? 0 : sliderItem.index + 1;
       return __assign(__assign({}, sliderItem), {
         index: index
       });
     });
-    setSliderItems(updated);
+    setSliderItemList(updated);
   };
 
   var nextItem = function nextItem() {
-    var updated = sliderItems.map(function (sliderItem) {
+    var updated = sliderItemList.map(function (sliderItem) {
       var index = sliderItem.index === 0 ? 4 : sliderItem.index - 1;
       return __assign(__assign({}, sliderItem), {
         index: index
       });
     });
-    setSliderItems(updated);
+    setSliderItemList(updated);
   };
 
   var handleTimeFrameChange = function handleTimeFrameChange(timeFrame) {
     return __awaiter(_this, void 0, void 0, function () {
-      var cached, updated;
       return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            setTimeFrame(timeFrame);
-            cached = getCache(timeFrame);
-            if (!(cached === false)) return [3
-            /*break*/
-            , 2];
-            return [4
-            /*yield*/
-            , getData(sliderItems, timeFrame)];
-
-          case 1:
-            updated = _a.sent();
-            setCache(updated, timeFrame);
-            setSliderItems(updated);
-            return [2
-            /*return*/
-            ];
-
-          case 2:
-            setSliderItems(cached);
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  var setCache = function setCache(data, timeFrame) {
-    var purged = {};
-
-    for (var i = 0; i < data.length; i++) {
-      var sliderItem = data[i];
-      purged[sliderItem.name] = sliderItem.sliderItemData;
-    }
-
-    _cacher__WEBPACK_IMPORTED_MODULE_6__.Cacher.setItem("sliderItems", purged, timeFrame);
-  };
-
-  var getCache = function getCache(timeFrame) {
-    var cached = _cacher__WEBPACK_IMPORTED_MODULE_6__.Cacher.getItem("sliderItems", true, timeFrame).value;
-
-    if (cached === undefined) {
-      return false;
-    }
-
-    if (Object.keys(cached).length <= 0) {
-      return false;
-    }
-
-    var updated = sliderItems.map(function (sliderItem) {
-      return __assign(__assign({}, sliderItem), {
-        sliderItemData: cached[sliderItem.name]
-      });
-    });
-    return updated;
-  };
-
-  var getData = function getData(sliderItems, timeFrame) {
-    return __awaiter(_this, void 0, void 0, function () {
-      var _a, minDate, maxDate;
-
-      var _this = this;
-
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _a = (0,_dates__WEBPACK_IMPORTED_MODULE_4__.convertTime)(timeFrame), minDate = _a.minDate, maxDate = _a.maxDate;
-            return [4
-            /*yield*/
-            , Promise.all(sliderItems.map(function (sliderItem) {
-              return __awaiter(_this, void 0, void 0, function () {
-                var res, countValue, imgUrl, sliderItemData, e_1, countValue, sliderItemData;
-                return __generator(this, function (_a) {
-                  switch (_a.label) {
-                    case 0:
-                      _a.trys.push([0, 2,, 3]);
-
-                      return [4
-                      /*yield*/
-                      , sliderItem.apiFunction(minDate, maxDate)];
-
-                    case 1:
-                      res = _a.sent();
-                      countValue = sliderItem.name === "timeListened" ? (0,_dates__WEBPACK_IMPORTED_MODULE_4__.msToTime)(res.data[0].y) : res.data[0].y;
-                      imgUrl = res.data[0].img_url === null ? sliderItem.defaultImgUrl : res.data[0].img_url;
-                      sliderItemData = __assign(__assign({}, sliderItem.sliderItemData), {
-                        nameValue: res.data[0].label,
-                        countValue: countValue,
-                        imgUrl: imgUrl
-                      });
-                      return [2
-                      /*return*/
-                      , __assign(__assign({}, sliderItem), {
-                        sliderItemData: sliderItemData
-                      })];
-
-                    case 2:
-                      e_1 = _a.sent();
-                      countValue = sliderItem.name === "timeListened" ? "00:00:00" : "0";
-                      sliderItemData = __assign(__assign({}, sliderItem.sliderItemData), {
-                        nameValue: "",
-                        countValue: countValue,
-                        imgUrl: sliderItem.defaultImgUrl
-                      });
-                      return [2
-                      /*return*/
-                      , __assign(__assign({}, sliderItem), {
-                        sliderItemData: sliderItemData
-                      })];
-
-                    case 3:
-                      return [2
-                      /*return*/
-                      ];
-                  }
-                });
-              });
-            }))];
-
-          case 1:
-            return [2
-            /*return*/
-            , _b.sent()];
-        }
+        setTimeFrame(timeFrame);
+        return [2
+        /*return*/
+        ];
       });
     });
   };
@@ -8107,42 +8036,21 @@ function Slider() {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "gallery-container"
       }, {
-        children: sliderItems.map(function (sliderItem) {
-          var position = _SliderItem__WEBPACK_IMPORTED_MODULE_1__.SliderPositions[sliderItem.index];
-          var className = "gallery-item gallery-item-".concat(position);
-          var sliderText = sliderItem.sliderItemData.templateText.replace("{{timeFrame}}", timeFrame.toLowerCase()).replace("{{count}}", sliderItem.sliderItemData.countValue).replace("{{name}}", sliderItem.sliderItemData.nameValue);
-          var img = sliderItem.sliderItemData.imgUrl === undefined ? sliderItem.defaultImgUrl : sliderItem.sliderItemData.imgUrl;
-          return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-            className: className
-          }, {
-            children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h5", __assign({
-              id: sliderItem.name,
-              className: "gallery-header"
-            }, {
-              children: sliderText
-            }), void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 109,
-              columnNumber: 33
-            }, _this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
-              id: sliderItem.sliderItemData.imgName,
-              className: "gallery-img",
-              src: img,
-              alt: sliderItem.sliderItemData.imgName
-            }, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 110,
-              columnNumber: 33
-            }, _this)]
-          }), sliderItem.name, true, {
+        children: sliderItemList.map(function (sliderItem) {
+          var position = _SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderPositions[sliderItem.index];
+          return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_SliderItem__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            sliderItem: sliderItem,
+            position: position,
+            timeFrame: timeFrame
+          }, sliderItem.name, false, {
             fileName: _jsxFileName,
-            lineNumber: 107,
-            columnNumber: 33
+            lineNumber: 69,
+            columnNumber: 31
           }, _this);
         })
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 100,
+        lineNumber: 66,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "gallery-controls"
@@ -8154,7 +8062,7 @@ function Slider() {
           children: "Previous"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 116,
+          lineNumber: 73,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("button", __assign({
           className: "gallery-controls-next btn btn-primary",
@@ -8163,17 +8071,17 @@ function Slider() {
           children: "Next"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 117,
+          lineNumber: 74,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 115,
+        lineNumber: 72,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 99,
+      lineNumber: 65,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "gallery-time-buttons"
@@ -8182,23 +8090,23 @@ function Slider() {
         onClick: handleTimeFrameChange
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 121,
+        lineNumber: 78,
         columnNumber: 17
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 120,
+      lineNumber: 77,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       className: "border-bottom border-white mt-5"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 123,
+      lineNumber: 80,
       columnNumber: 13
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 97,
+    lineNumber: 63,
     columnNumber: 13
   }, this);
 }
@@ -8216,11 +8124,81 @@ function Slider() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SliderItems": () => (/* binding */ SliderItems),
-/* harmony export */   "SliderPositions": () => (/* binding */ SliderPositions)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
+/* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
 
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/slider/SliderItem.tsx";
+;
+
+function SliderItemComponent(_a) {
+  var _b;
+
+  var sliderItem = _a.sliderItem,
+      timeFrame = _a.timeFrame,
+      position = _a.position;
+  return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+    className: "gallery-item gallery-item-".concat(position)
+  }, {
+    children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h5", __assign({
+      id: sliderItem.name.toString(),
+      className: "gallery-header"
+    }, {
+      children: sliderItem.sliderItemData.templateText.replace("{{timeFrame}}", timeFrame.toLowerCase()).replace("{{count}}", sliderItem.sliderItemData.countValue).replace("{{name}}", sliderItem.sliderItemData.nameValue)
+    }), void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 13,
+      columnNumber: 13
+    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
+      id: sliderItem.sliderItemData.imgName,
+      className: "gallery-img",
+      src: (_b = sliderItem.sliderItemData.imgUrl) !== null && _b !== void 0 ? _b : sliderItem.defaultImgUrl,
+      alt: sliderItem.sliderItemData.imgName
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 21,
+      columnNumber: 13
+    }, this)]
+  }), sliderItem.name, true, {
+    fileName: _jsxFileName,
+    lineNumber: 11,
+    columnNumber: 13
+  }, this);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SliderItemComponent);
+
+/***/ }),
+
+/***/ "./resources/js/slider/SliderItems.ts":
+/*!********************************************!*\
+  !*** ./resources/js/slider/SliderItems.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SliderItemName": () => (/* binding */ SliderItemName),
+/* harmony export */   "SliderPositions": () => (/* binding */ SliderPositions),
+/* harmony export */   "sliderItems": () => (/* binding */ sliderItems)
+/* harmony export */ });
 var SliderPositions;
 
 (function (SliderPositions) {
@@ -8231,9 +8209,19 @@ var SliderPositions;
   SliderPositions[SliderPositions["nextRight"] = 4] = "nextRight";
 })(SliderPositions || (SliderPositions = {}));
 
-var SliderItems = [{
-  name: "topSongs",
-  apiFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.topSongs,
+;
+var SliderItemName;
+
+(function (SliderItemName) {
+  SliderItemName[SliderItemName["topSongs"] = 0] = "topSongs";
+  SliderItemName[SliderItemName["topArtists"] = 1] = "topArtists";
+  SliderItemName[SliderItemName["timeListened"] = 2] = "timeListened";
+  SliderItemName[SliderItemName["amountSongs"] = 3] = "amountSongs";
+  SliderItemName[SliderItemName["amountNewSongs"] = 4] = "amountNewSongs";
+})(SliderItemName || (SliderItemName = {}));
+
+var sliderItems = [{
+  name: SliderItemName.topSongs,
   defaultImgUrl: "https://fakeimg.pl/300/?text=No top song",
   index: 0,
   sliderItemData: {
@@ -8243,8 +8231,7 @@ var SliderItems = [{
     imgName: "topSongsImg"
   }
 }, {
-  name: "topArtist",
-  apiFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.topArtist,
+  name: SliderItemName.topArtists,
   defaultImgUrl: "https://fakeimg.pl/300/?text=No top artist",
   index: 1,
   sliderItemData: {
@@ -8254,8 +8241,7 @@ var SliderItems = [{
     imgName: "topArtistImg"
   }
 }, {
-  name: "timeListened",
-  apiFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.timeListend,
+  name: SliderItemName.timeListened,
   defaultImgUrl: "https://i.pinimg.com/736x/f9/4c/95/f94c9574933ce9404f323fb58f5e7f5c.jpg",
   index: 2,
   sliderItemData: {
@@ -8265,9 +8251,8 @@ var SliderItems = [{
     imgName: "timeListenedImg"
   }
 }, {
-  name: "amountSongs",
-  apiFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.amountSongs,
-  defaultImgUrl: "./onRepeat.jpg",
+  name: SliderItemName.amountSongs,
+  defaultImgUrl: "/storage/onRepeat.jpg",
   index: 3,
   sliderItemData: {
     templateText: "Total songs listend {{timeFrame}}: {{count}}",
@@ -8276,8 +8261,7 @@ var SliderItems = [{
     imgName: "amountSongs"
   }
 }, {
-  name: "amountNewSongs",
-  apiFunction: _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_0__.PlayedAPI.amountNewSongs,
+  name: SliderItemName.amountNewSongs,
   defaultImgUrl: "https://fakeimg.pl/300/?text=No new songs",
   index: 4,
   sliderItemData: {

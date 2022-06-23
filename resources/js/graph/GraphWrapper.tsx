@@ -57,7 +57,7 @@ function GraphWrapper({ graph, userId }: GraphWrapperProps) {
             case GraphName.allSongsPlayed:
                 return PlayedAPI.allSongsPlayed(minDate, maxDate, filterSettings["minPlayed"], filterSettings["maxPlayed"], userId)
             case GraphName.topSongs:
-                return PlayedAPI.topSongs(minDate, maxDate, filterSettings["artistName"], filterSettings["amount"], userId);
+                return PlayedAPI.topSongs(minDate, maxDate, filterSettings["amount"], filterSettings["artistName"], userId);
             case GraphName.topArtist:
                 return PlayedAPI.topArtist(minDate, maxDate, filterSettings["amount"], userId);
             case GraphName.playedPerDay:

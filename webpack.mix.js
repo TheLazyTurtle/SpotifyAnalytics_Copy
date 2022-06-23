@@ -12,6 +12,13 @@ mix.disableNotifications();
  |
  */
 
+
 mix.ts('resources/js/index.tsx', 'public/js')
     .react()
     .postCss('resources/js/App.css', 'public/css');
+
+if (mix.inProduction()) {
+    mix.version();
+}
+
+mix.browserSync("http://localhost:8000");

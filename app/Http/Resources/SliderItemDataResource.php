@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DataWrapperResource extends JsonResource
+class SliderItemDataResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,22 +14,14 @@ class DataWrapperResource extends JsonResource
      */
     public function toArray($request)
     {
-        if (isset($this->object)) {
+        if (isset($this->img_url)) {
             return [
-                'x' => $this->x,
-                'y' => $this->y,
-                'object' => $this->object,
-            ];
-        } else if (isset($this->img_url)) {
-            return [
-                'x' => $this->x,
                 'y' => $this->y,
                 'imgUrl' => $this->img_url
             ];
         }
 
         return [
-            'x' => $this->x,
             'y' => $this->y,
         ];
         // return parent::toArray($request);

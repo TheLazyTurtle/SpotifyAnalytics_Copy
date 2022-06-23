@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('played/playedPerDay', [PlayedController::class, 'playedPerDay']);
     Route::get('played/topArtistSearch', [PlayedController::class, 'topArtistSearch']);
     Route::get('played/topSongsSearch', [PlayedController::class, 'topSongsSearch']);
-    Route::get('played/timeListend', [PlayedController::class, 'timeListend']);
+    Route::get('played/timeListened', [PlayedController::class, 'timeListened']);
     Route::get('played/amountSongs', [PlayedController::class, 'amountSongs']);
     Route::get('played/amountNewSongs', [PlayedController::class, 'amountNewSongs']);
     Route::get('search', [PlayedController::class, 'search']);

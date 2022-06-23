@@ -2,6 +2,7 @@ import axios from "axios";
 import { Response } from "../App";
 import { Played } from "../graph/Played";
 import { AutocompleteItem } from "../inputField/AutocompleteItem";
+import { SliderItemName } from "../slider/SliderItems";
 import { Api } from "./api";
 
 export class PlayedAPI extends Api {
@@ -20,7 +21,7 @@ export class PlayedAPI extends Api {
         return await axios.get<Response<Played[]>>("/api/played/allSongsPlayed", params);
     }
 
-    static async topSongs(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", artistName: string = "%", amount: string = "10", userID?: string) {
+    static async topSongs(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string = "10", artistName: string = "%", userID?: string) {
         const params = {
             params: {
                 min_date: minDate,
@@ -89,42 +90,43 @@ export class PlayedAPI extends Api {
         return await axios.get<Response<AutocompleteItem[]>>(`/api/search`, params)
     }
 
-    static async timeListend(minDate: string, maxDate: string) {
-        try {
-            const header = super.makeHeader("GET");
-
-            const response = await fetch(`${PlayedAPI.url}/timeListend?min_date=${minDate}&max_date=${maxDate}`, header);
-            const response_1 = await super.checkStatus(response);
-            return super.parseJSON(response_1);
-        } catch (error) {
-            console.log("log client error " + error);
-            throw new Error("There was an error getting the data from graph Played Per Day");
+    static async timeListened(minDate: string, maxDate: string) {
+        const params = {
+            params: {
+                min_date: minDate,
+                max_date: maxDate
+            }
         }
+        return await axios.get<Response<Played>>(`/api/played/timeListened`, params);
     }
 
     static async amountSongs(minDate: string, maxDate: string) {
-        try {
-            const header = super.makeHeader("GET");
-
-            const response = await fetch(`${PlayedAPI.url}/amountSongs?min_date=${minDate}&max_date=${maxDate}`, header);
-            const response_1 = await super.checkStatus(response);
-            return super.parseJSON(response_1);
-        } catch (error) {
-            console.log("log client error " + error);
-            throw new Error("There was an error getting the data from graph Played Per Day");
+        const params = {
+            params: {
+                min_date: minDate,
+                max_date: maxDate
+            }
         }
+        return await axios.get<Response<Played>>(`/api/played/amountSongs`, params);
     }
 
     static async amountNewSongs(minDate: string, maxDate: string) {
-        try {
-            const header = super.makeHeader("GET");
-
-            const response = await fetch(`${PlayedAPI.url}/amountNewSongs?min_date=${minDate}&max_date=${maxDate}`, header);
-            const response_1 = await super.checkStatus(response);
-            return super.parseJSON(response_1);
-        } catch (error) {
-            console.log("log client error " + error);
-            throw new Error("There was an error getting the data from graph Played Per Day");
+        const params = {
+            params: {
+                min_date: minDate,
+                max_date: maxDate
+            }
         }
+        return await axios.get<Response<Played>>(`/api/played/amountNewSongs`, params);
+    }
+
+    static async sliderItemData(minDate: string, maxDate: string) {
+        return {
+            [SliderItemName.topSongs]: await this.topSongs(minDate, maxDate, "1").then((data) => data.data.data[0] as Played),
+            [SliderItemName.topArtists]: await this.topArtist(minDate, maxDate, "1").then((data) => data.data.data[0] as Played),
+            [SliderItemName.timeListened]: await this.timeListened(minDate, maxDate).then((data) => data.data.data as Played),
+            [SliderItemName.amountSongs]: await this.amountSongs(minDate, maxDate).then((data) => data.data.data as Played),
+            [SliderItemName.amountNewSongs]: await this.amountNewSongs(minDate, maxDate).then((data) => data.data.data as Played)
+        };
     }
 }

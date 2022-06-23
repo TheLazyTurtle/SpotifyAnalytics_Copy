@@ -1,5 +1,6 @@
 export type Played<T = void> = {
     x: string,
-    y: number,
+    y: number | string,
+    imgUrl?: string,
     object?: T
 };
