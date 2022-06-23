@@ -7087,7 +7087,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api/NotificationAPI */ "./resources/js/api/NotificationAPI.ts");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -7257,44 +7258,19 @@ function NotificationMessage(_a) {
       isComponent = _a.isComponent,
       updateList = _a.updateList;
 
-  function handleAccept() {
+  function handleResponse(response) {
     return __awaiter(this, void 0, void 0, function () {
+      var params;
       return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_1__.NotificationAPI.handleRequest(notification.id, true)];
-
-          case 1:
-            _a.sent();
-
-            updateList(notification);
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  }
-
-  function handleDeny() {
-    return __awaiter(this, void 0, void 0, function () {
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_1__.NotificationAPI.handleRequest(notification.id, false)];
-
-          case 1:
-            _a.sent();
-
-            updateList(notification);
-            return [2
-            /*return*/
-            ];
-        }
+        params = {
+          notification_id: notification.id,
+          respones: response
+        };
+        axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/notification/handle", params);
+        updateList();
+        return [2
+        /*return*/
+        ];
       });
     });
   }
@@ -7351,14 +7327,18 @@ function NotificationMessage(_a) {
     }, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
         className: "fas fa-check",
-        onClick: handleAccept
+        onClick: function onClick() {
+          return handleResponse(true);
+        }
       }, void 0, false, {
         fileName: _jsxFileName,
         lineNumber: 38,
         columnNumber: 17
       }, this), notification.notification_type_id === 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
         className: "fas fa-ban p-2",
-        onClick: handleDeny
+        onClick: function onClick() {
+          return handleResponse(false);
+        }
       }, void 0, false, {
         fileName: _jsxFileName,
         lineNumber: 39,
@@ -7423,8 +7403,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/NotificationAPI */ "./resources/js/api/NotificationAPI.ts");
+/* harmony import */ var react_query__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-query */ "./node_modules/react-query/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _NotificationMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NotificationMessage */ "./resources/js/notificatons/NotificationMessage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -7442,149 +7423,6 @@ var __assign = undefined && undefined.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
 
 var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/notificatons/NotificationsPopup.tsx";
 
@@ -7597,73 +7435,43 @@ function NotificationsPopup(_a) {
 
   var isComponent = _a.isComponent;
 
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
-      loading = _b[0],
-      setLoading = _b[1];
-
-  var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-      notifications = _c[0],
-      setNotifications = _c[1];
-
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    getNotifications();
-  }, []);
-
-  function getNotifications() {
-    return __awaiter(this, void 0, void 0, function () {
-      var notifications;
-      return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            setLoading(true);
-            return [4
-            /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_2__.NotificationAPI.getNotifications()];
-
-          case 1:
-            notifications = _a.sent();
-
-            if (notifications.success) {
-              setNotifications(notifications.data);
-            }
-
-            setLoading(false);
-            return [2
-            /*return*/
-            ];
-        }
-      });
+  var _b = (0,react_query__WEBPACK_IMPORTED_MODULE_1__.useQuery)("Notifications", function () {
+    return axios__WEBPACK_IMPORTED_MODULE_2___default().get("/api/notification").then(function (response) {
+      return response.data.data;
     });
-  }
+  }),
+      isLoading = _b.isLoading,
+      data = _b.data,
+      refetch = _b.refetch;
 
-  function updateNotificationList(notificationToRemove) {
-    setLoading(true);
-    setNotifications(function (current) {
-      return current.filter(function (notification) {
-        return notification !== notificationToRemove;
-      });
-    });
-    setLoading(false);
+  function updateNotificationList() {
+    refetch();
   }
 
   if (isComponent) {
     return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "w-10 bg-white floating-window"
     }, {
-      children: !loading && notifications.map(function (notification, index) {
+      children: [!isLoading && (data === null || data === void 0 ? void 0 : data.map(function (notification, index) {
         return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_NotificationMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
           notification: notification,
           updateList: updateNotificationList,
           isComponent: isComponent
         }, index, false, {
           fileName: _jsxFileName,
-          lineNumber: 41,
-          columnNumber: 96
+          lineNumber: 21,
+          columnNumber: 90
         }, _this);
-      })
-    }), void 0, false, {
+      })), (data === null || data === void 0 ? void 0 : data.length) === 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
+        children: "No notifications"
+      }, void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 24,
+        columnNumber: 39
+      }, this)]
+    }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 39,
+      lineNumber: 19,
       columnNumber: 17
     }, this);
   }
@@ -7671,20 +7479,26 @@ function NotificationsPopup(_a) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
     className: "mx-2 text-custom-green"
   }, {
-    children: !loading && notifications.map(function (notification, index) {
+    children: [!isLoading && (data === null || data === void 0 ? void 0 : data.map(function (notification, index) {
       return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_NotificationMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
         notification: notification,
         updateList: updateNotificationList,
         isComponent: isComponent
       }, index, false, {
         fileName: _jsxFileName,
-        lineNumber: 50,
-        columnNumber: 92
+        lineNumber: 31,
+        columnNumber: 86
       }, _this);
-    })
-  }), void 0, false, {
+    })), (data === null || data === void 0 ? void 0 : data.length) === 0 && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
+      children: "No notifications"
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 34,
+      columnNumber: 35
+    }, this)]
+  }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 48,
+    lineNumber: 29,
     columnNumber: 13
   }, this);
 }

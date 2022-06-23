@@ -1,21 +1,21 @@
-import { NotificationAPI } from "../api/NotificationAPI";
 import { Notification } from "./Notification";
+import axios from "axios";
 
 interface NotificationMessageProps {
     notification: Notification;
     isComponent: boolean;
-    updateList: (notification: Notification) => void;
+    updateList: () => void;
 };
 
 function NotificationMessage({ notification, isComponent, updateList }: NotificationMessageProps) {
-    async function handleAccept() {
-        await NotificationAPI.handleRequest(notification.id, true);
-        updateList(notification);
-    }
+    async function handleResponse(response: boolean) {
+        const params = {
+            notification_id: notification.id,
+            respones: response
+        }
 
-    async function handleDeny() {
-        await NotificationAPI.handleRequest(notification.id, false);
-        updateList(notification);
+        axios.post("/api/notification/handle", params);
+        updateList();
     }
 
     return (
@@ -35,9 +35,9 @@ function NotificationMessage({ notification, isComponent, updateList }: Notifica
                 }
             </div >
             <div className="col-3">
-                <i className="fas fa-check" onClick={handleAccept}></i>
+                <i className="fas fa-check" onClick={() => handleResponse(true)}></i>
                 {notification.notification_type_id === 0 &&
-                    <i className="fas fa-ban p-2" onClick={handleDeny}></i>
+                    <i className="fas fa-ban p-2" onClick={() => handleResponse(false)}></i>
                 }
             </div>
         </div >
