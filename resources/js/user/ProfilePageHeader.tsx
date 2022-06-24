@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useContext } from "react";
-import { NotificationAPI } from "../api/NotificationAPI";
-import { UserAPI } from "../api/UserAPI";
 import { LoggedInUserContext } from "../App";
 import { PageType } from "./ProfilePage";
 import { User } from "./User";
@@ -44,29 +42,39 @@ function Buttons(props: ProfilePageHeaderProps) {
     );
 }
 
+async function updateFollowingStatus(following_user_id: string) {
+    return await axios.post("/api/user/follow", { following_user_id }).then((result) => result.status === 200);
+}
+
+async function makeNotification(notification_type_id: number, receiver_user_id: string) {
+    return await axios.post("/api/notification/create", { notification_type_id, receiver_user_id }).then((result) => result.status === 200);
+}
+
+async function removeNotification(receiver_user_id: string) {
+    return await axios.post("/api/notification/delete", { receiver_user_id }).then((result) => result.status === 200);
+}
+
 // TODO: This should use button component
 function followButton(user: User) {
     async function handleFollowage() {
-        let result = null;
-
-        if (user.following) {
-            // Unfollow a user
-            result = await UserAPI.follow(user.id);
-            result = await NotificationAPI.removeRequest(user.id);
-        } else if (user.hasFollowingRequest) {
-            // Remove request
-            result = await NotificationAPI.removeRequest(user.id);
-        } else if (user.private) {
-            // Make request
-            result = await NotificationAPI.makeRequest(0, user.id);
-        } else {
-            // Follow user and make a notification that you want to follow
-            result = await UserAPI.follow(user.id);
-            await NotificationAPI.makeRequest(1, user.id);
+        // Remove request
+        if (user.hasFollowingRequest) {
+            if (await removeNotification(user.id)) return window.location.reload();
         }
 
-        if (result.success) {
-            return window.location.reload();
+        if (user.following) {
+            // Unfollowing
+            if (await updateFollowingStatus(user.id)) return window.location.reload();
+        } else {
+            // Follow
+            if (user.private) {
+                if (await makeNotification(0, user.id)) return window.location.reload();
+            }
+            if (await updateFollowingStatus(user.id)) {
+                if (await makeNotification(1, user.id)) {
+                    return window.location.reload();
+                }
+            }
         }
     }
 

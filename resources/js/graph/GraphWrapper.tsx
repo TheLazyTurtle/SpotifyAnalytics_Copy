@@ -31,7 +31,7 @@ interface GraphWrapperProps {
 function GraphWrapper({ graph, userId }: GraphWrapperProps) {
     const [timeFrame, setTimeFrame] = useState(TimeFrame.year);
     const [filterSettings, setFilterSettings] = useState<FilterSetting>();
-    const { data, refetch } = useQuery([graph.name, timeFrame], () => chooseEndPoint(graph.name, timeFrame, filterSettings, userId));
+    const { data, refetch } = useQuery([graph.name, timeFrame, userId], () => chooseEndPoint(graph.name, timeFrame, filterSettings, userId));
 
     useEffect(() => {
         refetch();

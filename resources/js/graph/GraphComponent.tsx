@@ -56,12 +56,12 @@ function GraphComponent({ dataPoints, graphType }: GraphComponentProps) {
             if (graphType === GraphDataType.Bar) {
                 dataPoints?.forEach((dataPoint: Played) => {
                     labels.push(dataPoint.x);
-                    dataPointValues.push(dataPoint.y);
+                    dataPointValues.push(+dataPoint.y);
                 });
             } else {
                 dataPoints?.forEach((dataPoint: Played) => {
                     labels.push(new Date(dataPoint.x).toLocaleDateString());
-                    dataPointValues.push(dataPoint.y);
+                    dataPointValues.push(+dataPoint.y);
                 });
             }
         }

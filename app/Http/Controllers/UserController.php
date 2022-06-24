@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\Followers;
 use App\Models\Notification;
 use App\Models\User;
@@ -26,15 +27,11 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
-                'success' => false,
                 'data' => 'Please log in'
             ], 400);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $user
-        ], 200);
+        return new UserResource($user);
     }
 
     // Get a user by it's username
@@ -54,23 +51,12 @@ class UserController extends Controller
             ], 400);
         }
 
-        $user->hasFollowingRequest = Notification::hasFollowingRequestOpen($authUser->id, $user->id);
+        $user->has_following_request = Notification::hasFollowingRequestOpen($authUser->id, $user->id);
         $user->following = Followers::isFollowing($authUser->id, $user->id);
         $user->following_count = Followers::followingCount($user->id);
         $user->followers_count = Followers::followerCount($user->id);
 
-        // if ($authUser->is_admin == false && !$user->following) {
-        //     // TODO: IF YOU ARE NOT FOLLOWING WE STILL WANT A NAME AND AN IMG
-        //     return response()->json([
-        //         'success' => false,
-        //         'data' => 'You are not following this user'
-        //     ], 400);
-        // }
-
-        return response()->json([
-            'success' => true,
-            'data' => $user
-        ], 200);
+        return new UserResource($user);
     }
 
     public function showGuest($username)
@@ -97,17 +83,9 @@ class UserController extends Controller
 
         if ($user->private) {
             $user->following = false;
-
-            return response()->json([
-                'success' => true,
-                'data' => $user
-            ], 200);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $user
-        ], 200);
+        return new UserResource($user);
     }
 
     // Make new user

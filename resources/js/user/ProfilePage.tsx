@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { UserAPI } from "../api/UserAPI";
-import { LoggedInUserContext } from "../App";
+import { LoggedInUserContext, Response } from "../App";
 import ProfilePageBody from "./ProfilePageBody";
 import ProfilePageHeader from "./ProfilePageHeader";
 import { User } from "./User";
+import axios from "axios";
 
 export enum PageType {
     Personal,
@@ -34,24 +34,18 @@ function ProfilePage() {
     }, []);
 
     async function getUser(username?: string) {
-        // TODO: This should be changed with a check for if a user is logged in or not
-        //      Because now we force both but if you are logged in only the first one has to be ran
-        //      And if you are not logged in only the second one needs to be ran
-        let user = await UserAPI.get(username);
-
-        if (user.success) {
-            setUser(user.data);
-            return;
+        if (loggedInUser.guest) {
         }
+        const url = loggedInUser.guest ? `/api/user/guest/${username}` : `/api/user/${username}`;
 
-        user = await UserAPI.getGuest(username);
-
-        if (user.success) {
-            setUser(user.data);
-            return;
-        }
-
-        setUser({ guest: true } as User);
+        axios.get<Response<User>>(url).then((response) => {
+            if (response.status === 200) {
+                setUser(response.data.data);
+            } else {
+                setUser({ guest: true } as User);
+            }
+        });
+        return;
     }
 
     return (

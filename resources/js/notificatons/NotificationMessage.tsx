@@ -11,7 +11,7 @@ function NotificationMessage({ notification, isComponent, updateList }: Notifica
     async function handleResponse(response: boolean) {
         const params = {
             notification_id: notification.id,
-            respones: response
+            response: response
         }
 
         axios.post("/api/notification/handle", params);

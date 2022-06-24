@@ -17,21 +17,16 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         if (pageType === PageType.Personal) {
             return true;
         }
-        if (user.id === undefined) {
-            return false;
+        if (loggedInUser.isAdmin) {
+            return true;
         }
         if (!user.private) {
             return true;
         }
-
-        if (!user.following) {
-            if (!loggedInUser.isAdmin) {
-                return false;
-            }
+        if (user.following) {
             return true;
         }
-
-        return true;
+        return false;
     }
 
     function toLogin() {

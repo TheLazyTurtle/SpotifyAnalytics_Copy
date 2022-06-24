@@ -108,7 +108,6 @@ class NotificationController extends Controller
         // If the person sending the request is not in the notificaiton kill the request because it is invalid
         if ($notification->receiver_user_id != $authUser->id) {
             return response([
-                'success' => false,
                 'data' => 'Please log in'
             ], 400);
         }
@@ -120,12 +119,10 @@ class NotificationController extends Controller
         // Delete the notification after handeling it
         if ($notification->delete()) {
             return response([
-                'success' => true,
                 'data' => 'Handled notification'
             ], 200);
         } else {
             return response([
-                'success' => false,
                 'data' => 'Failed to handle notification'
             ], 500);
         }

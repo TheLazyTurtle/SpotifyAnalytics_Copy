@@ -2839,378 +2839,6 @@ function AlbumsPage() {
 
 /***/ }),
 
-/***/ "./resources/js/api/NotificationAPI.ts":
-/*!*********************************************!*\
-  !*** ./resources/js/api/NotificationAPI.ts ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "NotificationAPI": () => (/* binding */ NotificationAPI)
-/* harmony export */ });
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
-
-
-var NotificationAPI =
-/** @class */
-function (_super) {
-  __extends(NotificationAPI, _super);
-
-  function NotificationAPI() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  NotificationAPI.makeRequest = function (notificationTypeID, userID) {
-    return __awaiter(this, void 0, void 0, function () {
-      var body, header, response, response_1, error_1;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            body = {
-              notification_type_id: notificationTypeID,
-              receiver_user_id: userID
-            };
-            header = _super.makeHeader.call(this, "POST", body);
-            return [4
-            /*yield*/
-            , fetch("".concat(NotificationAPI.url, "/create"), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_1 = _b.sent();
-            console.log("log client error " + error_1);
-            throw new Error("There was an error making the request");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  NotificationAPI.removeRequest = function (userID) {
-    return __awaiter(this, void 0, void 0, function () {
-      var body, header, response, response_1, error_2;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            body = {
-              receiver_user_id: userID
-            };
-            header = _super.makeHeader.call(this, "POST", body);
-            return [4
-            /*yield*/
-            , fetch("".concat(NotificationAPI.url, "/delete"), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_2 = _b.sent();
-            console.log("log client error " + error_2);
-            throw new Error("There was an error making the request");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  NotificationAPI.getNotifications = function () {
-    return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_3;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            return [4
-            /*yield*/
-            , fetch("".concat(NotificationAPI.url, "/"), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_3 = _b.sent();
-            console.log("log client error " + error_3);
-            throw new Error("There was an error making the request");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  NotificationAPI.handleRequest = function (notificationID, result) {
-    return __awaiter(this, void 0, void 0, function () {
-      var body, header, response, response_1, error_4;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            body = {
-              notification_id: notificationID,
-              response: result
-            };
-            header = _super.makeHeader.call(this, "POST", body);
-            return [4
-            /*yield*/
-            , fetch("".concat(NotificationAPI.url, "/handle"), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_4 = _b.sent();
-            console.log("log client error " + error_4);
-            throw new Error("There was an error making the request");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  var _a;
-
-  _a = NotificationAPI;
-  NotificationAPI.url = "".concat(_a.baseUrl, "/notification");
-  return NotificationAPI;
-}(_api__WEBPACK_IMPORTED_MODULE_0__.Api);
-
-
-
-/***/ }),
-
 /***/ "./resources/js/api/PlayedAPI.ts":
 /*!***************************************!*\
   !*** ./resources/js/api/PlayedAPI.ts ***!
@@ -3800,382 +3428,6 @@ function (_super) {
   PlayedAPI.url = "".concat(_a.baseUrl, "/played");
   return PlayedAPI;
 }(_api__WEBPACK_IMPORTED_MODULE_2__.Api);
-
-
-
-/***/ }),
-
-/***/ "./resources/js/api/UserAPI.ts":
-/*!*************************************!*\
-  !*** ./resources/js/api/UserAPI.ts ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "UserAPI": () => (/* binding */ UserAPI)
-/* harmony export */ });
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
-
-
-
-var UserAPI =
-/** @class */
-function (_super) {
-  __extends(UserAPI, _super);
-
-  function UserAPI() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  UserAPI.getExternal = function (username) {
-    return __awaiter(this, void 0, void 0, function () {
-      var header, response, response_1, error_1;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            return [4
-            /*yield*/
-            , fetch("".concat(UserAPI.url, "/").concat(username), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_1 = _b.sent();
-            console.log("log client error " + error_1);
-            throw new Error("There was an error getting the data for the user");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  UserAPI.get = function (username) {
-    return __awaiter(this, void 0, void 0, function () {
-      var header, usernameExtenstion, response, response_1, error_2;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            usernameExtenstion = username !== undefined ? "".concat(username) : "";
-            return [4
-            /*yield*/
-            , fetch("".concat(UserAPI.url, "/").concat(usernameExtenstion), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_2 = _b.sent();
-            console.log("log client error " + error_2); // throw new Error("There was an error getting the data for the user");
-
-            return [2
-            /*return*/
-            , {
-              success: false
-            }];
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  UserAPI.getGuest = function (username) {
-    return __awaiter(this, void 0, void 0, function () {
-      var header, usernameExtenstion, response, response_1, error_3;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            header = _super.makeHeader.call(this, "GET");
-            usernameExtenstion = username !== undefined ? "".concat(username) : "";
-            return [4
-            /*yield*/
-            , fetch("".concat(UserAPI.url, "/guest/").concat(usernameExtenstion), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_3 = _b.sent();
-            console.log("log client error " + error_3); // throw new Error("There was an error getting the data for the user");
-
-            return [2
-            /*return*/
-            , {
-              success: false
-            }];
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  UserAPI.follow = function (userID) {
-    return __awaiter(this, void 0, void 0, function () {
-      var body, header, response, response_1, error_4;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
-          case 0:
-            _b.trys.push([0, 3,, 4]);
-
-            body = {
-              following_user_id: userID
-            };
-            header = _super.makeHeader.call(this, "POST", body);
-            return [4
-            /*yield*/
-            , fetch("".concat(UserAPI.url, "/follow?following_user_id=").concat(userID), header)];
-
-          case 1:
-            response = _b.sent();
-            return [4
-            /*yield*/
-            , _super.checkStatus.call(this, response)];
-
-          case 2:
-            response_1 = _b.sent();
-            return [2
-            /*return*/
-            , _super.parseJSON.call(this, response_1)];
-
-          case 3:
-            error_4 = _b.sent();
-            console.log("log client error " + error_4);
-            throw new Error("There was an error following / unfollowing the user");
-
-          case 4:
-            return [2
-            /*return*/
-            ];
-        }
-      });
-    });
-  };
-
-  var _a;
-
-  _a = UserAPI;
-  UserAPI.url = "".concat(_a.baseUrl, "/user");
-  return UserAPI;
-}(_api__WEBPACK_IMPORTED_MODULE_0__.Api);
 
 
 
@@ -5253,12 +4505,12 @@ function GraphComponent(_a) {
       if (graphType === _GraphWrapper__WEBPACK_IMPORTED_MODULE_2__.GraphDataType.Bar) {
         dataPoints === null || dataPoints === void 0 ? void 0 : dataPoints.forEach(function (dataPoint) {
           labels.push(dataPoint.x);
-          dataPointValues.push(dataPoint.y);
+          dataPointValues.push(+dataPoint.y);
         });
       } else {
         dataPoints === null || dataPoints === void 0 ? void 0 : dataPoints.forEach(function (dataPoint) {
           labels.push(new Date(dataPoint.x).toLocaleDateString());
-          dataPointValues.push(dataPoint.y);
+          dataPointValues.push(+dataPoint.y);
         });
       }
     }
@@ -5527,7 +4779,7 @@ function GraphWrapper(_a) {
       filterSettings = _c[0],
       setFilterSettings = _c[1];
 
-  var _d = (0,react_query__WEBPACK_IMPORTED_MODULE_6__.useQuery)([graph.name, timeFrame], function () {
+  var _d = (0,react_query__WEBPACK_IMPORTED_MODULE_6__.useQuery)([graph.name, timeFrame, userId], function () {
     return chooseEndPoint(graph.name, timeFrame, filterSettings, userId);
   }),
       data = _d.data,
@@ -7264,7 +6516,7 @@ function NotificationMessage(_a) {
       return __generator(this, function (_a) {
         params = {
           notification_id: notification.id,
-          respones: response
+          response: response
         };
         axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/notification/handle", params);
         updateList();
@@ -8224,10 +7476,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var _api_UserAPI__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../api/UserAPI */ "./resources/js/api/UserAPI.ts");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _ProfilePageBody__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProfilePageBody */ "./resources/js/user/ProfilePageBody.tsx");
-/* harmony import */ var _ProfilePageHeader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ProfilePageHeader */ "./resources/js/user/ProfilePageHeader.tsx");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
+/* harmony import */ var _ProfilePageBody__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ProfilePageBody */ "./resources/js/user/ProfilePageBody.tsx");
+/* harmony import */ var _ProfilePageHeader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProfilePageHeader */ "./resources/js/user/ProfilePageHeader.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8405,7 +7658,7 @@ var PageType;
 ;
 
 function ProfilePage() {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_3__.LoggedInUserContext);
+  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_2__.LoggedInUserContext);
 
   var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(PageType.External),
       pageType = _a[0],
@@ -8434,45 +7687,23 @@ function ProfilePage() {
 
   function getUser(username) {
     return __awaiter(this, void 0, void 0, function () {
-      var user;
+      var url;
       return __generator(this, function (_a) {
-        switch (_a.label) {
-          case 0:
-            return [4
-            /*yield*/
-            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_2__.UserAPI.get(username)];
+        if (loggedInUser.guest) {}
 
-          case 1:
-            user = _a.sent();
-
-            if (user.success) {
-              setUser(user.data);
-              return [2
-              /*return*/
-              ];
-            }
-
-            return [4
-            /*yield*/
-            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_2__.UserAPI.getGuest(username)];
-
-          case 2:
-            user = _a.sent();
-
-            if (user.success) {
-              setUser(user.data);
-              return [2
-              /*return*/
-              ];
-            }
-
+        url = loggedInUser.guest ? "/api/user/guest/".concat(username) : "/api/user/".concat(username);
+        axios__WEBPACK_IMPORTED_MODULE_5___default().get(url).then(function (response) {
+          if (response.status === 200) {
+            setUser(response.data.data);
+          } else {
             setUser({
               guest: true
             });
-            return [2
-            /*return*/
-            ];
-        }
+          }
+        });
+        return [2
+        /*return*/
+        ];
       });
     });
   }
@@ -8485,51 +7716,51 @@ function ProfilePage() {
         children: "User does no exists"
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 60,
+        lineNumber: 54,
         columnNumber: 17
       }, this)
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 59,
+      lineNumber: 53,
       columnNumber: 27
     }, this), !user.guest && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageHeader__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageHeader__WEBPACK_IMPORTED_MODULE_4__["default"], {
         user: user,
         pageType: pageType
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 65,
+        lineNumber: 59,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
         className: "border-bottom border-white mt-5"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 66,
+        lineNumber: 60,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
         className: "w-100"
       }, {
-        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageBody__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageBody__WEBPACK_IMPORTED_MODULE_3__["default"], {
           user: user,
           pageType: pageType
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 68,
+          lineNumber: 62,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 67,
+        lineNumber: 61,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 63,
+      lineNumber: 57,
       columnNumber: 28
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 57,
+    lineNumber: 51,
     columnNumber: 13
   }, this);
 }
@@ -8592,23 +7823,19 @@ function ProfilePageBody(_a) {
       return true;
     }
 
-    if (user.id === undefined) {
-      return false;
+    if (loggedInUser.isAdmin) {
+      return true;
     }
 
     if (!user["private"]) {
       return true;
     }
 
-    if (!user.following) {
-      if (!loggedInUser.isAdmin) {
-        return false;
-      }
-
+    if (user.following) {
       return true;
     }
 
-    return true;
+    return false;
   };
 
   function toLogin() {
@@ -8627,12 +7854,12 @@ function ProfilePageBody(_a) {
           userId: user.id
         }, graph.name, false, {
           fileName: _jsxFileName,
-          lineNumber: 46,
+          lineNumber: 41,
           columnNumber: 21
         }, _this)
       }), graph.name, false, {
         fileName: _jsxFileName,
-        lineNumber: 44,
+        lineNumber: 39,
         columnNumber: 69
       }, _this);
     }), !toShow() && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -8647,28 +7874,28 @@ function ProfilePageBody(_a) {
           children: "login"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 51,
+          lineNumber: 46,
           columnNumber: 101
         }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", {
           children: "follow"
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 51,
+          lineNumber: 46,
           columnNumber: 133
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 51,
+        lineNumber: 46,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 49,
+      lineNumber: 44,
       columnNumber: 26
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 42,
+    lineNumber: 37,
     columnNumber: 13
   }, this);
 }
@@ -8692,10 +7919,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../api/NotificationAPI */ "./resources/js/api/NotificationAPI.ts");
-/* harmony import */ var _api_UserAPI__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../api/UserAPI */ "./resources/js/api/UserAPI.ts");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
+/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8861,12 +8086,10 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
-
-
 ;
 
 function Buttons(props) {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_App__WEBPACK_IMPORTED_MODULE_5__.LoggedInUserContext);
+  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_App__WEBPACK_IMPORTED_MODULE_3__.LoggedInUserContext);
   var user = props.user;
 
   function handleLogout() {
@@ -8882,7 +8105,7 @@ function Buttons(props) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
     className: "row"
   }, {
-    children: [props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_6__.PageType.Personal && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: [props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_4__.PageType.Personal && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-4 col-md-2 mx-md-0"
       }, {
@@ -8893,12 +8116,12 @@ function Buttons(props) {
           children: "Settings"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 33,
+          lineNumber: 31,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 32,
+        lineNumber: 30,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-3 col-md-2 mx-2 mx-md-2"
@@ -8910,109 +8133,167 @@ function Buttons(props) {
           children: "Logout"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 36,
+          lineNumber: 34,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 35,
+        lineNumber: 33,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 30,
+      lineNumber: 28,
       columnNumber: 53
-    }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_6__.PageType.External && !loggedInUser.guest && followButton(user)]
+    }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_4__.PageType.External && !loggedInUser.guest && followButton(user)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 28,
+    lineNumber: 26,
     columnNumber: 13
   }, this);
+}
+
+function updateFollowingStatus(following_user_id) {
+  return __awaiter(this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          return [4
+          /*yield*/
+          , axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/user/follow", {
+            following_user_id: following_user_id
+          }).then(function (result) {
+            return result.status === 200;
+          })];
+
+        case 1:
+          return [2
+          /*return*/
+          , _a.sent()];
+      }
+    });
+  });
+}
+
+function makeNotification(notification_type_id, receiver_user_id) {
+  return __awaiter(this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          return [4
+          /*yield*/
+          , axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/notification/create", {
+            notification_type_id: notification_type_id,
+            receiver_user_id: receiver_user_id
+          }).then(function (result) {
+            return result.status === 200;
+          })];
+
+        case 1:
+          return [2
+          /*return*/
+          , _a.sent()];
+      }
+    });
+  });
+}
+
+function removeNotification(receiver_user_id) {
+  return __awaiter(this, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          return [4
+          /*yield*/
+          , axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/notification/delete", {
+            receiver_user_id: receiver_user_id
+          }).then(function (result) {
+            return result.status === 200;
+          })];
+
+        case 1:
+          return [2
+          /*return*/
+          , _a.sent()];
+      }
+    });
+  });
 } // TODO: This should use button component
 
 
 function followButton(user) {
   function handleFollowage() {
     return __awaiter(this, void 0, void 0, function () {
-      var result;
       return __generator(this, function (_a) {
         switch (_a.label) {
           case 0:
-            result = null;
-            if (!user.following) return [3
-            /*break*/
-            , 3];
-            return [4
-            /*yield*/
-            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_4__.UserAPI.follow(user.id)];
-
-          case 1:
-            // Unfollow a user
-            result = _a.sent();
-            return [4
-            /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.removeRequest(user.id)];
-
-          case 2:
-            result = _a.sent();
-            return [3
-            /*break*/
-            , 10];
-
-          case 3:
             if (!user.hasFollowingRequest) return [3
             /*break*/
-            , 5];
+            , 2];
             return [4
             /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.removeRequest(user.id)];
+            , removeNotification(user.id)];
+
+          case 1:
+            if (_a.sent()) return [2
+            /*return*/
+            , window.location.reload()];
+            _a.label = 2;
+
+          case 2:
+            if (!user.following) return [3
+            /*break*/
+            , 4];
+            return [4
+            /*yield*/
+            , updateFollowingStatus(user.id)];
+
+          case 3:
+            // Unfollowing
+            if (_a.sent()) return [2
+            /*return*/
+            , window.location.reload()];
+            return [3
+            /*break*/
+            , 9];
 
           case 4:
-            // Remove request
-            result = _a.sent();
-            return [3
-            /*break*/
-            , 10];
-
-          case 5:
             if (!user["private"]) return [3
             /*break*/
-            , 7];
+            , 6];
             return [4
             /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.makeRequest(0, user.id)];
+            , makeNotification(0, user.id)];
+
+          case 5:
+            if (_a.sent()) return [2
+            /*return*/
+            , window.location.reload()];
+            _a.label = 6;
 
           case 6:
-            // Make request
-            result = _a.sent();
-            return [3
-            /*break*/
-            , 10];
+            return [4
+            /*yield*/
+            , updateFollowingStatus(user.id)];
 
           case 7:
+            if (!_a.sent()) return [3
+            /*break*/
+            , 9];
             return [4
             /*yield*/
-            , _api_UserAPI__WEBPACK_IMPORTED_MODULE_4__.UserAPI.follow(user.id)];
+            , makeNotification(1, user.id)];
 
           case 8:
-            // Follow user and make a notification that you want to follow
-            result = _a.sent();
-            return [4
-            /*yield*/
-            , _api_NotificationAPI__WEBPACK_IMPORTED_MODULE_3__.NotificationAPI.makeRequest(1, user.id)];
-
-          case 9:
-            _a.sent();
-
-            _a.label = 10;
-
-          case 10:
-            if (result.success) {
+            if (_a.sent()) {
               return [2
               /*return*/
               , window.location.reload()];
             }
 
+            _a.label = 9;
+
+          case 9:
             return [2
             /*return*/
             ];
@@ -9043,12 +8324,12 @@ function followButton(user) {
       children: makeButtonText()
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 87,
+      lineNumber: 95,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 85,
+    lineNumber: 93,
     columnNumber: 13
   }, this);
 }
@@ -9072,12 +8353,12 @@ function ProfilePageHeader(props) {
             alt: props.user.username
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 99,
+            lineNumber: 107,
             columnNumber: 25
           }, this)
         }), "img-wrapper", false, {
           fileName: _jsxFileName,
-          lineNumber: 98,
+          lineNumber: 106,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-12 col-md-9 mt-3 mt-md-5"
@@ -9088,7 +8369,7 @@ function ProfilePageHeader(props) {
             children: props.user.username
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 102,
+            lineNumber: 110,
             columnNumber: 25
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
             className: "row"
@@ -9103,17 +8384,17 @@ function ProfilePageHeader(props) {
                   children: props.user.followersCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 105,
+                  lineNumber: 113,
                   columnNumber: 59
                 }, this), " Followers"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 105,
+                lineNumber: 113,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 104,
+              lineNumber: 112,
               columnNumber: 29
             }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
               className: "col-4 col-md-2"
@@ -9125,49 +8406,49 @@ function ProfilePageHeader(props) {
                   children: props.user.followingCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 108,
+                  lineNumber: 116,
                   columnNumber: 59
                 }, this), " Following"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 108,
+                lineNumber: 116,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 107,
+              lineNumber: 115,
               columnNumber: 29
             }, this)]
           }), void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 103,
+            lineNumber: 111,
             columnNumber: 25
           }, this), props.user.username !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(Buttons, {
             user: props.user,
             pageType: props.pageType
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 111,
+            lineNumber: 119,
             columnNumber: 64
           }, this)]
         }), "text-wrapper", true, {
           fileName: _jsxFileName,
-          lineNumber: 101,
+          lineNumber: 109,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 97,
+        lineNumber: 105,
         columnNumber: 17
       }, this)
     }), "info-wrapper", false, {
       fileName: _jsxFileName,
-      lineNumber: 96,
+      lineNumber: 104,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 94,
+    lineNumber: 102,
     columnNumber: 13
   }, this);
 }
