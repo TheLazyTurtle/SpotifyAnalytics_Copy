@@ -36,12 +36,11 @@ class NotificationController extends Controller
         $authUser = Auth()->user();
 
         $this->validate($request, [
-            'notification_type_id',
-            'receiver_user_id',
+            'notification_type_id' => 'required|min:1|max:10',
+            'receiver_user_id' => 'required|min:1|max:10',
         ]);
 
         // Check if notification already exists
-        // TODO: Should this check not be a function of it self
         $notification = Notification::where('receiver_user_id', $request->receiver_user_id)->where('sender_user_id', $authUser->id)->first();
 
         if ($notification) {
@@ -72,10 +71,9 @@ class NotificationController extends Controller
     // Delete
     public function destroy(Request $request)
     {
-        // TODO: input validation on whole controller
         $authUser = Auth()->user();
         $this->validate($request, [
-            'receiver_user_id'
+            'receiver_user_id' => 'required|min:1|max:1'
         ]);
 
         $notification = Notification::where('receiver_user_id', $request->receiver_user_id)->where('sender_user_id', $authUser->id)->first();
@@ -103,6 +101,12 @@ class NotificationController extends Controller
     public function handle(Request $request)
     {
         $authUser = Auth()->user();
+
+        $this->validate($request, [
+            'notification_type_id' => 'required|min:1|max:1',
+            'response' => 'required'
+        ]);
+
         $notification = Notification::where('id', $request->notification_id)->first();
 
         // If the person sending the request is not in the notificaiton kill the request because it is invalid

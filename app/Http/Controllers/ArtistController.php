@@ -12,6 +12,7 @@ use App\Models\Played;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ArtistController extends Controller
 {
@@ -25,7 +26,7 @@ class ArtistController extends Controller
     // Show one
     public function show($artist_id)
     {
-        // TODO: validate data
+        Validator::validate([$artist_id], [0 => 'required|min:22|max:23']);
         $artist = Artist::where('artist_id', $artist_id)->first();
 
         if (!$artist) {
@@ -41,7 +42,7 @@ class ArtistController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'artist_id' => 'requred',
+            'artist_id' => 'requred|min:22|max:23',
             'name' => 'required',
             'url' => 'required',
             'img_url' => 'required',
@@ -65,6 +66,11 @@ class ArtistController extends Controller
     // Update
     public function update(Request $request, $artist_id)
     {
+        Validator::validate([$artist_id], [0 => 'required|min:22|max:23']);
+        $this->validate($request, [
+            'artist_id' => 'min:22|max:23',
+        ]);
+
         $artist = Artist::where('artist_id', $artist_id)->first();
 
         if (!$artist) {
@@ -73,7 +79,6 @@ class ArtistController extends Controller
             ], 400);
         }
 
-        // TODO: Validate input??
         $updated = $artist->fill($request->all())->save();
 
         if ($updated) {
@@ -88,6 +93,8 @@ class ArtistController extends Controller
     // Destroy
     public function destroy($artist_id)
     {
+        Validator::validate([$artist_id], [0 => 'required|min:22|max:23']);
+
         $artist = Artist::where('artist_id', $artist_id)->first();
 
         if (!$artist) {
@@ -108,7 +115,9 @@ class ArtistController extends Controller
     // Get an artists albums
     public function albums(Request $request)
     {
-        // // TODO: Valiadte input
+        $this->validate($request, [
+            'artist_id' => 'min:22|max:23',
+        ]);
 
         $singles = Album::getArtistSingles($request->artist_id);
         $albums = Album::getArtistAlbumsTheyOwn($request->artist_id);
@@ -120,6 +129,10 @@ class ArtistController extends Controller
     // NOTE: This is a scuffed AF query. We first do a huge query to get the total and than do another big query to get the users
     public function topSongs(Request $request)
     {
+        $this->validate($request, [
+            'artist_id' => 'min:22|max:23',
+        ]);
+
         $user_id = null;
         if (auth()->check()) {
             $user_id = $request->user();

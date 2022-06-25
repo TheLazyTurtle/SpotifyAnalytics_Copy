@@ -3,10 +3,13 @@ import { redirectToLogin, Response } from "../App";
 import { Played } from "../graph/Played";
 import { AutocompleteItem } from "../inputField/AutocompleteItem";
 import { SliderItemName } from "../slider/SliderItems";
-import { Api } from "./api";
 
-export class PlayedAPI extends Api {
-    protected static url = `${this.baseUrl}/played`;
+export class PlayedAPI {
+    private static handleErrors(error: any) {
+        if (error.response.status === 401) {
+            redirectToLogin();
+        }
+    }
 
     static async allSongsPlayed(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", minPlayed: string = "0", maxPlayed: string = "9999", userID?: string) {
         const params = {
@@ -19,7 +22,7 @@ export class PlayedAPI extends Api {
             }
         };
 
-        return await axios.get<Response<Played[]>>("/api/played/allSongsPlayed", params).catch(() => userID ?? redirectToLogin())
+        return await axios.get<Response<Played[]>>("/api/played/allSongsPlayed", params).catch((error) => this.handleErrors(error))
     }
 
     static async topSongs(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string = "10", artistName: string = "%", userID?: string) {
@@ -33,7 +36,7 @@ export class PlayedAPI extends Api {
             }
         }
 
-        const result = await axios.get<Response<Played[]>>("/api/played/topSongs", params).catch(() => userID ?? redirectToLogin());
+        const result = await axios.get<Response<Played[]>>("/api/played/topSongs", params).catch((error) => this.handleErrors(error));
 
         return result;
     }
@@ -48,7 +51,7 @@ export class PlayedAPI extends Api {
             }
         }
 
-        const result = await axios.get<Response<Played[]>>("/api/played/topArtists", params).catch(() => userID ?? redirectToLogin())
+        const result = await axios.get<Response<Played[]>>("/api/played/topArtists", params).catch((error) => this.handleErrors(error))
 
         return result;
     }
@@ -64,7 +67,7 @@ export class PlayedAPI extends Api {
             }
         }
 
-        const result = await axios.get<Response<Played[]>>("/api/played/playedPerDay", params).catch(() => userID ?? redirectToLogin());
+        const result = await axios.get<Response<Played[]>>("/api/played/playedPerDay", params).catch((error) => this.handleErrors(error));
         return result;
     }
 

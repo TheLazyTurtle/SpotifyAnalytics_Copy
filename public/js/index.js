@@ -2662,35 +2662,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
 /* harmony import */ var _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../slider/SliderItems */ "./resources/js/slider/SliderItems.ts");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function (resolve) {
@@ -2838,15 +2809,16 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 
-
 var PlayedAPI =
 /** @class */
-function (_super) {
-  __extends(PlayedAPI, _super);
+function () {
+  function PlayedAPI() {}
 
-  function PlayedAPI() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
+  PlayedAPI.handleErrors = function (error) {
+    if (error.response.status === 401) {
+      (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+    }
+  };
 
   PlayedAPI.allSongsPlayed = function (minDate, maxDate, minPlayed, maxPlayed, userID) {
     if (minDate === void 0) {
@@ -2867,8 +2839,11 @@ function (_super) {
 
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+
+      var _this = this;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -2881,14 +2856,14 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/allSongsPlayed", params)["catch"](function () {
-              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/allSongsPlayed", params)["catch"](function (error) {
+              return _this.handleErrors(error);
             })];
 
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -2913,8 +2888,11 @@ function (_super) {
 
     return __awaiter(this, void 0, void 0, function () {
       var params, result;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+
+      var _this = this;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -2927,12 +2905,12 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topSongs", params)["catch"](function () {
-              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topSongs", params)["catch"](function (error) {
+              return _this.handleErrors(error);
             })];
 
           case 1:
-            result = _b.sent();
+            result = _a.sent();
             return [2
             /*return*/
             , result];
@@ -2956,8 +2934,11 @@ function (_super) {
 
     return __awaiter(this, void 0, void 0, function () {
       var params, result;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+
+      var _this = this;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -2969,12 +2950,12 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topArtists", params)["catch"](function () {
-              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topArtists", params)["catch"](function (error) {
+              return _this.handleErrors(error);
             })];
 
           case 1:
-            result = _b.sent();
+            result = _a.sent();
             return [2
             /*return*/
             , result];
@@ -3002,8 +2983,11 @@ function (_super) {
 
     return __awaiter(this, void 0, void 0, function () {
       var params, result;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+
+      var _this = this;
+
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3016,12 +3000,12 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/playedPerDay", params)["catch"](function () {
-              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/playedPerDay", params)["catch"](function (error) {
+              return _this.handleErrors(error);
             })];
 
           case 1:
-            result = _b.sent();
+            result = _a.sent();
             return [2
             /*return*/
             , result];
@@ -3033,8 +3017,8 @@ function (_super) {
   PlayedAPI.topArtistSearch = function (artistName, amount, userID) {
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3050,7 +3034,7 @@ function (_super) {
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -3059,8 +3043,8 @@ function (_super) {
   PlayedAPI.topSongsSearch = function (songName, amount, userID) {
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3076,7 +3060,7 @@ function (_super) {
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -3085,8 +3069,8 @@ function (_super) {
   PlayedAPI.search = function (name) {
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3100,7 +3084,7 @@ function (_super) {
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -3109,8 +3093,8 @@ function (_super) {
   PlayedAPI.timeListened = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3125,7 +3109,7 @@ function (_super) {
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -3134,8 +3118,8 @@ function (_super) {
   PlayedAPI.amountSongs = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3150,7 +3134,7 @@ function (_super) {
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -3159,8 +3143,8 @@ function (_super) {
   PlayedAPI.amountNewSongs = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
       var params;
-      return __generator(this, function (_b) {
-        switch (_b.label) {
+      return __generator(this, function (_a) {
+        switch (_a.label) {
           case 0:
             params = {
               params: {
@@ -3175,7 +3159,7 @@ function (_super) {
           case 1:
             return [2
             /*return*/
-            , _b.sent()];
+            , _a.sent()];
         }
       });
     });
@@ -3183,15 +3167,15 @@ function (_super) {
 
   PlayedAPI.sliderItemData = function (minDate, maxDate) {
     return __awaiter(this, void 0, void 0, function () {
-      var _b, _c, _d, _e, _f;
+      var _a, _b, _c, _d, _e;
 
-      var _g;
+      var _f;
 
-      return __generator(this, function (_h) {
-        switch (_h.label) {
+      return __generator(this, function (_g) {
+        switch (_g.label) {
           case 0:
-            _g = {};
-            _b = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.topSongs;
+            _f = {};
+            _a = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.topSongs;
             return [4
             /*yield*/
             , this.topSongs(minDate, maxDate, "1").then(function (data) {
@@ -3199,8 +3183,8 @@ function (_super) {
             })];
 
           case 1:
-            _g[_b] = _h.sent();
-            _c = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.topArtists;
+            _f[_a] = _g.sent();
+            _b = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.topArtists;
             return [4
             /*yield*/
             , this.topArtist(minDate, maxDate, "1").then(function (data) {
@@ -3208,8 +3192,8 @@ function (_super) {
             })];
 
           case 2:
-            _g[_c] = _h.sent();
-            _d = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.timeListened;
+            _f[_b] = _g.sent();
+            _c = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.timeListened;
             return [4
             /*yield*/
             , this.timeListened(minDate, maxDate).then(function (data) {
@@ -3217,8 +3201,8 @@ function (_super) {
             })];
 
           case 3:
-            _g[_d] = _h.sent();
-            _e = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.amountSongs;
+            _f[_c] = _g.sent();
+            _d = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.amountSongs;
             return [4
             /*yield*/
             , this.amountSongs(minDate, maxDate).then(function (data) {
@@ -3226,8 +3210,8 @@ function (_super) {
             })];
 
           case 4:
-            _g[_e] = _h.sent();
-            _f = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.amountNewSongs;
+            _f[_d] = _g.sent();
+            _e = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.amountNewSongs;
             return [4
             /*yield*/
             , this.amountNewSongs(minDate, maxDate).then(function (data) {
@@ -3237,114 +3221,13 @@ function (_super) {
           case 5:
             return [2
             /*return*/
-            , (_g[_f] = _h.sent(), _g)];
+            , (_f[_e] = _g.sent(), _f)];
         }
       });
     });
   };
 
-  var _a;
-
-  _a = PlayedAPI;
-  PlayedAPI.url = "".concat(_a.baseUrl, "/played");
   return PlayedAPI;
-}(_api__WEBPACK_IMPORTED_MODULE_3__.Api);
-
-
-
-/***/ }),
-
-/***/ "./resources/js/api/api.ts":
-/*!*********************************!*\
-  !*** ./resources/js/api/api.ts ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Api": () => (/* binding */ Api)
-/* harmony export */ });
-var Api =
-/** @class */
-function () {
-  function Api() {}
-
-  Api.translateStatusToErrorMessage = function (status) {
-    switch (status) {
-      case 401:
-        return "Please login";
-
-      case 403:
-        return "You do not have permission to view this resource";
-
-      default:
-        return "There was an error getting this resource";
-    }
-  };
-
-  Api.checkStatus = function (response) {
-    if (response.status.ok) {
-      return response;
-    } else {
-      var httpErrorInfo = {
-        status: response.stauts,
-        statusText: response.statusText,
-        url: response.url
-      };
-      console.log("Log server http error: ".concat(JSON.stringify(httpErrorInfo, null, " ")));
-      var errorMessage = Api.translateStatusToErrorMessage(httpErrorInfo.status);
-      throw new Error(errorMessage);
-    }
-  };
-
-  Api.parseJSON = function (response) {
-    return response.json();
-  };
-
-  Api.getToken = function () {
-    var cookies = document.cookie.split('; ');
-
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].split("=");
-
-      if (cookie[0] === "XSRF-TOKEN") {
-        return cookie[1];
-      }
-    }
-
-    return null;
-  };
-
-  Api.makeHeader = function (type, body) {
-    if (body === void 0) {
-      body = {};
-    }
-
-    var xsrfToken = this.getToken();
-
-    if (type === "GET") {
-      return {
-        method: type,
-        headers: {
-          'Content-Type': 'application/json;',
-          Credential: 'include'
-        }
-      };
-    } else if (type === "POST") {
-      return {
-        method: type,
-        headers: {
-          'Content-Type': 'application/json;',
-          Credential: 'include'
-        },
-        body: JSON.stringify(body)
-      };
-    }
-  };
-
-  Api.baseUrl = "http://localhost:8000/api";
-  return Api;
 }();
 
 
@@ -7494,8 +7377,11 @@ function ProfilePage() {
               guest: true
             });
           }
-        })["catch"](function () {
-          return (0,_App__WEBPACK_IMPORTED_MODULE_2__.redirectToLogin)();
+        })["catch"](function (error) {
+          if (error.response.status === 401) (0,_App__WEBPACK_IMPORTED_MODULE_2__.redirectToLogin)();
+          setUser({
+            guest: true
+          });
         });
         return [2
         /*return*/
@@ -7512,12 +7398,12 @@ function ProfilePage() {
         children: "User does no exists"
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 40,
+        lineNumber: 43,
         columnNumber: 17
       }, this)
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 39,
+      lineNumber: 42,
       columnNumber: 27
     }, this), user.id !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageHeader__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -7525,13 +7411,13 @@ function ProfilePage() {
         pageType: pageType
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 45,
+        lineNumber: 48,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
         className: "border-bottom border-white mt-5"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 46,
+        lineNumber: 49,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
         className: "w-100"
@@ -7541,22 +7427,22 @@ function ProfilePage() {
           pageType: pageType
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 48,
+          lineNumber: 51,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 47,
+        lineNumber: 50,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 43,
+      lineNumber: 46,
       columnNumber: 38
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 37,
+    lineNumber: 40,
     columnNumber: 13
   }, this);
 }

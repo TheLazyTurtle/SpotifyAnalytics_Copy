@@ -30,7 +30,10 @@ function ProfilePage() {
             } else {
                 setUser({ guest: true } as User);
             }
-        }).catch(() => redirectToLogin());
+        }).catch((error) => {
+            if (error.response.status === 401) redirectToLogin();
+            setUser({ guest: true } as User);
+        });
         return;
     }
 

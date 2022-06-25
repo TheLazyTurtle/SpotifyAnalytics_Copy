@@ -10,14 +10,14 @@ use App\Models\Played;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class PlayedController extends Controller
 {
     // Show all for a user
-    // TODO: This might not need a user_id. This just needs the user to be be authorized and then we get the user_id from that
-    public function index(Request $request, $user_id)
+    public function index($user_id)
     {
-        $this->validate($request, ['user_id' => 'required']);
+        Validator::validate([$user_id], [0 => 'required|max:10']);
 
         $played = Played::where('played_by', $user_id)->get();
 
@@ -34,9 +34,9 @@ class PlayedController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'song_id' => 'required',
-            'date_played' => 'required',
-            'played_by' => 'required',
+            'song_id' => 'required|min:22|max:23',
+            'date_played' => 'required|date',
+            'played_by' => 'required|min:1|max:10',
             'song_name' => 'required'
         ]);
 
@@ -58,9 +58,13 @@ class PlayedController extends Controller
     // All songs played of user
     public function allSongsPlayed(Request $request)
     {
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+            'max_date' => 'required|date',
+            'min_played' => 'required|integer',
+            'max_played' => 'required|integer'
+        ]);
 
         if ($request->user_id) {
             $user_id = $request->user_id;
@@ -82,9 +86,13 @@ class PlayedController extends Controller
     // Top song of user
     public function topSongs(Request $request)
     {
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+            'max_date' => 'required|date',
+            'artist_name' => 'required',
+            'amount' => 'required|integer'
+        ]);
 
         if ($request->user_id) {
             $user_id = $request->user_id;
@@ -106,9 +114,12 @@ class PlayedController extends Controller
     // Top artist of user
     public function topArtists(Request $request)
     {
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+            'max_date' => 'required|date',
+            'amount' => 'required|integer'
+        ]);
 
         if ($request->user_id) {
             $user_id = $request->user_id;
@@ -127,12 +138,15 @@ class PlayedController extends Controller
     }
 
     // Played per day for a user
-    // TODO: resource
     public function playedPerDay(Request $request)
     {
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+            'max_date' => 'required|date',
+            'song_name' => 'required',
+            'artist_name' => 'required'
+        ]);
 
         if ($request->user_id) {
             $user_id = $request->user_id;
@@ -155,15 +169,17 @@ class PlayedController extends Controller
     // TODO: Resource
     public function topArtistSearch(Request $request)
     {
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'artist_name' => 'required',
+            'amount' => 'required|integer'
+        ]);
+
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
             $user_id = $request->user()->id;
         }
-
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
 
         $topArtists = Played::where('played_by', $user_id)
             ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
@@ -185,15 +201,17 @@ class PlayedController extends Controller
     // TODO: Resource
     public function topSongsSearch(Request $request)
     {
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'song_name' => 'required',
+            'amount' => 'required|integer'
+        ]);
+
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
             $user_id = $request->user()->id;
         }
-
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
 
         $topSongs = Played::where('played_by', $user_id)
             ->select('played.song_name as name')
@@ -211,14 +229,15 @@ class PlayedController extends Controller
     }
 
     // Get total time listend for a user
-    // TODO: Resource
     public function timeListened(Request $request)
     {
-        $user_id = $request->user()->id;
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+            'max_date' => 'required|date'
+        ]);
 
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $user_id = $request->user()->id;
 
         $timeListend = Played::where('played_by', $user_id)
             ->join('songs', 'songs.song_id', 'played.song_id')
@@ -230,14 +249,15 @@ class PlayedController extends Controller
     }
 
     // Amount of songs a user listend to 
-    // TODO: Resource
     public function amountSongs(Request $request)
     {
-        $user_id = $request->user()->id;
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+            'max_date' => 'required|date'
+        ]);
 
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $user_id = $request->user()->id;
 
         $amountSongs = Played::where('played.played_by', $user_id)
             ->select(DB::raw('COUNT(*) as y'))
@@ -248,14 +268,14 @@ class PlayedController extends Controller
     }
 
     // Amount of new songs a user listend to 
-    // TODO: Resource
     public function amountNewSongs(Request $request)
     {
-        $user_id = $request->user()->id;
+        $this->validate($request, [
+            'user_id' => 'min:1|max:10',
+            'min_date' => 'required|date',
+        ]);
 
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $user_id = $request->user()->id;
 
         $newSongs = DB::table(function ($query) use ($request, $user_id) {
             $query->select('played.song_id')
@@ -276,9 +296,9 @@ class PlayedController extends Controller
     public function search(Request $request)
     {
         // $user = $request->user();
-        // TODO: input validation and default values;
-        // TODO: Authentication
-        // TODO: Make the user_id go using the validation step
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
 
         $searchArtist = Artist::where('name', 'like', "%$request->name%")
             ->select('artist_id', 'name', 'img_url as imgUrl', DB::raw('concat("artist") as type'))

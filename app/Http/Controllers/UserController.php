@@ -8,6 +8,7 @@ use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -38,20 +39,20 @@ class UserController extends Controller
     // Get a user by it's username
     public function show(Request $request, $username)
     {
+        Validator::validate([$username], [0 => 'required|max:20|alpha_dash']);
+
         $authUser = null;
 
         if (auth('api')->check()) {
             $authUser = $request->user();
         }
 
-        // TODO: Validate data
         $user = User::where('username', $username)
             ->select('id', 'username', 'img_url', 'private')
             ->first();
 
         if (!$user) {
             return response()->json([
-                'success' => false,
                 'data' => 'User not found'
             ], 400);
         }
@@ -75,12 +76,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'spotify_id' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'username' => 'required',
-            'email' => 'required',
+            'spotify_id' => 'required|max:100',
+            'first_name' => 'required|alpha|max:20',
+            'last_name' => 'required|alpha|max:50',
+            'username' => 'required|alpha_dash|max:20',
+            'email' => 'required|email',
             'password' => 'required',
+            'repeatPassword' => 'required|same:password'
         ]);
 
         $user = new user();
@@ -107,6 +109,14 @@ class UserController extends Controller
     // Update
     public function update(Request $request)
     {
+        $this->validate($request, [
+            'spotify_id' => 'max:100',
+            'first_name' => 'max:20|alpha',
+            'last_name' => 'max:50|alpha',
+            'username' => 'max:20|alpha_dash',
+            'email' => 'email',
+        ]);
+
         $authUser = Auth()->user();
         $user = User::where('id', $authUser->id)->first();
 
@@ -117,7 +127,6 @@ class UserController extends Controller
             ], 400);
         }
 
-        // TODO: validate input
         $updated = $user->fill($request->all())->save();
 
         if ($updated) {
@@ -161,9 +170,12 @@ class UserController extends Controller
     // (un)Follow a user
     public function follow(Request $request)
     {
+        $this->validate($request, [
+            'following_user_id' => 'required|max:10',
+        ]);
+
         $authUser = Auth()->user();
 
-        // TODO: Validate input
         $following = Followers::isFollowing($authUser->id, $request->following_user_id);
 
         if (!$following) {

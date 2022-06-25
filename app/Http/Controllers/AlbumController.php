@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\AlbumResource;
 use Illuminate\Http\Request;
 use App\Models\Album;
+use Illuminate\Support\Facades\Validator;
 
 class AlbumController extends Controller
 {
@@ -18,7 +19,8 @@ class AlbumController extends Controller
     // Show one
     public function show($album_id)
     {
-        // TODO: Validate data
+        Validator::validate([$album_id], [0 => 'required|min:22|max:23']);
+
         $album = Album::where('album_id', $album_id)->first();
 
         if (!$album) {
@@ -33,10 +35,10 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'album_id' => 'required|max:23',
+            'album_id' => 'required|min:22|max:23',
             'name' => 'required',
             'release_date' => 'required',
-            'primary_artist_id' => 'required|max:23',
+            'primary_artist_id' => 'required|min:22|max:23',
             'url' => 'required',
             'img_url' => 'required',
             'type' => 'required|max:10'
@@ -63,6 +65,13 @@ class AlbumController extends Controller
     // Update
     public function update(Request $request, $album_id)
     {
+        Validator::validate([$album_id], [0 => 'required|min:22|max:23']);
+        $this->validate($request, [
+            'album_id' => 'min:22|max:23',
+            'primary_artist_id' => 'min:22|max:23',
+            'type' => 'max:10'
+        ]);
+
         $album = Album::where('album_id', $album_id)->first();
 
         if (!$album) {
@@ -71,7 +80,6 @@ class AlbumController extends Controller
             ], 400);
         }
 
-        // TODO: Validate input??
         $updated = $album->fill($request->all())->save();
 
         if ($updated) {
@@ -86,6 +94,8 @@ class AlbumController extends Controller
     // Destroy
     public function destroy($album_id)
     {
+        Validator::validate([$album_id], [0 => 'required|min:22|max:23']);
+
         $album = Album::where('album_id', $album_id)->first();
 
         if (!$album) {
