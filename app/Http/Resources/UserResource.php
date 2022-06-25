@@ -14,7 +14,6 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        // TODO: Add following / followers / has_following_request here
         return [
             'id' => $this->id,
             'username' => $this->username,
@@ -23,8 +22,8 @@ class UserResource extends JsonResource
             'followersCount' => $this->followers_count,
             'followingCount' => $this->following_count,
             'private' => $this->private,
-            'hasFollowingRequest' => $this->has_following_request
-
+            'hasFollowingRequest' => $this->has_following_request,
+            'isOwnAccount' => $this->is_own_account
         ];
         // return parent::toArray($request);
     }

@@ -24,6 +24,7 @@ class UserController extends Controller
             ->select(DB::raw('COUNT(*) as count'))
             ->first()->count;
         $user->following = false;
+        $user->is_own_account = true;
 
         if (!$user) {
             return response()->json([
@@ -35,9 +36,13 @@ class UserController extends Controller
     }
 
     // Get a user by it's username
-    public function show($username)
+    public function show(Request $request, $username)
     {
-        $authUser = Auth()->user();
+        $authUser = null;
+
+        if (auth('api')->check()) {
+            $authUser = $request->user();
+        }
 
         // TODO: Validate data
         $user = User::where('username', $username)
@@ -51,39 +56,17 @@ class UserController extends Controller
             ], 400);
         }
 
-        $user->has_following_request = Notification::hasFollowingRequestOpen($authUser->id, $user->id);
-        $user->following = Followers::isFollowing($authUser->id, $user->id);
+        if ($authUser == null) {
+            $user->has_following_request = false;
+            $user->following = false;
+        } else {
+            $user->has_following_request = Notification::hasFollowingRequestOpen($authUser->id, $user->id);
+            $user->following = Followers::isFollowing($authUser->id, $user->id);
+        }
+
+        $user->is_own_account = false;
         $user->following_count = Followers::followingCount($user->id);
         $user->followers_count = Followers::followerCount($user->id);
-
-        return new UserResource($user);
-    }
-
-    public function showGuest($username)
-    {
-        // TODO: Validate data
-        $user = User::where('username', $username)
-            ->select('id', 'username', 'img_url', 'private')
-            ->first();
-
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'data' => 'User not found'
-            ], 400);
-        }
-
-        // Get the following / follower count of the user
-        $user->following_count = Followers::where('follower_user_id', $user->user_id)
-            ->select(DB::raw('COUNT(*) as count'))
-            ->first()->count;
-        $user->followers_count = Followers::where('following_user_id', $user->user_id)
-            ->select(DB::raw('COUNT(*) as count'))
-            ->first()->count;
-
-        if ($user->private) {
-            $user->following = false;
-        }
 
         return new UserResource($user);
     }

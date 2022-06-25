@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Response } from "../App";
+import { redirectToLogin, Response } from "../App";
 import { Played } from "../graph/Played";
 import { AutocompleteItem } from "../inputField/AutocompleteItem";
 import { SliderItemName } from "../slider/SliderItems";
@@ -18,7 +18,8 @@ export class PlayedAPI extends Api {
                 user_id: userID
             }
         };
-        return await axios.get<Response<Played[]>>("/api/played/allSongsPlayed", params);
+
+        return await axios.get<Response<Played[]>>("/api/played/allSongsPlayed", params).catch(() => userID ?? redirectToLogin())
     }
 
     static async topSongs(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string = "10", artistName: string = "%", userID?: string) {
@@ -31,7 +32,10 @@ export class PlayedAPI extends Api {
                 user_id: userID
             }
         }
-        return await axios.get<Response<Played[]>>("/api/played/topSongs", params);
+
+        const result = await axios.get<Response<Played[]>>("/api/played/topSongs", params).catch(() => userID ?? redirectToLogin());
+
+        return result;
     }
 
     static async topArtist(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", amount: string = "10", userID?: string) {
@@ -43,7 +47,10 @@ export class PlayedAPI extends Api {
                 user_id: userID
             }
         }
-        return await axios.get<Response<Played[]>>("/api/played/topArtists", params);
+
+        const result = await axios.get<Response<Played[]>>("/api/played/topArtists", params).catch(() => userID ?? redirectToLogin())
+
+        return result;
     }
 
     static async playedPerDay(minDate: string = "2020-01-01", maxDate: string = "2099-01-01", songName: string = "%", artistName: string = "%", userID?: string) {
@@ -56,7 +63,9 @@ export class PlayedAPI extends Api {
                 user_id: userID
             }
         }
-        return await axios.get<Response<Played[]>>("/api/played/playedPerDay", params);
+
+        const result = await axios.get<Response<Played[]>>("/api/played/playedPerDay", params).catch(() => userID ?? redirectToLogin());
+        return result;
     }
 
     static async topArtistSearch(artistName: string, amount: string, userID?: string) {
@@ -122,8 +131,8 @@ export class PlayedAPI extends Api {
 
     static async sliderItemData(minDate: string, maxDate: string) {
         return {
-            [SliderItemName.topSongs]: await this.topSongs(minDate, maxDate, "1").then((data) => data.data.data[0] as Played),
-            [SliderItemName.topArtists]: await this.topArtist(minDate, maxDate, "1").then((data) => data.data.data[0] as Played),
+            [SliderItemName.topSongs]: await this.topSongs(minDate, maxDate, "1").then((data) => typeof data === "string" ? {} : data?.data.data[0] as Played),
+            [SliderItemName.topArtists]: await this.topArtist(minDate, maxDate, "1").then((data) => typeof data === "string" ? {} : data?.data.data[0] as Played),
             [SliderItemName.timeListened]: await this.timeListened(minDate, maxDate).then((data) => data.data.data as Played),
             [SliderItemName.amountSongs]: await this.amountSongs(minDate, maxDate).then((data) => data.data.data as Played),
             [SliderItemName.amountNewSongs]: await this.amountNewSongs(minDate, maxDate).then((data) => data.data.data as Played)

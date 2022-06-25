@@ -23,7 +23,19 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // $this->app->instance(LoginResponse::class, new class implements ContractsLoginResponse
+        // {
+        //     public function toResponse($request)
+        //     {
+        //         /**
+        //          * @var User $user
+        //          */
+        //         $user = $request->user();
+        //         return $request->wantsJson()
+        //             ? response()->json(['two_factor' => false, 'user' => $user])
+        //             : redirect()->intended(Fortify::redirects('login'));
+        //     }
+        // });
     }
 
     /**
@@ -33,21 +45,18 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('username', $request->username)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;
+            }
+        });
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
-
-        Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('username', $request->username)->first();
-
-            if (
-                $user &&
-                Hash::check($request->password, $user->password)
-            ) {
-                return $user;
-            }
-        });
 
         RateLimiter::for('login', function (Request $request) {
             $username = (string) $request->username;

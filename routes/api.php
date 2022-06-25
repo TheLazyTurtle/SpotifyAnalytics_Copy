@@ -20,28 +20,34 @@ use App\Http\Controllers\UserController;
 
 Route::resource('song', SongController::class);
 Route::get('artist/albums', [ArtistController::class, 'albums']);
-// Route::resource('artist', ArtistController::class);
-Route::get('user/guest/{id}', [UserController::class, 'showGuest']);
+Route::get('user/{id}', [UserController::class, 'show']);
+
+// Graphs
+Route::get('played/allSongsPlayed', [PlayedController::class, 'allSongsPlayed']);
+Route::get('played/topSongs', [PlayedController::class, 'topSongs']);
+Route::get('played/topArtists', [PlayedController::class, 'topArtists']);
+Route::get('played/playedPerDay', [PlayedController::class, 'playedPerDay']);
+
+// Search
+Route::get('search', [PlayedController::class, 'search']);
+Route::get('played/topArtistSearch', [PlayedController::class, 'topArtistSearch']);
+Route::get('played/topSongsSearch', [PlayedController::class, 'topSongsSearch']);
+
+// Artists
+Route::get('artist/topSongs', [ArtistController::class, 'topSongs']);
+Route::get('artist/{id}', [ArtistController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('played/allSongsPlayed', [PlayedController::class, 'allSongsPlayed']);
-    Route::get('played/topSongs', [PlayedController::class, 'topSongs']);
-    Route::get('played/topArtists', [PlayedController::class, 'topArtists']);
-    Route::get('played/playedPerDay', [PlayedController::class, 'playedPerDay']);
-    Route::get('played/topArtistSearch', [PlayedController::class, 'topArtistSearch']);
-    Route::get('played/topSongsSearch', [PlayedController::class, 'topSongsSearch']);
+    // Slider
     Route::get('played/timeListened', [PlayedController::class, 'timeListened']);
     Route::get('played/amountSongs', [PlayedController::class, 'amountSongs']);
     Route::get('played/amountNewSongs', [PlayedController::class, 'amountNewSongs']);
-    Route::get('search', [PlayedController::class, 'search']);
 
-    Route::get('artist/topSongs', [ArtistController::class, 'topSongs']);
-    Route::get('artist/{id}', [ArtistController::class, 'show']);
-
+    // Current user
     Route::get('user/', [UserController::class, 'getCurrentUser']);
-    Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user/follow', [UserController::class, 'follow']);
 
+    // Notifications
     Route::post('notification/create', [NotificationController::class, 'store']);
     Route::post('notification/delete', [NotificationController::class, 'destroy']);
     Route::post('notification/handle', [NotificationController::class, 'handle']);

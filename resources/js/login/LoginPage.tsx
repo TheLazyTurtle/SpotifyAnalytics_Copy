@@ -19,20 +19,14 @@ function LoginPage() {
         }
 
         axios.get('/sanctum/csrf-cookie').then(response => {
-            test();
+            if (response.status !== 204) return;
+
+            axios.post("/login", { username, password }).then((result) => {
+                if (result.status !== 200) return;
+
+                window.location.href = getRedirectUrl();
+            });
         });
-
-    }
-
-    // TODO: Fix this
-    async function test() {
-        const username: any = usernameElement.current?.value
-        const password: any = passwordElement.current?.value
-        const res = await axios.post("/login", { username, password });
-
-        if (res.status === 200) {
-            window.location.href = getRedirectUrl();
-        }
     }
 
     function getRedirectUrl() {

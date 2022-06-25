@@ -1,13 +1,11 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { PlayedAPI } from "../api/PlayedAPI";
-import { LoggedInUserContext } from "../App";
 import InputField from "../inputField/InputField";
 import { inputField } from "../inputField/InputFieldWrapper";
 import NotificationsPopup from "../notificatons/NotificationsPopup";
 
 function Header() {
-    const loggedInUser = useContext(LoggedInUserContext);
     const [showNotificationPopup, setNotificationPopup] = useState<boolean>(false);
 
     const inputField: inputField = {
@@ -30,26 +28,24 @@ function Header() {
 
     return (
         <>
-            {!loggedInUser.guest &&
-                <div className="bg-dark w-100 py-2 px-2 d-md-block d-none">
-                    <div className="row mx-auto w-75">
-                        <div className="col-4 d-inline-block">
-                            <a href="/" className="text-decoration-none">
-                                <h3>Spotify Analytics</h3>
-                            </a>
-                        </div>
-                        <div className="col-4 d-inline-block">
-                            <InputField onChange={() => { }} inputField={inputField} isComponent={true} />
-                        </div>
-                        <div className="col-4 d-inline-block text-center text-custom-green">
-                            <i onClick={toggleNotificationPopup} className="fas fa-envelope px-2"></i>
-                            {showNotificationPopup && <NotificationsPopup isComponent={true} />}
-                            <i onClick={() => { window.location.href = "/profile" }} className="fas fa-user-alt px-2"></i>
-                            <i onClick={handleLogout} className="fas fa-arrow-right px-2"></i>
-                        </div>
+            <div className="bg-dark w-100 py-2 px-2 d-md-block d-none">
+                <div className="row mx-auto w-75">
+                    <div className="col-4 d-inline-block">
+                        <a href="/" className="text-decoration-none">
+                            <h3>Spotify Analytics</h3>
+                        </a>
+                    </div>
+                    <div className="col-4 d-inline-block">
+                        <InputField onChange={() => { }} inputField={inputField} isComponent={true} />
+                    </div>
+                    <div className="col-4 d-inline-block text-center text-custom-green">
+                        <i onClick={toggleNotificationPopup} className="fas fa-envelope px-2"></i>
+                        {showNotificationPopup && <NotificationsPopup isComponent={true} />}
+                        <i onClick={() => { window.location.href = "/profile" }} className="fas fa-user-alt px-2"></i>
+                        <i onClick={handleLogout} className="fas fa-arrow-right px-2"></i>
                     </div>
                 </div>
-            }
+            </div>
         </>
     );
 }

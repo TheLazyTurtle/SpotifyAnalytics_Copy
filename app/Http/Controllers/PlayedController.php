@@ -56,84 +56,72 @@ class PlayedController extends Controller
     }
 
     // All songs played of user
-    // TODO: Resource
     public function allSongsPlayed(Request $request)
     {
-        if ($request->user_id) {
-            $user_id = $request->user_id;
-        } else {
-            $user_id = Auth()->user()->id;
-        }
-
         // TODO: input validation and default values;
         // TODO: Authentication
         // TODO: Make the user_id go using the validation step
 
-        $played = Played::where('played_by', $user_id)
-            ->distinct()
-            ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x')
-            ->whereBetween('date_played', [$request->min_date, $request->max_date])
-            ->groupBy('played.song_id')
-            ->havingBetween('y', [$request->min_played, $request->max_played])
-            ->orderBy('played.song_name')
-            ->get();
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = $request->user()->id;
+        }
+
+        $played = Played::allSongsPlayed(
+            $user_id,
+            $request->min_date,
+            $request->max_date,
+            $request->min_played,
+            $request->max_played
+        );
 
         return DataWrapperResource::collection($played);
     }
 
     // Top song of user
-    // TODO: resource
     public function topSongs(Request $request)
     {
-        if ($request->user_id) {
-            $user_id = $request->user_id;
-        } else {
-            $user_id = Auth()->user()->id;
-        }
-
         // TODO: input validation and default values;
         // TODO: Authentication
         // TODO: Make the user_id go using the validation step
 
-        $top_songs = Played::where('played_by', $user_id)
-            ->distinct()
-            ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
-            ->join('songs', 'artist_has_song.song_id', 'songs.song_id')
-            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-            ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x', 'songs.img_url')
-            ->whereBetween('date_played', [$request->min_date, $request->max_date])
-            ->where('artists.name', 'like', $request->artist_name)
-            ->groupBy('played.song_id')
-            ->orderBy('y', 'desc')
-            ->limit($request->amount)
-            ->get();
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = $request->user()->id;
+        }
+
+        $top_songs = Played::topSongs(
+            $user_id,
+            $request->min_date,
+            $request->max_date,
+            $request->artist_name,
+            $request->amount
+        );
 
         return DataWrapperResource::collection($top_songs);
     }
 
     // Top artist of user
-    // TODO: Resource
     public function topArtists(Request $request)
     {
-        if ($request->user_id) {
-            $user_id = $request->user_id;
-        } else {
-            $user_id = Auth()->user()->id;
-        }
-
         // TODO: input validation and default values;
         // TODO: Authentication
         // TODO: Make the user_id go using the validation step
 
-        $top_artists = Played::where('played_by', $user_id)
-            ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
-            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-            ->select(DB::raw('COUNT(*) as y'), 'artists.name as x', 'artists.img_url')
-            ->whereBetween('played.date_played', [$request->min_date, $request->max_date])
-            ->groupBy('artists.artist_id')
-            ->orderBy('y', 'desc')
-            ->limit($request->amount)
-            ->get();
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = $request->user()->id;
+        }
+
+        $top_artists = Played::topArtist(
+            $user_id,
+            $request->min_date,
+            $request->max_date,
+            $request->amount
+        );
 
         return DataWrapperResource::collection($top_artists);
     }
@@ -142,31 +130,23 @@ class PlayedController extends Controller
     // TODO: resource
     public function playedPerDay(Request $request)
     {
-        if ($request->user_id) {
-            $user_id = $request->user_id;
-        } else {
-            $user_id = Auth()->user()->id;
-        }
-
         // TODO: input validation and default values;
         // TODO: Authentication
         // TODO: Make the user_id go using the validation step
 
-        $played_per_day = Played::where('played_by', $user_id)
-            ->select(DB::raw('unix_timestamp(played.date_played) * 1000 as x'), DB::raw('COUNT(*) as y'))
-            ->join('songs', 'played.song_id', 'songs.song_id')
-            ->whereIn('songs.song_id', function ($query) use ($request) {
-                $query->select('songs.song_id')
-                    ->from('songs')
-                    ->join('artist_has_song', 'artist_has_song.song_id', 'songs.song_id')
-                    ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-                    ->where('artists.name', 'like', $request->artist_name)
-                    ->where('songs.name', 'like', $request->song_name);
-            })
-            ->whereBetween('played.date_played', [$request->min_date, $request->max_date])
-            ->groupBy(DB::raw('MONTH(played.date_played)'), DB::raw('YEAR(played.date_played)'))
-            ->orderBy('x', 'desc')
-            ->get();
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user_id = $request->user()->id;
+        }
+
+        $played_per_day = Played::playedPerDay(
+            $user_id,
+            $request->artist_name,
+            $request->song_name,
+            $request->min_date,
+            $request->max_date
+        );
 
         return DataWrapperResource::collection($played_per_day);
     }
@@ -178,7 +158,7 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = Auth()->user()->id;
+            $user_id = $request->user()->id;
         }
 
         // TODO: input validation and default values;
@@ -208,7 +188,7 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = Auth()->user()->id;
+            $user_id = $request->user()->id;
         }
 
         // TODO: input validation and default values;
@@ -234,7 +214,7 @@ class PlayedController extends Controller
     // TODO: Resource
     public function timeListened(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        $user_id = $request->user()->id;
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -253,7 +233,7 @@ class PlayedController extends Controller
     // TODO: Resource
     public function amountSongs(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        $user_id = $request->user()->id;
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -271,7 +251,7 @@ class PlayedController extends Controller
     // TODO: Resource
     public function amountNewSongs(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        $user_id = $request->user()->id;
 
         // TODO: input validation and default values;
         // TODO: Authentication
@@ -295,7 +275,7 @@ class PlayedController extends Controller
     // TODO: Resource
     public function search(Request $request)
     {
-        $user = Auth()->user();
+        // $user = $request->user();
         // TODO: input validation and default values;
         // TODO: Authentication
         // TODO: Make the user_id go using the validation step

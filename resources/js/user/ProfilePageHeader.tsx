@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useContext } from "react";
-import { LoggedInUserContext } from "../App";
 import { PageType } from "./ProfilePage";
 import { User } from "./User";
 
@@ -10,7 +8,6 @@ interface ProfilePageHeaderProps {
 };
 
 function Buttons(props: ProfilePageHeaderProps) {
-    const loggedInUser = useContext(LoggedInUserContext);
     const user = props.user;
 
     function handleLogout() {
@@ -35,7 +32,7 @@ function Buttons(props: ProfilePageHeaderProps) {
                     </div>
                 </>
             }
-            {(props.pageType === PageType.External && !loggedInUser.guest) &&
+            {(props.pageType === PageType.External) &&
                 followButton(user)
             }
         </div>

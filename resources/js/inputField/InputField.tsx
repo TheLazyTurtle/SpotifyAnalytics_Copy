@@ -10,10 +10,11 @@ interface InputFieldProps {
     isComponent: boolean;
     onChange(name: string, value: string): void;
     parentGraphName?: GraphName;
+    userId?: string;
 };
 
 // TODO: Make this component a but more usable
-function InputField({ inputField, isComponent, onChange, parentGraphName }: InputFieldProps) {
+function InputField({ inputField, isComponent, onChange, parentGraphName, userId }: InputFieldProps) {
     const { name, allowedInputType, placeholder, filterValue } = inputField;
     const [filterSetting, setFilterSetting] = useState(filterValue);
     const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<AutocompleteItem[]>([]);
@@ -43,7 +44,7 @@ function InputField({ inputField, isComponent, onChange, parentGraphName }: Inpu
                 return;
             }
 
-            const autoCompleteSuggestionResult = await inputField.autocompleteFunction(value, 10);
+            const autoCompleteSuggestionResult = await inputField.autocompleteFunction(value, 10, userId);
 
             if (autoCompleteSuggestionResult.status !== 200) {
                 setAutocompleteSuggestions([]);
@@ -65,7 +66,7 @@ function InputField({ inputField, isComponent, onChange, parentGraphName }: Inpu
             const filterSettingValue = value.length > 0 ? value : undefined;
 
             // Set cache
-            if (parentGraphName !== undefined) {
+            if (parentGraphName !== undefined && userId === undefined) {
                 const currentCacheValue = Cacher.getItem(`${parentGraphName}-settings`);
                 const updatedCacheValue = { ...currentCacheValue, [name]: filterSettingValue };
                 Cacher.setItem(`${parentGraphName}-settings`, updatedCacheValue);
@@ -114,7 +115,6 @@ function autoComplete(name: string, allowedInputType: string, placeholderText: s
 
 function autoCompleteRow(index: number, item: AutocompleteItem, clickHandler: (event: any) => void) {
     if (item.type) {
-        console.log(item)
         const href = item.artist_id !== undefined ? `/artist/${item.artist_id}` : `/${item.name}`;
         return (
             <div key={index}>

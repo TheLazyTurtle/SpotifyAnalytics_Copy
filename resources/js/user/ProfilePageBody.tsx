@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { LoggedInUserContext } from "../App";
+import { redirectToLogin } from "../App";
 import { Graph, graphs } from "../graph/Graphs";
 import GraphWrapper from "../graph/GraphWrapper";
 import { PageType } from "./ProfilePage";
@@ -11,13 +10,9 @@ interface ProfilePageBodyProps {
 };
 
 function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
-    const loggedInUser = useContext(LoggedInUserContext);
 
     const toShow = function() {
         if (pageType === PageType.Personal) {
-            return true;
-        }
-        if (loggedInUser.isAdmin) {
             return true;
         }
         if (!user.private) {
@@ -29,11 +24,6 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         return false;
     }
 
-    function toLogin() {
-        const currentPage = window.location.pathname.replace("/", "");
-        return `/login?redirect=${currentPage}`;
-    }
-
     return (
         <>
             {toShow() && new graphs().graphs.map((graph: Graph) => (
@@ -43,7 +33,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
             ))}
             {!toShow() &&
                 <div className="w-50 mx-auto">
-                    <h3 className="text-white">This profile is private. Please {loggedInUser.guest ? <a href={toLogin()}>login</a> : <a>follow</a>}</h3>
+                    <h3 className="text-white">This profile is private. Please {user.guest ? <a href={redirectToLogin(true)}>login</a> : <a>follow</a>}</h3>
                 </div>
             }
         </>

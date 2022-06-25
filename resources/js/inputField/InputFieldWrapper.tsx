@@ -9,7 +9,7 @@ export type inputField = {
     allowedInputType: string;
     placeholder: string;
     filterValue: string;
-    autocompleteFunction?(name: string, limit: string | number): any;
+    autocompleteFunction?(name: string, limit: string | number, userId?: string): any;
 };
 
 interface InputFieldWrapperProps {
@@ -19,9 +19,9 @@ interface InputFieldWrapperProps {
     userId?: string;
 };
 
-function InputFieldWrapper({ update, inputFields, graphName }: InputFieldWrapperProps) {
+function InputFieldWrapper({ update, inputFields, graphName, userId }: InputFieldWrapperProps) {
     const [filterSettings, setFilterSettings] = useState<FilterSetting>({});
-    const cachedFilterSettings = Cacher.getItem(`${graphName}-settings`);
+    const cachedFilterSettings = userId === undefined ? Cacher.getItem(`${graphName}-settings`) : "{}";
 
     const handleInputChange = (name: string, value: string) => {
         let temp = filterSettings;
@@ -37,7 +37,7 @@ function InputFieldWrapper({ update, inputFields, graphName }: InputFieldWrapper
                     inputField.filterValue = cachedFilterSettings[inputField.name];
 
                     return (<div className="col-sm" key={index}>
-                        <InputField key={inputField.name} inputField={inputField} onChange={handleInputChange} isComponent={true} parentGraphName={graphName} />
+                        <InputField key={inputField.name} inputField={inputField} onChange={handleInputChange} isComponent={true} parentGraphName={graphName} userId={userId} />
                     </div>);
                 })}
             </div>

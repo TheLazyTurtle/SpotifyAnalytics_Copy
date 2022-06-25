@@ -8,7 +8,6 @@ use App\Http\Resources\DataWrapperResource;
 use App\Http\Resources\SongResource;
 use App\Models\Album;
 use App\Models\Artist;
-use App\Models\ArtistHasSong;
 use App\Models\Played;
 use App\Models\Song;
 use Illuminate\Http\Request;
@@ -135,7 +134,10 @@ class ArtistController extends Controller
     // NOTE: This is a scuffed AF query. We first do a huge query to get the total and than do another big query to get the users
     public function topSongs(Request $request)
     {
-        $user_id = Auth()->user()->id;
+        $user_id = null;
+        if (auth()->check()) {
+            $user_id = $request->user();
+        }
 
         $songs = Played::join('songs', 'songs.song_id', 'played.song_id')
             ->join('artist_has_song', 'artist_has_song.song_id', 'songs.song_id')
@@ -149,14 +151,18 @@ class ArtistController extends Controller
             ->get();
 
         foreach ($songs as $song) {
-            $user_count = Played::where('played_by', $user_id)
-                ->where('song_id', $song->song_id)
-                ->select(DB::raw('COUNT(*) as x'))
-                ->first();
+            if ($user_id == null) {
+                $song->x = 0;
+            } else {
+                $user_count = Played::where('played_by', $user_id->id)
+                    ->where('song_id', $song->song_id)
+                    ->select(DB::raw('COUNT(*) as x'))
+                    ->first();
+                $song->x = $user_count->x;
+            }
 
             $songObject = Song::where('song_id', $song->song_id)->first();
 
-            $song->x = $user_count->x;
             $song->object = new SongResource($songObject);
         }
 

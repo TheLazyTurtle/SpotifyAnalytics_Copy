@@ -2063,15 +2063,15 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "LoggedInUserContext": () => (/* binding */ LoggedInUserContext),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "redirectToLogin": () => (/* binding */ redirectToLogin)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.css */ "./resources/js/App.css");
 /* harmony import */ var _header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header/Header */ "./resources/js/header/Header.tsx");
 /* harmony import */ var bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.css */ "./node_modules/bootstrap/dist/css/bootstrap.css");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
 /* harmony import */ var _home_HomePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home/HomePage */ "./resources/js/home/HomePage.tsx");
 /* harmony import */ var _album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./album/AlbumsPage */ "./resources/js/album/AlbumsPage.tsx");
 /* harmony import */ var _login_LoginPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/LoginPage */ "./resources/js/login/LoginPage.tsx");
@@ -2080,8 +2080,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _header_MobileHeader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./header/MobileHeader */ "./resources/js/header/MobileHeader.tsx");
 /* harmony import */ var _user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./user/ProfilePage */ "./resources/js/user/ProfilePage.tsx");
 /* harmony import */ var _search_SearchPage__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./search/SearchPage */ "./resources/js/search/SearchPage.tsx");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./notificatons/NotificationsPage */ "./resources/js/notificatons/NotificationsPage.tsx");
+/* harmony import */ var _notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./notificatons/NotificationsPage */ "./resources/js/notificatons/NotificationsPage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2096,149 +2095,6 @@ var __assign = undefined && undefined.__assign || function () {
   };
 
   return __assign.apply(this, arguments);
-};
-
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-  var _ = {
-    label: 0,
-    sent: function sent() {
-      if (t[0] & 1) throw t[1];
-      return t[1];
-    },
-    trys: [],
-    ops: []
-  },
-      f,
-      y,
-      t,
-      g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-
-    while (_) {
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-        if (y = 0, t) op = [op[0] & 2, t.value];
-
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-
-          case 4:
-            _.label++;
-            return {
-              value: op[1],
-              done: false
-            };
-
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-
-          case 7:
-            op = _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-
-              _.ops.push(op);
-
-              break;
-            }
-
-            if (t[2]) _.ops.pop();
-
-            _.trys.pop();
-
-            continue;
-        }
-
-        op = body.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    }
-
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
 };
 
 
@@ -2256,204 +2112,149 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
-
-var LoggedInUserContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_12__.createContext)({
-  guest: true
-});
-
-function App() {
-  var _a = (0,react__WEBPACK_IMPORTED_MODULE_12__.useState)({
-    guest: true
-  }),
-      loggedInUser = _a[0],
-      setLoggedInUser = _a[1];
-
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_12__.useState)(true),
-      loading = _b[0],
-      setLoading = _b[1];
-
-  var redirectUrls = ["/", "/profile"];
-
-  function validateLogin() {
-    return __awaiter(this, void 0, void 0, function () {
-      var validationResult;
-      return __generator(this, function (_a) {
-        setLoading(true);
-        validationResult = {
-          success: true,
-          data: {
-            id: "1",
-            username: "The Lazy Turtle",
-            isAdmin: true,
-            imgUrl: ""
-          }
-        };
-
-        if (validationResult.success) {
-          setLoggedInUser(validationResult.data);
-          setLoading(false);
-        } else {
-          setLoading(false);
-
-          if (window.location.pathname === "/login") {
-            return [2
-            /*return*/
-            ];
-          }
-
-          redirectUrls.map(function (url) {
-            if (url === window.location.pathname) {// window.location.href = makeRedirectUrl();
-            }
-          });
-          return [2
-          /*return*/
-          ];
-        }
-
-        return [2
-        /*return*/
-        ];
-      });
-    });
+;
+function redirectToLogin(link) {
+  if (link === void 0) {
+    link = false;
   }
 
-  (0,react__WEBPACK_IMPORTED_MODULE_12__.useEffect)(function () {
-    validateLogin();
-  }, []);
+  var currentPage = window.location.pathname.replace("/", "");
+  var url = "/login?redirect=".concat(currentPage);
+
+  if (link) {
+    return url;
+  }
+
+  window.location.href = url;
+}
+
+function App() {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
     className: "App"
   }, {
-    children: [!loading && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(LoggedInUserContext.Provider, __assign({
-      value: loggedInUser
-    }, {
-      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 71,
-        columnNumber: 21
-      }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.BrowserRouter, {
-        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, {
-          children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_home_HomePage__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 74,
-              columnNumber: 54
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 74,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/login",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 75,
-              columnNumber: 59
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 75,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/album/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 76,
-              columnNumber: 69
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 76,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/artist/:artistID",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 77,
-              columnNumber: 70
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 77,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/profile",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 78,
-              columnNumber: 61
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 78,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/search",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 79,
-              columnNumber: 60
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 79,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/notifications",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_13__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 80,
-              columnNumber: 67
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 80,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "/:username",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 81,
-              columnNumber: 63
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 81,
-            columnNumber: 29
-          }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
-            path: "*",
-            element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
-              fileName: _jsxFileName,
-              lineNumber: 82,
-              columnNumber: 54
-            }, this)
-          }, void 0, false, {
-            fileName: _jsxFileName,
-            lineNumber: 82,
-            columnNumber: 29
-          }, this)]
-        }, void 0, true, {
-          fileName: _jsxFileName,
-          lineNumber: 73,
-          columnNumber: 25
-        }, this)
-      }, void 0, false, {
-        fileName: _jsxFileName,
-        lineNumber: 72,
-        columnNumber: 21
-      }, this)]
-    }), void 0, true, {
+    children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {}, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 69,
-      columnNumber: 25
+      lineNumber: 35,
+      columnNumber: 13
+    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_13__.BrowserRouter, {
+      children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Routes, {
+        children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_home_HomePage__WEBPACK_IMPORTED_MODULE_4__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 38,
+            columnNumber: 46
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 38,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/login",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_login_LoginPage__WEBPACK_IMPORTED_MODULE_6__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 39,
+            columnNumber: 51
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 39,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/album/:artistID",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_5__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 40,
+            columnNumber: 61
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 40,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/artist/:artistID",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_artist_ArtistPage__WEBPACK_IMPORTED_MODULE_8__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 41,
+            columnNumber: 62
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 41,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/profile",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 42,
+            columnNumber: 53
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 42,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/search",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_search_SearchPage__WEBPACK_IMPORTED_MODULE_11__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 43,
+            columnNumber: 52
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 43,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/notifications",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPage__WEBPACK_IMPORTED_MODULE_12__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 44,
+            columnNumber: 59
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 44,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "/:username",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_user_ProfilePage__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 45,
+            columnNumber: 55
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 45,
+          columnNumber: 21
+        }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_router_dom__WEBPACK_IMPORTED_MODULE_14__.Route, {
+          path: "*",
+          element: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notFound_NotFound__WEBPACK_IMPORTED_MODULE_7__["default"], {}, void 0, false, {
+            fileName: _jsxFileName,
+            lineNumber: 46,
+            columnNumber: 46
+          }, this)
+        }, void 0, false, {
+          fileName: _jsxFileName,
+          lineNumber: 46,
+          columnNumber: 21
+        }, this)]
+      }, void 0, true, {
+        fileName: _jsxFileName,
+        lineNumber: 37,
+        columnNumber: 17
+      }, this)
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 36,
+      columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_header_MobileHeader__WEBPACK_IMPORTED_MODULE_9__["default"], {}, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 87,
+      lineNumber: 49,
       columnNumber: 13
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 67,
+    lineNumber: 33,
     columnNumber: 13
   }, this);
 }
@@ -2852,8 +2653,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../slider/SliderItems */ "./resources/js/slider/SliderItems.ts");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
+/* harmony import */ var _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../slider/SliderItems */ "./resources/js/slider/SliderItems.ts");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./api */ "./resources/js/api/api.ts");
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -3029,6 +2831,7 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 
+
 var PlayedAPI =
 /** @class */
 function (_super) {
@@ -3071,7 +2874,9 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/allSongsPlayed", params)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/allSongsPlayed", params)["catch"](function () {
+              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            })];
 
           case 1:
             return [2
@@ -3100,7 +2905,7 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var params;
+      var params, result;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
@@ -3115,12 +2920,15 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topSongs", params)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topSongs", params)["catch"](function () {
+              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            })];
 
           case 1:
+            result = _b.sent();
             return [2
             /*return*/
-            , _b.sent()];
+            , result];
         }
       });
     });
@@ -3140,7 +2948,7 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var params;
+      var params, result;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
@@ -3154,12 +2962,15 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topArtists", params)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/topArtists", params)["catch"](function () {
+              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            })];
 
           case 1:
+            result = _b.sent();
             return [2
             /*return*/
-            , _b.sent()];
+            , result];
         }
       });
     });
@@ -3183,7 +2994,7 @@ function (_super) {
     }
 
     return __awaiter(this, void 0, void 0, function () {
-      var params;
+      var params, result;
       return __generator(this, function (_b) {
         switch (_b.label) {
           case 0:
@@ -3198,12 +3009,15 @@ function (_super) {
             };
             return [4
             /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/playedPerDay", params)];
+            , axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/played/playedPerDay", params)["catch"](function () {
+              return userID !== null && userID !== void 0 ? userID : (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)();
+            })];
 
           case 1:
+            result = _b.sent();
             return [2
             /*return*/
-            , _b.sent()];
+            , result];
         }
       });
     });
@@ -3370,25 +3184,25 @@ function (_super) {
         switch (_h.label) {
           case 0:
             _g = {};
-            _b = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.topSongs;
+            _b = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.topSongs;
             return [4
             /*yield*/
             , this.topSongs(minDate, maxDate, "1").then(function (data) {
-              return data.data.data[0];
+              return typeof data === "string" ? {} : data === null || data === void 0 ? void 0 : data.data.data[0];
             })];
 
           case 1:
             _g[_b] = _h.sent();
-            _c = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.topArtists;
+            _c = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.topArtists;
             return [4
             /*yield*/
             , this.topArtist(minDate, maxDate, "1").then(function (data) {
-              return data.data.data[0];
+              return typeof data === "string" ? {} : data === null || data === void 0 ? void 0 : data.data.data[0];
             })];
 
           case 2:
             _g[_c] = _h.sent();
-            _d = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.timeListened;
+            _d = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.timeListened;
             return [4
             /*yield*/
             , this.timeListened(minDate, maxDate).then(function (data) {
@@ -3397,7 +3211,7 @@ function (_super) {
 
           case 3:
             _g[_d] = _h.sent();
-            _e = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.amountSongs;
+            _e = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.amountSongs;
             return [4
             /*yield*/
             , this.amountSongs(minDate, maxDate).then(function (data) {
@@ -3406,7 +3220,7 @@ function (_super) {
 
           case 4:
             _g[_e] = _h.sent();
-            _f = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_1__.SliderItemName.amountNewSongs;
+            _f = _slider_SliderItems__WEBPACK_IMPORTED_MODULE_2__.SliderItemName.amountNewSongs;
             return [4
             /*yield*/
             , this.amountNewSongs(minDate, maxDate).then(function (data) {
@@ -3427,7 +3241,7 @@ function (_super) {
   _a = PlayedAPI;
   PlayedAPI.url = "".concat(_a.baseUrl, "/played");
   return PlayedAPI;
-}(_api__WEBPACK_IMPORTED_MODULE_2__.Api);
+}(_api__WEBPACK_IMPORTED_MODULE_3__.Api);
 
 
 
@@ -4856,13 +4670,13 @@ function GraphWrapper(_a) {
       fileName: _jsxFileName,
       lineNumber: 71,
       columnNumber: 13
-    }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_GraphComponent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }, this), typeof data !== "string" && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_GraphComponent__WEBPACK_IMPORTED_MODULE_8__["default"], {
       dataPoints: data === null || data === void 0 ? void 0 : data.data.data,
       graphType: graph.type
     }, void 0, false, {
       fileName: _jsxFileName,
       lineNumber: 72,
-      columnNumber: 13
+      columnNumber: 41
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
@@ -4977,9 +4791,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _api_PlayedAPI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../api/PlayedAPI */ "./resources/js/api/PlayedAPI.ts");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
-/* harmony import */ var _notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../notificatons/NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
+/* harmony import */ var _inputField_InputField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../inputField/InputField */ "./resources/js/inputField/InputField.tsx");
+/* harmony import */ var _notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../notificatons/NotificationsPopup */ "./resources/js/notificatons/NotificationsPopup.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -5004,10 +4817,7 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
-
 function Header() {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_App__WEBPACK_IMPORTED_MODULE_4__.LoggedInUserContext);
-
   var _a = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       showNotificationPopup = _a[0],
       setNotificationPopup = _a[1];
@@ -5031,7 +4841,7 @@ function Header() {
   }
 
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    children: !loggedInUser.guest && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+    children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "bg-dark w-100 py-2 px-2 d-md-block d-none"
     }, {
       children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -5048,34 +4858,34 @@ function Header() {
               children: "Spotify Analytics"
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 38,
-              columnNumber: 33
+              lineNumber: 35,
+              columnNumber: 29
             }, this)
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 37,
-            columnNumber: 29
+            lineNumber: 34,
+            columnNumber: 25
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 36,
-          columnNumber: 25
+          lineNumber: 33,
+          columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block"
         }, {
-          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onChange: function onChange() {},
             inputField: inputField,
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 42,
-            columnNumber: 29
+            lineNumber: 39,
+            columnNumber: 25
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 41,
-          columnNumber: 25
+          lineNumber: 38,
+          columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-4 d-inline-block text-center text-custom-green"
         }, {
@@ -5084,14 +4894,14 @@ function Header() {
             className: "fas fa-envelope px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 45,
-            columnNumber: 29
-          }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            lineNumber: 42,
+            columnNumber: 25
+          }, this), showNotificationPopup && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_notificatons_NotificationsPopup__WEBPACK_IMPORTED_MODULE_5__["default"], {
             isComponent: true
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 46,
-            columnNumber: 54
+            lineNumber: 43,
+            columnNumber: 50
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: function onClick() {
               window.location.href = "/profile";
@@ -5099,34 +4909,34 @@ function Header() {
             className: "fas fa-user-alt px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 47,
-            columnNumber: 29
+            lineNumber: 44,
+            columnNumber: 25
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("i", {
             onClick: handleLogout,
             className: "fas fa-arrow-right px-2"
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 48,
-            columnNumber: 29
+            lineNumber: 45,
+            columnNumber: 25
           }, this)]
         }), void 0, true, {
           fileName: _jsxFileName,
-          lineNumber: 44,
-          columnNumber: 25
+          lineNumber: 41,
+          columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 35,
-        columnNumber: 21
+        lineNumber: 32,
+        columnNumber: 17
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 33,
-      columnNumber: 36
+      lineNumber: 31,
+      columnNumber: 13
     }, this)
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 31,
+    lineNumber: 29,
     columnNumber: 13
   }, this);
 }
@@ -5597,7 +5407,8 @@ function InputField(_a) {
   var inputField = _a.inputField,
       isComponent = _a.isComponent,
       onChange = _a.onChange,
-      parentGraphName = _a.parentGraphName;
+      parentGraphName = _a.parentGraphName,
+      userId = _a.userId;
   var name = inputField.name,
       allowedInputType = inputField.allowedInputType,
       placeholder = inputField.placeholder,
@@ -5654,7 +5465,7 @@ function InputField(_a) {
 
             return [4
             /*yield*/
-            , inputField.autocompleteFunction(value, 10)];
+            , inputField.autocompleteFunction(value, 10, userId)];
 
           case 1:
             autoCompleteSuggestionResult = _a.sent();
@@ -5690,7 +5501,7 @@ function InputField(_a) {
 
         filterSettingValue = value.length > 0 ? value : undefined; // Set cache
 
-        if (parentGraphName !== undefined) {
+        if (parentGraphName !== undefined && userId === undefined) {
           currentCacheValue = _cacher__WEBPACK_IMPORTED_MODULE_3__.Cacher.getItem("".concat(parentGraphName, "-settings"));
           updatedCacheValue = __assign(__assign({}, currentCacheValue), (_a = {}, _a[name] = filterSettingValue, _a));
           _cacher__WEBPACK_IMPORTED_MODULE_3__.Cacher.setItem("".concat(parentGraphName, "-settings"), updatedCacheValue);
@@ -5726,7 +5537,7 @@ function normal(name, allowedInputType, placeholderText, value, handleOnChange) 
     onChange: handleOnChange
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 92,
+    lineNumber: 93,
     columnNumber: 13
   }, this);
 }
@@ -5745,7 +5556,7 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       autoComplete: "off"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 100,
+      lineNumber: 101,
       columnNumber: 13
     }, this), autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data w-25 border position-absolute background-base"
@@ -5755,7 +5566,7 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 101,
+      lineNumber: 102,
       columnNumber: 97
     }, this), autoCompleteSuggestions.length > 0 && !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data border position-absolute background-base"
@@ -5765,19 +5576,18 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 106,
+      lineNumber: 107,
       columnNumber: 69
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 98,
+    lineNumber: 99,
     columnNumber: 13
   }, this);
 }
 
 function autoCompleteRow(index, item, clickHandler) {
   if (item.type) {
-    console.log(item);
     var href = item.artist_id !== undefined ? "/artist/".concat(item.artist_id) : "/".concat(item.name);
     return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
@@ -5872,13 +5682,14 @@ function InputFieldWrapper(_a) {
 
   var update = _a.update,
       inputFields = _a.inputFields,
-      graphName = _a.graphName;
+      graphName = _a.graphName,
+      userId = _a.userId;
 
   var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
       filterSettings = _b[0],
       setFilterSettings = _b[1];
 
-  var cachedFilterSettings = _cacher__WEBPACK_IMPORTED_MODULE_2__.Cacher.getItem("".concat(graphName, "-settings"));
+  var cachedFilterSettings = userId === undefined ? _cacher__WEBPACK_IMPORTED_MODULE_2__.Cacher.getItem("".concat(graphName, "-settings")) : "{}";
 
   var handleInputChange = function handleInputChange(name, value) {
     var temp = filterSettings;
@@ -5902,7 +5713,8 @@ function InputFieldWrapper(_a) {
             inputField: inputField,
             onChange: handleInputChange,
             isComponent: true,
-            parentGraphName: graphName
+            parentGraphName: graphName,
+            userId: userId
           }, inputField.name, false, {
             fileName: _jsxFileName,
             lineNumber: 40,
@@ -6139,44 +5951,18 @@ function LoginPage() {
         }
 
         axios__WEBPACK_IMPORTED_MODULE_4___default().get('/sanctum/csrf-cookie').then(function (response) {
-          test();
+          if (response.status !== 204) return;
+          axios__WEBPACK_IMPORTED_MODULE_4___default().post("/login", {
+            username: username,
+            password: password
+          }).then(function (result) {
+            if (result.status !== 200) return;
+            window.location.href = getRedirectUrl();
+          });
         });
         return [2
         /*return*/
         ];
-      });
-    });
-  } // TODO: Fix this
-
-
-  function test() {
-    var _a, _b;
-
-    return __awaiter(this, void 0, void 0, function () {
-      var username, password, res;
-      return __generator(this, function (_c) {
-        switch (_c.label) {
-          case 0:
-            username = (_a = usernameElement.current) === null || _a === void 0 ? void 0 : _a.value;
-            password = (_b = passwordElement.current) === null || _b === void 0 ? void 0 : _b.value;
-            return [4
-            /*yield*/
-            , axios__WEBPACK_IMPORTED_MODULE_4___default().post("/login", {
-              username: username,
-              password: password
-            })];
-
-          case 1:
-            res = _c.sent();
-
-            if (res.status === 200) {
-              window.location.href = getRedirectUrl();
-            }
-
-            return [2
-            /*return*/
-            ];
-        }
       });
     });
   }
@@ -6212,7 +5998,7 @@ function LoginPage() {
         children: "Login"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 63,
+        lineNumber: 57,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("form", {
         children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
@@ -6223,11 +6009,11 @@ function LoginPage() {
           ref: usernameElement
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 65,
+          lineNumber: 59,
           columnNumber: 21
         }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 65,
+          lineNumber: 59,
           columnNumber: 141
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
           className: "mt-1 w-50 bg-custom-gray",
@@ -6237,11 +6023,11 @@ function LoginPage() {
           ref: passwordElement
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 66,
+          lineNumber: 60,
           columnNumber: 21
         }, this), " ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("br", {}, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 66,
+          lineNumber: 60,
           columnNumber: 145
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("input", {
           className: "btn btn-primary py-0 my-2 w-50 rounded-8",
@@ -6250,12 +6036,12 @@ function LoginPage() {
           value: "Login"
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 67,
+          lineNumber: 61,
           columnNumber: 21
         }, this)]
       }, void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 64,
+        lineNumber: 58,
         columnNumber: 17
       }, this), error && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-danger",
@@ -6264,7 +6050,7 @@ function LoginPage() {
         children: error
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 70,
+        lineNumber: 64,
         columnNumber: 26
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
         children: ["Don't have an account? Make one here ", (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
@@ -6274,22 +6060,22 @@ function LoginPage() {
           children: "here"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 71,
+          lineNumber: 65,
           columnNumber: 57
         }, this)]
       }, void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 71,
+        lineNumber: 65,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 62,
+      lineNumber: 56,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 60,
+    lineNumber: 54,
     columnNumber: 13
   }, this);
 }
@@ -7658,8 +7444,6 @@ var PageType;
 ;
 
 function ProfilePage() {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_2__.LoggedInUserContext);
-
   var _a = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(PageType.External),
       pageType = _a[0],
       setPageType = _a[1];
@@ -7670,36 +7454,26 @@ function ProfilePage() {
 
   var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useParams)();
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    var username = params.username;
-
-    if (username === loggedInUser.username) {
-      window.location.href = "/profile";
-    }
-
-    if (username === undefined) {
-      setPageType(PageType.Personal);
-      setUser(loggedInUser);
-      return;
-    }
-
-    getUser(username);
-  }, []);
+    getUser(params.username);
+  }, [params.username]);
 
   function getUser(username) {
     return __awaiter(this, void 0, void 0, function () {
-      var url;
       return __generator(this, function (_a) {
-        if (loggedInUser.guest) {}
-
-        url = loggedInUser.guest ? "/api/user/guest/".concat(username) : "/api/user/".concat(username);
-        axios__WEBPACK_IMPORTED_MODULE_5___default().get(url).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_5___default().get("/api/user/".concat(username !== null && username !== void 0 ? username : "")).then(function (response) {
           if (response.status === 200) {
+            if (response.data.data.isOwnAccount) {
+              setPageType(PageType.Personal);
+            }
+
             setUser(response.data.data);
           } else {
             setUser({
               guest: true
             });
           }
+        })["catch"](function () {
+          return (0,_App__WEBPACK_IMPORTED_MODULE_2__.redirectToLogin)();
         });
         return [2
         /*return*/
@@ -7716,26 +7490,26 @@ function ProfilePage() {
         children: "User does no exists"
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 54,
+        lineNumber: 40,
         columnNumber: 17
       }, this)
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 53,
+      lineNumber: 39,
       columnNumber: 27
-    }, this), !user.guest && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    }, this), user.id !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_ProfilePageHeader__WEBPACK_IMPORTED_MODULE_4__["default"], {
         user: user,
         pageType: pageType
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 59,
+        lineNumber: 45,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
         className: "border-bottom border-white mt-5"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 60,
+        lineNumber: 46,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
         className: "w-100"
@@ -7745,22 +7519,22 @@ function ProfilePage() {
           pageType: pageType
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 62,
+          lineNumber: 48,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 61,
+        lineNumber: 47,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 57,
-      columnNumber: 28
+      lineNumber: 43,
+      columnNumber: 38
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 51,
+    lineNumber: 37,
     columnNumber: 13
   }, this);
 }
@@ -7781,11 +7555,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _graph_Graphs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../graph/Graphs */ "./resources/js/graph/Graphs.ts");
-/* harmony import */ var _graph_GraphWrapper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../graph/GraphWrapper */ "./resources/js/graph/GraphWrapper.tsx");
-/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
+/* harmony import */ var _graph_Graphs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../graph/Graphs */ "./resources/js/graph/Graphs.ts");
+/* harmony import */ var _graph_GraphWrapper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../graph/GraphWrapper */ "./resources/js/graph/GraphWrapper.tsx");
+/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -7808,7 +7581,6 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
-
 ;
 
 function ProfilePageBody(_a) {
@@ -7816,14 +7588,9 @@ function ProfilePageBody(_a) {
 
   var user = _a.user,
       pageType = _a.pageType;
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_App__WEBPACK_IMPORTED_MODULE_2__.LoggedInUserContext);
 
   var toShow = function toShow() {
-    if (pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_5__.PageType.Personal) {
-      return true;
-    }
-
-    if (loggedInUser.isAdmin) {
+    if (pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_4__.PageType.Personal) {
       return true;
     }
 
@@ -7838,28 +7605,23 @@ function ProfilePageBody(_a) {
     return false;
   };
 
-  function toLogin() {
-    var currentPage = window.location.pathname.replace("/", "");
-    return "/login?redirect=".concat(currentPage);
-  }
-
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    children: [toShow() && new _graph_Graphs__WEBPACK_IMPORTED_MODULE_3__.graphs().graphs.map(function (graph) {
+    children: [toShow() && new _graph_Graphs__WEBPACK_IMPORTED_MODULE_2__.graphs().graphs.map(function (graph) {
       return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "graph pt-3",
         id: graph.name
       }, {
-        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_graph_GraphWrapper__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_graph_GraphWrapper__WEBPACK_IMPORTED_MODULE_3__["default"], {
           graph: graph,
           userId: user.id
         }, graph.name, false, {
           fileName: _jsxFileName,
-          lineNumber: 41,
+          lineNumber: 31,
           columnNumber: 21
         }, _this)
       }), graph.name, false, {
         fileName: _jsxFileName,
-        lineNumber: 39,
+        lineNumber: 29,
         columnNumber: 69
       }, _this);
     }), !toShow() && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -7868,34 +7630,34 @@ function ProfilePageBody(_a) {
       children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("h3", __assign({
         className: "text-white"
       }, {
-        children: ["This profile is private. Please ", loggedInUser.guest ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
-          href: toLogin()
+        children: ["This profile is private. Please ", user.guest ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
+          href: (0,_App__WEBPACK_IMPORTED_MODULE_1__.redirectToLogin)(true)
         }, {
           children: "login"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 46,
-          columnNumber: 101
+          lineNumber: 36,
+          columnNumber: 93
         }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", {
           children: "follow"
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 46,
-          columnNumber: 133
+          lineNumber: 36,
+          columnNumber: 137
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 46,
+        lineNumber: 36,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 44,
+      lineNumber: 34,
       columnNumber: 26
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 37,
+    lineNumber: 27,
     columnNumber: 13
   }, this);
 }
@@ -7918,9 +7680,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-dev-runtime */ "./node_modules/react/jsx-dev-runtime.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../App */ "./resources/js/App.tsx");
-/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
+/* harmony import */ var _ProfilePage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProfilePage */ "./resources/js/user/ProfilePage.tsx");
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -8084,12 +7844,9 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/user/ProfilePageHeader.tsx";
 
 
-
-
 ;
 
 function Buttons(props) {
-  var loggedInUser = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_App__WEBPACK_IMPORTED_MODULE_3__.LoggedInUserContext);
   var user = props.user;
 
   function handleLogout() {
@@ -8105,7 +7862,7 @@ function Buttons(props) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
     className: "row"
   }, {
-    children: [props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_4__.PageType.Personal && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    children: [props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_2__.PageType.Personal && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-4 col-md-2 mx-md-0"
       }, {
@@ -8116,12 +7873,12 @@ function Buttons(props) {
           children: "Settings"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 31,
+          lineNumber: 28,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 30,
+        lineNumber: 27,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-3 col-md-2 mx-2 mx-md-2"
@@ -8133,22 +7890,22 @@ function Buttons(props) {
           children: "Logout"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 34,
+          lineNumber: 31,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 33,
+        lineNumber: 30,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 28,
+      lineNumber: 25,
       columnNumber: 53
-    }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_4__.PageType.External && !loggedInUser.guest && followButton(user)]
+    }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_2__.PageType.External && followButton(user)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 26,
+    lineNumber: 23,
     columnNumber: 13
   }, this);
 }
@@ -8324,12 +8081,12 @@ function followButton(user) {
       children: makeButtonText()
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 95,
+      lineNumber: 92,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 93,
+    lineNumber: 90,
     columnNumber: 13
   }, this);
 }
@@ -8353,12 +8110,12 @@ function ProfilePageHeader(props) {
             alt: props.user.username
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 107,
+            lineNumber: 104,
             columnNumber: 25
           }, this)
         }), "img-wrapper", false, {
           fileName: _jsxFileName,
-          lineNumber: 106,
+          lineNumber: 103,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-12 col-md-9 mt-3 mt-md-5"
@@ -8369,7 +8126,7 @@ function ProfilePageHeader(props) {
             children: props.user.username
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 110,
+            lineNumber: 107,
             columnNumber: 25
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
             className: "row"
@@ -8384,17 +8141,17 @@ function ProfilePageHeader(props) {
                   children: props.user.followersCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 113,
+                  lineNumber: 110,
                   columnNumber: 59
                 }, this), " Followers"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 113,
+                lineNumber: 110,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 112,
+              lineNumber: 109,
               columnNumber: 29
             }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
               className: "col-4 col-md-2"
@@ -8406,49 +8163,49 @@ function ProfilePageHeader(props) {
                   children: props.user.followingCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 116,
+                  lineNumber: 113,
                   columnNumber: 59
                 }, this), " Following"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 116,
+                lineNumber: 113,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 115,
+              lineNumber: 112,
               columnNumber: 29
             }, this)]
           }), void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 111,
+            lineNumber: 108,
             columnNumber: 25
           }, this), props.user.username !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(Buttons, {
             user: props.user,
             pageType: props.pageType
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 119,
+            lineNumber: 116,
             columnNumber: 64
           }, this)]
         }), "text-wrapper", true, {
           fileName: _jsxFileName,
-          lineNumber: 109,
+          lineNumber: 106,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 105,
+        lineNumber: 102,
         columnNumber: 17
       }, this)
     }), "info-wrapper", false, {
       fileName: _jsxFileName,
-      lineNumber: 104,
+      lineNumber: 101,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 102,
+    lineNumber: 99,
     columnNumber: 13
   }, this);
 }
