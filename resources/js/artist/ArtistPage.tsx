@@ -27,7 +27,7 @@ function ArtistPage() {
                             </div>
                             <div className="border-bottom border-white mt-5"></div>
                             <div className="mt-5">
-                                <AlbumsPage />
+                                <AlbumsPage artistName={data.data.name} />
                             </div>
                         </>
                     }

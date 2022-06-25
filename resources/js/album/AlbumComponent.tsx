@@ -6,9 +6,10 @@ import { useState } from "react";
 
 interface AlbumProps {
     album: Album;
+    artistName?: string;
 }
 
-function AlbumComponent({ album }: AlbumProps) {
+function AlbumComponent({ album, artistName }: AlbumProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     function handleOnExpand() {
@@ -25,7 +26,13 @@ function AlbumComponent({ album }: AlbumProps) {
                             <strong>{album.name}</strong>
                         </h5>
                     </a>
-                    <a key={album.albumArtist.name} href={album.albumArtist.url} target="_blank" rel="noreferrer" className="text-decoration-none">{album.albumArtist.name}</a>
+                    <a key={album.albumArtist?.name ?? artistName}
+                        href={album.albumArtist?.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-decoration-none">
+                        {album.albumArtist?.name ?? artistName}
+                    </a>
                 </section>
             </div>
             <div className={isOpen ? "d-block" : "d-none"}>

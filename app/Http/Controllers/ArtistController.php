@@ -106,28 +106,14 @@ class ArtistController extends Controller
     }
 
     // Get an artists albums
-    // TODO: Resource thing
     public function albums(Request $request)
     {
-        // TODO: Valiadte input
-        $albums = Album::where('primary_artist_id', $request->artist_id)
-            ->orderBy('release_date', 'desc')
-            ->get();
+        // // TODO: Valiadte input
 
-        if (!$albums) {
-            return response()->json([
-                'data' => 'Albums not found'
-            ], 400);
-        }
+        $singles = Album::getArtistSingles($request->artist_id);
+        $albums = Album::getArtistAlbumsTheyOwn($request->artist_id);
 
-        foreach ($albums as $album) {
-            $album->album_songs = $album->songs($album->album_id);
-            $album->album_artist = $album->artist($album->primary_artist_id);
-
-            // array_push($res, $album);
-        }
-
-        return AlbumResource::collection($albums);
+        return AlbumResource::collection(collect($singles, $albums));
     }
 
     // Get the top songs of an artist

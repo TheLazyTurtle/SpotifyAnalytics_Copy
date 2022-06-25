@@ -5,7 +5,11 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { Response } from "../App";
 
-function AlbumsPage() {
+interface AlbumPageProps {
+    artistName?: string;
+};
+
+function AlbumsPage({ artistName }: AlbumPageProps) {
     const searchParams = useParams();
     const artistID = searchParams.artistID === undefined ? "" : searchParams.artistID;
 
@@ -15,7 +19,6 @@ function AlbumsPage() {
         }
     }
     const { isLoading, data, error } = useQuery("artistAlbums", () => axios.get<Response<Album[]>>(`/api/artist/albums/`, params).then((response) => response.data));
-    // const [isOpen, setIsOpen] = useState(false);
 
     return (
         <>
@@ -34,7 +37,7 @@ function AlbumsPage() {
                     <p>Loading...</p>
                 </div>
             ) : (
-                <AlbumList albums={data?.data} />
+                <AlbumList albums={data?.data} artistName={artistName} />
             )}
         </>
 

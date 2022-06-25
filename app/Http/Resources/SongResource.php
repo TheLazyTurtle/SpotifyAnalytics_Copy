@@ -8,6 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class SongResource extends JsonResource
 {
     public $colletcs = Song::class;
+    // public $preserveKeys = true;
 
     /**
      * Transform the resource into an array.

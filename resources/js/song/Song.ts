@@ -9,5 +9,5 @@ export type Song = {
     previewUrl: string;
     trackNumber: number;
     explicit: boolean;
-    artists?: Artist[];
+    artists: Artist[];
 }

@@ -3,14 +3,15 @@ import AlbumComponent from "./AlbumComponent";
 
 interface AlbumListProps {
     albums?: Album[];
+    artistName?: string;
 }
 
-function AlbumList({ albums }: AlbumListProps) {
+function AlbumList({ albums, artistName }: AlbumListProps) {
     return (
         <div>
             {albums?.map((album) => (
                 <div key={album.id} className="cols-sm">
-                    <AlbumComponent album={album} />
+                    <AlbumComponent album={album} artistName={artistName} />
                 </div>
             ))}
         </div>

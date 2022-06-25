@@ -2305,11 +2305,14 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 function AlbumComponent(_a) {
   var _this = this;
 
-  var album = _a.album;
+  var _b, _c, _d, _e, _f;
 
-  var _b = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
-      isOpen = _b[0],
-      setIsOpen = _b[1];
+  var album = _a.album,
+      artistName = _a.artistName;
+
+  var _g = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
+      isOpen = _g[0],
+      setIsOpen = _g[1];
 
   function handleOnExpand() {
     setIsOpen(!isOpen);
@@ -2328,7 +2331,7 @@ function AlbumComponent(_a) {
         className: "mx-md-5 my-md-3 album-md-img album-sm-img"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 21,
+        lineNumber: 22,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
         className: "d-sm-block d-md-inline-block col-xs-2 mx-sm-3 my-sm-2 px-3 py-2 py-md-0 px-md-0"
@@ -2344,38 +2347,38 @@ function AlbumComponent(_a) {
               children: album.name
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 25,
+              lineNumber: 26,
               columnNumber: 29
             }, this)
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 24,
+            lineNumber: 25,
             columnNumber: 25
           }, this)
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 23,
+          lineNumber: 24,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
-          href: album.albumArtist.url,
+          href: (_b = album.albumArtist) === null || _b === void 0 ? void 0 : _b.url,
           target: "_blank",
           rel: "noreferrer",
           className: "text-decoration-none"
         }, {
-          children: album.albumArtist.name
-        }), album.albumArtist.name, false, {
+          children: (_d = (_c = album.albumArtist) === null || _c === void 0 ? void 0 : _c.name) !== null && _d !== void 0 ? _d : artistName
+        }), (_f = (_e = album.albumArtist) === null || _e === void 0 ? void 0 : _e.name) !== null && _f !== void 0 ? _f : artistName, false, {
           fileName: _jsxFileName,
-          lineNumber: 28,
+          lineNumber: 29,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 22,
+        lineNumber: 23,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 20,
+      lineNumber: 21,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: isOpen ? "d-block" : "d-none"
@@ -2391,29 +2394,29 @@ function AlbumComponent(_a) {
               song: song
             }, song.name, false, {
               fileName: _jsxFileName,
-              lineNumber: 34,
+              lineNumber: 41,
               columnNumber: 63
             }, _this);
           })
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 33,
+          lineNumber: 40,
           columnNumber: 21
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 32,
+        lineNumber: 39,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
         className: "border-bottom border-white mt-5"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 39,
+        lineNumber: 46,
         columnNumber: 17
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 31,
+      lineNumber: 38,
       columnNumber: 13
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
@@ -2423,17 +2426,17 @@ function AlbumComponent(_a) {
         children: isOpen ? "Close" : "Open"
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 42,
+        lineNumber: 49,
         columnNumber: 17
       }, this)
     }, "album-folder", false, {
       fileName: _jsxFileName,
-      lineNumber: 41,
+      lineNumber: 48,
       columnNumber: 13
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 18,
+    lineNumber: 19,
     columnNumber: 13
   }, this);
 }
@@ -2478,28 +2481,30 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 function AlbumList(_a) {
   var _this = this;
 
-  var albums = _a.albums;
+  var albums = _a.albums,
+      artistName = _a.artistName;
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
     children: albums === null || albums === void 0 ? void 0 : albums.map(function (album) {
       return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "cols-sm"
       }, {
         children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_AlbumComponent__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          album: album
+          album: album,
+          artistName: artistName
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 13,
+          lineNumber: 14,
           columnNumber: 21
         }, _this)
       }), album.id, false, {
         fileName: _jsxFileName,
-        lineNumber: 11,
+        lineNumber: 12,
         columnNumber: 38
       }, _this);
     })
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 9,
+    lineNumber: 10,
     columnNumber: 13
   }, this);
 }
@@ -2547,8 +2552,10 @@ var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/
 
 
 
+;
 
-function AlbumsPage() {
+function AlbumsPage(_a) {
+  var artistName = _a.artistName;
   var searchParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useParams)();
   var artistID = searchParams.artistID === undefined ? "" : searchParams.artistID;
   var params = {
@@ -2557,15 +2564,14 @@ function AlbumsPage() {
     }
   };
 
-  var _a = (0,react_query__WEBPACK_IMPORTED_MODULE_2__.useQuery)("artistAlbums", function () {
+  var _b = (0,react_query__WEBPACK_IMPORTED_MODULE_2__.useQuery)("artistAlbums", function () {
     return axios__WEBPACK_IMPORTED_MODULE_3___default().get("/api/artist/albums/", params).then(function (response) {
       return response.data;
     });
   }),
-      isLoading = _a.isLoading,
-      data = _a.data,
-      error = _a.error; // const [isOpen, setIsOpen] = useState(false);
-
+      isLoading = _b.isLoading,
+      data = _b.data,
+      error = _b.error;
 
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     children: [error && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -2580,27 +2586,27 @@ function AlbumsPage() {
               className: "icon-alert inverse "
             }, void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 26,
+              lineNumber: 29,
               columnNumber: 33
             }, this), " Something died "]
           }, void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 26,
+            lineNumber: 29,
             columnNumber: 29
           }, this)
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 25,
+          lineNumber: 28,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 24,
+        lineNumber: 27,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 22,
+      lineNumber: 25,
       columnNumber: 24
     }, this), isLoading ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "center-page"
@@ -2609,29 +2615,30 @@ function AlbumsPage() {
         className: "spinner primary"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 33,
+        lineNumber: 36,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", {
         children: "Loading..."
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 34,
+        lineNumber: 37,
         columnNumber: 21
       }, this)]
     }), void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 31,
+      lineNumber: 34,
       columnNumber: 27
     }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_AlbumList__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      albums: data === null || data === void 0 ? void 0 : data.data
+      albums: data === null || data === void 0 ? void 0 : data.data,
+      artistName: artistName
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 36,
+      lineNumber: 39,
       columnNumber: 18
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 20,
+    lineNumber: 23,
     columnNumber: 13
   }, this);
 }
@@ -3571,7 +3578,9 @@ function ArtistPage() {
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "mt-5"
         }, {
-          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_3__["default"], {}, void 0, false, {
+          children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_album_AlbumsPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            artistName: data.data.name
+          }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 30,
             columnNumber: 33
@@ -7158,6 +7167,8 @@ var __assign = undefined && undefined.__assign || function () {
 var _jsxFileName = "/home/joost/projects/laravel/Spotify_analytics/resources/js/song/SongComponent.tsx";
 
 function SongComponent(_a) {
+  var _this = this;
+
   var song = _a.song;
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
     id: song.name,
@@ -7198,7 +7209,7 @@ function SongComponent(_a) {
     }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "col-xl-6 col-lg-3 d-inline-block align-middle"
     }, {
-      children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
+      children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
         href: song.url,
         className: "text-decoration-none"
       }, {
@@ -7215,8 +7226,19 @@ function SongComponent(_a) {
         fileName: _jsxFileName,
         lineNumber: 18,
         columnNumber: 17
-      }, this)
-    }), void 0, false, {
+      }, this), song.artists.map(function (artist) {
+        return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", __assign({
+          href: artist.url,
+          className: "text-decoration-none"
+        }, {
+          children: [artist.name, ", "]
+        }), artist.name, true, {
+          fileName: _jsxFileName,
+          lineNumber: 21,
+          columnNumber: 56
+        }, _this);
+      })]
+    }), void 0, true, {
       fileName: _jsxFileName,
       lineNumber: 17,
       columnNumber: 13

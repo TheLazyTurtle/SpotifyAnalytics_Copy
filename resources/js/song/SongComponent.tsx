@@ -18,9 +18,9 @@ function SongComponent({ song }: SongProps) {
                 <a href={song.url} className="text-decoration-none">
                     <h6 className="text-white">{song.name}</h6>
                 </a>
-                {/* {song.artists.map((artist: Artist) => ( */}
-                {/*     <a key={artist.name} href={artist.url} className="text-decoration-none">{artist.name}, </a> */}
-                {/* ))} */}
+                {song.artists.map((artist: Artist) => (
+                    <a key={artist.name} href={artist.url} className="text-decoration-none">{artist.name}, </a>
+                ))}
             </div>
             <div className="col-2 d-xl-inline-block d-none align-middle">
                 <audio src={song.previewUrl} controls />
