@@ -100,7 +100,7 @@ function autoComplete(name: string, allowedInputType: string, placeholderText: s
         <section className="autocomplete-input-field">
             <input className="form-control" name={name} type={allowedInputType} placeholder={placeholderText} value={inputFieldText} onChange={handleOnChange} autoComplete="off" />
             {(autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent) &&
-                <div className="input-field-result-data w-25 border position-absolute background-base">
+                <div className="input-field-result-data px-5 border position-absolute background-base">
                     {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
                 </div>
             }

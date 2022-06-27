@@ -58,6 +58,20 @@ class PlayedController extends Controller
     // All songs played of user
     public function allSongsPlayed(Request $request)
     {
+        if ($request->user_id) {
+            $user_id = $request->user_id;
+        } else {
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json([
+                    'data' => 'Please login'
+                ], 401);
+            }
+
+            $user_id = $user->id;
+        }
+
         $this->validate($request, [
             'user_id' => 'min:1|max:10',
             'min_date' => 'required|date',
@@ -65,12 +79,6 @@ class PlayedController extends Controller
             'min_played' => 'required|integer',
             'max_played' => 'required|integer'
         ]);
-
-        if ($request->user_id) {
-            $user_id = $request->user_id;
-        } else {
-            $user_id = $request->user()->id;
-        }
 
         $played = Played::allSongsPlayed(
             $user_id,
@@ -97,7 +105,15 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = $request->user()->id;
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json([
+                    'data' => 'Please login'
+                ], 401);
+            }
+
+            $user_id = $user->id;
         }
 
         $top_songs = Played::topSongs(
@@ -124,7 +140,15 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = $request->user()->id;
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json([
+                    'data' => 'Please login'
+                ], 401);
+            }
+
+            $user_id = $user->id;
         }
 
         $top_artists = Played::topArtist(
@@ -151,7 +175,15 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = $request->user()->id;
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json([
+                    'data' => 'Please login'
+                ], 401);
+            }
+
+            $user_id = $user->id;
         }
 
         $played_per_day = Played::playedPerDay(
@@ -178,7 +210,15 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = $request->user()->id;
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json([
+                    'data' => 'Please login'
+                ], 401);
+            }
+
+            $user_id = $user->id;
         }
 
         $topArtists = Played::where('played_by', $user_id)
@@ -210,7 +250,15 @@ class PlayedController extends Controller
         if ($request->user_id) {
             $user_id = $request->user_id;
         } else {
-            $user_id = $request->user()->id;
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json([
+                    'data' => 'Please login'
+                ], 401);
+            }
+
+            $user_id = $user->id;
         }
 
         $topSongs = Played::where('played_by', $user_id)

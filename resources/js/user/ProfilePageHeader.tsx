@@ -76,6 +76,7 @@ function followButton(user: User) {
     }
 
     function makeButtonText() {
+        console.log(user)
         if (user.following) {
             return "Unfollow";
         }

@@ -61,10 +61,14 @@ function LoginPage() {
                         <div className="form-helper text-danger">{error["username"]?.[0]}</div>
                     </div>
                     <div className="form-outline">
-                        <input className="mt-1 w-50 bg-custom-gray" type="text" name="password" placeholder="Password" onChange={handleChange} /> <br />
+                        <input className="mt-1 w-50 bg-custom-gray" type="password" name="password" placeholder="Password" onChange={handleChange} /> <br />
                         <div className="form-helper text-danger">{error["password"]?.[0]}</div>
                     </div>
-                    <input className="btn btn-primary py-0 my-2 w-50 rounded-8" type="button" onClick={handleSubmit} value="Login" />
+                    <div className="form-outline">
+                        <input id="remember" className="mt-1 mx-2 bg-custom-gray" type="checkbox" name="remember" onChange={handleChange} />
+                        <label htmlFor="remember">Remember me</label><br />
+                    </div>
+                    <input className="btn btn-primary py-0 my-2 w-50 rounded-8" type="submit" value="Login" />
                 </form>
 
                 <p>Don't have an account? Make one <a href="/register" className="text-decoration-none">here</a></p>

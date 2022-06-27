@@ -103,7 +103,7 @@ class NotificationController extends Controller
         $authUser = Auth()->user();
 
         $this->validate($request, [
-            'notification_type_id' => 'required|min:1|max:1',
+            'notification_id' => 'required|min:1|max:10',
             'response' => 'required'
         ]);
 

@@ -43,7 +43,7 @@ class UserController extends Controller
 
         $authUser = null;
 
-        if (auth('api')->check()) {
+        if (auth('web')->check()) {
             $authUser = $request->user();
         }
 

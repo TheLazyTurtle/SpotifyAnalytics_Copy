@@ -56,7 +56,7 @@ function RegisterPage() {
                         <input className="mt-1 mx-2 bg-custom-gray" type="checkbox" name="acceptPrivacy" placeholder="Accept privacy" onChange={handleChange} />Accept the privacy (violation xD) <br />
                         <div className="form-helper text-danger">{error["acceptPrivacy"]?.[0]}</div>
                     </div>
-                    <input className="btn btn-primary py-0 my-2 w-50 rounded-8" type="submit" value="Login" />
+                    <input className="btn btn-primary py-0 my-2 w-50 rounded-8" type="submit" value="Register" />
                 </form>
 
                 <p>Already have an account? Log in <a href="/login" className="text-decoration-none">here</a></p>

@@ -33,9 +33,10 @@ export function redirectToLogin(link: boolean = false) {
 }
 
 function App() {
+
     return (
         <>
-            <div className="App">
+            <div className="App pb-5 pb-md-0">
                 <Header />
                 <Router>
                     <Routes>

@@ -30,19 +30,6 @@ interface GraphComponentProps {
     graphType: GraphDataType;
 };
 
-const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false,
-        },
-        title: {
-            display: false,
-        },
-    },
-};
-
 function GraphComponent({ dataPoints, graphType }: GraphComponentProps) {
     const { labels, dataPointValues } = processDataPoints(graphType, dataPoints);
     const colors = ["#6D78AD", "#51CDA0", "#DF7970", "#4C9CA0", "#AE7D99", "#C9D45C", "#5592AD", "#DF874D", "#52BCA8", "#8E7AA3", "#E3CB64", "#C77B85", "#C39762", "#8DD17E", "#B57952", "#FCC26C"];
@@ -97,6 +84,39 @@ function GraphComponent({ dataPoints, graphType }: GraphComponentProps) {
             ],
         }
     }
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    callback: (value: string | number) => {
+                        const label = labels[+value];
+                        const filter = ["(", "-", "|"];
+
+                        for (let i = 0; i < filter.length; i++) {
+                            if (label.indexOf(filter[i]) >= 0 && label.length >= 6) {
+                                return label.substring(0, label.indexOf(filter[i]));
+                            }
+                        };
+                        return label.substring(0, 20);
+                    }
+                }
+            },
+            y: {
+                beginAtZero: true,
+            }
+        }
+    };
 
     return (
         <>

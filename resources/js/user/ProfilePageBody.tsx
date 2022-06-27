@@ -10,6 +10,7 @@ interface ProfilePageBodyProps {
 };
 
 function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
+    console.log(user)
 
     const toShow = function() {
         if (pageType === PageType.Personal) {
@@ -28,7 +29,7 @@ function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
         <>
             {toShow() && new graphs().graphs.map((graph: Graph) => (
                 < div key={graph.name} className="graph pt-3" id={graph.name} >
-                    <GraphWrapper key={graph.name} graph={graph} userId={user.id} />
+                    <GraphWrapper key={graph.name} graph={graph} userId={user.isOwnAccount ? undefined : user.id} />
                 </div>
             ))}
             {!toShow() &&
