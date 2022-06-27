@@ -10,7 +10,6 @@ interface ProfilePageBodyProps {
 };
 
 function ProfilePageBody({ user, pageType }: ProfilePageBodyProps) {
-    console.log(user)
 
     const toShow = function() {
         if (pageType === PageType.Personal) {

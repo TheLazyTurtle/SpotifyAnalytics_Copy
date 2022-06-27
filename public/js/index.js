@@ -5810,7 +5810,8 @@ function Header() {
           children: (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(_inputField_InputField__WEBPACK_IMPORTED_MODULE_4__["default"], {
             onChange: function onChange() {},
             inputField: inputField,
-            isComponent: true
+            isComponent: true,
+            isGlobalSearchField: true
           }, void 0, false, {
             fileName: _jsxFileName,
             lineNumber: 39,
@@ -6434,6 +6435,7 @@ function InputField(_a) {
 
   var inputField = _a.inputField,
       isComponent = _a.isComponent,
+      isGlobalSearchField = _a.isGlobalSearchField,
       onChange = _a.onChange,
       parentGraphName = _a.parentGraphName,
       userId = _a.userId;
@@ -6552,7 +6554,7 @@ function InputField(_a) {
 
   ;
   var inputFieldText = filterSetting === undefined ? "" : filterSetting;
-  return inputField.autocompleteFunction === undefined ? normal(name, allowedInputType, placeholder, inputFieldText, handleOnInputChange) : autoComplete(name, allowedInputType, placeholder, inputFieldText, autocompleteSuggestions, isComponent, handleOnInputChange, clickHandler);
+  return inputField.autocompleteFunction === undefined ? normal(name, allowedInputType, placeholder, inputFieldText, handleOnInputChange) : autoComplete(name, allowedInputType, placeholder, inputFieldText, autocompleteSuggestions, isComponent, handleOnInputChange, clickHandler, isGlobalSearchField);
 }
 
 function normal(name, allowedInputType, placeholderText, value, handleOnChange) {
@@ -6565,12 +6567,12 @@ function normal(name, allowedInputType, placeholderText, value, handleOnChange) 
     onChange: handleOnChange
   }, void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 93,
+    lineNumber: 94,
     columnNumber: 13
   }, this);
 }
 
-function autoComplete(name, allowedInputType, placeholderText, inputFieldText, autoCompleteSuggestions, isComponent, handleOnChange, clickHandler) {
+function autoComplete(name, allowedInputType, placeholderText, inputFieldText, autoCompleteSuggestions, isComponent, handleOnChange, clickHandler, isGlobalSearchField) {
   return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("section", __assign({
     className: "autocomplete-input-field"
   }, {
@@ -6584,17 +6586,33 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       autoComplete: "off"
     }, void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 101,
-      columnNumber: 13
-    }, this), autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-      className: "input-field-result-data px-5 border position-absolute background-base"
-    }, {
-      children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
-        return autoCompleteRow(index, item, clickHandler);
-      })
-    }), void 0, false, {
-      fileName: _jsxFileName,
       lineNumber: 102,
+      columnNumber: 13
+    }, this), autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      children: isGlobalSearchField ? (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+        className: "input-field-result-data w-25 border position-absolute background-base"
+      }, {
+        children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
+          return autoCompleteRow(index, item, clickHandler);
+        })
+      }), void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 105,
+        columnNumber: 45
+      }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
+        className: "input-field-result-data px-5 border position-absolute background-base"
+      }, {
+        children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
+          return autoCompleteRow(index, item, clickHandler);
+        })
+      }), void 0, false, {
+        fileName: _jsxFileName,
+        lineNumber: 109,
+        columnNumber: 26
+      }, this)
+    }, void 0, false, {
+      fileName: _jsxFileName,
+      lineNumber: 103,
       columnNumber: 97
     }, this), autoCompleteSuggestions.length > 0 && !isComponent && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
       className: "input-field-result-data border position-absolute background-base"
@@ -6604,12 +6622,12 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       })
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 107,
+      lineNumber: 116,
       columnNumber: 69
     }, this)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 99,
+    lineNumber: 100,
     columnNumber: 13
   }, this);
 }
@@ -6624,7 +6642,7 @@ function autoCompleteRow(index, item, clickHandler) {
         className: "w-10 d-inline-block"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 121,
+        lineNumber: 130,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-white px-3 d-inline-block",
@@ -6636,17 +6654,17 @@ function autoCompleteRow(index, item, clickHandler) {
           children: item.name
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 122,
+          lineNumber: 131,
           columnNumber: 98
         }, this)
       }), index, false, {
         fileName: _jsxFileName,
-        lineNumber: 122,
+        lineNumber: 131,
         columnNumber: 17
       }, this)]
     }, index, true, {
       fileName: _jsxFileName,
-      lineNumber: 119,
+      lineNumber: 128,
       columnNumber: 17
     }, this);
   }
@@ -6658,7 +6676,7 @@ function autoCompleteRow(index, item, clickHandler) {
     children: item.name
   }), index, false, {
     fileName: _jsxFileName,
-    lineNumber: 127,
+    lineNumber: 136,
     columnNumber: 13
   }, this);
 }
@@ -9070,7 +9088,6 @@ function ProfilePageBody(_a) {
 
   var user = _a.user,
       pageType = _a.pageType;
-  console.log(user);
 
   var toShow = function toShow() {
     if (pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_4__.PageType.Personal) {
@@ -9099,12 +9116,12 @@ function ProfilePageBody(_a) {
           userId: user.isOwnAccount ? undefined : user.id
         }, graph.name, false, {
           fileName: _jsxFileName,
-          lineNumber: 32,
+          lineNumber: 31,
           columnNumber: 21
         }, _this)
       }), graph.name, false, {
         fileName: _jsxFileName,
-        lineNumber: 30,
+        lineNumber: 29,
         columnNumber: 69
       }, _this);
     }), !toShow() && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
@@ -9119,28 +9136,28 @@ function ProfilePageBody(_a) {
           children: "login"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 37,
+          lineNumber: 36,
           columnNumber: 93
         }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("a", {
           children: "follow"
         }, void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 37,
+          lineNumber: 36,
           columnNumber: 137
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 37,
+        lineNumber: 36,
         columnNumber: 21
       }, this)
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 35,
+      lineNumber: 34,
       columnNumber: 26
     }, this)]
   }, void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 28,
+    lineNumber: 27,
     columnNumber: 13
   }, this);
 }
@@ -9356,12 +9373,12 @@ function Buttons(props) {
           children: "Settings"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 28,
+          lineNumber: 29,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 27,
+        lineNumber: 28,
         columnNumber: 21
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
         className: "col-3 col-md-2 mx-2 mx-md-2"
@@ -9373,22 +9390,22 @@ function Buttons(props) {
           children: "Logout"
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 31,
+          lineNumber: 32,
           columnNumber: 25
         }, this)
       }), void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 30,
+        lineNumber: 31,
         columnNumber: 21
       }, this)]
     }, void 0, true, {
       fileName: _jsxFileName,
-      lineNumber: 25,
+      lineNumber: 26,
       columnNumber: 53
     }, this), props.pageType === _ProfilePage__WEBPACK_IMPORTED_MODULE_2__.PageType.External && followButton(user)]
   }), void 0, true, {
     fileName: _jsxFileName,
-    lineNumber: 23,
+    lineNumber: 24,
     columnNumber: 13
   }, this);
 }
@@ -9543,8 +9560,6 @@ function followButton(user) {
   }
 
   function makeButtonText() {
-    console.log(user);
-
     if (user.following) {
       return "Unfollow";
     }
@@ -9566,12 +9581,12 @@ function followButton(user) {
       children: makeButtonText()
     }), void 0, false, {
       fileName: _jsxFileName,
-      lineNumber: 93,
+      lineNumber: 95,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 91,
+    lineNumber: 93,
     columnNumber: 13
   }, this);
 }
@@ -9595,12 +9610,12 @@ function ProfilePageHeader(props) {
             alt: props.user.username
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 105,
+            lineNumber: 107,
             columnNumber: 25
           }, this)
         }), "img-wrapper", false, {
           fileName: _jsxFileName,
-          lineNumber: 104,
+          lineNumber: 106,
           columnNumber: 21
         }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
           className: "col-12 col-md-9 mt-3 mt-md-5"
@@ -9611,7 +9626,7 @@ function ProfilePageHeader(props) {
             children: props.user.username
           }), void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 108,
+            lineNumber: 110,
             columnNumber: 25
           }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
             className: "row"
@@ -9626,17 +9641,17 @@ function ProfilePageHeader(props) {
                   children: props.user.followersCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 111,
+                  lineNumber: 113,
                   columnNumber: 59
                 }, this), " Followers"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 111,
+                lineNumber: 113,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 110,
+              lineNumber: 112,
               columnNumber: 29
             }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
               className: "col-4 col-md-2"
@@ -9648,49 +9663,49 @@ function ProfilePageHeader(props) {
                   children: props.user.followingCount
                 }, void 0, false, {
                   fileName: _jsxFileName,
-                  lineNumber: 114,
+                  lineNumber: 116,
                   columnNumber: 59
                 }, this), " Following"]
               }), void 0, true, {
                 fileName: _jsxFileName,
-                lineNumber: 114,
+                lineNumber: 116,
                 columnNumber: 33
               }, this)
             }), void 0, false, {
               fileName: _jsxFileName,
-              lineNumber: 113,
+              lineNumber: 115,
               columnNumber: 29
             }, this)]
           }), void 0, true, {
             fileName: _jsxFileName,
-            lineNumber: 109,
+            lineNumber: 111,
             columnNumber: 25
           }, this), props.user.username !== undefined && (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)(Buttons, {
             user: props.user,
             pageType: props.pageType
           }, void 0, false, {
             fileName: _jsxFileName,
-            lineNumber: 117,
+            lineNumber: 119,
             columnNumber: 64
           }, this)]
         }), "text-wrapper", true, {
           fileName: _jsxFileName,
-          lineNumber: 107,
+          lineNumber: 109,
           columnNumber: 21
         }, this)]
       }), void 0, true, {
         fileName: _jsxFileName,
-        lineNumber: 103,
+        lineNumber: 105,
         columnNumber: 17
       }, this)
     }), "info-wrapper", false, {
       fileName: _jsxFileName,
-      lineNumber: 102,
+      lineNumber: 104,
       columnNumber: 13
     }, this)
   }), void 0, false, {
     fileName: _jsxFileName,
-    lineNumber: 100,
+    lineNumber: 102,
     columnNumber: 13
   }, this);
 }

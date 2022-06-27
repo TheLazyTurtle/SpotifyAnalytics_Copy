@@ -9,12 +9,13 @@ interface InputFieldProps {
     inputField: inputField;
     isComponent: boolean;
     onChange(name: string, value: string): void;
+    isGlobalSearchField?: boolean;
     parentGraphName?: GraphName;
     userId?: string;
 };
 
 // TODO: Make this component a but more usable
-function InputField({ inputField, isComponent, onChange, parentGraphName, userId }: InputFieldProps) {
+function InputField({ inputField, isComponent, isGlobalSearchField, onChange, parentGraphName, userId }: InputFieldProps) {
     const { name, allowedInputType, placeholder, filterValue } = inputField;
     const [filterSetting, setFilterSetting] = useState(filterValue);
     const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<AutocompleteItem[]>([]);
@@ -86,7 +87,7 @@ function InputField({ inputField, isComponent, onChange, parentGraphName, userId
     };
 
     const inputFieldText = filterSetting === undefined ? "" : filterSetting;
-    return inputField.autocompleteFunction === undefined ? normal(name, allowedInputType, placeholder, inputFieldText, handleOnInputChange) : autoComplete(name, allowedInputType, placeholder, inputFieldText, autocompleteSuggestions, isComponent, handleOnInputChange, clickHandler);
+    return inputField.autocompleteFunction === undefined ? normal(name, allowedInputType, placeholder, inputFieldText, handleOnInputChange) : autoComplete(name, allowedInputType, placeholder, inputFieldText, autocompleteSuggestions, isComponent, handleOnInputChange, clickHandler, isGlobalSearchField);
 }
 
 function normal(name: string, allowedInputType: string, placeholderText: string, value: string, handleOnChange: (event: any) => void) {
@@ -95,14 +96,22 @@ function normal(name: string, allowedInputType: string, placeholderText: string,
     );
 }
 
-function autoComplete(name: string, allowedInputType: string, placeholderText: string, inputFieldText: string, autoCompleteSuggestions: AutocompleteItem[], isComponent: boolean, handleOnChange: (event: any) => void, clickHandler: (event: any) => void) {
+function autoComplete(name: string, allowedInputType: string, placeholderText: string, inputFieldText: string, autoCompleteSuggestions: AutocompleteItem[], isComponent: boolean, handleOnChange: (event: any) => void, clickHandler: (event: any) => void, isGlobalSearchField?: boolean) {
     return (
         <section className="autocomplete-input-field">
             <input className="form-control" name={name} type={allowedInputType} placeholder={placeholderText} value={inputFieldText} onChange={handleOnChange} autoComplete="off" />
             {(autoCompleteSuggestions.length > 0 && inputFieldText.length > 0 && isComponent) &&
-                <div className="input-field-result-data px-5 border position-absolute background-base">
-                    {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
-                </div>
+                <>
+                    {isGlobalSearchField ? (
+                        <div className="input-field-result-data w-25 border position-absolute background-base">
+                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
+                        </div>
+                    ) : (
+                        <div className="input-field-result-data px-5 border position-absolute background-base">
+                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
+                        </div>
+                    )}
+                </>
             }
             {(autoCompleteSuggestions.length > 0 && !isComponent) &&
                 <div className="input-field-result-data border position-absolute background-base">

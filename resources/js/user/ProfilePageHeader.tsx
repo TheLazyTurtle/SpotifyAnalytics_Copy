@@ -1,4 +1,5 @@
 import axios from "axios";
+import LoginPopup from "../login/LoginPopup";
 import { PageType } from "./ProfilePage";
 import { User } from "./User";
 
@@ -40,11 +41,13 @@ function Buttons(props: ProfilePageHeaderProps) {
 }
 
 async function updateFollowingStatus(following_user_id: string) {
-    return await axios.post("/api/user/follow", { following_user_id }).then((result) => result.status === 200);
+    return await axios.post("/api/user/follow", { following_user_id })
+        .then((result) => result.status === 200);
 }
 
 async function makeNotification(notification_type_id: number, receiver_user_id: string) {
-    return await axios.post("/api/notification/create", { notification_type_id, receiver_user_id }).then((result) => result.status === 200);
+    return await axios.post("/api/notification/create", { notification_type_id, receiver_user_id })
+        .then((result) => result.status === 200);
 }
 
 async function removeNotification(receiver_user_id: string) {
@@ -76,7 +79,6 @@ function followButton(user: User) {
     }
 
     function makeButtonText() {
-        console.log(user)
         if (user.following) {
             return "Unfollow";
         }

@@ -36,7 +36,7 @@ function Header() {
                         </a>
                     </div>
                     <div className="col-4 d-inline-block">
-                        <InputField onChange={() => { }} inputField={inputField} isComponent={true} />
+                        <InputField onChange={() => { }} inputField={inputField} isComponent={true} isGlobalSearchField={true} />
                     </div>
                     <div className="col-4 d-inline-block text-center text-custom-green">
                         <i onClick={toggleNotificationPopup} className="fas fa-envelope px-2"></i>
