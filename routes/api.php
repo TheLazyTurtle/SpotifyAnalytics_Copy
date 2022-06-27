@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayedController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SpotifyTokenController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -51,4 +52,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('notification/delete', [NotificationController::class, 'destroy']);
     Route::post('notification/handle', [NotificationController::class, 'handle']);
     Route::get('notification/', [NotificationController::class, 'index']);
+
+    // Token magic
+    Route::post('spotifyTokens/add', [SpotifyTokenController::class, 'create']);
+    Route::get('spotifyTokens', [SpotifyTokenController::class, 'check']);
 });

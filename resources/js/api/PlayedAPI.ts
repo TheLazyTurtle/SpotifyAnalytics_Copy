@@ -134,8 +134,8 @@ export class PlayedAPI {
 
     static async sliderItemData(minDate: string, maxDate: string) {
         return {
-            [SliderItemName.topSongs]: await this.topSongs(minDate, maxDate, "1").then((data) => typeof data === "string" ? {} : data?.data.data[0] as Played),
-            [SliderItemName.topArtists]: await this.topArtist(minDate, maxDate, "1").then((data) => typeof data === "string" ? {} : data?.data.data[0] as Played),
+            [SliderItemName.topSongs]: await this.topSongs(minDate, maxDate, "1").then((data) => typeof data === "string" ? {} as Played : data?.data.data[0] as Played),
+            [SliderItemName.topArtists]: await this.topArtist(minDate, maxDate, "1").then((data) => typeof data === "string" ? {} as Played : data?.data.data[0] as Played),
             [SliderItemName.timeListened]: await this.timeListened(minDate, maxDate).then((data) => data.data.data as Played),
             [SliderItemName.amountSongs]: await this.amountSongs(minDate, maxDate).then((data) => data.data.data as Played),
             [SliderItemName.amountNewSongs]: await this.amountNewSongs(minDate, maxDate).then((data) => data.data.data as Played)

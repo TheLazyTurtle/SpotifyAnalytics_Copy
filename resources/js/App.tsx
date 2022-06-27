@@ -12,6 +12,7 @@ import ProfilePage from './user/ProfilePage';
 import SearchPage from './search/SearchPage';
 import NotificationsPage from './notificatons/NotificationsPage';
 import RegisterPage from './register/RegisterPage';
+import CallbackPage from './spotify/CallbackPage';
 
 export interface Response<T> {
     status: number;
@@ -20,6 +21,7 @@ export interface Response<T> {
     };
 };
 
+// TODO: This should be a helper function
 export function redirectToLogin(link: boolean = false) {
     const currentPage = window.location.pathname.replace("/", "");
     const url = `/login?redirect=${currentPage}`;
@@ -32,24 +34,27 @@ export function redirectToLogin(link: boolean = false) {
 
 function App() {
     return (
-        <div className="App">
-            <Header />
-            <Router>
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/album/:artistID" element={<AlbumsPage />} />
-                    <Route path="/artist/:artistID" element={<ArtistPage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/notifications" element={<NotificationsPage />} />
-                    <Route path="/:username" element={<ProfilePage />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </Router>
-            <MobileHeader />
-        </div >
+        <>
+            <div className="App">
+                <Header />
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/callback" element={<CallbackPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/album/:artistID" element={<AlbumsPage />} />
+                        <Route path="/artist/:artistID" element={<ArtistPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/search" element={<SearchPage />} />
+                        <Route path="/notifications" element={<NotificationsPage />} />
+                        <Route path="/:username" element={<ProfilePage />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Router>
+                <MobileHeader />
+            </div>
+        </>
     );
 }
 
