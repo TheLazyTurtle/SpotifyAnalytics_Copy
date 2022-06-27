@@ -11,6 +11,7 @@ import MobileHeader from './header/MobileHeader';
 import ProfilePage from './user/ProfilePage';
 import SearchPage from './search/SearchPage';
 import NotificationsPage from './notificatons/NotificationsPage';
+import RegisterPage from './register/RegisterPage';
 
 export interface Response<T> {
     status: number;
@@ -37,6 +38,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
                     <Route path="/album/:artistID" element={<AlbumsPage />} />
                     <Route path="/artist/:artistID" element={<ArtistPage />} />
                     <Route path="/profile" element={<ProfilePage />} />

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayedController;
-use App\Http\Controllers\SongController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
@@ -18,7 +17,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::resource('song', SongController::class);
+// Artist
 Route::get('artist/albums', [ArtistController::class, 'albums']);
 Route::get('user/{id}', [UserController::class, 'show']);
 

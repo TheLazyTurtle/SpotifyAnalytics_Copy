@@ -62,7 +62,7 @@ function LoginPage() {
                 </form>
 
                 {error && <p className="text-danger" role="alert">{error}</p>}
-                <p>Don't have an account? Make one here <a href="/register" className="text-decoration-none">here</a></p>
+                <p>Don't have an account? Make one <a href="/register" className="text-decoration-none">here</a></p>
             </div>
         </div>
     );
