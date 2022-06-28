@@ -30,7 +30,7 @@ class SystemController extends Controller
         $start_time = microtime(true);
 
         $session = $this->makeSession();
-        return $session;
+
         if ($session == null) {
             return response()->json(['data' => 'Failed to make session'], 500);
         }
@@ -81,7 +81,8 @@ class SystemController extends Controller
                 'updated_at' => $current_date_time->format('Y-m-d H:i:s')
             ]
         );
-        return json_encode($this->logs, JSON_PRETTY_PRINT);
+
+        return response()->json($this->logs, 200);
     }
 
     public function parseTracks($tracks, $user_id)

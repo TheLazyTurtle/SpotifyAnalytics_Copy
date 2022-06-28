@@ -5,6 +5,8 @@ notes.md
 /node_modules
 /public/hot
 /public/storage
+/public/js/index.js
+/public/css/app.css
 /storage/*.key
 /vendor
 .env
