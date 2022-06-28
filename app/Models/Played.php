@@ -10,6 +10,7 @@ class Played extends Model
 {
     use HasFactory;
     protected $table = 'played';
+    public $timestamps = false;
     protected $fillable = [
         'song_id',
         'date_played',

@@ -52,4 +52,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    public static function allActiveWithTokens()
+    {
+        return User::where('is_active', 1)
+            ->join('spotify_tokens', 'spotify_tokens.user_id', 'users.id')
+            ->select('users.id', 'users.username', 'spotify_tokens.refresh_token')
+            ->get();
+    }
 }

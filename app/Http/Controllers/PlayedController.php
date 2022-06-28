@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\DataWrapperResource;
 use App\Http\Resources\PlayedResource;
 use App\Http\Resources\SliderItemDataResource;
-use App\Models\Artist;
 use App\Models\Played;
 use App\Models\User;
 use Illuminate\Http\Request;

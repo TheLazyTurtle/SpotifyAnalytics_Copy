@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Http\Resources\ArtistResource;
 use App\Http\Resources\SongResource;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

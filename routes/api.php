@@ -5,6 +5,7 @@ use App\Http\Controllers\PlayedController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SpotifyTokenController;
+use App\Http\Controllers\SystemController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -36,6 +37,8 @@ Route::get('played/topSongsSearch', [PlayedController::class, 'topSongsSearch'])
 // Artists
 Route::get('artist/topSongs', [ArtistController::class, 'topSongs']);
 Route::get('artist/{id}', [ArtistController::class, 'show']);
+
+Route::get('system/syncUsers/{id}', [SystemController::class, 'fetch']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Slider
