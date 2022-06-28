@@ -6593,17 +6593,17 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
         className: "input-field-result-data w-25 border position-absolute background-base"
       }, {
         children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
-          return autoCompleteRow(index, item, clickHandler);
+          return autoCompleteRow(index, item, true, clickHandler);
         })
       }), void 0, false, {
         fileName: _jsxFileName,
         lineNumber: 105,
         columnNumber: 45
       }, this) : (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", __assign({
-        className: "input-field-result-data px-5 border position-absolute background-base"
+        className: "input-field-result-data col-5 row small-row rounded-8 mx-1 border position-absolute background-base"
       }, {
         children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
-          return autoCompleteRow(index, item, clickHandler);
+          return autoCompleteRow(index, item, false, clickHandler);
         })
       }), void 0, false, {
         fileName: _jsxFileName,
@@ -6618,7 +6618,7 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
       className: "input-field-result-data border position-absolute background-base"
     }, {
       children: inputFieldText.length > 0 && autoCompleteSuggestions.map(function (item, index) {
-        return autoCompleteRow(index, item, clickHandler);
+        return autoCompleteRow(index, item, true, clickHandler);
       })
     }), void 0, false, {
       fileName: _jsxFileName,
@@ -6632,9 +6632,9 @@ function autoComplete(name, allowedInputType, placeholderText, inputFieldText, a
   }, this);
 }
 
-function autoCompleteRow(index, item, clickHandler) {
-  if (item.type) {
-    var href = item.artist_id !== undefined ? "/artist/".concat(item.artist_id) : "/".concat(item.name);
+function autoCompleteRow(index, item, isSearch, clickHandler) {
+  if (isSearch) {
+    var href = item.artist_id === undefined ? "/".concat(item.name) : "/artist/".concat(item.artist_id);
     return (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("div", {
       children: [(0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("img", {
         alt: item.name,
@@ -6642,7 +6642,7 @@ function autoCompleteRow(index, item, clickHandler) {
         className: "w-10 d-inline-block"
       }, void 0, false, {
         fileName: _jsxFileName,
-        lineNumber: 130,
+        lineNumber: 131,
         columnNumber: 17
       }, this), (0,react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV)("p", __assign({
         className: "text-white px-3 d-inline-block",
@@ -6654,17 +6654,17 @@ function autoCompleteRow(index, item, clickHandler) {
           children: item.name
         }), void 0, false, {
           fileName: _jsxFileName,
-          lineNumber: 131,
+          lineNumber: 132,
           columnNumber: 98
         }, this)
       }), index, false, {
         fileName: _jsxFileName,
-        lineNumber: 131,
+        lineNumber: 132,
         columnNumber: 17
       }, this)]
     }, index, true, {
       fileName: _jsxFileName,
-      lineNumber: 128,
+      lineNumber: 129,
       columnNumber: 17
     }, this);
   }
@@ -6676,7 +6676,7 @@ function autoCompleteRow(index, item, clickHandler) {
     children: item.name
   }), index, false, {
     fileName: _jsxFileName,
-    lineNumber: 136,
+    lineNumber: 137,
     columnNumber: 13
   }, this);
 }
@@ -67792,7 +67792,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	/* webpack/runtime/load script */
 /******/ 	(() => {
 /******/ 		var inProgress = {};
-/******/ 		var dataWebpackPrefix = "spa-front-end:";
+/******/ 		var dataWebpackPrefix = "Spotify analytics:";
 /******/ 		// loadScript function to load a script via script tag
 /******/ 		__webpack_require__.l = (url, done, key, chunkId) => {
 /******/ 			if(inProgress[url]) { inProgress[url].push(done); return; }
@@ -67937,7 +67937,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = globalThis["webpackChunkspa_front_end"] = globalThis["webpackChunkspa_front_end"] || [];
+/******/ 		var chunkLoadingGlobal = globalThis["webpackChunkSpotify_analytics"] = globalThis["webpackChunkSpotify_analytics"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();

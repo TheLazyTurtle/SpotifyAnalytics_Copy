@@ -104,27 +104,28 @@ function autoComplete(name: string, allowedInputType: string, placeholderText: s
                 <>
                     {isGlobalSearchField ? (
                         <div className="input-field-result-data w-25 border position-absolute background-base">
-                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
+                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, true, clickHandler))}
                         </div>
                     ) : (
-                        <div className="input-field-result-data px-5 border position-absolute background-base">
-                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
+                        <div className="input-field-result-data col-5 row small-row rounded-8 mx-1 border position-absolute background-base">
+                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, false, clickHandler))}
                         </div>
                     )}
                 </>
             }
             {(autoCompleteSuggestions.length > 0 && !isComponent) &&
                 <div className="input-field-result-data border position-absolute background-base">
-                    {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, clickHandler))}
+                    {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, true, clickHandler))}
                 </div>
             }
         </section>
     );
 }
 
-function autoCompleteRow(index: number, item: AutocompleteItem, clickHandler: (event: any) => void) {
-    if (item.type) {
-        const href = item.artist_id !== undefined ? `/artist/${item.artist_id}` : `/${item.name}`;
+function autoCompleteRow(index: number, item: AutocompleteItem, isSearch: boolean, clickHandler: (event: any) => void) {
+    if (isSearch) {
+        const href = item.artist_id === undefined ? `/${item.name}` : `/artist/${item.artist_id}`;
+
         return (
             <div key={index}>
                 <img alt={item.name} src={item.imgUrl} className="w-10 d-inline-block" />

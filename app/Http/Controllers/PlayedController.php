@@ -221,15 +221,7 @@ class PlayedController extends Controller
             $user_id = $user->id;
         }
 
-        $topArtists = Played::where('played_by', $user_id)
-            ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
-            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-            ->select('artists.name')
-            ->where('artists.name', 'like', $request->artist_name . '%')
-            ->groupBy('artists.artist_id')
-            ->orderBy(DB::raw('COUNT(*)'), 'desc')
-            ->limit($request->amount)
-            ->get();
+        $topArtists = Played::topArtistSearch($user_id, $request->artist_name, $request->amount);
 
         return response()->json([
             'data' => $topArtists
@@ -261,15 +253,7 @@ class PlayedController extends Controller
             $user_id = $user->id;
         }
 
-        $topSongs = Played::where('played_by', $user_id)
-            ->select('played.song_name as name')
-            ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
-            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-            ->where('played.song_name', 'like', $request->song_name . '%')
-            ->groupBy('played.song_id')
-            ->orderBy(DB::raw('COUNT(*)'), 'desc')
-            ->limit($request->amount)
-            ->get();
+        $topSongs = Played::topSongsSearch($user_id, $request->song_name, $request->amount);
 
         return response()->json([
             'data' => $topSongs
@@ -348,11 +332,7 @@ class PlayedController extends Controller
             'name' => 'required'
         ]);
 
-        $searchArtist = Artist::where('name', 'like', "%$request->name%")
-            ->select('artist_id', 'name', 'img_url as imgUrl', DB::raw('concat("artist") as type'))
-            ->limit(10)
-            ->get()
-            ->toArray();
+        $searchArtist = Played::topArtistSearch("%", $request->name, 10)->toArray();
         $searchUser = User::where('username', 'like', "%$request->name%")
             ->select('username as name', 'img_url as imgUrl', DB::raw('concat("user") as type'))
             ->limit(10)

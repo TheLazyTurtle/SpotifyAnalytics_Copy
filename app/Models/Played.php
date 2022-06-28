@@ -76,4 +76,30 @@ class Played extends Model
             ->orderBy('x', 'desc')
             ->get();
     }
+
+    public static function topArtistSearch($user_id, $artist_name, $amount)
+    {
+        return Played::where('played_by', 'like',  $user_id)
+            ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
+            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
+            ->select('artists.name', 'artists.img_url as imgUrl', DB::raw('concat("artist") as type'))
+            ->where('artists.name', 'like', $artist_name . '%')
+            ->groupBy('artists.artist_id')
+            ->orderBy(DB::raw('COUNT(*)'), 'desc')
+            ->limit($amount)
+            ->get();
+    }
+
+    public static function topSongsSearch($user_id, $song_name, $amount)
+    {
+        return Played::where('played_by', $user_id)
+            ->select('played.song_name as name')
+            ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
+            ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
+            ->where('played.song_name', 'like', $song_name . '%')
+            ->groupBy('played.song_id')
+            ->orderBy(DB::raw('COUNT(*)'), 'desc')
+            ->limit($amount)
+            ->get();
+    }
 }
