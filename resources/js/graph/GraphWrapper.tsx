@@ -70,7 +70,10 @@ function GraphWrapper({ graph, userId }: GraphWrapperProps) {
             <ButtonWrapper onClick={handleTimeFrameClick} />
             <InputFieldWrapper update={handleInputFieldUpdate} inputFields={graph.inputFields} graphName={graph.name} userId={userId} />
             {typeof data !== "string" &&
-                <GraphComponent dataPoints={data?.data.data} graphType={graph.type} />
+                <>
+                    <h2 className="text-center text-white">{graph.title}</h2>
+                    <GraphComponent dataPoints={data?.data.data} graphType={graph.type} />
+                </>
             }
         </>
     );

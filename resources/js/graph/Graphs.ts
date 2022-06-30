@@ -6,6 +6,7 @@ export interface Graph {
     type: GraphDataType;
     inputFields: inputField[];
     name: GraphName;
+    title: string;
 };
 
 class graphs {
@@ -26,7 +27,8 @@ class graphs {
                     filterValue: "",
                 }
             ],
-            name: GraphName.allSongsPlayed
+            name: GraphName.allSongsPlayed,
+            title: "Streams Per Song"
         },
         {
             type: GraphDataType.Bar,
@@ -45,7 +47,8 @@ class graphs {
                     filterValue: "",
                 },
             ],
-            name: GraphName.topSongs
+            name: GraphName.topSongs,
+            title: "Top Songs"
         },
         {
             type: GraphDataType.Bar,
@@ -57,7 +60,9 @@ class graphs {
                     filterValue: "",
                 },
             ],
-            name: GraphName.topArtist
+            name: GraphName.topArtist,
+            title: "Top Artist"
+
         },
         {
             type: GraphDataType.Line,
@@ -69,15 +74,9 @@ class graphs {
                     filterValue: "",
                     autocompleteFunction: PlayedAPI.topSongsSearch
                 },
-                // {
-                //     name: "artistName",
-                //     type: "text",
-                //     placeholder: "Artist Name",
-                //     filterValue: "",
-                //     autocompleteFunction: PlayedAPI.topArtistSearch
-                // },
             ],
-            name: GraphName.playedPerDay
+            name: GraphName.playedPerDay,
+            title: "Total Streams Per Time Frame"
         },
     ];
 

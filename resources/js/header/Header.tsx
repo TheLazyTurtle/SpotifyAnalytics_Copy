@@ -22,6 +22,7 @@ function Header() {
 
     function handleLogout() {
         axios.post("/logout").then(() => {
+            localStorage.clear();
             window.location.href = "/login";
         });
     }

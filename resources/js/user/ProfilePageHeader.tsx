@@ -15,6 +15,7 @@ function Buttons(props: ProfilePageHeaderProps) {
 
     function handleLogout() {
         axios.post("/logout").then(() => {
+            localStorage.clear();
             window.location.href = "/login";
         });
     }
@@ -133,11 +134,7 @@ function ProfilePageHeader(props: ProfilePageHeaderProps) {
     const deleteAccount = (event: any) => {
         event.preventDefault();
         if (window.confirm("Are you sure you want to delete your account and all data related to it?")) {
-            axios.delete("/api/user/delete").then((result) => {
-
-            }).catch((error) => {
-
-            });
+            axios.delete("/api/user/delete");
         }
     }
 
