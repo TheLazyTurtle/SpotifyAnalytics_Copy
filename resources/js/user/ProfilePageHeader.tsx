@@ -130,6 +130,17 @@ function ProfilePageHeader(props: ProfilePageHeaderProps) {
         setInputValues(values => ({ ...values, [name]: value }));
     }
 
+    const deleteAccount = (event: any) => {
+        event.preventDefault();
+        if (window.confirm("Are you sure you want to delete your account and all data related to it?")) {
+            axios.delete("/api/user/delete").then((result) => {
+
+            }).catch((error) => {
+
+            });
+        }
+    }
+
     return (
         <>
             <Modal show={show} onHide={() => setShow(false)}>
@@ -157,6 +168,7 @@ function ProfilePageHeader(props: ProfilePageHeaderProps) {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button variant="danger" onClick={deleteAccount}>Delete account</Button>
                     <Button variant="secondary" onClick={() => setShow(false)}>Cancel</Button>
                     <Button variant="primary" onClick={handleSubmit}>Save</Button>
                 </Modal.Footer>

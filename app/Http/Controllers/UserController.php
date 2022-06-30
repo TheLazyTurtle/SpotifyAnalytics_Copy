@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\Followers;
 use App\Models\Notification;
+use App\Models\Played;
+use App\Models\SpotifyToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -142,7 +144,6 @@ class UserController extends Controller
     }
 
     // Delete user
-    // TODO: Make it remove all data from a user
     public function destroy()
     {
         $authUser = Auth()->user();
@@ -156,6 +157,11 @@ class UserController extends Controller
         }
 
         if ($user->delete()) {
+            Played::where('played_by', $authUser->id)->delete();
+            SpotifyToken::where('user_id', $authUser->id)->delete();
+            Followers::where('follower_user_id', $authUser->id)->delete();
+            Followers::where('following_user_id', $authUser->id)->delete();
+
             return response()->json([
                 'success' => true
             ], 200);

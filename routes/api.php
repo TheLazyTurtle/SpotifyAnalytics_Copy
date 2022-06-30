@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Current user
     Route::get('user/', [UserController::class, 'getCurrentUser']);
+    Route::delete('user/delete', [UserController::class, 'destroy']);
     Route::post('user/follow', [UserController::class, 'follow']);
 
     // Notifications
