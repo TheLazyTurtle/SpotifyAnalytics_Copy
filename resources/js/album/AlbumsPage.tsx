@@ -18,7 +18,7 @@ function AlbumsPage({ artistName }: AlbumPageProps) {
             artist_id: artistID
         }
     }
-    const { isLoading, data, error } = useQuery("artistAlbums", () => axios.get<Response<Album[]>>(`/api/artist/albums/`, params).then((response) => response.data));
+    const { isLoading, data, error } = useQuery("artistAlbums", () => axios.get<Response<Album[]>>(`/api/artist/albums`, params).then((response) => response.data));
 
     return (
         <>
