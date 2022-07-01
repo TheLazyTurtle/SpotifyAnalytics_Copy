@@ -38,7 +38,7 @@ Route::get('played/topSongsSearch', [PlayedController::class, 'topSongsSearch'])
 Route::get('artist/topSongs', [ArtistController::class, 'topSongs']);
 Route::get('artist/{id}', [ArtistController::class, 'show']);
 
-Route::get('system/syncUsers/{id}', [SystemController::class, 'fetch']);
+// Route::get('system/syncUsers/{id}', [SystemController::class, 'fetch']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Slider

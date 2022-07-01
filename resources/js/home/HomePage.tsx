@@ -1,5 +1,5 @@
 import Slider from "../slider/Slider";
-import Wrapper from "../graph/GraphWrapper";
+import GraphWrapper from "../graph/GraphWrapper";
 import { graphs, Graph } from "../graph/Graphs";
 import axios from 'axios';
 import { useEffect, useState } from "react";
@@ -43,7 +43,7 @@ function HomePage() {
             <section className="w-100">
                 {new graphs().graphs.map((graph: Graph) => (
                     <div key={graph.name} className="graph pt-3" id={graph.name}>
-                        <Wrapper key={graph.name} graph={graph} />
+                        <GraphWrapper key={graph.name} graph={graph} />
                     </div>
                 ))}
             </section>

@@ -122,6 +122,7 @@ class ArtistController extends Controller
         $singles = Album::getArtistSingles($request->artist_id);
         $albums = Album::getArtistAlbumsTheyOwn($request->artist_id);
 
+        // NOTE: This can be used to optimize
         return AlbumResource::collection(collect($singles, $albums));
     }
 

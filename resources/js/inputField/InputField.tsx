@@ -104,7 +104,7 @@ function autoComplete(name: string, allowedInputType: string, placeholderText: s
                 <>
                     {isGlobalSearchField ? (
                         <div className="input-field-result-data w-25 border position-absolute background-base">
-                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, true, clickHandler))}
+                            {inputFieldText.length > 0 && autoCompleteSuggestions.map((item: AutocompleteItem, index: number) => autoCompleteRow(index, item, isGlobalSearchField, clickHandler))}
                         </div>
                     ) : (
                         <div className="input-field-result-data col-5 row small-row rounded-8 mx-1 border position-absolute background-base">
@@ -122,9 +122,9 @@ function autoComplete(name: string, allowedInputType: string, placeholderText: s
     );
 }
 
-function autoCompleteRow(index: number, item: AutocompleteItem, isSearch: boolean, clickHandler: (event: any) => void) {
-    if (isSearch) {
-        const href = item.artist_id === undefined ? `/${item.name}` : `/artist/${item.artist_id}`;
+function autoCompleteRow(index: number, item: AutocompleteItem, isGlobalSearchField: boolean, clickHandler: (event: any) => void) {
+    if (isGlobalSearchField) {
+        const href = item.type === "user" ? `/${item.name}` : `/artist/${item.artist_id}`;
 
         return (
             <div key={index}>

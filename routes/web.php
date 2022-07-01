@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SystemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ Route::get('/', function () {
 Route::get('/addSpotifyTokens', function () {
     return view('addSpotifyTokens');
 });
+
+Route::get('/system/syncUsers/{id}', [SystemController::class, 'fetch']);
 
 Route::view('/{path?}', 'index')
     ->where('path', '.*')

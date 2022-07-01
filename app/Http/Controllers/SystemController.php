@@ -175,7 +175,7 @@ class SystemController extends Controller
                 ]
             );
 
-            if ($artistObject->wasRecentlyCreated || strtotime($artistObject->updated_at) < strtotime('-60 day')) {
+            if ($artistObject->wasRecentlyCreated) {
                 array_push($this->logs[$this->currentUsername], ['Added artist' => ['artist_id' => $artist['id'], 'name' => $artist['name']]]);
 
                 $result = $this->api->search($artist['name'], 'artist');
@@ -184,8 +184,10 @@ class SystemController extends Controller
                 $img = null;
                 foreach ($result['artists']['items'] as $potentialArtist) {
                     if ($potentialArtist['id'] == $artist['id']) {
-                        $img = $potentialArtist['images'][0]['url'];
-                        break;
+                        if (isset($potentialArtist['images'][0])) {
+                            $img = $potentialArtist['images'][0]['url'];
+                            break;
+                        }
                     }
                 }
 

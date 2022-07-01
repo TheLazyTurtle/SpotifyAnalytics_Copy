@@ -65,6 +65,10 @@ class UserController extends Controller
         } else {
             $user->has_following_request = Notification::hasFollowingRequestOpen($authUser->id, $user->id);
             $user->following = Followers::isFollowing($authUser->id, $user->id);
+
+            if ($authUser->is_admin) {
+                $user->following = true;
+            }
         }
 
         $user->is_own_account = false;

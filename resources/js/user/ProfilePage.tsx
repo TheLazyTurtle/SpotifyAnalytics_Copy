@@ -21,7 +21,7 @@ function ProfilePage() {
     }, [params.username]);
 
     async function getUser(username?: string) {
-        axios.get<Response<User>>(`/api/user/${username ?? ""}`).then((response) => {
+        axios.get<Response<User>>(`/api/user${username === undefined ? "" : "/" + username}`).then((response) => {
             if (response.status === 200) {
                 if (response.data.data.isOwnAccount) {
                     setPageType(PageType.Personal);
