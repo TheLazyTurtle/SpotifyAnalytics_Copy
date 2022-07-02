@@ -47,7 +47,7 @@ function GraphComponent({ dataPoints, graphType }: GraphComponentProps) {
                 });
             } else {
                 dataPoints?.forEach((dataPoint: Played) => {
-                    labels.push(new Date(dataPoint.x).toLocaleDateString());
+                    labels.push(new Date(+dataPoint.x).toLocaleDateString());
                     dataPointValues.push(+dataPoint.y);
                 });
             }

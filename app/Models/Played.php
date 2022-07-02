@@ -33,18 +33,6 @@ class Played extends Model
 
     public static function topSongs($user_id, $min_date, $max_date, $artist_name, $amount)
     {
-        // return Played::where('played_by', $user_id)
-        //     ->join('artist_has_song', 'artist_has_song.song_id', 'played.song_id')
-        //     ->join('songs', 'artist_has_song.song_id', 'songs.song_id')
-        //     ->rightJoin('artists', 'artists.artist_id', 'artist_has_song.artist_id')
-        //     ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x', 'songs.img_url')
-        //     ->whereBetween('date_played', [$min_date, $max_date])
-        //     ->where('artists.name', 'like', $artist_name)
-        //     ->groupBy('played.song_id')
-        //     ->orderBy('y', 'desc')
-        //     ->limit($amount)
-        //     ->get();
-
         $song_ids = ArtistHasSong::whereIn('artist_has_song.artist_id', function ($query) use ($artist_name) {
             $query->select('artists.artist_id')
                 ->from('artists')
@@ -93,7 +81,7 @@ class Played extends Model
             })
             ->whereBetween('played.date_played', [$min_date, $max_date])
             ->groupBy(DB::raw('MONTH(played.date_played)'), DB::raw('YEAR(played.date_played)'))
-            ->orderBy('x', 'desc')
+            ->orderBy('x', 'asc')
             ->get();
     }
 
