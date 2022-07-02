@@ -121,9 +121,9 @@ class ArtistController extends Controller
 
         $singles = Album::getArtistSingles($request->artist_id);
         $albums = Album::getArtistAlbumsTheyOwn($request->artist_id);
+        $merged = $singles->merge($albums)->sortByDesc('release_date');
 
-        // NOTE: This can be used to optimize
-        return AlbumResource::collection(collect($singles, $albums));
+        return AlbumResource::collection($merged);
     }
 
     // Get the top songs of an artist
