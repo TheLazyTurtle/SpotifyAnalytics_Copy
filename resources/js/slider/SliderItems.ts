@@ -54,7 +54,7 @@ export const sliderItems: SliderItem[] = [
     },
     {
         name: SliderItemName.timeListened,
-        defaultImgUrl: "https://i.pinimg.com/736x/f9/4c/95/f94c9574933ce9404f323fb58f5e7f5c.jpg",
+        defaultImgUrl: "/storage/timeListened.jpg",
         index: 2,
         sliderItemData: {
             templateText: "Time listend {{timeFrame}}: {{count}}",

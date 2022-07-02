@@ -274,9 +274,9 @@ class PlayedController extends Controller
             ->join('songs', 'songs.song_id', 'played.song_id')
             ->select(DB::raw('SUM(songs.length) as y'))
             ->whereBetween('played.date_played', [$request->min_date, $request->max_date])
-            ->first();
+            ->get();
 
-        return new SliderItemDataResource($timeListend);
+        return SliderItemDataResource::collection($timeListend);
     }
 
     // Amount of songs a user listend to 
@@ -293,9 +293,9 @@ class PlayedController extends Controller
         $amountSongs = Played::where('played.played_by', $user_id)
             ->select(DB::raw('COUNT(*) as y'))
             ->whereBetween('played.date_played', [$request->min_date, $request->max_date])
-            ->first();
+            ->get();
 
-        return new SliderItemDataResource($amountSongs);
+        return SliderItemDataResource::collection($amountSongs);
     }
 
     // Amount of new songs a user listend to 
@@ -317,9 +317,9 @@ class PlayedController extends Controller
         }, 'a')
             ->join('songs', 'songs.song_id', 'a.song_id')
             ->select(DB::raw('COUNT(*) as y'), 'songs.img_url')
-            ->first();
+            ->get();
 
-        return new SliderItemDataResource($newSongs);
+        return SliderItemDataResource::collection($newSongs);
     }
 
     // Search artists and users
