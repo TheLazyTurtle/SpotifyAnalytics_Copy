@@ -21,6 +21,12 @@ class SliderItemDataResource extends JsonResource
             ];
         }
 
+        if ($this->y == 'null' || $this->y == NULL) {
+            return [
+                'y' => 0
+            ];
+        }
+
         return [
             'y' => $this->y,
         ];

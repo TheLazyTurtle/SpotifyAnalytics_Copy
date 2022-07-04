@@ -31,7 +31,7 @@ function SliderItemComponent({ sliderItem, timeFrame, position }: SliderItemProp
         const newData = data.data.data;
 
         if (sliderItem.name === SliderItemName.timeListened) {
-            sliderItem.sliderItemData.countValue = msToTime(newData[0].y.toString() ?? "0");
+            sliderItem.sliderItemData.countValue = msToTime(newData[0]?.y.toString() ?? "0");
         } else {
             sliderItem.sliderItemData.countValue = newData[0]?.y.toString() ?? "0";
         }

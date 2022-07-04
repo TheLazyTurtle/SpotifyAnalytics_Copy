@@ -67,7 +67,7 @@ class SystemController extends Controller
             $this->parseTracks($tracks['items'], $user_id);
             $end_user_time = microtime(true);
             array_push($this->logs[$this->currentUsername], ['execution_time' => $end_user_time - $start_user_time]);
-            set_time_limit(30);
+            //     set_time_limit(30);
         }
 
         $end_time = microtime(true);
