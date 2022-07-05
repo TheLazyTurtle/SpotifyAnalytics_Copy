@@ -68,10 +68,12 @@ class Played extends Model
 
     public static function playedPerDay($user_id, $artist_name, $song_name, $min_date, $max_date)
     {
-        return Played::where('played_by', $user_id)
-            ->select(DB::raw('unix_timestamp(played.date_played) * 1000 as x'), DB::raw('COUNT(*) as y'))
-            ->join('songs', 'played.song_id', 'songs.song_id')
-            ->whereIn('songs.song_id', function ($query) use ($artist_name, $song_name) {
+        $diff = strtotime($max_date) - strtotime($min_date);
+        $days = abs(round($diff / 86400));
+
+        $played = Played::where('played_by', $user_id)
+            ->select(DB::raw('played.date_played as x'), DB::raw('COUNT(*) as y'))
+            ->whereIn('played.song_id', function ($query) use ($artist_name, $song_name) {
                 $query->select('songs.song_id')
                     ->from('songs')
                     ->join('artist_has_song', 'artist_has_song.song_id', 'songs.song_id')
@@ -79,9 +81,19 @@ class Played extends Model
                     ->where('artists.name', 'like', $artist_name)
                     ->where('songs.name', 'like', $song_name);
             })
-            ->whereBetween('played.date_played', [$min_date, $max_date])
-            ->groupBy(DB::raw('MONTH(played.date_played)'), DB::raw('YEAR(played.date_played)'))
-            ->orderBy('x', 'asc')
+            ->whereBetween('played.date_played', [$min_date, $max_date]);
+
+        if ($days == 1) {
+            $played->groupBy(DB::raw('HOUR(played.date_played)'));
+        } elseif ($days > 1 && $days <= 30) {
+            $played->groupBy(DB::raw('DAY(played.date_played)'));
+        } elseif ($days > 30 && $days <= 365) {
+            $played->groupBy(DB::raw('MONTH(played.date_played)'));
+        } else {
+            $played->groupBy(DB::raw('YEAR(played.date_played)'));
+        }
+
+        return $played->orderBy('x', 'asc')
             ->get();
     }
 

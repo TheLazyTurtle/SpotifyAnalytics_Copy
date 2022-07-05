@@ -72,7 +72,7 @@ function GraphWrapper({ graph, userId }: GraphWrapperProps) {
             {typeof data !== "string" &&
                 <>
                     <h2 className="text-center text-white">{graph.title}</h2>
-                    <GraphComponent dataPoints={data?.data.data} graphType={graph.type} />
+                    <GraphComponent dataPoints={data?.data.data} graphType={graph.type} timeFrame={timeFrame} />
                 </>
             }
         </>
