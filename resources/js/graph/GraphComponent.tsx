@@ -11,6 +11,7 @@ import {
 } from 'chart.js';
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
+import { TimeFrame } from '../dates';
 import { GraphDataType } from './GraphWrapper';
 import { Played } from './Played';
 
@@ -28,9 +29,10 @@ ChartJS.register(
 interface GraphComponentProps {
     dataPoints?: Played[];
     graphType: GraphDataType;
+    timeFrame: TimeFrame;
 };
 
-function GraphComponent({ dataPoints, graphType }: GraphComponentProps) {
+function GraphComponent({ dataPoints, graphType, timeFrame }: GraphComponentProps) {
     const { labels, dataPointValues } = processDataPoints(graphType, dataPoints);
     const colors = ["#6D78AD", "#51CDA0", "#DF7970", "#4C9CA0", "#AE7D99", "#C9D45C", "#5592AD", "#DF874D", "#52BCA8", "#8E7AA3", "#E3CB64", "#C77B85", "#C39762", "#8DD17E", "#B57952", "#FCC26C"];
     const lineColor = "#1DB954";
@@ -47,7 +49,11 @@ function GraphComponent({ dataPoints, graphType }: GraphComponentProps) {
                 });
             } else {
                 dataPoints?.forEach((dataPoint: Played) => {
-                    labels.push(new Date(+dataPoint.x).toLocaleDateString());
+                    if (timeFrame === TimeFrame.today || timeFrame === TimeFrame.yesterday) {
+                        labels.push(new Date(dataPoint.x).toLocaleTimeString());
+                    } else {
+                        labels.push(new Date(dataPoint.x).toLocaleDateString());
+                    }
                     dataPointValues.push(+dataPoint.y);
                 });
             }
