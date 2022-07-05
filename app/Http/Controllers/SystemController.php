@@ -18,6 +18,9 @@ class SystemController extends Controller
     private $api;
     private $logs = array();
     private $currentUsername = "";
+    private $played = array();
+    private $artist_has_song = array();
+    private $checkedSongs = array();
 
     public function fetch($id)
     {
@@ -48,13 +51,7 @@ class SystemController extends Controller
             $tokens = $this->refreshUsersTokens($session, $user->refresh_token);
 
             if ($tokens == null) {
-                array_push($this->logs[$this->currentUsername], ['Tokens' => 'Failed to refresh tokens']);
-            } else {
-                if (empty($tokens['access_token']) || empty($tokens['refresh_token'])) {
-                    array_push($this->logs[$this->currentUsername], ['Tokens' => 'Tokens were incomplete fetch round skipped']);
-                    continue;
-                }
-                array_push($this->logs[$this->currentUsername], ['Tokens' => 'Refreshed tokens']);
+                continue;
             }
 
             $this->api = new SpotifyWebAPI\SpotifyWebAPI();
@@ -67,8 +64,11 @@ class SystemController extends Controller
             $this->parseTracks($tracks['items'], $user_id);
             $end_user_time = microtime(true);
             array_push($this->logs[$this->currentUsername], ['execution_time' => $end_user_time - $start_user_time]);
-            //     set_time_limit(30);
         }
+
+        // Insert all the played songs and artist_has_songs
+        Played::insertOrIgnore($this->played);
+        ArtistHasSong::insertOrIgnore($this->artist_has_song);
 
         $end_time = microtime(true);
         array_push($this->logs['system'], ['execution_time' => $end_time - $start_time]);
@@ -89,64 +89,58 @@ class SystemController extends Controller
     {
         foreach ($tracks as $track) {
             $this->insertSong($track, $user_id);
-            $this->insertAlbum($track["track"]["album"]);
-            $this->insertArtists($track["track"]["artists"], $track["track"]["id"]);
         }
     }
 
     public function insertSong($song, $user_id)
     {
-        $played_at = $song["played_at"];
-        $played_at = str_replace("T", " ", $played_at);
-        $played_at = str_replace("Z", "", $played_at);
-        $played_at = substr($played_at, 0, -4);
-
         $song_info = $song["track"];
+        $played_at = $song["played_at"];
+        $played_at = str_replace("Z", "", $played_at);
 
-        $songObject = Song::updateOrCreate(
-            [
-                'song_id' => $song_info['id']
-            ],
-            [
-                'name' => $song_info['name'],
-                'length' => $song_info['duration_ms'],
-                'url' => $song_info['external_urls']['spotify'],
-                'img_url' => $song_info['album']['images'][0]['url'],
-                'preview_url' => $song_info['preview_url'] ?? 'NULL',
-                'album_id' => $song_info['album']['id'],
-                'track_number' => $song_info['track_number'],
-                'explicit' => $song_info['explicit']
-            ]
-        );
-
-        $playedObject = Played::firstOrCreate(
+        // Add played
+        array_push(
+            $this->played,
             [
                 'song_id' => $song_info['id'],
                 'date_played' => $played_at,
-                'played_by' => $user_id
-            ],
-            [
+                'played_by' => $user_id,
                 'song_name' => $song_info['name']
             ]
         );
 
-        if ($songObject->wasRecentlyCreated) {
-            array_push($this->logs[$this->currentUsername], ['Added song' => ['song_id' => $song_info['id'], 'name' => $song_info['name']]]);
-        }
+        if (!in_array($song_info['id'], $this->checkedSongs)) {
+            $songObject = Song::firstOrCreate(
+                [
+                    'song_id' => $song_info['id'],
+                ],
+                [
+                    'name' => $song_info['name'],
+                    'length' => $song_info['duration_ms'],
+                    'url' => $song_info['external_urls']['spotify'],
+                    'img_url' => $song_info['album']['images'][0]['url'],
+                    'preview_url' => $song_info['preview_url'] ?? 'NULL',
+                    'album_id' => $song_info['album']['id'],
+                    'track_number' => $song_info['track_number'],
+                    'explicit' => $song_info['explicit']
+                ]
+            );
 
-        if ($playedObject->wasRecentlyCreated) {
-            array_push($this->logs[$this->currentUsername], ['Added played' => ['song_id' => $song_info['id'], 'name' => $song_info['name']]]);
+            array_push($this->checkedSongs, $song_info['id']);
+            if ($songObject->wasRecentlyCreated) {
+
+                $this->insertAlbum($song_info['album']);
+                $this->insertArtists($song_info['artists'], $song_info['id']);
+            }
         }
     }
 
     public function insertAlbum($album)
     {
 
-        $albumObject = Album::updateOrCreate(
+        $albumObject = Album::firstOrCreate(
             [
-                'album_id' => $album['id']
-            ],
-            [
+                'album_id' => $album['id'],
                 'name' => $album['name'],
                 'release_date' => $album['release_date'],
                 'primary_artist_id' => $album['artists'][0]['id'],
@@ -157,7 +151,6 @@ class SystemController extends Controller
         );
 
         if ($albumObject->wasRecentlyCreated) {
-            array_push($this->logs[$this->currentUsername], ['Added album' => ['album_id' => $album['id'], 'name' => $album['name']]]);
             $this->getAlbumSongs($album['id'], $album['images'][0]['url']);
         }
     }
@@ -198,7 +191,8 @@ class SystemController extends Controller
                 )->save();
             }
 
-            ArtistHasSong::updateOrCreate(
+            array_push(
+                $this->artist_has_song,
                 [
                     'artist_id' => $artist['id'],
                     'song_id' => $song_id
@@ -211,14 +205,13 @@ class SystemController extends Controller
     {
         $results = $this->api->getAlbumTracks($album_id);
         $results = json_decode(json_encode($results), true);
+        $songs = array();
 
         foreach ($results["items"] as $song) {
-
-            $songObject = Song::updateOrCreate(
+            array_push(
+                $songs,
                 [
-                    'song_id' => $song['id']
-                ],
-                [
+                    'song_id' => $song['id'],
                     'name' => $song['name'],
                     'length' => $song['duration_ms'],
                     'url' => $song['external_urls']['spotify'],
@@ -230,11 +223,10 @@ class SystemController extends Controller
                 ]
             );
 
-            if ($songObject->wasRecentlyCreated) {
-                array_push($this->logs[$this->currentUsername], ['Added album song' => ['song_id' => $song['id'], 'name' => $song['name']]]);
-                $this->insertArtists($song['artists'], $song['id']);
-            }
+            $this->insertArtists($song['artists'], $song['id']);
         }
+
+        Song::insertOrIgnore($songs);
     }
 
     public function refreshUsersTokens($session, $refreshToken)
@@ -245,6 +237,17 @@ class SystemController extends Controller
             $tokens = array();
             $tokens['access_token'] = $session->getAccessToken();
             $tokens['refresh_token'] = $session->getRefreshToken();
+
+            if ($tokens == null) {
+                array_push($this->logs[$this->currentUsername], ['Tokens' => 'Failed to refresh tokens']);
+                return null;
+            } else {
+                if (empty($tokens['access_token']) || empty($tokens['refresh_token'])) {
+                    array_push($this->logs[$this->currentUsername], ['Tokens' => 'Tokens were incomplete fetch round skipped']);
+                    return null;
+                }
+                array_push($this->logs[$this->currentUsername], ['Tokens' => 'Refreshed tokens']);
+            }
 
             return $tokens;
         } catch (Exception $e) {
