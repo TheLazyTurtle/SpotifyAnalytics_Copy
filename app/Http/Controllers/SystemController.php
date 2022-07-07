@@ -96,7 +96,7 @@ class SystemController extends Controller
     {
         $song_info = $song["track"];
         $played_at = $song["played_at"];
-        $played_at = str_replace("Z", "", $played_at);
+        $played_at = str_replace("T", " ", $played_at);
 
         // Add played
         array_push(
