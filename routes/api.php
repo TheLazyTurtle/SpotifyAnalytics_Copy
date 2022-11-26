@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlayedController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SongController;
 use App\Http\Controllers\SpotifyTokenController;
 use App\Http\Controllers\SystemController;
 use App\Http\Controllers\UserController;

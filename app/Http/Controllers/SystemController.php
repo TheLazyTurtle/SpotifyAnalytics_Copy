@@ -21,13 +21,14 @@ class SystemController extends Controller
     private $played = array();
     private $artist_has_song = array();
     private $checkedSongs = array();
+    private $addedSongs = array();
 
     public function fetch($id)
     {
         if ($id != env('FETCHER_TOKEN')) {
             return response()->json([
-                'data' => 'Incorrect token',
-            ], 400);
+                'data' => 'Page not found',
+            ], 404);
         }
 
         $start_time = microtime(true);
@@ -69,6 +70,9 @@ class SystemController extends Controller
         // Insert all the played songs and artist_has_songs
         Played::insertOrIgnore($this->played);
         ArtistHasSong::insertOrIgnore($this->artist_has_song);
+
+        // Fix all the broken hashes
+        Song::fixHashes($this->addedSongs);
 
         $end_time = microtime(true);
         array_push($this->logs['system'], ['execution_time' => $end_time - $start_time]);
@@ -128,7 +132,7 @@ class SystemController extends Controller
 
             array_push($this->checkedSongs, $song_info['id']);
             if ($songObject->wasRecentlyCreated) {
-
+                array_push($this->addedSongs, $song_info['id']);
                 $this->insertAlbum($song_info['album']);
                 $this->insertArtists($song_info['artists'], $song_info['id']);
             }

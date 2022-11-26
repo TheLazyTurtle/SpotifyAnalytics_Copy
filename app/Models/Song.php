@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Resources\ArtistResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Song extends Model
 {
@@ -19,7 +20,8 @@ class Song extends Model
         'preview_url',
         'album_id',
         'track_number',
-        'explicit'
+        'explicit',
+        'hash'
     ];
 
     // Song has many played
@@ -44,5 +46,30 @@ class Song extends Model
     public function album()
     {
         return $this->belongsTo(Album::class, 'album_id', 'album_id');
+    }
+
+    public static function makeHash($song_id)
+    {
+        $sub = Artist::selectRaw("group_concat(name SEPARATOR ' ') as names, song_id")
+            ->join("artist_has_song", "artists.artist_id", "artist_has_song.artist_id")
+            ->where("artist_has_song.song_id", $song_id)
+            ->groupBy("artist_has_song.song_id");
+
+        $hash = Song::selectRaw("md5(group_concat(songs.name, c.names)) as hash")
+            ->joinSub($sub, "c", function ($join) {
+                $join->on("c.song_id", "songs.song_id");
+            })
+            ->groupBy("songs.song_id")
+            ->first();
+
+        return $hash;
+    }
+
+    public static function fixHashes($song_ids)
+    {
+        for ($i = 0; $i < count($song_ids); $i++) {
+            Song::where('song_id', $song_ids[$i])
+                ->update(['hash' => Song::makeHash($song_ids[$i])->hash]);
+        }
     }
 }

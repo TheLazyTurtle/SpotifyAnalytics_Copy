@@ -23,9 +23,10 @@ class Played extends Model
     {
         return Played::where('played_by', $user_id)
             ->distinct()
+            ->join('songs', 'songs.song_id', 'played.song_id')
             ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x')
             ->whereBetween('date_played', [$min_date, $max_date])
-            ->groupBy('played.song_id')
+            ->groupBy('songs.hash')
             ->havingBetween('y', [$min_played, $max_played])
             ->orderBy('played.song_name')
             ->get();
@@ -45,7 +46,7 @@ class Played extends Model
             ->whereBetween('date_played', [$min_date, $max_date])
             ->join('songs', 'songs.song_id', 'played.song_id')
             ->select(DB::raw('COUNT(*) as y'), 'played.song_name as x', 'songs.img_url')
-            ->groupBy('played.song_id')
+            ->groupBy('songs.hash')
             ->orderBy('y', 'desc')
             ->limit($amount)
             ->get();
